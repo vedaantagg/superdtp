@@ -711,6 +711,119 @@
 
         /* === SECTION ZOOM TRANSITION === */
         section { transform-origin: center top; will-change: transform, opacity; }
+
+        /* === WORKFLOW ENGINE v2 === */
+        .wf-phase-tab {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 13px 16px;
+            border: none; border-bottom: 2px solid transparent;
+            border-right: 1px solid rgba(255,255,255,0.05);
+            background: none; color: rgba(255,255,255,0.62); cursor: pointer;
+            font-family: 'Space Grotesk', monospace; font-size: 0.57rem;
+            text-transform: uppercase; letter-spacing: 0.16em; white-space: nowrap;
+            transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+        .wf-phase-tab:hover { color: #fff; background: rgba(255,255,255,0.04); }
+        .wf-phase-tab.active { color: #d4af37; border-bottom-color: #d4af37; background: rgba(212,175,55,0.04); }
+        .wf-tab-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+        .wf-ctrl-btn {
+            width: 32px; height: 32px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.55); cursor: pointer; flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+        .wf-ctrl-btn:hover { color: #fff; border-color: rgba(212,175,55,0.4); background: rgba(212,175,55,0.07); }
+        .wf-ctrl-btn.is-playing { background: rgba(212,175,55,0.14); border-color: rgba(212,175,55,0.45); color: #d4af37; }
+
+        /* Body: sidebar + diagram */
+        .wf-body { display: grid; grid-template-columns: 200px 1fr; align-items: start; }
+
+        /* Step navigator: sticky, no scrollbar */
+        .wf-nav {
+            position: sticky;
+            top: 88px;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            overflow-x: hidden;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .wf-nav::-webkit-scrollbar { display: none; }
+        #wf-step-list { list-style: none; margin: 0; padding: 10px 0; }
+
+        .wf-step-item {
+            display: flex; align-items: flex-start; gap: 7px; padding: 9px 12px;
+            font-family: 'Space Grotesk', monospace; font-size: 0.7rem;
+            color: #ffffff; cursor: pointer;
+            border-left: 2px solid transparent;
+            transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+            line-height: 1.55; list-style: none;
+        }
+        .wf-step-item:hover { color: #fff; background: rgba(255,255,255,0.06); }
+        .wf-step-item.done { border-left-color: rgba(52,211,153,0.55); color: rgba(255,255,255,0.62); }
+        .wf-step-item.current { color: #d4af37; background: rgba(212,175,55,0.11); border-left-color: #d4af37; font-weight: 600; }
+        .wf-step-num { font-size: 0.62rem; letter-spacing: 0.1em; color: #d4af37; opacity: 0.75; flex-shrink: 0; margin-top: 2px; min-width: 20px; }
+        .wf-step-item.done .wf-step-num { color: #34d399; opacity: 0.8; }
+        .wf-step-item.current .wf-step-num { color: #d4af37; opacity: 1; }
+        .wf-phase-div {
+            padding: 12px 12px 7px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow: none;
+            -webkit-font-smoothing: antialiased;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            margin: 10px 0 4px;
+            list-style: none;
+            font-weight: 700;
+        }
+
+        /* SVG diagram wrap: no x overflow, full y */
+        .wf-diagram-wrap {
+            overflow: hidden;
+            position: relative;
+            background:
+                linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px),
+                rgba(9,9,11,0.45);
+            background-size: 50px 50px, 50px 50px, auto;
+        }
+        .wf-diagram-wrap svg { display: block; width: 100%; height: auto; }
+
+        /* SVG message animation classes */
+        .wf-msg-line {
+            transition: stroke-dashoffset 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .wf-msg-arrow {
+            transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .wf-msg-badge {
+            transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .wf-msg-badge-txt {
+            transition: opacity 0.3s ease 0.05s;
+        }
+        .wf-msg-label {
+            transition: opacity 0.4s ease;
+        }
+
+        /* Progress label truncation */
+        #wf-current-label { max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .wf-body { grid-template-columns: 1fr; }
+            .wf-nav { position: relative; top: 0; max-height: 160px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+        }
+        @media (max-width: 480px) {
+            .wf-phase-tab { padding: 11px 10px; font-size: 0.5rem; }
+            #wf-current-label { display: none; }
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -747,7 +860,7 @@
         </a>
         <nav class="hidden md:flex items-center space-x-8 font-mono text-xs tracking-wider text-neutral-400">
             <a href="#hero" class="nav-link active">01. INCEPTION</a>
-            <a href="#visual-lab" class="nav-link">02. VISUAL SYSTEMS</a>
+            <a href="#visual-lab" class="nav-link">02. HOW WE WORK</a>
             <a href="#infographics" class="nav-link">03. MATRIX DIAGRAMS</a>
             <div class="services-trigger relative flex items-center cursor-pointer">
                 <button type="button" class="nav-link flex items-center gap-1.5 cursor-pointer">
@@ -867,108 +980,143 @@
 
     </section>
 
-    <section class="section-fade-bg py-32 px-6 md:px-12 bg-[#07070a] border-t border-white/5" id="visual-lab" data-bg-opacity="0.8">
+    <section class="section-fade-bg py-24 px-6 md:px-12 bg-[#07070a] border-t border-white/5" id="visual-lab" data-bg-opacity="0.8">
         <div class="max-w-7xl mx-auto">
+
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-end">
                 <div class="lg:col-span-7">
-                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest block mb-4">[ 02 / VISUAL SYSTEMS ]</span>
+                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest block mb-4">[ 02 / WORKFLOW ENGINE ]</span>
                     <h2 class="font-serif text-5xl md:text-7xl tracking-tight max-w-3xl">Localization that still looks designed.</h2>
                 </div>
                 <p class="lg:col-span-4 lg:col-start-9 text-sm text-neutral-400 leading-relaxed">
-                    SuperDTP turns translation, accessibility, and print production into a visual control room. The graphics below are custom-built for this page: no stock placeholders, just the kind of document intelligence the product should communicate.
+                    Every project moves through a four-phase, quality-gated pipeline. From first brief to final invoice, the sequence runs automatically when you scroll here.
                 </p>
             </div>
 
-            <div class="visual-shell rounded-xl">
-                <div class="visual-stage">
-                    <div class="interface-window primary rounded-xl">
-                        <div class="window-bar">
-                            <span class="window-dot"></span>
-                            <span class="window-dot"></span>
-                            <span class="window-dot"></span>
-                            <span class="ml-3 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-neutral-500">Render workspace</span>
-                        </div>
-                        <div class="doc-preview-grid">
-                            <div class="localized-page">
-                                <div class="page-block gold" style="width: 52%;"></div>
-                                <div class="page-block" style="width: 86%;"></div>
-                                <div class="page-block" style="width: 72%;"></div>
-                                <div class="page-block" style="width: 92%;"></div>
-                                <div class="page-block rtl gold" style="width: 64%;"></div>
-                                <div class="page-block rtl" style="width: 78%;"></div>
-                                <div class="page-block rtl" style="width: 58%;"></div>
-                                <div class="page-block" style="width: 84%;"></div>
-                                <div class="page-block" style="width: 38%;"></div>
-                            </div>
-                            <div class="localization-map">
-                                <span class="map-node source">SOURCE</span>
-                                <span class="map-node engine">DTP AI</span>
-                                <span class="map-node market">RTL</span>
-                                <span class="map-node output">PDF/X</span>
-                                <span class="map-line one"></span>
-                                <span class="map-line two"></span>
-                                <span class="map-line three"></span>
-                            </div>
-                        </div>
+            <!-- WORKFLOW ENGINE PANEL -->
+            <div class="visual-shell rounded-xl" id="workflow-engine">
+
+                <!-- TOP BAR: Phase tabs + playback controls -->
+                <div class="flex items-center border-b border-white/5" style="min-height:50px;overflow-x:auto;">
+                    <button class="wf-phase-tab active" data-phase="all">All Phases</button>
+                    <button class="wf-phase-tab" data-phase="p1">
+                        <span class="wf-tab-dot" style="background:#38bdf8;"></span>01 &middot; Initiation
+                    </button>
+                    <button class="wf-phase-tab" data-phase="p2">
+                        <span class="wf-tab-dot" style="background:#d4af37;"></span>02 &middot; Production
+                    </button>
+                    <button class="wf-phase-tab" data-phase="p3">
+                        <span class="wf-tab-dot" style="background:#38bdf8;"></span>03 &middot; Approvals
+                    </button>
+                    <button class="wf-phase-tab" data-phase="p4">
+                        <span class="wf-tab-dot" style="background:#34d399;"></span>04 &middot; Closure
+                    </button>
+                    <div class="flex items-center gap-2 px-4 py-2 ml-auto flex-shrink-0">
+                        <button id="wf-prev" class="wf-ctrl-btn" aria-label="Previous step">
+                            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 2L4 6.5 9 11"/></svg>
+                        </button>
+                        <button id="wf-play" class="wf-ctrl-btn" aria-label="Play / Pause">
+                            <svg id="wf-icon-play" width="13" height="13" viewBox="0 0 13 13" fill="currentColor"><path d="M3 2l8 4.5L3 11V2z"/></svg>
+                            <svg id="wf-icon-pause" width="13" height="13" viewBox="0 0 13 13" fill="currentColor" style="display:none"><rect x="2" y="2" width="3.5" height="9" rx="1"/><rect x="7.5" y="2" width="3.5" height="9" rx="1"/></svg>
+                        </button>
+                        <button id="wf-next" class="wf-ctrl-btn" aria-label="Next step">
+                            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 2l5 4.5L4 11"/></svg>
+                        </button>
+                        <button id="wf-reset" class="wf-ctrl-btn" aria-label="Reset">
+                            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 6.5A4.5 4.5 0 1 0 3 4M2 2v3h3"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- BODY: Step navigator + SVG sequence diagram -->
+                <div class="wf-body">
+
+                    <!-- LEFT: Sticky step navigator -->
+                    <div class="wf-nav" id="wf-step-panel">
+                        <ul id="wf-step-list"></ul>
                     </div>
 
-                    <div class="interface-window secondary rounded-xl">
-                        <div class="window-bar">
-                            <span class="window-dot"></span>
-                            <span class="window-dot"></span>
-                            <span class="window-dot"></span>
-                            <span class="ml-3 font-mono text-[0.62rem] uppercase tracking-[0.24em] text-neutral-500">Quality gates</span>
-                        </div>
-                        <div class="quality-stack">
-                            <div class="quality-row">
-                                <span>Layout</span>
-                                <div class="quality-meter"><span style="--value: 96%;"></span></div>
-                                <strong class="text-neutral-200">96</strong>
-                            </div>
-                            <div class="quality-row">
-                                <span>WCAG</span>
-                                <div class="quality-meter"><span style="--value: 91%;"></span></div>
-                                <strong class="text-neutral-200">91</strong>
-                            </div>
-                            <div class="quality-row">
-                                <span>Print</span>
-                                <div class="quality-meter"><span style="--value: 99%;"></span></div>
-                                <strong class="text-neutral-200">99</strong>
-                            </div>
-                            <div class="rounded-lg border border-white/10 bg-white/[0.03] p-4 mt-2">
-                                <div class="font-mono text-[0.62rem] uppercase tracking-[0.24em] text-brandAccent mb-3">Flag resolved</div>
-                                <p class="text-xs leading-relaxed text-neutral-400">Arabic headline reflowed, image caption mirrored, PDF tag tree regenerated, export package ready.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                    <!-- RIGHT: Full-height responsive sequence diagram -->
+                    <div class="wf-diagram-wrap" id="wf-diagram-wrap">
+                    <div id="wf-marker-0" style="position:absolute;top:9.80%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-1" style="position:absolute;top:13.85%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-2" style="position:absolute;top:17.91%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-3" style="position:absolute;top:21.96%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-4" style="position:absolute;top:26.01%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-5" style="position:absolute;top:33.45%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-6" style="position:absolute;top:37.50%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-7" style="position:absolute;top:41.55%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-8" style="position:absolute;top:45.61%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-9" style="position:absolute;top:49.66%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-10" style="position:absolute;top:57.09%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-11" style="position:absolute;top:61.15%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-12" style="position:absolute;top:65.20%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-13" style="position:absolute;top:69.26%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-14" style="position:absolute;top:71.49%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-15" style="position:absolute;top:78.04%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-16" style="position:absolute;top:82.09%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-17" style="position:absolute;top:86.15%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-18" style="position:absolute;top:90.20%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-19" style="position:absolute;top:94.26%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
 
-            <div class="mt-20">
-                <div class="proof-card">
-                    <span class="proof-index">01</span>
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">Adaptive document previews</h3>
-                        <p class="text-sm text-neutral-400 leading-relaxed max-w-2xl">Before and after states show how copy expansion, RTL movement, and design constraints are corrected without flattening the source file.</p>
+                        <svg id="wf-svg" width="100%" viewBox="0 0 800 1480" xmlns="http://www.w3.org/2000/svg" aria-label="Localization project workflow sequence diagram">
+                            <defs>
+                                <linearGradient id="wf-actor-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="rgba(15,23,42,0.97)"/>
+                                    <stop offset="100%" stop-color="rgba(7,9,20,0.97)"/>
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Phase background boxes (built by JS) -->
+                            <g id="wf-phase-bg"></g>
+
+                            <!-- Actor lifelines + headers -->
+                            <g id="wf-actors">
+                                <!-- Client -->
+                                <line x1="80"  y1="90" x2="80"  y2="1455" stroke="rgba(56,189,248,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
+                                <rect x="15"  y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(56,189,248,0.35)" stroke-width="1.5"/>
+                                <text x="80"  y="52" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Client</text>
+
+                                <!-- PM -->
+                                <line x1="240" y1="90" x2="240" y2="1455" stroke="rgba(212,175,55,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
+                                <rect x="175" y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(212,175,55,0.35)" stroke-width="1.5"/>
+                                <text x="240" y="44" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Project</text>
+                                <text x="240" y="62" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Management</text>
+
+                                <!-- DTP -->
+                                <line x1="400" y1="90" x2="400" y2="1455" stroke="rgba(167,139,250,0.12)" stroke-width="1" stroke-dasharray="4,7"/>
+                                <rect x="335" y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(167,139,250,0.35)" stroke-width="1.5"/>
+                                <text x="400" y="52" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">DTP Team</text>
+
+                                <!-- QA/LSO -->
+                                <line x1="560" y1="90" x2="560" y2="1455" stroke="rgba(52,211,153,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
+                                <rect x="495" y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(52,211,153,0.35)" stroke-width="1.5"/>
+                                <text x="560" y="43" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Internal QA</text>
+                                <text x="560" y="62" fill="#ffffff" font-size="12" text-anchor="middle" font-family="Space Grotesk,monospace">/ LSO</text>
+
+                                <!-- Finance -->
+                                <line x1="720" y1="90" x2="720" y2="1455" stroke="rgba(251,113,133,0.12)" stroke-width="1" stroke-dasharray="4,7"/>
+                                <rect x="655" y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(251,113,133,0.35)" stroke-width="1.5"/>
+                                <text x="720" y="43" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Accounts</text>
+                                <text x="720" y="62" fill="#ffffff" font-size="12" text-anchor="middle" font-family="Space Grotesk,monospace">&amp; Finance</text>
+                            </g>
+
+                            <!-- Message groups (built by JS) -->
+                            <g id="wf-msg-stage"></g>
+                        </svg>
                     </div>
-                    <div class="proof-thumb"></div>
+
                 </div>
-                <div class="proof-card">
-                    <span class="proof-index">02</span>
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">Compliance graphics</h3>
-                        <p class="text-sm text-neutral-400 leading-relaxed max-w-2xl">Every visual element points back to a production concern: tag structure, contrast, page geometry, language expansion, and print output fidelity.</p>
+
+                
+                <div class="border-t border-white/5 px-5 py-3 flex items-center gap-4">
+                    <span class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest flex-shrink-0" id="wf-counter">0 / 20</span>
+                    <div class="flex-1 relative overflow-hidden rounded-full" style="height:1px;background:rgba(255,255,255,0.08);">
+                        <div id="wf-progress" style="position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,#d4af37,#38bdf8);transition:width 0.45s ease;"></div>
                     </div>
-                    <div class="proof-thumb"></div>
+                    <span class="font-mono text-[0.6rem] text-neutral-400 tracking-wide flex-shrink-0" id="wf-current-label" aria-live="polite">--</span>
                 </div>
-                <div class="proof-card">
-                    <span class="proof-index">03</span>
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">Animated system confidence</h3>
-                        <p class="text-sm text-neutral-400 leading-relaxed max-w-2xl">The motion borrows the reference site's calm cinematic timing, but the content now feels specific to architectural document localization.</p>
-                    </div>
-                    <div class="proof-thumb"></div>
-                </div>
+
             </div>
         </div>
     </section>
@@ -1543,8 +1691,8 @@
                 }
             });
 
-            gsap.set('.diagram-panel, .proof-card', { opacity: 0, y: 38 });
-            ScrollTrigger.batch('.diagram-panel, .proof-card', {
+            gsap.set('.diagram-panel', { opacity: 0, y: 38 });
+            ScrollTrigger.batch('.diagram-panel', {
                 start: 'top 86%',
                 once: true,
                 onEnter: batch => {
@@ -1650,98 +1798,30 @@
         }
 
         function initVisualLabMotion() {
-            gsap.from('.interface-window', {
+            gsap.from('#workflow-engine', {
                 opacity: 0,
-                y: 46,
-                scale: 0.96,
-                stagger: 0.16,
-                duration: 1,
+                y: 32,
+                duration: 0.9,
                 ease: 'expo.out',
                 scrollTrigger: {
-                    trigger: '#visual-lab .visual-shell',
-                    start: 'top 90%',
+                    trigger: '#workflow-engine',
+                    start: 'top 88%',
                     once: true
                 }
             });
 
-            gsap.to('.interface-window.primary', {
-                y: -34,
-                ease: 'none',
+            gsap.from('.wf-phase-tab', {
+                opacity: 0,
+                y: 12,
+                stagger: 0.07,
+                duration: 0.65,
+                ease: 'power2.out',
                 scrollTrigger: {
-                    trigger: '#visual-lab',
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1
+                    trigger: '#workflow-engine',
+                    start: 'top 84%',
+                    once: true
                 }
             });
-
-            gsap.to('.interface-window.secondary', {
-                y: 36,
-                ease: 'none',
-                scrollTrigger: {
-                    trigger: '#visual-lab',
-                    start: 'top bottom',
-                    end: 'bottom top',
-                    scrub: 1
-                }
-            });
-
-            gsap.fromTo('.page-block',
-                { scaleX: 0.2, opacity: 0.35 },
-                {
-                    scaleX: 1,
-                    opacity: 1,
-                    duration: 1.2,
-                    stagger: 0.08,
-                    ease: 'expo.out',
-                    scrollTrigger: {
-                        trigger: '.localized-page',
-                        start: 'top 78%',
-                        once: true
-                    }
-                }
-            );
-
-            gsap.fromTo('.map-line',
-                { scaleX: 0, opacity: 0 },
-                {
-                    scaleX: 1,
-                    opacity: 0.9,
-                    duration: 1,
-                    stagger: 0.16,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: '.localization-map',
-                        start: 'top 78%',
-                        once: true
-                    }
-                }
-            );
-
-            gsap.to('.map-node.engine', {
-                scale: 1.08,
-                boxShadow: '0 0 42px rgba(212,175,55,0.22)',
-                repeat: -1,
-                yoyo: true,
-                duration: 1.6,
-                ease: 'sine.inOut'
-            });
-
-            gsap.fromTo('.quality-meter span',
-                { scaleX: 0 },
-                {
-                    scaleX: 1,
-                    transformOrigin: 'left center',
-                    duration: 1.2,
-                    stagger: 0.12,
-                    ease: 'power3.out',
-                    scrollTrigger: {
-                        trigger: '.quality-stack',
-                        start: 'top 82%',
-                        once: true
-                    }
-                }
-            );
         }
         /* ── NEW FUNCTIONS ──────────────────────────────────────── */
 
@@ -1811,7 +1891,7 @@
                 initScrollBackground();
             } catch (error) {
                 document.body.classList.remove('anim-ready');
-                document.querySelectorAll('.line-internal, #home-action-bar, .diagram-panel, .proof-card, .interface-window').forEach(el => {
+                document.querySelectorAll('.line-internal, #home-action-bar, .diagram-panel').forEach(el => {
                     el.style.opacity = '1';
                     el.style.transform = 'none';
                 });
@@ -1866,6 +1946,376 @@
                 }
             });
         }
+
+        // === WORKFLOW ENGINE v3 ===
+        (function initWorkflowEngine() {
+
+            // ── Data ───────────────────────────────────────────
+            var phases = [
+                { id:'p1', num:'01', name:'Initiation & Prep',        top:100,  bot:440,  fill:'rgba(56,189,248,0.04)',  stroke:'rgba(56,189,248,0.18)'  },
+                { id:'p2', num:'02', name:'Production & Verification', top:460,  bot:780,  fill:'rgba(212,175,55,0.04)', stroke:'rgba(212,175,55,0.18)'  },
+                { id:'p3', num:'03', name:'Final Approvals',           top:800,  bot:1090, fill:'rgba(56,189,248,0.04)',  stroke:'rgba(56,189,248,0.18)'  },
+                { id:'p4', num:'04', name:'Closure & Billing',         top:1110, bot:1450, fill:'rgba(52,211,153,0.04)', stroke:'rgba(52,211,153,0.18)'  }
+            ];
+
+            // seq, phase, fromX, toX, isSelf, y, labelText
+            var steps = [
+                [1, 'p1', 80,  240, false, 145,  'Project Initiated (Email / FTP / WeTransfer)'],
+                [2, 'p1', 240, 240, true,  205,  'Run Pre-Flight Checks'],
+                [3, 'p1', 240, 80,  false, 265,  'Send Quote'],
+                [4, 'p1', 80,  240, false, 325,  'Issue Preliminary Purchase Order (PO)'],
+                [5, 'p1', 240, 240, true,  385,  'Allocation to Team Leaders'],
+                [6, 'p2', 240, 400, false, 495,  'Assign to DTP 1'],
+                [7, 'p2', 400, 560, false, 555,  'Send to Internal QA'],
+                [8, 'p2', 560, 80,  false, 615,  'Deliver PDF for QA / Language Sign-Off (LSO)'],
+                [9, 'p2', 80,  400, false, 675,  'Feedback / Edits for DTP 2'],
+                [10,'p2', 400, 80,  false, 735,  'Deliver for Client Review (CR)'],
+                [11,'p3', 80,  400, false, 845,  'Send CR Feedback for DTP 3'],
+                [12,'p3', 400, 80,  false, 905,  "Deliver for Client’s Client Review (CCR)"],
+                [13,'p3', 80,  400, false, 965,  'Send CCR Feedback for DTP 4'],
+                [14,'p3', 80,  240, false, 1025, 'Final Approval Granted'],
+                [15,'p3', 240, 80,  false, 1058, 'Final Delivery to Client'],
+                [16,'p4', 240, 720, false, 1155, 'Financial Closure of the Project'],
+                [17,'p4', 80,  720, false, 1215, 'Provide Final Purchase Order (PO)'],
+                [18,'p4', 80,  240, false, 1275, 'Project Feedback'],
+                [19,'p4', 720, 80,  false, 1335, 'Send Invoice'],
+                [20,'p4', 240, 240, true,  1395, 'Project Archived']
+            ];
+
+            var currentIdx = -1, playTimer = null;
+            var SPEED = 1400;
+
+            // ── Build phase background boxes ───────────────────
+            function buildPhaseBoxes() {
+                var g = document.getElementById('wf-phase-bg');
+                if (!g) return;
+                var SVG_NS = 'http://www.w3.org/2000/svg';
+                phases.forEach(function(p) {
+                    var rect = document.createElementNS(SVG_NS, 'rect');
+                    rect.setAttribute('x', '5');
+                    rect.setAttribute('y', p.top);
+                    rect.setAttribute('width', '790');
+                    rect.setAttribute('height', p.bot - p.top);
+                    rect.setAttribute('fill', p.fill);
+                    rect.setAttribute('stroke', p.stroke);
+                    rect.setAttribute('stroke-width', '1');
+                    rect.setAttribute('rx', '6');
+                    var label = document.createElementNS(SVG_NS, 'text');
+                    label.setAttribute('x', '18');
+                    label.setAttribute('y', p.top + 18);
+                    label.setAttribute('fill', '#ffffff');
+                    label.setAttribute('font-size', '12');
+                    label.setAttribute('font-weight', '700');
+                    label.setAttribute('letter-spacing', '1.5');
+                    label.setAttribute('font-family', 'Space Grotesk,monospace');
+                    label.textContent = (p.num + ' · ' + p.name).toUpperCase();
+                    g.appendChild(rect);
+                    g.appendChild(label);
+                });
+            }
+
+            // ── Build SVG message groups (hidden initially) ────
+            function buildMessages() {
+                var stage = document.getElementById('wf-msg-stage');
+                if (!stage) return;
+                var SVG_NS = 'http://www.w3.org/2000/svg';
+                var DASH = 900;
+
+                steps.forEach(function(s, idx) {
+                    var seq=s[0], ph=s[1], fx=s[2], tx=s[3], isSelf=s[4], y=s[5], text=s[6];
+                    var g = document.createElementNS(SVG_NS, 'g');
+                    g.id = 'wf-msg-' + idx;
+
+                    // Line / path
+                    var line;
+                    if (isSelf) {
+                        line = document.createElementNS(SVG_NS, 'path');
+                        line.setAttribute('d', 'M '+fx+' '+y+' L '+(fx+42)+' '+y+' L '+(fx+42)+' '+(y+34)+' L '+(fx+4)+' '+(y+34));
+                        line.setAttribute('fill', 'none');
+                    } else {
+                        line = document.createElementNS(SVG_NS, 'line');
+                        line.setAttribute('x1', fx); line.setAttribute('y1', y);
+                        line.setAttribute('x2', tx); line.setAttribute('y2', y);
+                    }
+                    line.setAttribute('stroke', '#d4af37');
+                    line.setAttribute('stroke-width', '1.5');
+                    line.setAttribute('stroke-dasharray', DASH);
+                    line.setAttribute('stroke-dashoffset', DASH);
+                    line.classList.add('wf-msg-line');
+
+                    // Arrow
+                    var arrow = document.createElementNS(SVG_NS, 'polygon');
+                    if (isSelf) {
+                        arrow.setAttribute('points', (fx+10)+','+(y+38)+' '+fx+','+(y+34)+' '+(fx+10)+','+(y+30));
+                    } else {
+                        var goR = fx < tx;
+                        var pts = goR
+                            ? (tx-10)+','+(y-5)+' '+tx+','+y+' '+(tx-10)+','+(y+5)
+                            : (tx+10)+','+(y-5)+' '+tx+','+y+' '+(tx+10)+','+(y+5);
+                        arrow.setAttribute('points', pts);
+                    }
+                    arrow.setAttribute('fill', '#d4af37');
+                    arrow.setAttribute('opacity', '0');
+                    arrow.classList.add('wf-msg-arrow');
+
+                    // Badge
+                    var badgeX = isSelf ? fx+38 : (fx < tx ? fx+22 : fx-22);
+                    var badge = document.createElementNS(SVG_NS, 'circle');
+                    badge.setAttribute('cx', badgeX); badge.setAttribute('cy', y); badge.setAttribute('r', '9');
+                    badge.setAttribute('fill', 'rgba(9,9,11,0.96)');
+                    badge.setAttribute('stroke', '#d4af37'); badge.setAttribute('stroke-width', '1.2');
+                    badge.setAttribute('opacity', '0');
+                    badge.classList.add('wf-msg-badge');
+
+                    var badgeTxt = document.createElementNS(SVG_NS, 'text');
+                    badgeTxt.setAttribute('x', badgeX); badgeTxt.setAttribute('y', y);
+                    badgeTxt.setAttribute('text-anchor', 'middle');
+                    badgeTxt.setAttribute('dominant-baseline', 'central');
+                    badgeTxt.setAttribute('fill', '#d4af37');
+                    badgeTxt.setAttribute('font-size', '9');
+                    badgeTxt.setAttribute('font-weight', '700');
+                    badgeTxt.setAttribute('font-family', 'Space Grotesk,monospace');
+                    badgeTxt.setAttribute('opacity', '0');
+                    badgeTxt.classList.add('wf-msg-badge-txt');
+                    badgeTxt.textContent = seq;
+
+                    // Label text
+                    var labelX = isSelf ? fx+56 : (fx+tx)/2;
+                    var labelY = isSelf ? y+20 : y-9;
+                    var labelAnchor = isSelf ? 'start' : 'middle';
+                    var labelEl = document.createElementNS(SVG_NS, 'text');
+                    labelEl.setAttribute('x', labelX); labelEl.setAttribute('y', labelY);
+                    labelEl.setAttribute('text-anchor', labelAnchor);
+                    labelEl.setAttribute('fill', '#ffffff');
+                    labelEl.setAttribute('font-size', '11');
+                    labelEl.setAttribute('font-family', 'Plus Jakarta Sans,sans-serif');
+                    labelEl.setAttribute('opacity', '0');
+                    labelEl.classList.add('wf-msg-label');
+                    labelEl.textContent = text;
+
+                    g.appendChild(line); g.appendChild(arrow);
+                    g.appendChild(badge); g.appendChild(badgeTxt); g.appendChild(labelEl);
+                    stage.appendChild(g);
+                });
+            }
+
+            // ── Build step list sidebar ────────────────────────
+            function buildStepList() {
+                var list = document.getElementById('wf-step-list');
+                if (!list) return;
+                var lastPh = '';
+                steps.forEach(function(s, idx) {
+                    var ph = s[1];
+                    if (ph !== lastPh) {
+                        var phObj = phases.find(function(p){ return p.id === ph; });
+                        var div = document.createElement('li');
+                        div.className = 'wf-phase-div';
+                        div.setAttribute('data-phase-div', ph);
+                        div.textContent = phObj.name;
+                        list.appendChild(div);
+                        lastPh = ph;
+                    }
+                    var item = document.createElement('li');
+                    item.className = 'wf-step-item';
+                    item.id = 'wf-item-' + idx;
+                    item.setAttribute('data-phase-item', ph);
+                    item.innerHTML = '<span class="wf-step-num">'+String(s[0]).padStart(2,'0')+'</span><span>'+s[6]+'</span>';
+                    item.addEventListener('click', function(){ stopPlay(); revealUpTo(idx); });
+                    list.appendChild(item);
+                });
+            }
+
+            // ── Animate a single step in ───────────────────────
+            function animateStep(idx) {
+                var g = document.getElementById('wf-msg-' + idx);
+                if (!g || g.dataset.revealed === '1') return;
+                g.dataset.revealed = '1';
+                var line     = g.querySelector('.wf-msg-line');
+                var arrow    = g.querySelector('.wf-msg-arrow');
+                var badge    = g.querySelector('.wf-msg-badge');
+                var badgeTxt = g.querySelector('.wf-msg-badge-txt');
+                var label    = g.querySelector('.wf-msg-label');
+
+                if (typeof gsap !== 'undefined') {
+                    // Line draws in with expo ease
+                    if (line) gsap.to(line, { strokeDashoffset: 0, duration: 0.72, ease: 'expo.out' });
+                    // Badge pops in with spring (scale 0 → 1)
+                    if (badge) {
+                        gsap.set(badge, { transformOrigin: '50% 50%', scale: 0, opacity: 0 });
+                        gsap.to(badge, { scale: 1, opacity: 1, duration: 0.55, delay: 0.38, ease: 'back.out(2)' });
+                    }
+                    if (badgeTxt) gsap.to(badgeTxt, { opacity: 1, duration: 0.3, delay: 0.48 });
+                    // Arrow slides in from behind
+                    if (arrow) {
+                        gsap.set(arrow, { opacity: 0, scale: 0.4, transformOrigin: '50% 50%' });
+                        gsap.to(arrow, { opacity: 1, scale: 1, duration: 0.4, delay: 0.52, ease: 'back.out(2.5)' });
+                    }
+                    // Label fades up
+                    if (label) {
+                        gsap.set(label, { opacity: 0, y: 4 });
+                        gsap.to(label, { opacity: 1, y: 0, duration: 0.45, delay: 0.44, ease: 'power2.out' });
+                    }
+                } else {
+                    // CSS fallback (no GSAP)
+                    if (line) line.style.strokeDashoffset = '0';
+                    setTimeout(function(){ if (badge) badge.setAttribute('opacity','1'); if (badgeTxt) badgeTxt.setAttribute('opacity','1'); }, 350);
+                    setTimeout(function(){ if (label) label.setAttribute('opacity','1'); }, 400);
+                    setTimeout(function(){ if (arrow) arrow.setAttribute('opacity','1'); }, 480);
+                }
+            }
+
+            // ── Hide a step instantly (for reset / prev) ──────
+            function hideStep(idx) {
+                var g = document.getElementById('wf-msg-' + idx);
+                if (!g) return;
+                g.dataset.revealed = '0';
+                var line = g.querySelector('.wf-msg-line');
+                var dash = line ? (line.getAttribute('stroke-dasharray') || '900') : '900';
+                if (typeof gsap !== 'undefined') {
+                    if (line) gsap.set(line, { strokeDashoffset: dash });
+                    g.querySelectorAll('.wf-msg-arrow,.wf-msg-badge,.wf-msg-badge-txt,.wf-msg-label').forEach(function(el){
+                        gsap.set(el, { opacity: 0, clearProps: 'scale,y,transform' });
+                    });
+                } else {
+                    if (line) { line.style.transition = 'none'; line.style.strokeDashoffset = dash; line.getBoundingClientRect(); line.style.transition = ''; }
+                    g.querySelectorAll('.wf-msg-arrow,.wf-msg-badge,.wf-msg-badge-txt,.wf-msg-label').forEach(function(el){ el.setAttribute('opacity','0'); });
+                }
+            }
+
+            // ── Reveal all steps up to (and including) idx ─────
+            function revealUpTo(idx) {
+                for (var i = 0; i <= idx; i++) animateStep(i);
+                currentIdx = idx;
+                updateSidebar(idx);
+                updateProgress(idx);
+            }
+
+            // ── Sidebar + progress ─────────────────────────────
+            function updateSidebar(idx) {
+                steps.forEach(function(_, i) {
+                    var item = document.getElementById('wf-item-' + i);
+                    if (!item) return;
+                    item.className = 'wf-step-item'
+                        + (i < idx  ? ' done' : '')
+                        + (i === idx ? ' current' : '');
+                });
+                var active = document.getElementById('wf-item-' + idx);
+                if (active) active.scrollIntoView({ block:'nearest', behavior:'smooth' });
+            }
+
+            function updateProgress(idx) {
+                var pct = idx < 0 ? 0 : ((idx+1)/steps.length*100);
+                var bar     = document.getElementById('wf-progress');
+                var counter = document.getElementById('wf-counter');
+                var label   = document.getElementById('wf-current-label');
+                if (bar)     bar.style.width = pct + '%';
+                if (counter) counter.textContent = Math.max(0,idx+1) + ' / ' + steps.length;
+                if (label)   label.textContent = idx >= 0 ? steps[idx][6] : '--';
+            }
+
+            // ── Playback controls ──────────────────────────────
+            function startPlay() {
+                if (currentIdx >= steps.length-1) { resetEngine(); }
+                setPauseIcon(true);
+                // Step forward immediately, then interval
+                revealUpTo(currentIdx+1);
+                playTimer = setInterval(function(){
+                    if (currentIdx >= steps.length-1) { stopPlay(); return; }
+                    revealUpTo(currentIdx+1);
+                }, SPEED);
+            }
+
+            function stopPlay() {
+                clearInterval(playTimer); playTimer = null;
+                setPauseIcon(false);
+            }
+
+            function resetEngine() {
+                stopPlay();
+                steps.forEach(function(_, i){ hideStep(i); });
+                steps.forEach(function(_, i){
+                    var item = document.getElementById('wf-item-'+i);
+                    if (item) item.className = 'wf-step-item';
+                });
+                currentIdx = -1;
+                updateProgress(-1);
+            }
+
+            function setPauseIcon(playing) {
+                var btn = document.getElementById('wf-play');
+                var pi  = document.getElementById('wf-icon-play');
+                var pa  = document.getElementById('wf-icon-pause');
+                if (btn) btn.classList.toggle('is-playing', playing);
+                if (pi)  pi.style.display  = playing ? 'none'  : 'block';
+                if (pa)  pa.style.display  = playing ? 'block' : 'none';
+            }
+
+            // ── Phase tab filter ───────────────────────────────
+            function filterPhase(id) {
+                document.querySelectorAll('.wf-phase-tab').forEach(function(t){
+                    t.classList.toggle('active', t.dataset.phase === id);
+                });
+                var all = id === 'all';
+                document.querySelectorAll('[data-phase-item]').forEach(function(el){
+                    el.style.display = (all || el.dataset.phaseItem === id) ? '' : 'none';
+                });
+                document.querySelectorAll('[data-phase-div]').forEach(function(el){
+                    el.style.display = (all || el.dataset.phaseDiv === id) ? '' : 'none';
+                });
+            }
+
+            // ── ScrollTrigger: reveal each step on scroll ──────
+            function initScrollTriggers() {
+                if (typeof ScrollTrigger === 'undefined') return;
+                steps.forEach(function(s, idx) {
+                    var marker = document.getElementById('wf-marker-' + idx);
+                    if (!marker) return;
+                    ScrollTrigger.create({
+                        trigger: marker,
+                        start: 'top 78%',
+                        once: true,
+                        onEnter: function() {
+                            animateStep(idx);
+                            currentIdx = Math.max(currentIdx, idx);
+                            updateSidebar(currentIdx);
+                            updateProgress(currentIdx);
+                        }
+                    });
+                });
+            }
+
+            // ── Event bindings ─────────────────────────────────
+            document.getElementById('wf-play')?.addEventListener('click', function(){
+                if (playTimer) stopPlay(); else startPlay();
+            });
+            document.getElementById('wf-next')?.addEventListener('click', function(){
+                stopPlay();
+                if (currentIdx < steps.length-1) revealUpTo(currentIdx+1);
+            });
+            document.getElementById('wf-prev')?.addEventListener('click', function(){
+                stopPlay();
+                if (currentIdx > 0) {
+                    // Hide current step only and go back
+                    hideStep(currentIdx);
+                    currentIdx--;
+                    updateSidebar(currentIdx);
+                    updateProgress(currentIdx);
+                } else {
+                    resetEngine();
+                }
+            });
+            document.getElementById('wf-reset')?.addEventListener('click', resetEngine);
+            document.querySelectorAll('.wf-phase-tab').forEach(function(t){
+                t.addEventListener('click', function(){ filterPhase(t.dataset.phase); });
+            });
+
+            // ── Init ───────────────────────────────────────────
+            buildPhaseBoxes();
+            buildMessages();
+            buildStepList();
+            updateProgress(-1);
+            initScrollTriggers();
+        })();
 
         function initAmbientCanvas() {
             const canvas = document.getElementById('ambient-canvas');
