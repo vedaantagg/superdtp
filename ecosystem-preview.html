@@ -540,43 +540,44 @@ function drawLines(D, nodeR, hubR) {
         var cos = Math.cos(rad), sin = Math.sin(rad);
         var hx = cx + cos * hubR,        hy = cy - sin * hubR;       /* hub edge  */
         var ex = cx + cos * nodeEdgeR,   ey = cy - sin * nodeEdgeR;  /* node edge */
+        var len = Math.hypot(ex-hx, ey-hy);
 
-        // Gradient (hub-blue → node colour, along the actual line)
-        var gId = 'lg'+i;
-        var lg = svgEl('linearGradient');
-        lg.id = gId;
-        lg.setAttribute('x1', hx); lg.setAttribute('y1', hy);
-        lg.setAttribute('x2', ex); lg.setAttribute('y2', ey);
-        lg.setAttribute('gradientUnits','userSpaceOnUse');
-        var s1 = svgEl('stop'); s1.setAttribute('offset','0%');   s1.setAttribute('stop-color','rgba(212,175,55,0.65)');
-        var s2 = svgEl('stop'); s2.setAttribute('offset','100%'); s2.setAttribute('stop-color', hexToRgba(node.color,.75));
-        lg.appendChild(s1); lg.appendChild(s2);
-        defs.appendChild(lg);
+        // Gold accent segment near hub (first 30%) — path avoids degenerate-length bug on vertical lines
+        var mx = hx + (ex-hx)*0.30, my = hy + (ey-hy)*0.30;
+        var la = svgEl('path');
+        la.setAttribute('d', 'M'+hx+' '+hy+' L'+mx+' '+my);
+        la.setAttribute('stroke','rgba(212,175,55,0.80)');
+        la.setAttribute('stroke-width','1.4');
+        la.setAttribute('stroke-linecap','round');
+        la.setAttribute('fill','none');
+        la.setAttribute('stroke-dasharray', len*0.30);
+        la.setAttribute('stroke-dashoffset', len*0.30);
+        la.id = 'eco-la'+i;
+        svgOverlay.appendChild(la);
+
+        // Node-colour segment (remaining 70%)
+        var lb = svgEl('path');
+        lb.setAttribute('d', 'M'+mx+' '+my+' L'+ex+' '+ey);
+        lb.setAttribute('stroke', hexToRgba(node.color,.75));
+        lb.setAttribute('stroke-width','1.2');
+        lb.setAttribute('stroke-linecap','round');
+        lb.setAttribute('fill','none');
+        lb.setAttribute('stroke-dasharray', len*0.70);
+        lb.setAttribute('stroke-dashoffset', len*0.70);
+        lb.id = 'eco-ln'+i;
+        svgOverlay.appendChild(lb);
 
         // Glow backing
-        var g = svgEl('line');
+        var g = svgEl('path');
         g.id = 'eco-gln'+i;
-        g.setAttribute('x1',hx); g.setAttribute('y1',hy);
-        g.setAttribute('x2',ex); g.setAttribute('y2',ey);
+        g.setAttribute('d', 'M'+hx+' '+hy+' L'+ex+' '+ey);
         g.setAttribute('stroke', node.color);
         g.setAttribute('stroke-width','4');
         g.setAttribute('stroke-opacity','.10');
+        g.setAttribute('fill','none');
         g.setAttribute('opacity','0');
         g.setAttribute('filter','url(#lnGlow)');
         svgOverlay.appendChild(g);
-
-        // Main line (animated, ends at node edge)
-        var ln = svgEl('line');
-        ln.id = 'eco-ln'+i;
-        ln.setAttribute('x1',hx); ln.setAttribute('y1',hy);
-        ln.setAttribute('x2',ex); ln.setAttribute('y2',ey);
-        ln.setAttribute('stroke','url(#'+gId+')');
-        ln.setAttribute('stroke-width','1.2');
-        ln.setAttribute('stroke-linecap','round');
-        var len = Math.hypot(ex-hx, ey-hy);
-        ln.setAttribute('stroke-dasharray', len);
-        ln.setAttribute('stroke-dashoffset', len);
-        svgOverlay.appendChild(ln);
 
         // Endpoint dot at node edge
         var dot = svgEl('circle');
@@ -634,9 +635,11 @@ function animateIn() {
     tl.fromTo('#eco-hub', { scale:0, opacity:0 }, { scale:1, opacity:1, duration:.85, ease:'back.out(1.4)' }, .2);
 
     NODES.forEach(function(_, i) {
-        tl.to('#eco-gln'+i, { attr:{opacity:1}, duration:.5, ease:'power2.inOut' }, .6 + i*.065);
-        tl.to('#eco-ln'+i,  { attr:{strokeDashoffset:0}, duration:.75, ease:'power2.inOut' }, .6 + i*.065);
-        tl.to('#eco-dot'+i, { attr:{opacity:.75}, duration:.25 }, .6 + i*.065 + .68);
+        var t0 = .6 + i*.065;
+        tl.to('#eco-gln'+i, { attr:{opacity:1}, duration:.5, ease:'power2.inOut' }, t0);
+        tl.to('#eco-la'+i,  { attr:{strokeDashoffset:0}, duration:.25, ease:'power2.inOut' }, t0);
+        tl.to('#eco-ln'+i,  { attr:{strokeDashoffset:0}, duration:.55, ease:'power2.inOut' }, t0 + .22);
+        tl.to('#eco-dot'+i, { attr:{opacity:.75}, duration:.25 }, t0 + .75);
     });
 
     gsap.set('.eco-node', { scale:0, opacity:0 });
@@ -648,6 +651,53 @@ function animateIn() {
     tl.to('#eco-stats', { opacity:1, y:0, duration:.6 }, 1.9);
 
     tl.call(startTravelDots, [], 2.2);
+    tl.call(startAmbient,    [], 2.6);
+}
+
+// ── Continuous ambient animation ───────────────────────────────────────
+function startAmbient() {
+    NODES.forEach(function(_, i) {
+        var delay = i * 0.28;
+
+        // Node circle: gentle breathe — scale + faint glow intensify
+        var c = document.querySelector('#eco-n'+i+' .eco-node-circle');
+        if (c) {
+            gsap.to(c, {
+                scale: 1.07,
+                duration: 2.4 + (i % 3) * 0.6,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+                delay: delay
+            });
+        }
+
+        // Glow line: breath opacity 0.10 → 0.40
+        var gln = document.getElementById('eco-gln'+i);
+        if (gln) {
+            gsap.to(gln, {
+                attr: { opacity: 0.40 },
+                duration: 3.0 + (i % 4) * 0.5,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+                delay: delay + 0.4
+            });
+        }
+
+        // Endpoint dot: pulse radius 3 → 5.5
+        var dot = document.getElementById('eco-dot'+i);
+        if (dot) {
+            gsap.to(dot, {
+                attr: { r: 5.5, opacity: 1 },
+                duration: 2.0 + (i % 3) * 0.55,
+                ease: 'sine.inOut',
+                yoyo: true,
+                repeat: -1,
+                delay: delay + 0.2
+            });
+        }
+    });
 }
 
 // ── Update one connector line after drag ───────────────────────────────
@@ -667,19 +717,19 @@ function updateNodeLine(i, nodeLeft, nodeTop) {
     var hx = cx + ux*hubR,            hy = cy + uy*hubR;   /* hub edge  */
     var ex = nx - ux*nodeCircR,       ey = ny - uy*nodeCircR; /* node edge */
 
-    var ln  = document.getElementById('eco-ln'+i);
+    var la  = document.getElementById('eco-la'+i);
+    var lb  = document.getElementById('eco-ln'+i);
     var gln = document.getElementById('eco-gln'+i);
     var dot = document.getElementById('eco-dot'+i);
-    var lg  = document.getElementById('lg'+i);
+    var len = Math.hypot(ex-hx, ey-hy);
+    var mx  = hx + (ex-hx)*0.30, my = hy + (ey-hy)*0.30;
 
-    if (gln) { gln.setAttribute('x1',hx); gln.setAttribute('y1',hy); gln.setAttribute('x2',ex); gln.setAttribute('y2',ey); gln.setAttribute('opacity','1'); }
-    if (ln)  {
-        ln.setAttribute('x1',hx); ln.setAttribute('y1',hy); ln.setAttribute('x2',ex); ln.setAttribute('y2',ey);
-        var len = Math.hypot(ex-hx, ey-hy);
-        ln.setAttribute('stroke-dasharray',len); ln.setAttribute('stroke-dashoffset','0');
-    }
+    if (gln) { gln.setAttribute('d','M'+hx+' '+hy+' L'+ex+' '+ey); gln.setAttribute('opacity','1'); }
+    if (la)  { la.setAttribute('d','M'+hx+' '+hy+' L'+mx+' '+my);
+               la.setAttribute('stroke-dasharray',len*0.30); la.setAttribute('stroke-dashoffset','0'); }
+    if (lb)  { lb.setAttribute('d','M'+mx+' '+my+' L'+ex+' '+ey);
+               lb.setAttribute('stroke-dasharray',len*0.70); lb.setAttribute('stroke-dashoffset','0'); }
     if (dot) { dot.setAttribute('cx',ex); dot.setAttribute('cy',ey); }
-    if (lg)  { lg.setAttribute('x1',hx); lg.setAttribute('y1',hy); lg.setAttribute('x2',ex); lg.setAttribute('y2',ey); }
 }
 
 // ── Drag-to-reposition nodes ──────────────────────────────────────────
