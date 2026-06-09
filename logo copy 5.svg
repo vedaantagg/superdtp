@@ -75,12 +75,12 @@
 
   <!-- .com -->
   <text class="domain"
-        transform="translate(127.2 31.5) rotate(-90)">
+        transform="translate(129.2 31.5) rotate(-90)">
     co
   </text>
 
   <text class="domain"
-        transform="translate(127.2 16.2) rotate(-90)">
+        transform="translate(129.2 16.2) rotate(-90)">
     m
   </text>
 

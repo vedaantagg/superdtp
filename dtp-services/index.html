@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DTP & Publishing Services | SuperDTP — Multilingual Desktop Publishing</title>
+    <meta name="description" content="SuperDTP's complete DTP & publishing services: multilingual desktop publishing, e-learning localisation, file preparation, independent quality assurance, PDF accessibility remediation, and prepress & typesetting.">
+    <meta name="keywords" content="multilingual DTP, e-learning localisation, file preparation, quality assurance, PDF accessibility, prepress typesetting, desktop publishing services">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="SuperDTP">
+    <link rel="canonical" href="https://www.superdtp.com/dtp-services/">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Instrument Serif"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        mono: ['"Space Grotesk"', 'monospace'],
+                    },
+                    colors: { brandBg: '#09090b', brandAccent: '#d4af37' }
+                }
+            }
+        }
+    </script>
+    <style>
+        html { scroll-behavior: smooth; }
+        body { background-color: #09090b; color: #fafafa; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        .grain-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); opacity: 0.025; pointer-events: none; z-index: 9999; }
+        #page-bg-overlay { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(circle at 15% 20%, rgba(212,175,55,0.1), transparent 35%), radial-gradient(circle at 85% 75%, rgba(56,189,248,0.08), transparent 35%), #050507; }
+        #cursor-light { position: fixed; width: 500px; height: 500px; left: 0; top: 0; z-index: 6; pointer-events: none; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.08), transparent 65%); transform: translate(-50%, -50%); mix-blend-mode: screen; }
+        #ambient-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
+        header, section, footer, nav { position: relative; z-index: 5; }
+        .top-nav-link { opacity: 0.45; transition: opacity 0.3s ease, color 0.3s ease; background: none; border: none; color: inherit; font-family: 'Space Grotesk', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; cursor: pointer; }
+        .top-nav-link:hover { opacity: 1; color: #fff; }
+        .services-dropdown { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); width: 320px; background: rgba(9,9,11,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease; z-index: 100; }
+        .services-trigger:hover .services-dropdown, .services-trigger:focus-within .services-dropdown { opacity: 1; visibility: visible; }
+        .services-trigger:hover .top-nav-link { opacity: 1; color: #fff; }
+        .dropdown-cat-header { padding: 10px 16px 6px; font-size: 0.55rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.2em; text-transform: uppercase; color: #d4af37; opacity: 0.8; border-top: 1px solid rgba(255,255,255,0.06); }
+        .dropdown-cat-header:first-child { border-top: none; }
+        .dropdown-link { display: flex; align-items: center; gap: 8px; padding: 8px 16px 8px 24px; font-size: 0.62rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.13em; text-transform: uppercase; color: rgba(255,255,255,0.48); text-decoration: none; transition: color 0.2s ease, background 0.2s ease; }
+        .dropdown-link:hover, .dropdown-link.current { color: #d4af37; background: rgba(255,255,255,0.04); }
+        .dropdown-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18); flex-shrink: 0; }
+        .dropdown-link:hover .dropdown-dot, .dropdown-link.current .dropdown-dot { background: rgba(212,175,55,0.5); }
+
+        /* In-page service nav */
+        #service-nav {
+            position: sticky;
+            top: 73px;
+            z-index: 40;
+            background: rgba(9,9,11,0.92);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        #service-nav::-webkit-scrollbar { display: none; }
+        .svc-tab {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 14px 20px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.6rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            white-space: nowrap;
+            transition: color 0.25s ease, border-color 0.25s ease;
+        }
+        .svc-tab:hover { color: rgba(255,255,255,0.75); }
+        .svc-tab.active { color: #d4af37; border-bottom-color: #d4af37; }
+        .svc-tab-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: 0.5; flex-shrink: 0; }
+        .svc-tab.active .svc-tab-dot { opacity: 1; }
+
+        /* Service sections */
+        .svc-section { scroll-margin-top: 130px; }
+
+        .live-data-card { border: 1px solid rgba(255,255,255,0.06); background: rgba(13,13,18,0.6); backdrop-filter: blur(20px); transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease; }
+        .live-data-card:hover { border-color: rgba(212,175,55,0.25); background: rgba(18,18,26,0.8); transform: translateY(-2px); }
+        .type-hero { font-family: 'Instrument Serif', serif; font-size: clamp(2.2rem, 4.5vw, 4.8rem); line-height: 1.05; letter-spacing: -0.02em; color: #fff; }
+        .pill-button { height: 48px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; padding: 0 30px; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; border: 1px solid rgba(255,255,255,0.1); transition: all 0.3s ease; text-decoration: none; font-family: 'Space Grotesk', monospace; }
+        .pill-button-primary { background: #d4af37; color: #09090b; border-color: #d4af37; }
+        .pill-button-primary:hover { background: #e8c84a; border-color: #e8c84a; transform: translateY(-1px); }
+        .pill-button-secondary { background: transparent; color: rgba(255,255,255,0.7); }
+        .pill-button-secondary:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); color: #fff; transform: translateY(-1px); }
+        .section-divider { border-top: 1px solid rgba(255,255,255,0.05); }
+        .hero-accent { color: #d4af37; }
+
+        /* Section index badge */
+        .svc-index-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            margin-bottom: 1rem;
+        }
+        .svc-index-badge::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 1px;
+            background: rgba(212,175,55,0.4);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <div class="grain-overlay" aria-hidden="true"></div>
+    <div id="page-bg-overlay" aria-hidden="true"></div>
+    <div id="cursor-light" aria-hidden="true"></div>
+    <canvas id="ambient-canvas" aria-hidden="true"></canvas>
+
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md">
+        <a href="/" aria-label="SuperDTP Home">
+            <img src="../logo copy 5.svg" alt="SuperDTP" style="height:52px;width:auto;display:block;" />
+        </a>
+        <nav class="hidden md:flex items-center space-x-8 font-mono text-xs tracking-wider text-neutral-400">
+            <a href="/" class="top-nav-link">01. Home</a>
+            <a href="/#visual-lab" class="top-nav-link">02. How We Work</a>
+            <a href="/#infographics" class="top-nav-link">03. Matrix</a>
+            <div class="services-trigger relative flex items-center cursor-pointer">
+                <a href="/#services" class="top-nav-link flex items-center gap-1.5">
+                    04. Services
+                    <svg class="w-2.5 h-2.5" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+                <div class="services-dropdown" role="menu">
+                    <div class="dropdown-cat-header">Localization Services</div>
+                    <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Indic Language Localization</a>
+                    <div class="dropdown-cat-header">DTP &amp; Publishing</div>
+                    <a href="/dtp-services/#multilingual-dtp" class="dropdown-link current" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP</a>
+                    <a href="/dtp-services/#e-learning" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>E-Learning Localization</a>
+                    <a href="/dtp-services/#file-preparation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>File Preparation</a>
+                    <a href="/dtp-services/#quality-assurance" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Quality Assurance</a>
+                    <a href="/dtp-services/#pdf-accessibility" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Accessibility</a>
+                    <a href="/dtp-services/#prepress" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Prepress &amp; Typesetting</a>
+                </div>
+            </div>
+        </nav>
+        <div class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block">
+            DTP: ACTIVE
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="min-h-screen flex flex-col justify-center relative pt-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
+        <div class="max-w-3xl space-y-6 py-16">
+            <div class="font-mono text-xs uppercase tracking-widest text-neutral-400 flex items-center gap-2">
+                <span class="w-2 h-2 bg-brandAccent rounded-full animate-pulse"></span>
+                DTP &amp; Publishing Services / Production Infrastructure
+            </div>
+            <h1 class="type-hero">
+                Transforming Multilingual Content<br>
+                Into Production-Ready,<br>
+                <span class="hero-accent">Brand-Consistent</span> Deliverables
+            </h1>
+            <p class="text-neutral-400 font-light leading-relaxed max-w-xl text-base md:text-lg">
+                Six integrated DTP and publishing disciplines — from desktop publishing and eLearning localisation to prepress, file engineering, quality assurance, and accessibility — delivered by 60+ in-house specialists across print and digital formats.
+            </p>
+            <div class="flex flex-row flex-wrap gap-4 pt-2">
+                <a href="#cta" class="pill-button pill-button-primary">Request a Quote</a>
+                <a href="#multilingual-dtp" class="pill-button pill-button-secondary">Explore Services</a>
+            </div>
+            <div class="pt-6 flex flex-wrap gap-8 text-neutral-400 font-mono text-xs">
+                <div><span class="text-brandAccent text-lg font-serif">60+</span><br>In-house specialists</div>
+                <div><span class="text-brandAccent text-lg font-serif">6</span><br>Service disciplines</div>
+                <div><span class="text-brandAccent text-lg font-serif">120+</span><br>Languages supported</div>
+                <div><span class="text-brandAccent text-lg font-serif">365</span><br>Days availability</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STICKY IN-PAGE NAV -->
+    <nav id="service-nav" aria-label="Service sections">
+        <div class="flex px-4 md:px-8 max-w-7xl mx-auto">
+            <a href="#multilingual-dtp" class="svc-tab active" data-section="multilingual-dtp">
+                <span class="svc-tab-dot"></span>Multilingual DTP
+            </a>
+            <a href="#e-learning" class="svc-tab" data-section="e-learning">
+                <span class="svc-tab-dot"></span>E-Learning
+            </a>
+            <a href="#file-preparation" class="svc-tab" data-section="file-preparation">
+                <span class="svc-tab-dot"></span>File Preparation
+            </a>
+            <a href="#quality-assurance" class="svc-tab" data-section="quality-assurance">
+                <span class="svc-tab-dot"></span>Quality Assurance
+            </a>
+            <a href="#pdf-accessibility" class="svc-tab" data-section="pdf-accessibility">
+                <span class="svc-tab-dot"></span>PDF Accessibility
+            </a>
+            <a href="#prepress" class="svc-tab" data-section="prepress">
+                <span class="svc-tab-dot"></span>Prepress &amp; Typesetting
+            </a>
+        </div>
+    </nav>
+
+    <main>
+
+    <!-- ═══════════════════════════════════════
+         01 / MULTILINGUAL DTP
+    ═══════════════════════════════════════ -->
+    <section id="multilingual-dtp" class="svc-section py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end">
+            <div class="lg:col-span-7 space-y-4">
+                <span class="svc-index-badge">01 / Multilingual DTP</span>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Publication-Ready Documents in Any Language</h2>
+                <p class="text-neutral-400 font-light max-w-xl leading-relaxed">Desktop Publishing entails the development and adaptation of documents to fit the format and layout criteria of the target language. Every project is handled by specialist DTP teams armed with industry-leading publishing technology.</p>
+            </div>
+            <div class="lg:col-span-5 flex flex-wrap gap-6 justify-end items-end">
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">60+</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">In-house specialists</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">60%</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Potential cost savings</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">365</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Days availability</div></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-brandAccent tracking-widest uppercase">Text Formatting & Typesetting</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Font size, type, and special character verification. Page breaks, margins, headers, tabulation, bulleted lists, blocking, indenting, and line breaking — all checked for publication compliance.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Magazines · Books · Manuals</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">Layout Design</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Correct layout for books, brochures, manuals, magazines — ensuring on-schedule, on-budget delivery. All graphics, screenshots, and drawings are meticulously checked and adjusted pre-publication.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">InDesign · QuarkXPress · Illustrator</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-emerald-400/80 tracking-widest uppercase">Multilingual Publishing</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Localize content into any language and deliver print-ready PDFs ready for publishing — including localisation of all pictures and embedded content across every target market.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Print-Ready PDF · All Languages</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-purple-400/80 tracking-widest uppercase">Image Editing & Graphics</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Graphic creation, image editing, and visual adaptation for multilingual publications. Every visual element is reviewed and adapted to meet language-specific layout and cultural requirements.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Photoshop · Illustrator · Corel</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-orange-400/80 tracking-widest uppercase">Book & Magazine Layout</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Books, magazines, newspapers, brochures, point-of-purchase displays, and catalogs — all laid out with language-specific typographic precision for multiple markets simultaneously.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Coffee Table · STM · B2B</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-pink-400/80 tracking-widest uppercase">Co-edition Layouts</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Translated versions of publications that precisely maintain the original design intent — ensuring your brand identity and visual language are preserved across every language edition.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Brand Consistency · Any Market</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         02 / E-LEARNING LOCALIZATION
+    ═══════════════════════════════════════ -->
+    <section id="e-learning" class="svc-section section-divider py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end">
+            <div class="lg:col-span-7 space-y-4">
+                <span class="svc-index-badge">02 / E-Learning Localization</span>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Train Your Global Workforce in Their Native Language</h2>
+                <p class="text-neutral-400 font-light max-w-xl leading-relaxed">eLearning localisation saves time and money in global training. We localize courses in all languages — Western (French, German, Dutch), non-Western (Chinese, Japanese, Korean), and bidirectional scripts (Arabic, Hebrew, Urdu).</p>
+            </div>
+            <div class="lg:col-span-5 flex flex-wrap gap-6 justify-end items-end">
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">All</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Language scripts</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">A/V</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Sync capabilities</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">LMS</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Ready output</div></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-brandAccent tracking-widest uppercase">Course Localisation</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Full adaptation of eLearning courses — restructuring layouts, adapting content flow, and ensuring all text elements display correctly in the target language across SCORM, xAPI, and HTML5 formats.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">SCORM · xAPI · HTML5</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-emerald-400/80 tracking-widest uppercase">Audio/Video Synchronization</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Precise synchronization of localized voiceovers and subtitles to course timings — maintaining lip-sync accuracy and ensuring subtitles appear at the correct moments in the target language.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Voiceover · Subtitle · Timing</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">Graphic & Asset Localisation</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Localisation of bitmap and vector art — adapting text within images, replacing culturally specific visuals, and ensuring all graphics work for the target market and culture.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Bitmap · Vector · Cultural Adaptation</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-purple-400/80 tracking-widest uppercase">RTL Script Support</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Full right-to-left adaptation for Arabic, Hebrew, and Urdu courses — including UI mirroring, text direction handling, and bidirectional content flow within all eLearning platforms.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Arabic · Hebrew · Urdu</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-orange-400/80 tracking-widest uppercase">UI & Navigation Adaptation</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Adapting course UI text, navigation labels, button text, assessment questions, and interactive elements to ensure a seamless learner experience in the target language.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Interface · Assessments · Interactions</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-pink-400/80 tracking-widest uppercase">LMS-Ready Delivery</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Localized courses packaged and tested for your Learning Management System — ensuring all tracking, completion criteria, and scoring work correctly across all localized versions.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Moodle · Cornerstone · SAP SF</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         03 / FILE PREPARATION
+    ═══════════════════════════════════════ -->
+    <section id="file-preparation" class="svc-section section-divider py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end">
+            <div class="lg:col-span-7 space-y-4">
+                <span class="svc-index-badge">03 / File Preparation</span>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Translation-Ready Files. Zero Rework.</h2>
+                <p class="text-neutral-400 font-light max-w-xl leading-relaxed">Poorly prepared files result in poor print quality, costly reprints, and expensive post-translation DTP rework. SuperDTP prepares your documents to reduce DTP effort, time, and resources across any project size, language, format, or platform.</p>
+            </div>
+            <div class="lg:col-span-5 flex flex-wrap gap-6 justify-end items-end">
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">Any</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Format supported</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">Zero</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Post-translation rework</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">PDF</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Print-ready output</div></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-brandAccent tracking-widest uppercase">Document Preparation for Translation</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Structuring and conditioning source documents for seamless translator handoff — ensuring translators receive clean, well-organized files that minimize ambiguity and maximize throughput.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">InDesign · Word · XML · XLIFF</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-purple-400/80 tracking-widest uppercase">Print-Ready PDF Creation</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">PDF files configured to exact printer specifications — ensuring optimal print quality, correct colour profiles, bleed settings, font embedding, and output intent from the very first file.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">PDF/X · Bleed · Colour Profiles</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">Format Conversion</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Converting between InDesign, QuarkXPress, PDF, Word, Publisher, and other formats — maintaining layout fidelity and content integrity throughout the conversion process.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">INDD · QXP · PDF · DOCX · PUB</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-emerald-400/80 tracking-widest uppercase">DTP Cleanup & Standardization</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Cleaning, standardizing, and optimizing files before translation — removing redundant styles, fixing overrides, standardizing character/paragraph styles, and resolving pre-existing layout issues.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Style Cleanup · Override Fix · Optimization</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-orange-400/80 tracking-widest uppercase">Preflight Checks</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Running comprehensive preflight checks before and after translation — verifying colour spaces, resolution, fonts, links, bleed, and trim to prevent costly press-ready errors downstream.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Pre-press · Post-translation · Delivery</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-pink-400/80 tracking-widest uppercase">Image & Asset Preparation</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Sourcing, checking, and conditioning all embedded images, graphics, and linked assets — ensuring correct resolution, colour mode, and file format for print and digital deliverables.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">CMYK · RGB · Resolution · Links</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         04 / QUALITY ASSURANCE
+    ═══════════════════════════════════════ -->
+    <section id="quality-assurance" class="svc-section section-divider py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end">
+            <div class="lg:col-span-7 space-y-4">
+                <span class="svc-index-badge">04 / Quality Assurance</span>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Third-Party QA That Guarantees Production Accuracy</h2>
+                <p class="text-neutral-400 font-light max-w-xl leading-relaxed">Independent of your production team, SuperDTP's QA specialists ensure online and printed materials meet the utmost standards of quality and correctness. IQA can be provided as a stand-alone assignment or integrated into your production pipeline.</p>
+            </div>
+            <div class="lg:col-span-5 flex flex-wrap gap-6 justify-end items-end">
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">3rd</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Party independent</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">IQA</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Detailed reports</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">Any</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Language or format</div></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-brandAccent tracking-widest uppercase">Document Review</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Complete, page-by-page review of translated and localized publications — checking linguistic accuracy, layout correctness, typography compliance, and content integrity against project criteria.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Online · Print · PDF</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-orange-400/80 tracking-widest uppercase">IQA Reports</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Detailed reports of all findings — documenting every issue identified, what was corrected, and what remains for client decision. Formatted for project managers and production teams.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Findings · Corrections · Status</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">Compliance Checking</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Verifying project output against specific client criteria — style guides, glossary compliance, terminology consistency, layout specifications, and project-specific quality standards.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Style Guide · Glossary · Specs</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-emerald-400/80 tracking-widest uppercase">Optional Corrections</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">SuperDTP can implement corrections during the review process — returning updated source files along with the IQA report so your production workflow moves faster with fewer revision rounds.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">In-review Corrections · Updated Files</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-purple-400/80 tracking-widest uppercase">Online Material QA</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Review of web-based and digital publications — checking eLearning courses, web pages, PDFs for screen, and digital assets for quality, correctness, and platform compliance.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Web · eLearning · Digital PDF</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-pink-400/80 tracking-widest uppercase">Print Material QA</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Pre-publication QA for print materials — reviewing books, magazines, brochures, and manuals to ensure layout accuracy, typographic correctness, and print-ready specification compliance.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Books · Magazines · Brochures</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         05 / PDF ACCESSIBILITY
+    ═══════════════════════════════════════ -->
+    <section id="pdf-accessibility" class="svc-section section-divider py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end">
+            <div class="lg:col-span-7 space-y-4">
+                <span class="svc-index-badge">05 / PDF Accessibility</span>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Section 508, WCAG &amp; ADA Compliant PDFs</h2>
+                <p class="text-neutral-400 font-light max-w-xl leading-relaxed">PDF Accessibility is crucial for your business, irrespective of industry. SuperDTP's accessibility specialists personally analyse each page, following accessibility rules and norms to resolve every compliance issue and deliver documents that reach every user.</p>
+            </div>
+            <div class="lg:col-span-5 flex flex-wrap gap-6 justify-end items-end">
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">508</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Section 508</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">WCAG</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">2.1 / 2.2 ready</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">ADA</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Compliant output</div></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-brandAccent tracking-widest uppercase">Document Accessibility Review</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Personal, page-by-page analysis of your PDFs against accessibility rules — identifying every barrier that prevents users with disabilities from accessing your content.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Full Document · Manual Review</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">Tags & Document Structure</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Adding proper heading tags, reading order, document structure, table attributes, and all required PDF accessibility tags — ensuring screen readers navigate your document logically.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">PDF Tags · Reading Order · Structure</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-emerald-400/80 tracking-widest uppercase">Alt-text for Images</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Writing descriptive alternative text for all visual elements — images, charts, graphs, diagrams — ensuring screen reader users receive equivalent information to sighted users.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Images · Charts · Diagrams · Figures</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-purple-400/80 tracking-widest uppercase">Section 508 Remediation</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Full compliance with Section 508 of the Rehabilitation Act — ensuring government agencies, contractors, and federally-funded organizations meet their legal obligations for accessible digital content.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Federal · Government · Contractors</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-orange-400/80 tracking-widest uppercase">WCAG 2.1 / 2.2 Compliance</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Meeting Web Content Accessibility Guidelines at Level AA — addressing perceivability, operability, understandability, and robustness criteria for all PDF content types.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">WCAG 2.1 AA · WCAG 2.2 · PDF/UA</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-pink-400/80 tracking-widest uppercase">ADA Guidelines</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Ensuring publications meet Americans with Disabilities Act requirements — applicable to insurance companies, financial institutions, schools, retailers, and all organizations serving the public.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Insurance · Finance · Education · Retail</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         06 / PREPRESS & TYPESETTING
+    ═══════════════════════════════════════ -->
+    <section id="prepress" class="svc-section section-divider py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end">
+            <div class="lg:col-span-7 space-y-4">
+                <span class="svc-index-badge">06 / Prepress &amp; Typesetting</span>
+                <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Production-Grade Typesetting for Global Publishers</h2>
+                <p class="text-neutral-400 font-light max-w-xl leading-relaxed">SuperDTP operates as a dedicated back-office for publishers worldwide, delivering prepress and typesetting services since 2014. With 60+ in-house specialists across production centres in Bulgaria and India, we handle everything from coffee table books to STM journals.</p>
+            </div>
+            <div class="lg:col-span-5 flex flex-wrap gap-6 justify-end items-end">
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">60+</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">In-house specialists</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">2014</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Operating since</div></div>
+                <div class="text-right"><div class="text-brandAccent text-2xl font-serif">2</div><div class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest">Production centres</div></div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-brandAccent tracking-widest uppercase">Typesetting & Pagination</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Professional typesetting and pagination for all publication types — maintaining typographic excellence, consistent grid systems, and publisher style guide compliance across every page.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">InDesign · QuarkXPress · Structured</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-orange-400/80 tracking-widest uppercase">Co-edition Layouts</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Translated publication layouts that precisely preserve the original design intent — adapting content for co-editions in multiple languages while maintaining the source publication's visual identity.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Multi-language · Brand Consistency</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">Scanning, OCR & Archiving</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Digitizing and archiving old books and journals with scanning, OCR, and metadata services — preserving legacy content in searchable, structured digital formats for long-term access.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Scanning · OCR · XML Metadata</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-emerald-400/80 tracking-widest uppercase">Picture Manipulation</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Touch-up, vectorization, and image optimization for publishing — colour correction, retouching, clipping paths, and high-resolution image processing for print and digital output.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Photoshop · Illustrator · Vectorization</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-purple-400/80 tracking-widest uppercase">STM Publishing</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">Scientific, Technical, and Medical journal typesetting — handling complex equations, tables, figures, references, and structured XML output for academic and research publications.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Science · Technical · Medical · Academic</div>
+            </article>
+            <article class="live-data-card rounded-2xl p-6 space-y-4">
+                <h3 class="font-mono text-xs text-pink-400/80 tracking-widest uppercase">Coffee Table & Premium Books</h3>
+                <p class="text-xs text-neutral-400 leading-relaxed">High-end layout and production for premium publications — coffee table books, artworks, photography books, and luxury publications where design quality is the primary differentiator.</p>
+                <div class="pt-3 border-t border-white/5 text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider">Premium Layout · Print-Ready · High-end</div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════
+         CTA
+    ═══════════════════════════════════════ -->
+    <section id="cta" class="section-divider py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
+        <div class="live-data-card rounded-3xl p-12 md:p-16 text-center space-y-6 max-w-3xl mx-auto">
+            <span class="font-mono text-[0.6rem] text-neutral-400 uppercase tracking-widest block">[ Get Started ]</span>
+            <h2 class="font-serif text-3xl md:text-4xl tracking-tight">Ready to Scale Your Publications Globally?</h2>
+            <p class="text-neutral-400 font-light max-w-lg mx-auto">Tell us about your project — language requirements, volume, formats, and deadlines. SuperDTP will deliver production-ready output on time and within budget.</p>
+            <div class="flex flex-wrap gap-4 justify-center pt-2">
+                <a href="mailto:dtp.bulgaria@gmail.com" class="pill-button pill-button-primary">Get in Touch</a>
+                <a href="/" class="pill-button pill-button-secondary">Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <footer id="footer" class="border-t border-white/5 bg-neutral-950/60 py-16 px-6 md:px-12 text-neutral-400 font-mono text-xs">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="space-y-2 text-center md:text-left">
+                <img src="../logo copy 5.svg" alt="SuperDTP" style="height:52px;width:auto;display:block;" />
+                <div>Multilingual DTP · eLearning · File Prep · QA · PDF Accessibility · Prepress</div>
+            </div>
+            <nav aria-label="Footer navigation" class="flex flex-wrap justify-center gap-6">
+                <a href="/" class="hover:text-brandAccent transition-colors">Home</a>
+                <a href="/localization/" class="hover:text-brandAccent transition-colors">Localisation</a>
+                <a href="#multilingual-dtp" class="hover:text-brandAccent transition-colors">DTP</a>
+                <a href="#e-learning" class="hover:text-brandAccent transition-colors">eLearning</a>
+                <a href="#pdf-accessibility" class="hover:text-brandAccent transition-colors">PDF Accessibility</a>
+                <a href="#prepress" class="hover:text-brandAccent transition-colors">Prepress</a>
+            </nav>
+            <div class="text-[10px] text-neutral-400 tracking-wider text-center">&copy; 2026 SUPERDTP. DTP &amp; Publishing Services.</div>
+        </div>
+    </footer>
+
+    <script>
+        /* Cursor light */
+        const cursorLight = document.getElementById('cursor-light');
+        document.addEventListener('mousemove', (e) => { cursorLight.style.opacity = '1'; cursorLight.style.left = `${e.clientX}px`; cursorLight.style.top = `${e.clientY}px`; });
+        document.addEventListener('mouseleave', () => { cursorLight.style.opacity = '0'; });
+
+        /* Ambient canvas */
+        (function() {
+            const canvas = document.getElementById('ambient-canvas');
+            const ctx = canvas.getContext('2d');
+            let W = canvas.width = window.innerWidth;
+            let H = canvas.height = window.innerHeight;
+            window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
+            const orbs = [
+                { rx: 0.15, ry: 0.22, rr: 0.45, c: '212,175,55', vx: 0.04, vy: 0.03, ph: 0 },
+                { rx: 0.85, ry: 0.15, rr: 0.40, c: '56,189,248', vx: -0.03, vy: 0.04, ph: 1.2 },
+                { rx: 0.50, ry: 0.75, rr: 0.38, c: '14,165,233', vx: 0.03, vy: -0.02, ph: 2.5 }
+            ];
+            function draw(ts) {
+                ctx.clearRect(0, 0, W, H);
+                const t = ts * 0.001;
+                orbs.forEach(o => {
+                    const r = o.rr * W * 0.4;
+                    const x = o.rx * W + Math.sin(t * o.vx + o.ph) * W * 0.05;
+                    const y = o.ry * H + Math.cos(t * o.vy + o.ph) * H * 0.05;
+                    const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+                    g.addColorStop(0, `rgba(${o.c},0.06)`);
+                    g.addColorStop(0.5, `rgba(${o.c},0.02)`);
+                    g.addColorStop(1, 'transparent');
+                    ctx.fillStyle = g;
+                    ctx.fillRect(0, 0, W, H);
+                });
+                requestAnimationFrame(draw);
+            }
+            requestAnimationFrame(draw);
+        })();
+
+        /* In-page nav active state on scroll */
+        (function() {
+            const sections = ['multilingual-dtp', 'e-learning', 'file-preparation', 'quality-assurance', 'pdf-accessibility', 'prepress'];
+            const tabs = document.querySelectorAll('.svc-tab');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const id = entry.target.id;
+                        tabs.forEach(tab => {
+                            tab.classList.toggle('active', tab.dataset.section === id);
+                        });
+                        /* Scroll active tab into view within sticky nav */
+                        const activeTab = document.querySelector(`.svc-tab[data-section="${id}"]`);
+                        if (activeTab) activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    }
+                });
+            }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) observer.observe(el);
+            });
+        })();
+    </script>
+</body>
+</html>

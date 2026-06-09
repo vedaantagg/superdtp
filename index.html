@@ -38,7 +38,7 @@
         .lenis.lenis-stopped { overflow: hidden; }
         body {
             background-color: #09090b;
-            color: #fafafa;
+            color: #ffffff;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
@@ -128,7 +128,7 @@
         }
 
         .nav-link {
-            opacity: 0.48;
+            opacity: 0.75;
             transition: opacity 0.35s ease, color 0.35s ease;
             background: none;
             border: none;
@@ -141,13 +141,16 @@
             color: #fff;
         }
 
-        .services-dropdown { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); width: 260px; background: rgba(9,9,11,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease; z-index: 100; }
+        .services-dropdown { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); width: 720px; max-width: 96vw; background: rgba(9,9,11,0.98); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity 0.22s ease, visibility 0.22s ease; z-index: 100; display: grid; grid-template-columns: 1fr 1fr 1fr; }
         .services-trigger:hover .services-dropdown, .services-trigger:focus-within .services-dropdown { opacity: 1; visibility: visible; }
         .services-trigger:hover .nav-link, .services-trigger:focus-within .nav-link { opacity: 1; color: #fff; }
-        .dropdown-link { display: flex; align-items: center; gap: 8px; padding: 10px 16px; font-size: 0.62rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.2s ease, background 0.2s ease; }
-        .dropdown-link:last-child { border-bottom: none; }
+        .mega-col { border-right: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px; }
+        .mega-col:last-child { border-right: none; background: rgba(212,175,55,0.03); }
+        .mega-col-hdr { padding: 14px 18px 10px; font-size: 0.56rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.2em; text-transform: uppercase; color: #d4af37; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 4px; }
+        .mega-star { font-size: 0.6rem; opacity: 0.8; }
+        .dropdown-link { display: flex; align-items: center; gap: 8px; padding: 7px 18px 7px 18px; font-size: 0.6rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.72); text-decoration: none; transition: color 0.2s ease, background 0.2s ease; }
         .dropdown-link:hover { color: #d4af37; background: rgba(255,255,255,0.04); }
-        .dropdown-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.2); flex-shrink: 0; }
+        .dropdown-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18); flex-shrink: 0; }
         .dropdown-link:hover .dropdown-dot { background: rgba(212,175,55,0.5); }
 
         #next-section-btn {
@@ -223,7 +226,7 @@
         .hero-subtext {
             font-size: clamp(0.9rem, 2vw, 1.2rem);
             line-height: 1.65;
-            opacity: 0.55;
+            opacity: 0.78;
             font-weight: 300;
         }
 
@@ -547,7 +550,7 @@
             gap: 12px;
             font-size: 0.65rem;
             letter-spacing: 0.16em;
-            color: rgba(255,255,255,0.52);
+            color: rgba(255,255,255,0.72);
             text-transform: uppercase;
         }
 
@@ -579,7 +582,7 @@
             font-family: "Space Grotesk", monospace;
             font-size: 0.75rem;
             letter-spacing: 0.28em;
-            color: rgba(212,175,55,0.75);
+            color: #d4af37;
         }
 
         .proof-thumb {
@@ -824,6 +827,463 @@
             .wf-phase-tab { padding: 11px 10px; font-size: 0.5rem; }
             #wf-current-label { display: none; }
         }
+        /* ── Services 3D Word Zoom ─────────────────────────────── */
+        #svc-word-zoom {
+            height: 700vh;
+            position: relative;
+        }
+        #svc-word-pin {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            background: #07070b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #svc-zoom-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+        #svc-word-stage {
+            position: absolute;
+            inset: 0;
+        }
+        .svc-wgroup {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .svc-word {
+            position: absolute;
+            left: var(--wx);
+            top: var(--wy);
+            transform: translate(-50%, -50%) scale(0.04);
+            transform-origin: center center;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+        .svc-word-xl { font-size: clamp(2rem, 5vw, 4.5rem); color: rgba(255,255,255,0.92); }
+        .svc-word-md { font-size: clamp(1.1rem, 2.8vw, 2.2rem); color: rgba(255,255,255,0.55); }
+        .svc-word-sm { font-size: clamp(0.7rem, 1.6vw, 1.3rem); color: rgba(255,255,255,0.28); }
+
+        /* Gold accent on every 3rd word */
+        .svc-wgroup:nth-child(odd) .svc-word-xl:first-child { color: #d4af37; }
+
+        #svc-zoom-hud {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 20;
+        }
+        #svc-zoom-step {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+        }
+        #svc-zoom-bar-wrap {
+            width: 80px;
+            height: 1.5px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 1px;
+        }
+        #svc-zoom-bar {
+            height: 100%;
+            width: 0%;
+            background: #d4af37;
+            border-radius: 1px;
+            transition: width 0.08s linear;
+        }
+
+        /* ── Services Grid Sections ────────────────────────────── */
+        #svc-loc-section {
+            background: #07070b;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 96px 6% 112px;
+        }
+        #svc-dtp-outer {
+            overflow: hidden;
+        }
+        #svc-dtp-section {
+            background: #090710;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 96px 6% 112px;
+            will-change: transform;
+        }
+
+        .svc-split-wrap {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+        .svc-split-left {
+            position: sticky;
+            top: 88px;
+        }
+        .svc-split-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .svc-split-pills span {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.17em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 5px 13px;
+            border-radius: 100px;
+        }
+
+        /* 3 × 3 grid */
+        .svc-3x3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        @media (max-width: 1100px) {
+            .svc-split-wrap { grid-template-columns: 1fr; gap: 40px; }
+            .svc-split-left { position: static; }
+            .svc-3x3 { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (max-width: 680px) {
+            .svc-3x3 { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 420px) {
+            .svc-3x3 { grid-template-columns: 1fr; }
+        }
+
+        /* Grid card */
+        .svc-gc {
+            background: rgba(255,255,255,0.025);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 14px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: border-color 0.28s ease, transform 0.32s ease, box-shadow 0.32s ease;
+        }
+        .svc-gc:hover {
+            border-color: rgba(212,175,55,0.42);
+            transform: translateY(-5px);
+            box-shadow: 0 22px 56px rgba(0,0,0,0.44), 0 0 0 1px rgba(212,175,55,0.1);
+        }
+        .svc-gc-top {
+            height: 96px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.6rem;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .svc-gc-top::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, transparent 40%, rgba(7,7,11,0.5) 100%);
+        }
+        .svc-gc-body {
+            padding: 14px 16px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+        .svc-gc-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: #fff;
+            line-height: 1.28;
+        }
+        .svc-gc-desc {
+            font-size: 0.68rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.62;
+            flex: 1;
+        }
+        .svc-gc-hover {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.52rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(212,175,55,0.6);
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 8px 16px;
+            background: rgba(212,175,55,0.04);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.22s ease, transform 0.22s ease;
+        }
+        .svc-gc:hover .svc-gc-hover { opacity: 1; transform: translateY(0); }
+        .svc-gc-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.54rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #d4af37;
+            transition: gap 0.2s ease;
+        }
+        .svc-gc:hover .svc-gc-cta { gap: 10px; }
+
+        /* ── TRUSTED BY TICKER ─────────────────────────────────────── */
+        @keyframes ticker-left  { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        @keyframes ticker-right { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+        .ticker-outer { overflow: hidden; }
+        .ticker-row   { display: flex; width: max-content; will-change: transform; }
+        .ticker-row.dir-left  { animation: ticker-left  45s linear infinite; }
+        .ticker-row.dir-right { animation: ticker-right 58s linear infinite; }
+        .ticker-row.dir-fast  { animation: ticker-left  30s linear infinite; }
+        .ticker-item  { display: inline-flex; align-items: center; gap: 14px; padding: 0 32px; height: 72px; flex-shrink: 0; border-right: 1px solid rgba(255,255,255,0.05); }
+        .ticker-logo  { display: block; flex-shrink: 0; width: auto; height: 34px; max-width: 120px; object-fit: contain; background: rgba(255,255,255,0.92); border-radius: 6px; padding: 5px 10px; box-sizing: content-box; filter: grayscale(0.15); opacity: 0.88; transition: opacity 0.25s ease; }
+        .ticker-item:hover .ticker-logo { opacity: 1; filter: grayscale(0); }
+        .ticker-name  { font-family: 'Space Grotesk', monospace; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.68); white-space: nowrap; }
+
+        /* ── INDUSTRY SOLUTIONS — sticky stacking cards ─────────── */
+        /* Each .ind-step is 100vh and position:sticky top:0, so they stack
+           one on top of the other as the user scrolls — pure CSS pin */
+        #industry-solutions { position: relative; background: #07070b; }
+        .ind-step {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            z-index: var(--iz);
+            /* Let clicks fall through to the card surfaces below */
+            pointer-events: none;
+        }
+        /* The visible card surface — inset from the step viewport */
+        .ind-crd {
+            position: absolute;
+            /* stacking peek: each card starts a few px lower, revealing the one below */
+            top: calc((var(--iz) - 1) * 7px);
+            left: 5vw; right: 5vw; bottom: 0;
+            border-radius: 20px 20px 0 0;
+            background: var(--ibg, rgba(11,10,18,0.98));
+            border: 1px solid rgba(255,255,255,0.07);
+            border-bottom: none;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            /* Hover interactivity */
+            pointer-events: auto;
+            cursor: pointer;
+            transition: border-color 0.32s ease, box-shadow 0.32s ease;
+        }
+        /* Gold shimmer line at top of card on hover */
+        .ind-crd::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 10%; right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(212,175,55,0.55), transparent);
+            opacity: 0;
+            transition: opacity 0.32s ease;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .ind-crd:hover { border-color: rgba(212,175,55,0.28); box-shadow: 0 0 0 1px rgba(212,175,55,0.06) inset, 0 32px 80px rgba(0,0,0,0.38); }
+        .ind-crd:hover::before { opacity: 1; }
+        .ind-crd:hover .ind-crd-industry { color: #d4af37; transition: color 0.22s ease; }
+        .ind-crd:hover .ind-crd-bg-num { -webkit-text-stroke-color: rgba(255,255,255,0.08); transition: -webkit-text-stroke-color 0.32s ease; }
+        .ind-crd:hover h3 { color: rgba(255,255,255,1); transition: color 0.22s ease; }
+        /* "Go here" hint visible on peeking card strips */
+        .ind-crd::after {
+            content: 'View ↑';
+            position: absolute;
+            top: 10px; right: clamp(24px,4vw,56px);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.44rem; letter-spacing: 0.18em; text-transform: uppercase;
+            color: rgba(212,175,55,0.7);
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 0.22s ease, transform 0.22s ease;
+            pointer-events: none;
+        }
+        .ind-crd:hover::after { opacity: 1; transform: translateY(0); }
+        /* Top bar: section label + counter */
+        .ind-crd-bar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 18px clamp(24px,4vw,56px) 0;
+            flex-shrink: 0;
+        }
+        .ind-crd-label { font-family: 'Space Grotesk', monospace; font-size: 0.5rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.38); }
+        .ind-crd-num { font-family: 'Instrument Serif', serif; font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.55); }
+        /* Main content area */
+        .ind-crd-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 clamp(24px,4vw,56px) clamp(32px,4vh,56px);
+            max-width: 900px;
+        }
+        .ind-crd-industry { font-family: 'Space Grotesk', monospace; font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase; color: #d4af37; margin-bottom: 20px; }
+        .ind-crd h3 { font-family: 'Instrument Serif', serif; font-size: clamp(2rem, 4.5vw, 4rem); color: #fff; line-height: 1.1; margin-bottom: 20px; font-weight: 400; }
+        .ind-crd-desc { font-size: clamp(0.82rem, 1.1vw, 0.92rem); color: rgba(255,255,255,0.58); line-height: 1.8; margin-bottom: 28px; max-width: 580px; }
+        .ind-crd-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+        .ind-tag { font-family: 'Space Grotesk', monospace; font-size: 0.47rem; letter-spacing: 0.14em; text-transform: uppercase; background: rgba(212,175,55,0.07); color: rgba(212,175,55,0.72); border: 1px solid rgba(212,175,55,0.2); padding: 5px 11px; border-radius: 4px; }
+        /* Large decorative number — right side of card */
+        .ind-crd-bg-num {
+            position: absolute; right: 5%; bottom: -0.1em;
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(140px, 20vw, 260px);
+            font-style: italic; color: transparent;
+            -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+            line-height: 1; user-select: none; pointer-events: none;
+        }
+        /* Progress bar at very bottom */
+        #ind-progress { position: fixed; bottom: 0; left: 0; height: 2px; width: 0%; background: linear-gradient(90deg,#d4af37,rgba(212,175,55,0.3)); z-index: 200; pointer-events: none; transition: width 0.1s linear; }
+        @media (max-width: 768px) {
+            .ind-crd { left: 3vw; right: 3vw; }
+            .ind-crd h3 { font-size: clamp(1.6rem, 6vw, 2.4rem); }
+        }
+
+        /* ── INDIC LANGUAGE EXCELLENCE ───────────────────────────────── */
+        .indic-lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 1px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; }
+        .indic-lang-card { background: rgba(9,9,11,0.9); padding: 18px 14px; transition: background 0.25s ease; cursor: default; }
+        .indic-lang-card:hover { background: rgba(18,24,44,0.95); }
+        .indic-script { font-size: 1.55rem; line-height: 1.4; color: rgba(255,255,255,0.82); margin-bottom: 6px; }
+        .indic-lang-en  { font-family: 'Space Grotesk', monospace; font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+        .indic-stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; margin-top: 40px; }
+        @media (max-width: 768px) { .indic-stat-row { grid-template-columns: repeat(2,1fr); } }
+        .indic-stat-cell { background: rgba(9,9,11,0.88); padding: 26px 20px; text-align: center; }
+
+        /* ── FILE FORMATS SCROLL-JACK ─────────────────────────────────── */
+        #fmt-section { position: relative; }
+        #fmt-pin {
+            height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+            position: relative; overflow: hidden;
+        }
+        #fmt-bg-fill {
+            position: absolute; inset: 0; z-index: 0; background: #06060a;
+            transition: background 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+        }
+        .fmt-left-panel {
+            position: relative; z-index: 2; display: flex; flex-direction: column;
+            justify-content: center; padding: clamp(40px,5vw,88px) clamp(32px,4vw,64px);
+            border-right: 1px solid rgba(255,255,255,0.06);
+        }
+        .fmt-right-panel {
+            position: relative; z-index: 2; overflow: hidden;
+        }
+        #fmt-list-track {
+            width: 100%; will-change: transform;
+            padding: 8vh clamp(28px,3vw,56px) 0;
+        }
+        .fmt-active-counter {
+            font-family: 'Space Grotesk', monospace; font-size: 0.6rem;
+            letter-spacing: 0.3em; color: #d4af37; text-transform: uppercase; margin-bottom: 16px;
+        }
+        .fmt-active-big {
+            font-family: 'Instrument Serif', serif; font-size: clamp(3.5rem,7vw,6.5rem);
+            color: #d4af37; line-height: 1; letter-spacing: -0.02em; display: block; margin-bottom: 10px;
+        }
+        .fmt-active-app {
+            font-family: 'Space Grotesk', monospace; font-size: 0.62rem;
+            letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.72);
+            margin-bottom: 14px;
+        }
+        .fmt-active-desc {
+            font-size: 0.78rem; color: rgba(255,255,255,0.62); line-height: 1.7;
+            max-width: 300px; margin-top: 14px;
+            border-left: 2px solid rgba(212,175,55,0.35); padding-left: 14px;
+            transition: opacity 0.3s ease;
+        }
+        .fmt-progress-dots { display: flex; gap: 4px; margin-top: 28px; flex-wrap: wrap; }
+        .fmt-prog-dot {
+            width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18);
+            transition: background 0.3s ease, width 0.3s ease; flex-shrink: 0;
+        }
+        .fmt-prog-dot.active { background: #d4af37; width: 14px; border-radius: 999px; }
+        .fmt-row {
+            display: flex; align-items: center; gap: 20px;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            border-left: 2px solid transparent;
+            min-height: clamp(80px, 11vh, 110px); cursor: default;
+            padding-left: 16px;
+            transition: opacity 0.4s ease, border-top-color 0.4s ease, border-left-color 0.4s ease, background 0.4s ease;
+            opacity: 0.38;
+        }
+        .fmt-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .fmt-row.active {
+            opacity: 1;
+            border-top-color: rgba(212,175,55,0.22);
+            border-left-color: #d4af37;
+            background: rgba(212,175,55,0.04);
+        }
+        .fmt-row.active .fmt-ext-label { color: #d4af37; }
+        .fmt-row.active .fmt-row-num { color: #d4af37; }
+        .fmt-row.active .fmt-app-badge {
+            color: #d4af37;
+            border-color: rgba(212,175,55,0.38);
+            background: rgba(212,175,55,0.08);
+        }
+        .fmt-ext-label {
+            font-family: 'Instrument Serif', serif; font-size: clamp(1.6rem,2.5vw,2.5rem);
+            color: rgba(255,255,255,0.9); transition: color 0.3s ease; line-height: 1;
+            flex-shrink: 0; min-width: 110px;
+        }
+        .fmt-row-num {
+            font-family: 'Space Grotesk', monospace; font-size: 0.62rem; letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.6); transition: color 0.3s ease; flex-shrink: 0; width: 32px;
+        }
+        .fmt-app-badge {
+            font-family: 'Space Grotesk', monospace; font-size: 0.56rem; letter-spacing: 0.14em;
+            text-transform: uppercase; color: rgba(255,255,255,0.72);
+            border: 1px solid rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 4px;
+            flex-shrink: 0; white-space: nowrap;
+            transition: color 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+        }
+        .fmt-row-desc { font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.6; flex: 1; }
+        @media (max-width: 900px) { #fmt-pin { grid-template-columns: 1fr; } .fmt-right-panel { display: none; } }
+        @media (max-width: 640px) { .fmt-row-desc { display: none; } }
+
+        /* ── WORLD REACH MAP ──────────────────────────────────────────── */
+        #world-reach { position: relative; overflow: hidden; }
+        #world-map-container svg { width: 100%; height: auto; display: block; }
+        #world-map-container path, #world-map-container polygon { transition: fill 0.3s ease; }
+        .country-base { fill: rgba(255,255,255,0.06) !important; stroke: rgba(255,255,255,0.09) !important; stroke-width: 0.4px !important; }
+        .country-active { fill: rgba(212,175,55,0.38) !important; stroke: rgba(212,175,55,0.5) !important; stroke-width: 0.6px !important; cursor: pointer; }
+        .country-active:hover { fill: rgba(212,175,55,0.65) !important; }
+        .map-loading { display: flex; align-items: center; justify-content: center; min-height: 400px; font-family: 'Space Grotesk', monospace; font-size: 0.58rem; letter-spacing: 0.25em; color: rgba(255,255,255,0.55); text-transform: uppercase; }
+
+        /* ── CONTACT FORM ─────────────────────────────────────────────── */
+        .contact-field { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.09); border-radius: 8px; padding: 14px 18px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.86rem; color: #fff; transition: border-color 0.25s ease, background 0.25s ease; outline: none; -webkit-appearance: none; appearance: none; }
+        .contact-field:focus { border-color: rgba(212,175,55,0.48); background: rgba(255,255,255,0.065); }
+        .contact-field::placeholder { color: rgba(255,255,255,0.42); }
+        textarea.contact-field { resize: vertical; min-height: 130px; }
+        .contact-label { display: block; font-family: 'Space Grotesk', monospace; font-size: 0.56rem; letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255,255,255,0.68); margin-bottom: 8px; }
+        .contact-submit { height: 52px; border-radius: 999px; padding: 0 38px; font-family: 'Space Grotesk', monospace; font-size: 0.62rem; letter-spacing: 0.24em; text-transform: uppercase; background: #d4af37; color: #000; border: none; cursor: pointer; transition: background 0.25s ease, transform 0.25s ease; display: inline-flex; align-items: center; gap: 10px; }
+        .contact-submit:hover { background: #e8c84a; transform: translateY(-2px); }
+        select.contact-field option { background: #09090b; color: #fff; }
+        .contact-success { display: none; align-items: center; gap: 10px; font-family: 'Space Grotesk', monospace; font-size: 0.65rem; letter-spacing: 0.18em; color: #34d399; }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -859,25 +1319,55 @@
             <img src="logo copy 5.svg" alt="SuperDTP" style="height:58px;width:auto;display:block;" />
         </a>
         <nav class="hidden md:flex items-center space-x-8 font-mono text-xs tracking-wider text-neutral-400">
-            <a href="#hero" class="nav-link active">01. INCEPTION</a>
+            <a href="#hero" class="nav-link active">01. HOME</a>
             <a href="#visual-lab" class="nav-link">02. HOW WE WORK</a>
-            <a href="#infographics" class="nav-link">03. MATRIX DIAGRAMS</a>
+            <a href="#industry-solutions" class="nav-link">03. INDUSTRIES</a>
             <div class="services-trigger relative flex items-center cursor-pointer">
-                <button type="button" class="nav-link flex items-center gap-1.5 cursor-pointer">
-                    SERVICES
+                <a href="#services" class="nav-link flex items-center gap-1.5">
+                    04. SERVICES
                     <svg class="w-2.5 h-2.5" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
+                </a>
                 <div class="services-dropdown" role="menu">
-                    <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Indic Localisation</a>
-                    <a href="/multilingual-dtp/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP</a>
-                    <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>E-learning</a>
-                    <a href="/file-preparation/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>File Preparation</a>
-                    <a href="/qa/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Quality Assurance</a>
-                    <a href="/pdf-remediation/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Accessibility</a>
-                    <a href="/prepress/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Prepress & Typesetting</a>
+
+                    <!-- Col 1: Localization Services -->
+                    <div class="mega-col">
+                        <div class="mega-col-hdr">Localization Services</div>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Translation &amp; Localization</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Website Localization</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Software &amp; App Localization</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia Localization</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Linguistic QA &amp; Transcreation</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>AI-Enabled Localization</a>
+                    </div>
+
+                    <!-- Col 2: DTP & Publishing Services -->
+                    <div class="mega-col">
+                        <div class="mega-col-hdr">DTP &amp; Publishing Services</div>
+                        <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP</a>
+                        <a href="/dtp-services/#prepress" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Typesetting Services</a>
+                        <a href="/dtp-services/#prepress" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Publishing Production</a>
+                        <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Artwork Localization</a>
+                        <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Packaging &amp; Label Localization</a>
+                        <a href="/dtp-services/#file-preparation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>File Engineering &amp; Conversion</a>
+                        <a href="/dtp-services/#quality-assurance" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>QA &amp; Compliance</a>
+                    </div>
+
+                    <!-- Col 3: Indic Language Solutions -->
+                    <div class="mega-col">
+                        <div class="mega-col-hdr">Indic Language Solutions <span class="mega-star">★</span></div>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Overview</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Indian Language Localization</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Indic Publishing &amp; DTP</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Government &amp; Public Sector</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia Localization</a>
+                        <a href="#" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Languages We Support</a>
+                    </div>
+
                 </div>
             </div>
-            <a href="#footer" class="nav-link">04. TERMINUS</a>
+            <a href="#contact" class="nav-link">05. CONTACT</a>
         </nav>
         <div class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block">
             ENGINE: ACTIVE
@@ -892,7 +1382,7 @@
        
         <div class="grid gap-8 lg:gap-12 lg:grid hero-grid items-center hero-layer">
             <div class="z-10">
-                <div class="font-mono text-[0.6rem] md:text-xs uppercase tracking-widest text-neutral-500 mb-3 md:mb-4 flex items-center gap-2">
+                <div class="font-mono text-[0.6rem] md:text-xs uppercase tracking-widest text-neutral-400 mb-3 md:mb-4 flex items-center gap-2">
                     <span class="w-1.5 h-1.5 bg-brandAccent rounded-full animate-ping"></span>
                     SYSTEM LAYOUT AUDIT / SYSTEMIC METRICS
                 </div>
@@ -958,37 +1448,101 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-8 pb-8">
             <div class="live-data-card rounded-3xl p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Words Processed</div>
-                <div class="text-4xl font-semibold text-white">15<span class="text-lg font-normal text-neutral-300">M+</span></div>
-                <div class="text-xs text-neutral-300 mt-3 leading-relaxed">End-to-end multilingual content handled across enterprise-scale production workflows.</div>
+                <div class="text-4xl font-semibold text-white">15<span class="text-lg font-normal text-neutral-400">M+</span></div>
+                <div class="text-xs text-neutral-400 mt-3 leading-relaxed">End-to-end multilingual content handled across enterprise-scale production workflows.</div>
             </div>
             <div class="live-data-card rounded-3xl p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Pages Formatted</div>
-                <div class="text-4xl font-semibold text-white">120<span class="text-lg font-normal text-neutral-300">k+</span></div>
-                <div class="text-xs text-neutral-300 mt-3 leading-relaxed">Production-ready layouts created with precision across print, digital, and learning formats.</div>
+                <div class="text-4xl font-semibold text-white">120<span class="text-lg font-normal text-neutral-400">k+</span></div>
+                <div class="text-xs text-neutral-400 mt-3 leading-relaxed">Production-ready layouts created with precision across print, digital, and learning formats.</div>
             </div>
             <div class="live-data-card rounded-3xl p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Languages Supported</div>
-                <div class="text-4xl font-semibold text-white">75<span class="text-lg font-normal text-neutral-300">+</span></div>
-                <div class="text-xs text-neutral-300 mt-3 leading-relaxed">From global business languages to complex scripts including Indic, RTL, and CJK systems.</div>
+                <div class="text-4xl font-semibold text-white">75<span class="text-lg font-normal text-neutral-400">+</span></div>
+                <div class="text-xs text-neutral-400 mt-3 leading-relaxed">From global business languages to complex scripts including Indic, RTL, and CJK systems.</div>
             </div>
             <div class="live-data-card rounded-3xl p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">QA Accuracy</div>
-                <div class="text-4xl font-semibold text-white">99<span class="text-lg font-normal text-neutral-300">%</span></div>
-                <div class="text-xs text-neutral-300 mt-3 leading-relaxed">Multi-layer quality checks ensuring consistency, formatting integrity, and publication-ready output.</div>
+                <div class="text-4xl font-semibold text-white">99<span class="text-lg font-normal text-neutral-400">%</span></div>
+                <div class="text-xs text-neutral-400 mt-3 leading-relaxed">Multi-layer quality checks ensuring consistency, formatting integrity, and publication-ready output.</div>
             </div>
         </div>
 
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════
+         TRUSTED BY — 3-Ribbon Marquee
+    ═══════════════════════════════════════════════════════ -->
+    <section id="trusted-by" class="relative py-12 border-t border-white/5 overflow-hidden bg-[#07070a]">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 mb-8 text-center">
+            <span class="font-mono text-[0.56rem] uppercase tracking-[0.32em] text-neutral-400">Trusted by global industry leaders</span>
+        </div>
+        <div class="ticker-outer space-y-2.5" style="-webkit-mask-image:linear-gradient(90deg,transparent,black 9%,black 91%,transparent);mask-image:linear-gradient(90deg,transparent,black 9%,black 91%,transparent)">
+
+            <!-- Ribbon 1: right-to-left -->
+            <div class="ticker-row dir-left" id="ticker-1">
+                <!-- Set A -->
+                <div class="ticker-item"><img class="ticker-logo" src="clients/ca-technologies-1.png" alt="CA Technologies company logo"><span class="ticker-name">CA Technologies</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/cisco-2.png" alt="Cisco company logo"><span class="ticker-name">Cisco</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/general-electric-1.png" alt="General Electric company logo"><span class="ticker-name">General Electric</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/siemens-1.png" alt="Siemens company logo"><span class="ticker-name">Siemens</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/pfizer-1.png" alt="Pfizer company logo"><span class="ticker-name">Pfizer</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/diakin-1.png" alt="Daikin company logo"><span class="ticker-name">Daikin</span></div>
+                <!-- Set B (duplicate for seamless loop) -->
+                <div class="ticker-item"><img class="ticker-logo" src="clients/ca-technologies-1.png" alt="CA Technologies company logo"><span class="ticker-name">CA Technologies</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/cisco-2.png" alt="Cisco company logo"><span class="ticker-name">Cisco</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/general-electric-1.png" alt="General Electric company logo"><span class="ticker-name">General Electric</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/siemens-1.png" alt="Siemens company logo"><span class="ticker-name">Siemens</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/pfizer-1.png" alt="Pfizer company logo"><span class="ticker-name">Pfizer</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/diakin-1.png" alt="Daikin company logo"><span class="ticker-name">Daikin</span></div>
+            </div>
+
+            <!-- Ribbon 2: left-to-right (reverse direction) -->
+            <div class="ticker-row dir-right" id="ticker-2">
+                <!-- Set A -->
+                <div class="ticker-item"><img class="ticker-logo" src="clients/Emersomn-1.png" alt="Emerson company logo"><span class="ticker-name">Emerson</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/honda-1.png" alt="Honda company logo"><span class="ticker-name">Honda</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/hospira-1.png" alt="Hospira company logo"><span class="ticker-name">Hospira</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/medtronic-1.png" alt="Medtronic company logo"><span class="ticker-name">Medtronic</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/mercedez-1.png" alt="Mercedes-Benz company logo"><span class="ticker-name">Mercedes-Benz</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/rolce-royce-1.png" alt="Rolls-Royce company logo"><span class="ticker-name">Rolls-Royce</span></div>
+                <!-- Set B -->
+                <div class="ticker-item"><img class="ticker-logo" src="clients/Emersomn-1.png" alt="Emerson company logo"><span class="ticker-name">Emerson</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/honda-1.png" alt="Honda company logo"><span class="ticker-name">Honda</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/hospira-1.png" alt="Hospira company logo"><span class="ticker-name">Hospira</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/medtronic-1.png" alt="Medtronic company logo"><span class="ticker-name">Medtronic</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/mercedez-1.png" alt="Mercedes-Benz company logo"><span class="ticker-name">Mercedes-Benz</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/rolce-royce-1.png" alt="Rolls-Royce company logo"><span class="ticker-name">Rolls-Royce</span></div>
+            </div>
+
+            <!-- Ribbon 3: right-to-left fast -->
+            <div class="ticker-row dir-fast" id="ticker-3">
+                <!-- Set A -->
+                <div class="ticker-item"><img class="ticker-logo" src="clients/teleflex-1.png" alt="Teleflex company logo"><span class="ticker-name">Teleflex</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/wyndham-1.png" alt="Wyndham Hotels company logo"><span class="ticker-name">Wyndham Hotels</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/Madcap Logo.png" alt="MadCap Software company logo"><span class="ticker-name">MadCap Software</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/Microsoft.png" alt="Microsoft company logo"><span class="ticker-name">Microsoft</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/Roche_Logo.png" alt="Roche company logo"><span class="ticker-name">Roche</span></div>
+                <!-- Set B -->
+                <div class="ticker-item"><img class="ticker-logo" src="clients/teleflex-1.png" alt="Teleflex company logo"><span class="ticker-name">Teleflex</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/wyndham-1.png" alt="Wyndham Hotels company logo"><span class="ticker-name">Wyndham Hotels</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/Madcap Logo.png" alt="MadCap Software company logo"><span class="ticker-name">MadCap Software</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/Microsoft.png" alt="Microsoft company logo"><span class="ticker-name">Microsoft</span></div>
+                <div class="ticker-item"><img class="ticker-logo" src="clients/Roche_Logo.png" alt="Roche company logo"><span class="ticker-name">Roche</span></div>
+            </div>
+
+        </div>
+    </section>
+
     <section class="section-fade-bg py-24 px-6 md:px-12 bg-[#07070a] border-t border-white/5" id="visual-lab" data-bg-opacity="0.8">
         <div class="max-w-7xl mx-auto">
 
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-end">
-                <div class="lg:col-span-7">
-                    <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest block mb-4">[ 02 / WORKFLOW ENGINE ]</span>
-                    <h2 class="font-serif text-5xl md:text-7xl tracking-tight max-w-3xl">Localization that still looks designed.</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 items-end">
+                <div>
+                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 02 / WORKFLOW ENGINE ]</span>
+                    <h2 class="font-serif text-5xl md:text-7xl tracking-tight max-w-3xl">How we work?</h2>
                 </div>
-                <p class="lg:col-span-4 lg:col-start-9 text-sm text-neutral-400 leading-relaxed">
+                <p class="text-sm text-neutral-400 leading-relaxed">
                     Every project moves through a four-phase, quality-gated pipeline. From first brief to final invoice, the sequence runs automatically when you scroll here.
                 </p>
             </div>
@@ -1038,28 +1592,28 @@
 
                     <!-- RIGHT: Full-height responsive sequence diagram -->
                     <div class="wf-diagram-wrap" id="wf-diagram-wrap">
-                    <div id="wf-marker-0" style="position:absolute;top:9.80%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-1" style="position:absolute;top:13.85%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-2" style="position:absolute;top:17.91%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-3" style="position:absolute;top:21.96%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-4" style="position:absolute;top:26.01%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-5" style="position:absolute;top:33.45%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-6" style="position:absolute;top:37.50%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-7" style="position:absolute;top:41.55%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-8" style="position:absolute;top:45.61%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-9" style="position:absolute;top:49.66%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-10" style="position:absolute;top:57.09%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-11" style="position:absolute;top:61.15%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-12" style="position:absolute;top:65.20%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-13" style="position:absolute;top:69.26%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-14" style="position:absolute;top:71.49%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-15" style="position:absolute;top:78.04%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-16" style="position:absolute;top:82.09%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-17" style="position:absolute;top:86.15%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-18" style="position:absolute;top:90.20%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
-                    <div id="wf-marker-19" style="position:absolute;top:94.26%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-0" style="position:absolute;top:9.93%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-1" style="position:absolute;top:13.91%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-2" style="position:absolute;top:19.87%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-3" style="position:absolute;top:23.84%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-4" style="position:absolute;top:27.81%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-5" style="position:absolute;top:35.10%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-6" style="position:absolute;top:39.07%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-7" style="position:absolute;top:43.05%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-8" style="position:absolute;top:47.02%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-9" style="position:absolute;top:51.00%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-10" style="position:absolute;top:56.95%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-11" style="position:absolute;top:60.93%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-12" style="position:absolute;top:64.90%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-13" style="position:absolute;top:68.87%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-14" style="position:absolute;top:72.85%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-15" style="position:absolute;top:78.81%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-16" style="position:absolute;top:82.78%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-17" style="position:absolute;top:86.75%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-18" style="position:absolute;top:90.73%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
+                    <div id="wf-marker-19" style="position:absolute;top:94.70%;left:0;width:1px;height:1px;pointer-events:none;" aria-hidden="true"></div>
 
-                        <svg id="wf-svg" width="100%" viewBox="0 0 800 1480" xmlns="http://www.w3.org/2000/svg" aria-label="Localization project workflow sequence diagram">
+                        <svg id="wf-svg" width="100%" viewBox="0 0 800 1510" xmlns="http://www.w3.org/2000/svg" aria-label="Localization project workflow sequence diagram">
                             <defs>
                                 <linearGradient id="wf-actor-grad" x1="0%" y1="0%" x2="100%" y2="100%">
                                     <stop offset="0%" stop-color="rgba(15,23,42,0.97)"/>
@@ -1073,29 +1627,29 @@
                             <!-- Actor lifelines + headers -->
                             <g id="wf-actors">
                                 <!-- Client -->
-                                <line x1="80"  y1="90" x2="80"  y2="1455" stroke="rgba(56,189,248,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
+                                <line x1="80"  y1="90" x2="80"  y2="1475" stroke="rgba(56,189,248,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
                                 <rect x="15"  y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(56,189,248,0.35)" stroke-width="1.5"/>
                                 <text x="80"  y="52" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Client</text>
 
                                 <!-- PM -->
-                                <line x1="240" y1="90" x2="240" y2="1455" stroke="rgba(212,175,55,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
+                                <line x1="240" y1="90" x2="240" y2="1475" stroke="rgba(212,175,55,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
                                 <rect x="175" y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(212,175,55,0.35)" stroke-width="1.5"/>
                                 <text x="240" y="44" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Project</text>
                                 <text x="240" y="62" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Management</text>
 
                                 <!-- DTP -->
-                                <line x1="400" y1="90" x2="400" y2="1455" stroke="rgba(167,139,250,0.12)" stroke-width="1" stroke-dasharray="4,7"/>
+                                <line x1="400" y1="90" x2="400" y2="1475" stroke="rgba(167,139,250,0.12)" stroke-width="1" stroke-dasharray="4,7"/>
                                 <rect x="335" y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(167,139,250,0.35)" stroke-width="1.5"/>
                                 <text x="400" y="52" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">DTP Team</text>
 
                                 <!-- QA/LSO -->
-                                <line x1="560" y1="90" x2="560" y2="1455" stroke="rgba(52,211,153,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
+                                <line x1="560" y1="90" x2="560" y2="1475" stroke="rgba(52,211,153,0.12)"  stroke-width="1" stroke-dasharray="4,7"/>
                                 <rect x="495" y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(52,211,153,0.35)" stroke-width="1.5"/>
                                 <text x="560" y="43" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Internal QA</text>
                                 <text x="560" y="62" fill="#ffffff" font-size="12" text-anchor="middle" font-family="Space Grotesk,monospace">/ LSO</text>
 
                                 <!-- Finance -->
-                                <line x1="720" y1="90" x2="720" y2="1455" stroke="rgba(251,113,133,0.12)" stroke-width="1" stroke-dasharray="4,7"/>
+                                <line x1="720" y1="90" x2="720" y2="1475" stroke="rgba(251,113,133,0.12)" stroke-width="1" stroke-dasharray="4,7"/>
                                 <rect x="655" y="18" width="130" height="58" rx="8" fill="url(#wf-actor-grad)" stroke="rgba(251,113,133,0.35)" stroke-width="1.5"/>
                                 <text x="720" y="43" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="Space Grotesk,monospace">Accounts</text>
                                 <text x="720" y="62" fill="#ffffff" font-size="12" text-anchor="middle" font-family="Space Grotesk,monospace">&amp; Finance</text>
@@ -1110,7 +1664,7 @@
 
                 
                 <div class="border-t border-white/5 px-5 py-3 flex items-center gap-4">
-                    <span class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest flex-shrink-0" id="wf-counter">0 / 20</span>
+                    <span class="font-mono text-[0.6rem] text-neutral-400 uppercase tracking-widest flex-shrink-0" id="wf-counter">0 / 20</span>
                     <div class="flex-1 relative overflow-hidden rounded-full" style="height:1px;background:rgba(255,255,255,0.08);">
                         <div id="wf-progress" style="position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,#d4af37,#38bdf8);transition:width 0.45s ease;"></div>
                     </div>
@@ -1121,208 +1675,616 @@
         </div>
     </section>
 
-    <section class="section-fade-bg py-32 px-6 md:px-12 bg-neutral-950 border-t border-white/5" id="infographics" data-bg-opacity="0.72">
+    <!-- ═══════════════════════════════════════════════════════
+         04 / SERVICES — 3D Word Zoom + Sticky Card Sections
+    ═══════════════════════════════════════════════════════ -->
+    <section id="services" class="section-fade-bg" data-bg-opacity="0.75">
+
+        <!-- 04a · Word Tunnel (pinned, 6 scroll-zoom steps) -->
+        <div id="svc-word-zoom">
+            <div id="svc-word-pin">
+                <div id="svc-zoom-label">
+                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 04 / SERVICES ]</span>
+                    <h2 class="font-serif text-5xl md:text-7xl tracking-tight text-white leading-tight">Full-Spectrum<br>Language &amp; Publishing</h2>
+                    <p class="text-sm text-neutral-400 mt-4 max-w-sm leading-relaxed">From translation to print-ready production — under one studio.</p>
+                </div>
+                <div id="svc-word-stage">
+                    <div class="svc-wgroup" data-phase="0">
+                        <span class="svc-word svc-word-xl" style="--wx:22%;--wy:28%">Translation</span>
+                        <span class="svc-word svc-word-xl" style="--wx:68%;--wy:62%">Localization</span>
+                        <span class="svc-word svc-word-md" style="--wx:52%;--wy:18%">120+ Languages</span>
+                        <span class="svc-word svc-word-md" style="--wx:30%;--wy:76%">Global Reach</span>
+                        <span class="svc-word svc-word-sm" style="--wx:82%;--wy:36%">Cultural Adaptation</span>
+                        <span class="svc-word svc-word-sm" style="--wx:14%;--wy:52%">Market-Ready</span>
+                    </div>
+                    <div class="svc-wgroup" data-phase="1">
+                        <span class="svc-word svc-word-xl" style="--wx:62%;--wy:30%">DTP</span>
+                        <span class="svc-word svc-word-xl" style="--wx:20%;--wy:60%">Typography</span>
+                        <span class="svc-word svc-word-md" style="--wx:74%;--wy:70%">Publishing</span>
+                        <span class="svc-word svc-word-md" style="--wx:40%;--wy:80%">InDesign</span>
+                        <span class="svc-word svc-word-sm" style="--wx:10%;--wy:30%">FrameMaker</span>
+                        <span class="svc-word svc-word-sm" style="--wx:84%;--wy:22%">Typesetting</span>
+                    </div>
+                    <div class="svc-wgroup" data-phase="2">
+                        <span class="svc-word svc-word-xl" style="--wx:36%;--wy:32%">eLearning</span>
+                        <span class="svc-word svc-word-xl" style="--wx:66%;--wy:58%">Multimedia</span>
+                        <span class="svc-word svc-word-md" style="--wx:18%;--wy:68%">Subtitling</span>
+                        <span class="svc-word svc-word-md" style="--wx:60%;--wy:20%">Dubbing</span>
+                        <span class="svc-word svc-word-sm" style="--wx:80%;--wy:78%">Voice-Over</span>
+                        <span class="svc-word svc-word-sm" style="--wx:44%;--wy:84%">Broadcast</span>
+                    </div>
+                    <div class="svc-wgroup" data-phase="3">
+                        <span class="svc-word svc-word-xl" style="--wx:26%;--wy:42%">Enterprise QA</span>
+                        <span class="svc-word svc-word-xl" style="--wx:64%;--wy:32%">Indic Scripts</span>
+                        <span class="svc-word svc-word-md" style="--wx:50%;--wy:68%">RTL + LTR</span>
+                        <span class="svc-word svc-word-md" style="--wx:80%;--wy:55%">Devanagari</span>
+                        <span class="svc-word svc-word-sm" style="--wx:14%;--wy:22%">Production-Ready</span>
+                        <span class="svc-word svc-word-sm" style="--wx:72%;--wy:84%">Bi-directional</span>
+                    </div>
+                    <div class="svc-wgroup" data-phase="4">
+                        <span class="svc-word svc-word-xl" style="--wx:42%;--wy:36%">AI-Powered</span>
+                        <span class="svc-word svc-word-xl" style="--wx:70%;--wy:66%">MTPE</span>
+                        <span class="svc-word svc-word-md" style="--wx:20%;--wy:56%">Automation</span>
+                        <span class="svc-word svc-word-md" style="--wx:76%;--wy:24%">Workflow</span>
+                        <span class="svc-word svc-word-sm" style="--wx:34%;--wy:80%">Neural MT</span>
+                        <span class="svc-word svc-word-sm" style="--wx:12%;--wy:72%">AI Speed</span>
+                    </div>
+                    <div class="svc-wgroup" data-phase="5">
+                        <span class="svc-word svc-word-xl" style="--wx:38%;--wy:34%">Transcreation</span>
+                        <span class="svc-word svc-word-xl" style="--wx:66%;--wy:62%">Brand Voice</span>
+                        <span class="svc-word svc-word-md" style="--wx:22%;--wy:64%">Cultural Fit</span>
+                        <span class="svc-word svc-word-md" style="--wx:72%;--wy:26%">Identity</span>
+                        <span class="svc-word svc-word-sm" style="--wx:50%;--wy:82%">Human Confidence</span>
+                        <span class="svc-word svc-word-sm" style="--wx:84%;--wy:48%">Quality</span>
+                    </div>
+                </div>
+                <div id="svc-zoom-hud">
+                    <span id="svc-zoom-step">01 / 06</span>
+                    <div id="svc-zoom-bar-wrap"><div id="svc-zoom-bar"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 04b · Localization Services — left sticky heading + 3×3 card grid -->
+        <div id="svc-loc-section">
+            <div class="svc-split-wrap">
+                <div class="svc-split-left" id="svc-loc-head">
+                    <span class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest block mb-6">Localization Services</span>
+                    <h2 class="font-serif text-4xl lg:text-[2.8rem] tracking-tight text-white leading-tight mb-5">Build multilingual<br>experiences that<br>connect globally.</h2>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-8">Through enterprise localization, language adaptation, and production-ready delivery across 120+ languages.</p>
+                    <div class="svc-split-pills">
+                        <span>120+ Languages</span>
+                        <span>Enterprise QA</span>
+                        <span>Indic Specialists</span>
+                        <span>AI-Powered</span>
+                    </div>
+                </div>
+                <div class="svc-split-right">
+                    <div class="svc-3x3" id="svc-loc-grid"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 04c · DTP & Publishing — slides from the right -->
+        <div id="svc-dtp-outer">
+            <div id="svc-dtp-section">
+                <div class="svc-split-wrap">
+                    <div class="svc-split-left" id="svc-dtp-head">
+                        <span class="font-mono text-[0.6rem] text-neutral-500 uppercase tracking-widest block mb-6">DTP &amp; Publishing Services</span>
+                        <h2 class="font-serif text-4xl lg:text-[2.8rem] tracking-tight text-white leading-tight mb-5">Transform multilingual<br>content into<br>production-ready work.</h2>
+                        <p class="text-sm text-neutral-400 leading-relaxed mb-8">Expert formatting, typesetting, artwork adaptation, and publishing workflows built for global enterprises.</p>
+                        <div class="svc-split-pills">
+                            <span>Print-Ready</span>
+                            <span>RTL &amp; LTR</span>
+                            <span>File Engineering</span>
+                            <span>QA &amp; Compliance</span>
+                        </div>
+                    </div>
+                    <div class="svc-split-right">
+                        <div class="svc-3x3" id="svc-dtp-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         05 / INDUSTRY SOLUTIONS — sticky stacking cards
+    ═══════════════════════════════════════════════════════ -->
+    <!-- Fixed progress bar (highest z-index, outside section flow) -->
+    <div id="ind-progress"></div>
+
+    <section id="industry-solutions">
+
+        <!-- 01 / Finance & Banking ── z:1, slides in first -->
+        <div class="ind-step" style="--iz:1;--ibg:rgba(10,9,16,0.98)">
+            <div class="ind-crd">
+                <div class="ind-crd-bar">
+                    <span class="ind-crd-label">[ 05 / Industry Solutions ]</span>
+                    <span class="ind-crd-num">01 / 07</span>
+                </div>
+                <div class="ind-crd-body">
+                    <div class="ind-crd-industry">Finance &amp; Banking</div>
+                    <h3>Financial Documents,<br>Globally Compliant</h3>
+                    <p class="ind-crd-desc">SuperDTP localizes annual reports, prospectuses, regulatory filings, and investor communications — maintaining precise formatting across 40+ languages while adhering to IFRS, SEC, and local regulatory standards.</p>
+                    <div class="ind-crd-tags">
+                        <span class="ind-tag">Annual Reports</span>
+                        <span class="ind-tag">Regulatory Filings</span>
+                        <span class="ind-tag">Investor Relations</span>
+                        <span class="ind-tag">KYC / AML Docs</span>
+                    </div>
+                </div>
+                <div class="ind-crd-bg-num">01</div>
+            </div>
+        </div>
+
+        <!-- 02 / Pharmaceuticals ── z:2 -->
+        <div class="ind-step" style="--iz:2;--ibg:rgba(9,9,17,0.98)">
+            <div class="ind-crd">
+                <div class="ind-crd-bar">
+                    <span class="ind-crd-label">[ 05 / Industry Solutions ]</span>
+                    <span class="ind-crd-num">02 / 07</span>
+                </div>
+                <div class="ind-crd-body">
+                    <div class="ind-crd-industry">Pharmaceuticals &amp; Life Sciences</div>
+                    <h3>Regulatory-Grade<br>Multilingual Documentation</h3>
+                    <p class="ind-crd-desc">Clinical trial documentation, SmPCs, package inserts, and dossier submissions formatted to ICH standards — zero-error, print-ready localized files that pass regulatory review first time.</p>
+                    <div class="ind-crd-tags">
+                        <span class="ind-tag">CTD / eCTD</span>
+                        <span class="ind-tag">Package Inserts</span>
+                        <span class="ind-tag">IFU / Labels</span>
+                        <span class="ind-tag">Clinical Protocols</span>
+                    </div>
+                </div>
+                <div class="ind-crd-bg-num">02</div>
+            </div>
+        </div>
+
+        <!-- 03 / Manufacturing ── z:3 -->
+        <div class="ind-step" style="--iz:3;--ibg:rgba(9,10,16,0.98)">
+            <div class="ind-crd">
+                <div class="ind-crd-bar">
+                    <span class="ind-crd-label">[ 05 / Industry Solutions ]</span>
+                    <span class="ind-crd-num">03 / 07</span>
+                </div>
+                <div class="ind-crd-body">
+                    <div class="ind-crd-industry">Manufacturing &amp; Engineering</div>
+                    <h3>Technical Documentation<br>at Global Scale</h3>
+                    <p class="ind-crd-desc">Operator manuals, CE-marking docs, and safety-critical callouts for automotive, aerospace, and heavy machinery — engineering diagrams and tables preserved perfectly across every language variant.</p>
+                    <div class="ind-crd-tags">
+                        <span class="ind-tag">Service Manuals</span>
+                        <span class="ind-tag">Safety Guides</span>
+                        <span class="ind-tag">CE Compliance</span>
+                        <span class="ind-tag">Parts Catalogs</span>
+                    </div>
+                </div>
+                <div class="ind-crd-bg-num">03</div>
+            </div>
+        </div>
+
+        <!-- 04 / Education ── z:4 -->
+        <div class="ind-step" style="--iz:4;--ibg:rgba(10,9,15,0.98)">
+            <div class="ind-crd">
+                <div class="ind-crd-bar">
+                    <span class="ind-crd-label">[ 05 / Industry Solutions ]</span>
+                    <span class="ind-crd-num">04 / 07</span>
+                </div>
+                <div class="ind-crd-body">
+                    <div class="ind-crd-industry">Education &amp; Publishing</div>
+                    <h3>Multilingual Learning<br>at Publisher Quality</h3>
+                    <p class="ind-crd-desc">Textbooks, EPUB, interactive PDFs, and course materials adapted into 30+ languages — including complex scripts like Hindi, Arabic, Chinese, and Tamil — for global publishers and eLearning platforms.</p>
+                    <div class="ind-crd-tags">
+                        <span class="ind-tag">Academic Textbooks</span>
+                        <span class="ind-tag">eLearning Modules</span>
+                        <span class="ind-tag">EPUB / PDF</span>
+                        <span class="ind-tag">Assessment Content</span>
+                    </div>
+                </div>
+                <div class="ind-crd-bg-num">04</div>
+            </div>
+        </div>
+
+        <!-- 05 / Legal ── z:5 -->
+        <div class="ind-step" style="--iz:5;--ibg:rgba(11,9,16,0.98)">
+            <div class="ind-crd">
+                <div class="ind-crd-bar">
+                    <span class="ind-crd-label">[ 05 / Industry Solutions ]</span>
+                    <span class="ind-crd-num">05 / 07</span>
+                </div>
+                <div class="ind-crd-body">
+                    <div class="ind-crd-industry">Legal &amp; Compliance</div>
+                    <h3>Precision Formatting<br>for Legal Instruments</h3>
+                    <p class="ind-crd-desc">Multilingual contracts, arbitration documents, court filings, and compliance frameworks — exact clause numbering and table structures maintained across every language version for international law firms.</p>
+                    <div class="ind-crd-tags">
+                        <span class="ind-tag">Contracts</span>
+                        <span class="ind-tag">Arbitration Docs</span>
+                        <span class="ind-tag">Due Diligence</span>
+                        <span class="ind-tag">Compliance Packs</span>
+                    </div>
+                </div>
+                <div class="ind-crd-bg-num">05</div>
+            </div>
+        </div>
+
+        <!-- 06 / Healthcare ── z:6 -->
+        <div class="ind-step" style="--iz:6;--ibg:rgba(9,10,17,0.98)">
+            <div class="ind-crd">
+                <div class="ind-crd-bar">
+                    <span class="ind-crd-label">[ 05 / Industry Solutions ]</span>
+                    <span class="ind-crd-num">06 / 07</span>
+                </div>
+                <div class="ind-crd-body">
+                    <div class="ind-crd-industry">Healthcare &amp; Medical Devices</div>
+                    <h3>Patient-Critical Content,<br>Flawlessly Formatted</h3>
+                    <p class="ind-crd-desc">MDR/IVDR-compliant medical device labeling, IFU documents, and eHealth UI localization — zero-compromise accuracy for local health authority submissions across 60+ markets.</p>
+                    <div class="ind-crd-tags">
+                        <span class="ind-tag">MDR / IVDR</span>
+                        <span class="ind-tag">Device Labels</span>
+                        <span class="ind-tag">Patient Info</span>
+                        <span class="ind-tag">eHealth UI</span>
+                    </div>
+                </div>
+                <div class="ind-crd-bg-num">06</div>
+            </div>
+        </div>
+
+        <!-- 07 / Technology ── z:7, top of stack -->
+        <div class="ind-step" style="--iz:7;--ibg:rgba(10,9,18,0.98)">
+            <div class="ind-crd">
+                <div class="ind-crd-bar">
+                    <span class="ind-crd-label">[ 05 / Industry Solutions ]</span>
+                    <span class="ind-crd-num">07 / 07</span>
+                </div>
+                <div class="ind-crd-body">
+                    <div class="ind-crd-industry">Technology &amp; Software</div>
+                    <h3>Software Localization<br>from UI to Docs</h3>
+                    <p class="ind-crd-desc">Help systems, release notes, onboarding guides, and white papers for enterprise software vendors — bridging the gap between translation output and publish-ready multilingual content at scale.</p>
+                    <div class="ind-crd-tags">
+                        <span class="ind-tag">Help Systems</span>
+                        <span class="ind-tag">Release Notes</span>
+                        <span class="ind-tag">White Papers</span>
+                        <span class="ind-tag">UI Strings</span>
+                    </div>
+                </div>
+                <div class="ind-crd-bg-num">07</div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         06 / INDIC LANGUAGE EXCELLENCE
+    ═══════════════════════════════════════════════════════ -->
+    <section class="section-fade-bg py-32 px-6 md:px-12 border-t border-white/5 bg-neutral-950" id="indic-excellence" data-bg-opacity="0.65">
         <div class="max-w-7xl mx-auto">
-            
-            <div class="mb-24">
-                <span class="font-mono text-xs text-neutral-500 uppercase tracking-widest block mb-4">[ 02 / INFOGRAPHIC LABS ]</span>
-                <h2 class="font-serif text-5xl md:text-6xl tracking-tight max-w-2xl">Visualizing Typographic & Compliance Architecture</h2>
+            <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 06 / INDIC LANGUAGE EXCELLENCE ]</span>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-end">
+                <div class="lg:col-span-7">
+                    <h2 class="font-serif text-5xl md:text-6xl tracking-tight max-w-3xl">Deep Roots in India's 22 Official Languages</h2>
+                </div>
+                <p class="lg:col-span-4 lg:col-start-9 text-sm text-neutral-400 leading-relaxed">With expert DTP engineers and linguists specializing in every major Indic script — from Devanagari to Ol Chiki — SuperDTP delivers production-ready multilingual content for India's vast and diverse markets.</p>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
-                
-                <div class="diagram-panel flex flex-col justify-between bg-brandBg/40 border border-white/5 p-8 rounded-xl backdrop-blur-sm group hover:border-white/20 transition-all duration-500">
-                    <div>
-                        <div class="flex justify-between items-center mb-8">
-                            <span class="font-mono text-xs text-neutral-500">DIAGRAM_01 // METRIC SHIFTS</span>
-                            <span class="font-mono text-xs text-brandAccent px-2 py-0.5 bg-brandAccent/10 rounded">+35% VOLUME</span>
-                        </div>
-                        
-                        <div class="doc-canvas p-6 flex flex-col justify-between mb-8" id="canvas-expansion">
-                            <div class="w-1/3 h-2 bg-neutral-700 rounded-full"></div>
-                            
-                            <div class="space-y-3 my-auto">
-                                <div class="w-full h-4 bg-white/10 rounded flex items-center px-2 overflow-hidden">
-                                    <div class="h-1.5 bg-brandAccent rounded-full expansion-bar-1" style="width: 45%;"></div>
-                                </div>
-                                <div class="w-full h-4 bg-white/10 rounded flex items-center px-2 overflow-hidden">
-                                    <div class="h-1.5 bg-brandAccent rounded-full expansion-bar-2" style="width: 60%;"></div>
-                                </div>
-                                <div class="w-full h-4 bg-white/10 rounded flex items-center px-2 overflow-hidden">
-                                    <div class="h-1.5 bg-brandAccent rounded-full expansion-bar-3" style="width: 30%;"></div>
-                                </div>
-                            </div>
-
-                            <div class="flex justify-between items-center border-t border-white/5 pt-4">
-                                <div class="w-4 h-4 rounded-sm bg-neutral-800"></div>
-                                <div class="w-12 h-1 bg-neutral-800"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">Text Expansion Overflows</h3>
-                        <p class="text-xs text-neutral-400 leading-relaxed">
-                            Translating layouts from English to European languages expands text copy by up to 35%. Our automated system scales component boundaries to prevent text truncation without altering the original art direction.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="diagram-panel flex flex-col justify-between bg-brandBg/40 border border-white/5 p-8 rounded-xl backdrop-blur-sm group hover:border-white/20 transition-all duration-500">
-                    <div>
-                        <div class="flex justify-between items-center mb-8">
-                            <span class="font-mono text-xs text-neutral-500">DIAGRAM_02 // LAYOUT AXIS</span>
-                            <span class="font-mono text-xs text-blue-400 px-2 py-0.5 bg-blue-500/10 rounded">RTL MATRIX</span>
-                        </div>
-                        
-                        <div class="doc-canvas p-6 flex flex-col justify-between mb-8" id="canvas-mirroring">
-                            <div class="flex justify-between items-center border-b border-white/5 pb-3">
-                                <div class="w-3 h-3 rounded-full bg-neutral-700"></div>
-                                <div class="w-8 h-1.5 bg-neutral-800 rounded-full"></div>
-                            </div>
-                            
-                            <div class="relative w-full h-32 my-auto flex items-center justify-between px-2">
-                                <div class="w-14 h-20 bg-white/10 rounded border border-white/10 p-2 flex flex-col justify-between rtl-box-left">
-                                    <div class="w-full h-2 bg-neutral-600 rounded"></div>
-                                    <div class="w-2/3 h-1.5 bg-neutral-700 rounded"></div>
-                                </div>
-                                
-                                <div class="absolute inset-x-0 h-px bg-dashed bg-neutral-700 z-0"></div>
-
-                                <div class="w-20 h-20 bg-brandAccent/10 rounded border border-brandAccent/20 p-2 flex flex-col justify-between relative z-10 rtl-box-right">
-                                    <div class="w-8 h-8 rounded-full bg-brandAccent/20 mx-auto animate-pulse"></div>
-                                    <div class="w-full h-2 bg-brandAccent/30 rounded"></div>
-                                </div>
-                            </div>
-
-                            <div class="w-full h-2 bg-neutral-800 rounded-full"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">Bi-Directional RTL Mapping</h3>
-                        <p class="text-xs text-neutral-400 leading-relaxed">
-                            Adapting documents for Middle Eastern markets requires more than right-aligning text. We accurately mirror user paths, image structures, and geometric flows to maintain reading context in Arabic and Hebrew scripts.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="diagram-panel flex flex-col justify-between bg-brandBg/40 border border-white/5 p-8 rounded-xl backdrop-blur-sm group hover:border-white/20 transition-all duration-500">
-                    <div>
-                        <div class="flex justify-between items-center mb-8">
-                            <span class="font-mono text-xs text-neutral-500">DIAGRAM_03 // COMPLIANCE NODES</span>
-                            <span class="font-mono text-xs text-emerald-400 px-2 py-0.5 bg-emerald-500/10 rounded">WCAG 2.2</span>
-                        </div>
-                        
-                        <div class="doc-canvas p-6 flex flex-col justify-between mb-8" id="canvas-accessibility">
-                            <div class="space-y-2 my-auto relative">
-                                <div class="w-full h-8 bg-neutral-900 border border-emerald-500/30 rounded p-2 flex justify-between items-center acc-layer-1">
-                                    <div class="w-16 h-2 bg-neutral-600 rounded"></div>
-                                    <span class="font-mono text-[8px] text-emerald-400 font-semibold">&lt;H1.TAG&gt;</span>
-                                </div>
-                                <div class="w-full h-8 bg-neutral-900 border border-white/5 rounded p-2 flex justify-between items-center acc-layer-2">
-                                    <div class="w-24 h-1.5 bg-neutral-700 rounded"></div>
-                                    <span class="font-mono text-[8px] text-neutral-500">&lt;P.BODY&gt;</span>
-                                </div>
-                                <div class="w-full h-12 bg-neutral-900 border border-brandAccent/20 rounded p-2 flex justify-between items-center acc-layer-3">
-                                    <div class="w-10 h-8 bg-white/5 rounded"></div>
-                                    <span class="font-mono text-[8px] text-brandAccent font-semibold">&lt;ALT-TEXT&gt;</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">PDF Accessibility Tag Arrays</h3>
-                        <p class="text-xs text-neutral-400 leading-relaxed">
-                            Unstructured documents present severe barriers for assistive screen readers. We map document structures with clear tag arrays, define intuitive reading order trees, and verify contrast values to satisfy global accessibility compliance mandates.
-                        </p>
-                    </div>
-                </div>
-
+            <!-- Language grid -->
+            <div class="indic-lang-grid">
+                <div class="indic-lang-card"><div class="indic-script">हिंदी</div><div class="indic-lang-en">Hindi</div></div>
+                <div class="indic-lang-card"><div class="indic-script">বাংলা</div><div class="indic-lang-en">Bengali</div></div>
+                <div class="indic-lang-card"><div class="indic-script">తెలుగు</div><div class="indic-lang-en">Telugu</div></div>
+                <div class="indic-lang-card"><div class="indic-script">தமிழ்</div><div class="indic-lang-en">Tamil</div></div>
+                <div class="indic-lang-card"><div class="indic-script">मराठी</div><div class="indic-lang-en">Marathi</div></div>
+                <div class="indic-lang-card"><div class="indic-script">ગુજરાતી</div><div class="indic-lang-en">Gujarati</div></div>
+                <div class="indic-lang-card"><div class="indic-script">ಕನ್ನಡ</div><div class="indic-lang-en">Kannada</div></div>
+                <div class="indic-lang-card"><div class="indic-script">മലയാളം</div><div class="indic-lang-en">Malayalam</div></div>
+                <div class="indic-lang-card"><div class="indic-script">ଓଡ଼ିଆ</div><div class="indic-lang-en">Odia</div></div>
+                <div class="indic-lang-card"><div class="indic-script">ਪੰਜਾਬੀ</div><div class="indic-lang-en">Punjabi</div></div>
+                <div class="indic-lang-card"><div class="indic-script">اردو</div><div class="indic-lang-en">Urdu</div></div>
+                <div class="indic-lang-card"><div class="indic-script">संस्कृत</div><div class="indic-lang-en">Sanskrit</div></div>
+                <div class="indic-lang-card"><div class="indic-script">অসমীয়া</div><div class="indic-lang-en">Assamese</div></div>
+                <div class="indic-lang-card"><div class="indic-script">मैथिली</div><div class="indic-lang-en">Maithili</div></div>
+                <div class="indic-lang-card"><div class="indic-script">سنڌي</div><div class="indic-lang-en">Sindhi</div></div>
+                <div class="indic-lang-card"><div class="indic-script">कॉशुर</div><div class="indic-lang-en">Kashmiri</div></div>
+                <div class="indic-lang-card"><div class="indic-script">डोगरी</div><div class="indic-lang-en">Dogri</div></div>
+                <div class="indic-lang-card"><div class="indic-script">कोंकणी</div><div class="indic-lang-en">Konkani</div></div>
+                <div class="indic-lang-card"><div class="indic-script">ᱥᱟᱱᱛᱟᱲᱤ</div><div class="indic-lang-en">Santali</div></div>
+                <div class="indic-lang-card"><div class="indic-script">মৈতৈলোন্</div><div class="indic-lang-en">Manipuri</div></div>
+                <div class="indic-lang-card"><div class="indic-script">बड़ो</div><div class="indic-lang-en">Bodo</div></div>
+                <div class="indic-lang-card"><div class="indic-script">नेपाली</div><div class="indic-lang-en">Nepali</div></div>
             </div>
 
-            <div class="mt-16 grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-8">
-                <div class="diagram-panel flex flex-col justify-between bg-brandBg/40 border border-white/5 p-8 rounded-xl backdrop-blur-sm group hover:border-white/20 transition-all duration-500">
-                    <div>
-                        <div class="flex justify-between items-center mb-8">
-                            <span class="font-mono text-xs text-neutral-500">DIAGRAM_04 // FONT FIDELITY</span>
-                            <span class="font-mono text-xs text-brandAccent px-2 py-0.5 bg-brandAccent/10 rounded">TYPE SYSTEM</span>
-                        </div>
-                        <div class="doc-canvas p-6 flex flex-col justify-between mb-8">
-                            <div class="space-y-3">
-                                <div class="h-3 bg-neutral-800 rounded-xl"></div>
-                                <div class="h-3 bg-neutral-700 rounded-xl w-4/5"></div>
-                                <div class="h-3 bg-neutral-800 rounded-xl w-3/5"></div>
-                            </div>
-                            <div class="flex justify-between items-center border-t border-white/5 pt-4">
-                                <span class="w-4 h-4 rounded-sm bg-neutral-800"></span>
-                                <span class="w-10 h-1 bg-neutral-800"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">Font System Fidelity</h3>
-                        <p class="text-xs text-neutral-400 leading-relaxed">
-                            Maintain typographic hierarchy across multilingual variants with adaptive font scaling, dynamic line-height adjustments, and glyph substitution logic for consistent brand expression.
-                        </p>
-                    </div>
+            <!-- Stats row -->
+            <div class="indic-stat-row">
+                <div class="indic-stat-cell">
+                    <div class="text-4xl font-semibold text-white mb-2">22<span class="text-lg font-normal text-neutral-400">+</span></div>
+                    <div class="font-mono text-[0.58rem] uppercase tracking-widest text-brandAccent/70">Official Languages</div>
+                    <div class="text-xs text-neutral-400 mt-2 leading-relaxed">Full coverage of all languages recognized by the Indian Constitution</div>
                 </div>
-                <div class="diagram-panel flex flex-col justify-between bg-brandBg/40 border border-white/5 p-8 rounded-xl backdrop-blur-sm group hover:border-white/20 transition-all duration-500">
-                    <div>
-                        <div class="flex justify-between items-center mb-8">
-                            <span class="font-mono text-xs text-neutral-500">DIAGRAM_05 // GRID SYNC</span>
-                            <span class="font-mono text-xs text-sky-400 px-2 py-0.5 bg-sky-500/10 rounded">FLOWMAP</span>
-                        </div>
-                        <div class="doc-canvas p-6 flex flex-col justify-between mb-8">
-                            <div class="grid gap-3">
-                                <div class="w-full h-3 bg-neutral-700 rounded-full"></div>
-                                <div class="w-full h-3 bg-neutral-700 rounded-full"></div>
-                                <div class="w-2/3 h-3 bg-neutral-700 rounded-full"></div>
-                            </div>
-                            <div class="flex justify-between items-center border-t border-white/5 pt-4">
-                                <span class="w-3 h-3 rounded-full bg-brandAccent/30"></span>
-                                <span class="w-16 h-1 bg-neutral-800"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">Grid Sync Analytics</h3>
-                        <p class="text-xs text-neutral-400 leading-relaxed">
-                            Inspect responsive grid distribution and content flow ratios with live metrics for baselines, gutters, and column breaks across print and screen compositions.
-                        </p>
-                    </div>
+                <div class="indic-stat-cell">
+                    <div class="text-4xl font-semibold text-white mb-2">12<span class="text-lg font-normal text-neutral-400">+</span></div>
+                    <div class="font-mono text-[0.58rem] uppercase tracking-widest text-brandAccent/70">Unique Scripts</div>
+                    <div class="text-xs text-neutral-400 mt-2 leading-relaxed">From Devanagari and Perso-Arabic to Ol Chiki and Meitei Mayek</div>
                 </div>
-                <div class="diagram-panel flex flex-col justify-between bg-brandBg/40 border border-white/5 p-8 rounded-xl backdrop-blur-sm group hover:border-white/20 transition-all duration-500">
-                    <div>
-                        <div class="flex justify-between items-center mb-8">
-                            <span class="font-mono text-xs text-neutral-500">DIAGRAM_06 // CONTEXT NODE</span>
-                            <span class="font-mono text-xs text-violet-400 px-2 py-0.5 bg-violet-500/10 rounded">SEMANTIC</span>
-                        </div>
-                        <div class="doc-canvas p-6 flex flex-col justify-between mb-8">
-                            <div class="grid gap-3">
-                                <div class="w-full h-4 bg-neutral-700 rounded-full"></div>
-                                <div class="w-4/5 h-4 bg-neutral-800 rounded-full"></div>
-                            </div>
-                            <div class="flex justify-between items-center border-t border-white/5 pt-4">
-                                <span class="w-5 h-5 rounded-full bg-violet-500/20"></span>
-                                <span class="w-10 h-1 bg-neutral-800"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div>
-                        <h3 class="font-serif text-3xl mb-3">Context Node Mapping</h3>
-                        <p class="text-xs text-neutral-400 leading-relaxed">
-                            Preserve user intent through semantic block analysis, auto-tagging, and progressive reading order generation for digital and print output.
-                        </p>
-                    </div>
+                <div class="indic-stat-cell">
+                    <div class="text-4xl font-semibold text-white mb-2">10<span class="text-lg font-normal text-neutral-400">M+</span></div>
+                    <div class="font-mono text-[0.58rem] uppercase tracking-widest text-brandAccent/70">Indic Words Processed</div>
+                    <div class="text-xs text-neutral-400 mt-2 leading-relaxed">Across publishing, government, education, and corporate sectors</div>
+                </div>
+                <div class="indic-stat-cell">
+                    <div class="text-4xl font-semibold text-white mb-2">RTL<span class="text-lg font-normal text-neutral-400"> + LTR</span></div>
+                    <div class="font-mono text-[0.58rem] uppercase tracking-widest text-brandAccent/70">Bi-Directional Mastery</div>
+                    <div class="text-xs text-neutral-400 mt-2 leading-relaxed">Expert handling of mixed-direction layouts including Urdu and Sindhi</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ═══════════════════════════════════════════════════════
+         07 / FILE FORMATS WE SUPPORT
+    ═══════════════════════════════════════════════════════ -->
+    <section id="fmt-section">
+        <div id="fmt-pin">
+
+            <!-- Background color layer — changes per format -->
+            <div id="fmt-bg-fill"></div>
+
+            <!-- LEFT: frozen heading + active format display -->
+            <div class="fmt-left-panel">
+                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-5">[ 07 / FILE FORMATS ]</span>
+                <h2 class="font-serif text-5xl md:text-6xl tracking-tight leading-none mb-6">Every Format.<br>Every Language.<br>Production&#8209;Ready.</h2>
+                <p class="text-sm text-neutral-400 leading-relaxed mb-10 max-w-xs">We work natively in the tools your team already uses — no conversion bottlenecks, no quality compromise.</p>
+
+                <!-- Active format spotlight -->
+                <div>
+                    <div class="fmt-active-counter" id="fmt-active-counter">01 / 12</div>
+                    <span class="fmt-active-big" id="fmt-active-big">.indd</span>
+                    <div class="fmt-active-app" id="fmt-active-app">Adobe InDesign</div>
+                    <div class="fmt-active-desc" id="fmt-active-desc">Adobe InDesign — the primary format for multilingual DTP, books, magazines, and marketing collateral</div>
+                </div>
+
+                <!-- Progress dots -->
+                <div class="fmt-progress-dots" id="fmt-prog-dots"></div>
+            </div>
+
+            <!-- RIGHT: vertically scrolling list -->
+            <div class="fmt-right-panel">
+                <div id="fmt-list-track">
+
+                    <div class="fmt-row active" data-ext=".indd" data-app="Adobe InDesign">
+                        <span class="fmt-row-num">01</span>
+                        <span class="fmt-ext-label">.indd</span>
+                        <span class="fmt-row-desc">Adobe InDesign — the primary format for multilingual DTP, books, magazines, and marketing collateral</span>
+                        <span class="fmt-app-badge">InDesign</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".ai" data-app="Adobe Illustrator">
+                        <span class="fmt-row-num">02</span>
+                        <span class="fmt-ext-label">.ai</span>
+                        <span class="fmt-row-desc">Adobe Illustrator — artwork, infographics, packaging, labels, and vector-based creative localization</span>
+                        <span class="fmt-app-badge">Illustrator</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".pdf" data-app="Adobe Acrobat">
+                        <span class="fmt-row-num">03</span>
+                        <span class="fmt-ext-label">.pdf</span>
+                        <span class="fmt-row-desc">Adobe PDF — print-ready, accessible, and digitally signed outputs; PDF/X, PDF/A, and tagged accessibility formats</span>
+                        <span class="fmt-app-badge">Acrobat</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".fm" data-app="Adobe FrameMaker">
+                        <span class="fmt-row-num">04</span>
+                        <span class="fmt-ext-label">.fm</span>
+                        <span class="fmt-row-desc">Adobe FrameMaker — structured long-form technical documentation, manuals, and DITA/XML-based publishing</span>
+                        <span class="fmt-app-badge">FrameMaker</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".docx" data-app="Microsoft Word">
+                        <span class="fmt-row-num">05</span>
+                        <span class="fmt-ext-label">.docx</span>
+                        <span class="fmt-row-desc">Microsoft Word — business documents, legal briefs, reports, and editable client deliverables in all languages</span>
+                        <span class="fmt-app-badge">Word</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".pptx" data-app="Microsoft PowerPoint">
+                        <span class="fmt-row-num">06</span>
+                        <span class="fmt-ext-label">.pptx</span>
+                        <span class="fmt-row-desc">Microsoft PowerPoint — investor decks, sales presentations, training materials, and brand-compliant slide localization</span>
+                        <span class="fmt-app-badge">PowerPoint</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".qxp" data-app="QuarkXPress">
+                        <span class="fmt-row-num">07</span>
+                        <span class="fmt-ext-label">.qxp</span>
+                        <span class="fmt-row-desc">QuarkXPress — legacy and active publishing workflows for newspapers, catalogs, and high-end print production</span>
+                        <span class="fmt-app-badge">QuarkXPress</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".epub" data-app="eBook Standard">
+                        <span class="fmt-row-num">08</span>
+                        <span class="fmt-ext-label">.epub</span>
+                        <span class="fmt-row-desc">EPUB 2 &amp; 3 — reflowable and fixed-layout eBooks with multilingual metadata, RTL/CJK support, and accessibility tags</span>
+                        <span class="fmt-app-badge">eBook</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".xml" data-app="Structured Content">
+                        <span class="fmt-row-num">09</span>
+                        <span class="fmt-ext-label">.xml</span>
+                        <span class="fmt-row-desc">XML, DITA &amp; XLIFF — structured content pipelines, translation exchange formats, and automated publishing workflows</span>
+                        <span class="fmt-app-badge">Structured</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".idml" data-app="InDesign Markup">
+                        <span class="fmt-row-num">10</span>
+                        <span class="fmt-ext-label">.idml</span>
+                        <span class="fmt-row-desc">InDesign Markup Language — interchange format enabling CAT-tool integration and automated localization pipelines</span>
+                        <span class="fmt-app-badge">InDesign ML</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".fig" data-app="Figma">
+                        <span class="fmt-row-num">11</span>
+                        <span class="fmt-ext-label">.fig</span>
+                        <span class="fmt-row-desc">Figma — UI/UX design localization, product screen exports, and interactive prototype adaptation for global markets</span>
+                        <span class="fmt-app-badge">Figma</span>
+                    </div>
+
+                    <div class="fmt-row" data-ext=".svg" data-app="Vector Graphics">
+                        <span class="fmt-row-num">12</span>
+                        <span class="fmt-ext-label">.svg</span>
+                        <span class="fmt-row-desc">SVG &amp; vector graphics — infographic localization, icon adaptation, and multilingual diagram recreation at any scale</span>
+                        <span class="fmt-app-badge">Vector</span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════
+         08 / WORLD REACH MAP
+    ═══════════════════════════════════════════════════════ -->
+    <section class="section-fade-bg py-32 px-6 md:px-12 border-t border-white/5 bg-neutral-950" id="world-reach" data-bg-opacity="0.68">
+        <div class="max-w-7xl mx-auto">
+            <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 08 / GLOBAL REACH ]</span>
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end">
+                <div class="lg:col-span-7">
+                    <h2 class="font-serif text-5xl md:text-6xl tracking-tight">Delivering to 60+ Markets Worldwide</h2>
+                </div>
+                <p class="lg:col-span-4 lg:col-start-9 text-sm text-neutral-400 leading-relaxed">SuperDTP's production network supports active client projects across North America, Europe, Asia Pacific, the Middle East, and South Asia — covering every major language market on earth.</p>
+            </div>
+
+            <!-- Stat strip -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-14">
+                <div class="border border-white/6 rounded-xl p-5 bg-white/[0.02]">
+                    <div class="font-serif text-3xl text-white mb-1">60<span class="text-base font-sans font-normal text-neutral-400">+</span></div>
+                    <div class="font-mono text-[0.56rem] uppercase tracking-widest text-brandAccent/65">Markets Served</div>
+                </div>
+                <div class="border border-white/6 rounded-xl p-5 bg-white/[0.02]">
+                    <div class="font-serif text-3xl text-white mb-1">75<span class="text-base font-sans font-normal text-neutral-400">+</span></div>
+                    <div class="font-mono text-[0.56rem] uppercase tracking-widest text-brandAccent/65">Languages</div>
+                </div>
+                <div class="border border-white/6 rounded-xl p-5 bg-white/[0.02]">
+                    <div class="font-serif text-3xl text-white mb-1">6</div>
+                    <div class="font-mono text-[0.56rem] uppercase tracking-widest text-brandAccent/65">Continents</div>
+                </div>
+                <div class="border border-white/6 rounded-xl p-5 bg-white/[0.02]">
+                    <div class="font-serif text-3xl text-white mb-1">24/7</div>
+                    <div class="font-mono text-[0.56rem] uppercase tracking-widest text-brandAccent/65">Production Coverage</div>
+                </div>
+            </div>
+            <img src="static/colored_world_map.svg" alt="World Map" >
+            <!-- Map container -->
+            <!-- <div class="relative rounded-xl overflow-hidden border border-white/6 bg-[#060609]" style="min-height:380px;">
+                <div id="world-map-container" class="map-loading">LOADING WORLD MAP…</div>
+                <!-- Country tooltip -->
+                 <img src-"static\colored_world_map.svg" alt="World Map" class="absolute top-0 left-0 w-full h-full object-cover pointer-events-none opacity-0" id="world-map-image">
+                <!-- <div id="map-tooltip" style="display:none;position:absolute;z-index:10;background:rgba(9,9,11,0.95);border:1px solid rgba(212,175,55,0.3);border-radius:6px;padding:6px 12px;font-family:'Space Grotesk',monospace;font-size:0.58rem;letter-spacing:0.18em;color:#d4af37;pointer-events:none;white-space:nowrap;"></div> -->
+            </div> -->
+
+        </div>
+    </section>
+    <!-- ═══════════════════════════════════════════════════════
+         09 / CONTACT US
+    ═══════════════════════════════════════════════════════ -->
+    <section class="section-fade-bg py-32 px-6 md:px-12 border-t border-white/5 bg-[#060609]" id="contact" data-bg-opacity="0.7">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
+
+                <!-- Left: copy -->
+                <div class="lg:col-span-5">
+                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 09 / CONTACT ]</span>
+                    <h2 class="font-serif text-5xl md:text-6xl tracking-tight mb-6">Let's Build Something Global Together</h2>
+                    <p class="text-sm text-neutral-400 leading-relaxed mb-10">Whether you have a single urgent project or an ongoing enterprise workflow, our team is ready to scope, quote, and deliver — typically within 24 hours.</p>
+
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-brandAccent/10 border border-brandAccent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#d4af37" stroke-width="1.5"><path d="M2 3h10l-5 5-5-5zm0 0v8h10V3"/></svg>
+                            </div>
+                            <div>
+                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-400 mb-1">Email</div>
+                                <a href="mailto:dtp.bulgaria@gmail.com" class="text-sm text-white hover:text-brandAccent transition-colors">dtp.bulgaria@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-brandAccent/10 border border-brandAccent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#d4af37" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg>
+                            </div>
+                            <div>
+                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-400 mb-1">Response Time</div>
+                                <div class="text-sm text-white">Within 24 hours, any timezone</div>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="w-8 h-8 rounded-lg bg-brandAccent/10 border border-brandAccent/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#d4af37" stroke-width="1.5"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z"/></svg>
+                            </div>
+                            <div>
+                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-400 mb-1">Enterprise Clients</div>
+                                <div class="text-sm text-white">Dedicated PM assigned from day one</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: form -->
+                <div class="lg:col-span-7">
+                    <form id="contact-form" class="space-y-5" novalidate>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="contact-label" for="cf-name">Full Name</label>
+                                <input type="text" id="cf-name" name="name" class="contact-field" placeholder="Your name" required>
+                            </div>
+                            <div>
+                                <label class="contact-label" for="cf-email">Email Address</label>
+                                <input type="email" id="cf-email" name="email" class="contact-field" placeholder="your@company.com" required>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label class="contact-label" for="cf-company">Company</label>
+                                <input type="text" id="cf-company" name="company" class="contact-field" placeholder="Your organization">
+                            </div>
+                            <div>
+                                <label class="contact-label" for="cf-service">Service Needed</label>
+                                <select id="cf-service" name="service" class="contact-field">
+                                    <option value="">Select a service…</option>
+                                    <option value="multilingual-dtp">Multilingual DTP</option>
+                                    <option value="localization">Translation &amp; Localization</option>
+                                    <option value="typesetting">Typesetting &amp; Publishing</option>
+                                    <option value="indic">Indic Language Services</option>
+                                    <option value="accessibility">PDF Accessibility</option>
+                                    <option value="elearning">eLearning Localization</option>
+                                    <option value="other">Other / Not Sure</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="contact-label" for="cf-languages">Target Languages</label>
+                            <input type="text" id="cf-languages" name="languages" class="contact-field" placeholder="e.g. German, Japanese, Arabic, Hindi…">
+                        </div>
+                        <div>
+                            <label class="contact-label" for="cf-message">Project Brief</label>
+                            <textarea id="cf-message" name="message" class="contact-field" placeholder="Describe your project — file formats, volume, deadline, and any special requirements…"></textarea>
+                        </div>
+                        <div class="flex items-center gap-6 pt-2">
+                            <button type="submit" class="contact-submit">
+                                Send Brief
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M1 7h12M8 3l4 4-4 4"/></svg>
+                            </button>
+                            <div class="contact-success" id="contact-success">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 7l3.5 3.5L12 3"/></svg>
+                                Message sent — we'll reply within 24 hours.
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
     <footer class="bg-neutral-950 border-t border-white/10 pt-24 pb-12 px-6 md:px-12" id="footer">
-        <div class="max-w-7xl mx-auto flex flex-col justify-between items-center gap-8 font-mono text-xs text-neutral-500 md:flex-row">
+        <div class="max-w-7xl mx-auto flex flex-col justify-between items-center gap-8 font-mono text-xs text-neutral-400 md:flex-row">
             <div>&copy; 2026 SUPERDTP LABS. WORLDWIDE DISTRIBUTION.</div>
             <div class="flex space-x-6 text-neutral-400">
                 <a href="mailto:dtp.bulgaria@gmail.com" class="hover:text-brandAccent transition-colors">CONNECT: DTP.BULGARIA@GMAIL.COM</a>
@@ -1585,10 +2547,11 @@
             });
 
             const sections = [
-                { id: '#hero', trigger: '#hero' },
-                { id: '#visual-lab', trigger: '#visual-lab' },
-                { id: '#infographics', trigger: '#infographics' },
-                { id: '#footer', trigger: '#footer' }
+                { id: '#hero',                trigger: '#hero'                },
+                { id: '#visual-lab',          trigger: '#visual-lab'          },
+                { id: '#industry-solutions',  trigger: '#industry-solutions'  },
+                { id: '#services',            trigger: '#services'            },
+                { id: '#contact',             trigger: '#contact'             }
             ];
 
             sections.forEach(({ id, trigger }) => {
@@ -1675,35 +2638,6 @@
                     trigger: '#visual-lab',
                     start: 'top 76%',
                     once: true
-                }
-            });
-
-            gsap.from('#infographics .font-mono, #infographics h2', {
-                opacity: 0,
-                y: 20,
-                stagger: 0.12,
-                duration: 0.85,
-                ease: 'power2.out',
-                scrollTrigger: {
-                    trigger: '#infographics',
-                    start: 'top 76%',
-                    once: true
-                }
-            });
-
-            gsap.set('.diagram-panel', { opacity: 0, y: 38 });
-            ScrollTrigger.batch('.diagram-panel', {
-                start: 'top 86%',
-                once: true,
-                onEnter: batch => {
-                    gsap.to(batch, {
-                        opacity: 1,
-                        y: 0,
-                        duration: 0.75,
-                        stagger: 0.08,
-                        ease: 'power3.out',
-                        onStart: () => batch.forEach(panel => panel.querySelector('.doc-canvas')?.classList.add('is-scanning'))
-                    });
                 }
             });
 
@@ -1900,7 +2834,7 @@
         }
 
         function initSectionZoomEffects() {
-            ['#visual-lab', '#infographics'].forEach(id => {
+            ['#visual-lab', '#trusted-by'].forEach(id => {
                 /* zoom-in from below as section enters viewport */
                 gsap.from(id, {
                     scale: 1.035,
@@ -1952,34 +2886,34 @@
 
             // ── Data ───────────────────────────────────────────
             var phases = [
-                { id:'p1', num:'01', name:'Initiation & Prep',        top:100,  bot:440,  fill:'rgba(56,189,248,0.04)',  stroke:'rgba(56,189,248,0.18)'  },
-                { id:'p2', num:'02', name:'Production & Verification', top:460,  bot:780,  fill:'rgba(212,175,55,0.04)', stroke:'rgba(212,175,55,0.18)'  },
-                { id:'p3', num:'03', name:'Final Approvals',           top:800,  bot:1090, fill:'rgba(56,189,248,0.04)',  stroke:'rgba(56,189,248,0.18)'  },
-                { id:'p4', num:'04', name:'Closure & Billing',         top:1110, bot:1450, fill:'rgba(52,211,153,0.04)', stroke:'rgba(52,211,153,0.18)'  }
+                { id:'p1', num:'01', name:'Initiation & Prep',        top:100,  bot:470,  fill:'rgba(56,189,248,0.04)',  stroke:'rgba(56,189,248,0.18)'  },
+                { id:'p2', num:'02', name:'Production & Verification', top:490,  bot:800,  fill:'rgba(212,175,55,0.04)', stroke:'rgba(212,175,55,0.18)'  },
+                { id:'p3', num:'03', name:'Final Approvals',           top:820,  bot:1130, fill:'rgba(56,189,248,0.04)',  stroke:'rgba(56,189,248,0.18)'  },
+                { id:'p4', num:'04', name:'Closure & Billing',         top:1150, bot:1480, fill:'rgba(52,211,153,0.04)', stroke:'rgba(52,211,153,0.18)'  }
             ];
 
             // seq, phase, fromX, toX, isSelf, y, labelText
             var steps = [
-                [1, 'p1', 80,  240, false, 145,  'Project Initiated (Email / FTP / WeTransfer)'],
-                [2, 'p1', 240, 240, true,  205,  'Run Pre-Flight Checks'],
-                [3, 'p1', 240, 80,  false, 265,  'Send Quote'],
-                [4, 'p1', 80,  240, false, 325,  'Issue Preliminary Purchase Order (PO)'],
-                [5, 'p1', 240, 240, true,  385,  'Allocation to Team Leaders'],
-                [6, 'p2', 240, 400, false, 495,  'Assign to DTP 1'],
-                [7, 'p2', 400, 560, false, 555,  'Send to Internal QA'],
-                [8, 'p2', 560, 80,  false, 615,  'Deliver PDF for QA / Language Sign-Off (LSO)'],
-                [9, 'p2', 80,  400, false, 675,  'Feedback / Edits for DTP 2'],
-                [10,'p2', 400, 80,  false, 735,  'Deliver for Client Review (CR)'],
-                [11,'p3', 80,  400, false, 845,  'Send CR Feedback for DTP 3'],
-                [12,'p3', 400, 80,  false, 905,  "Deliver for Client’s Client Review (CCR)"],
-                [13,'p3', 80,  400, false, 965,  'Send CCR Feedback for DTP 4'],
-                [14,'p3', 80,  240, false, 1025, 'Final Approval Granted'],
-                [15,'p3', 240, 80,  false, 1058, 'Final Delivery to Client'],
-                [16,'p4', 240, 720, false, 1155, 'Financial Closure of the Project'],
-                [17,'p4', 80,  720, false, 1215, 'Provide Final Purchase Order (PO)'],
-                [18,'p4', 80,  240, false, 1275, 'Project Feedback'],
-                [19,'p4', 720, 80,  false, 1335, 'Send Invoice'],
-                [20,'p4', 240, 240, true,  1395, 'Project Archived']
+                [1, 'p1', 80,  240, false, 150,  'Project Initiated (Email / FTP / WeTransfer)'],
+                [2, 'p1', 240, 240, true,  210,  'Run Pre-Flight Checks'],
+                [3, 'p1', 240, 80,  false, 300,  'Send Quote'],
+                [4, 'p1', 80,  240, false, 360,  'Issue Preliminary Purchase Order (PO)'],
+                [5, 'p1', 240, 240, true,  420,  'Allocation to Team Leaders'],
+                [6, 'p2', 240, 400, false, 530,  'Assign to DTP 1'],
+                [7, 'p2', 400, 560, false, 590,  'Send to Internal QA'],
+                [8, 'p2', 560, 80,  false, 650,  'Deliver PDF for QA / Language Sign-Off (LSO)'],
+                [9, 'p2', 80,  400, false, 710,  'Feedback / Edits for DTP 2'],
+                [10,'p2', 400, 80,  false, 770,  'Deliver for Client Review (CR)'],
+                [11,'p3', 80,  400, false, 860,  'Send CR Feedback for DTP 3'],
+                [12,'p3', 400, 80,  false, 920,  "Deliver for Client's Client Review (CCR)"],
+                [13,'p3', 80,  400, false, 980,  'Send CCR Feedback for DTP 4'],
+                [14,'p3', 80,  240, false, 1040, 'Final Approval Granted'],
+                [15,'p3', 240, 80,  false, 1100, 'Final Delivery to Client'],
+                [16,'p4', 240, 720, false, 1190, 'Financial Closure of the Project'],
+                [17,'p4', 80,  720, false, 1250, 'Provide Final Purchase Order (PO)'],
+                [18,'p4', 80,  240, false, 1310, 'Project Feedback'],
+                [19,'p4', 720, 80,  false, 1370, 'Send Invoice'],
+                [20,'p4', 240, 240, true,  1430, 'Project Archived']
             ];
 
             var currentIdx = -1, playTimer = null;
@@ -2002,9 +2936,9 @@
                     rect.setAttribute('rx', '6');
                     var label = document.createElementNS(SVG_NS, 'text');
                     label.setAttribute('x', '18');
-                    label.setAttribute('y', p.top + 18);
-                    label.setAttribute('fill', '#ffffff');
-                    label.setAttribute('font-size', '12');
+                    label.setAttribute('y', p.top - 5);
+                    label.setAttribute('fill', 'rgba(255,255,255,0.88)');
+                    label.setAttribute('font-size', '10');
                     label.setAttribute('font-weight', '700');
                     label.setAttribute('letter-spacing', '1.5');
                     label.setAttribute('font-family', 'Space Grotesk,monospace');
@@ -2030,7 +2964,7 @@
                     var line;
                     if (isSelf) {
                         line = document.createElementNS(SVG_NS, 'path');
-                        line.setAttribute('d', 'M '+fx+' '+y+' L '+(fx+42)+' '+y+' L '+(fx+42)+' '+(y+34)+' L '+(fx+4)+' '+(y+34));
+                        line.setAttribute('d', 'M '+fx+' '+y+' L '+(fx+42)+' '+y+' L '+(fx+42)+' '+(y+28)+' L '+(fx+4)+' '+(y+28));
                         line.setAttribute('fill', 'none');
                     } else {
                         line = document.createElementNS(SVG_NS, 'line');
@@ -2046,7 +2980,7 @@
                     // Arrow
                     var arrow = document.createElementNS(SVG_NS, 'polygon');
                     if (isSelf) {
-                        arrow.setAttribute('points', (fx+10)+','+(y+38)+' '+fx+','+(y+34)+' '+(fx+10)+','+(y+30));
+                        arrow.setAttribute('points', (fx+10)+','+(y+32)+' '+fx+','+(y+28)+' '+(fx+10)+','+(y+24));
                     } else {
                         var goR = fx < tx;
                         var pts = goR
@@ -2081,7 +3015,7 @@
 
                     // Label text
                     var labelX = isSelf ? fx+56 : (fx+tx)/2;
-                    var labelY = isSelf ? y+20 : y-9;
+                    var labelY = isSelf ? y+17 : y-16;
                     var labelAnchor = isSelf ? 'start' : 'middle';
                     var labelEl = document.createElementNS(SVG_NS, 'text');
                     labelEl.setAttribute('x', labelX); labelEl.setAttribute('y', labelY);
@@ -2356,6 +3290,824 @@
             }
             (function frame(ts) { draw(ts * 0.0008); requestAnimationFrame(frame); })(0);
         }
+
+
+        // ── Services: 3D Word Zoom ────────────────────────────
+        (function initSvcWordZoom() {
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+                document.querySelectorAll('.svc-word').forEach(function(w) {
+                    w.style.opacity = '0.6';
+                    w.style.transform = 'translate(-50%,-50%) scale(1)';
+                });
+                return;
+            }
+            var section = document.getElementById('svc-word-zoom');
+            var label   = document.getElementById('svc-zoom-label');
+            var bar     = document.getElementById('svc-zoom-bar');
+            var stepEl  = document.getElementById('svc-zoom-step');
+            var groups  = document.querySelectorAll('.svc-wgroup');
+            if (!section || !groups.length) return;
+
+            var PHASES = groups.length; // 6
+            var phaseDur = 1 / PHASES;
+
+            // Initial state: all words hidden small
+            gsap.set(groups, { opacity: 0 });
+            groups.forEach(function(g) {
+                gsap.set(g.querySelectorAll('.svc-word'), { scale: 0.04, opacity: 0, transformOrigin: '50% 50%' });
+            });
+
+            var tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    scrub: 1.4,
+                    onUpdate: function(self) {
+                        if (bar) bar.style.width = (self.progress * 100) + '%';
+                        var ph = Math.min(PHASES - 1, Math.floor(self.progress * PHASES));
+                        if (stepEl) stepEl.textContent = String(ph + 1).padStart(2, '0') + ' / 0' + PHASES;
+                    }
+                }
+            });
+
+            // Label fades out during first phase
+            tl.to(label, { opacity: 0, y: -20, duration: phaseDur * 0.4, ease: 'power2.in' }, 0);
+
+            groups.forEach(function(group, gi) {
+                var words  = Array.from(group.querySelectorAll('.svc-word'));
+                var t0     = gi * phaseDur;        // phase start
+                var tMid   = t0 + phaseDur * 0.28; // words at full size
+                var tEnd   = t0 + phaseDur * 0.92; // phase end
+                var tNext  = (gi + 1) * phaseDur;
+
+                // Reveal group
+                tl.to(group, { opacity: 1, duration: 0.001 }, t0);
+
+                words.forEach(function(word, wi) {
+                    var wordOffset = wi * phaseDur * 0.025; // stagger between words
+                    var tWord = t0 + wordOffset;
+                    var targetOpacity = word.className.includes('svc-word-xl') ? 0.9
+                                      : word.className.includes('svc-word-md') ? 0.52
+                                      : 0.25;
+
+                    // Phase 1: tiny → visible (approach camera)
+                    tl.to(word, {
+                        scale: 1,
+                        opacity: targetOpacity,
+                        duration: phaseDur * 0.26,
+                        ease: 'power2.out'
+                    }, tWord);
+
+                    // Phase 2: normal → blow past (rush through camera)
+                    tl.to(word, {
+                        scale: 10,
+                        opacity: 0,
+                        duration: phaseDur * 0.55,
+                        ease: 'power3.in'
+                    }, tWord + phaseDur * 0.24);
+                });
+
+                // Hide group container cleanly before next phase
+                tl.to(group, { opacity: 0, duration: 0.001 }, tNext - 0.002);
+            });
+
+            // Final fade-out of the whole pin before loc section
+            tl.to('#svc-word-pin', { opacity: 0, duration: 0.06, ease: 'power2.in' }, 0.94);
+        })();
+
+        // ── Services: 3×3 Grid Sections ──────────────────────
+        (function initSvcFlip() {
+            // 9 Localization cards
+            var LOC = [
+                { title: 'Translation & Localization',   desc: 'Adapt content beyond language. Market-ready communication across 120+ languages maintaining brand consistency and business intent.',    hover: 'Global Content. Local Impact.',        icon: '🌐', grad: 'linear-gradient(135deg,rgba(14,60,120,0.9),rgba(30,110,70,0.5))' },
+                { title: 'Website Localization',          desc: 'Transform websites into local digital experiences through multilingual content adaptation, SEO localization, and optimized user journeys.', hover: 'One Website. Multiple Experiences.',   icon: '🖥️', grad: 'linear-gradient(135deg,rgba(80,25,120,0.9),rgba(120,50,20,0.5))' },
+                { title: 'Software & App Localization',   desc: 'Create intuitive multilingual product experiences with UI localization, linguistic validation, and scalable release workflows.',           hover: 'Built Global. Feels Local.',            icon: '📱', grad: 'linear-gradient(135deg,rgba(20,75,120,0.9),rgba(55,20,100,0.5))' },
+                { title: 'eLearning Localization',        desc: 'Localize training and learning experiences through multilingual content adaptation, media localization, and learning-ready delivery.',     hover: 'Learning Without Barriers.',            icon: '🎓', grad: 'linear-gradient(135deg,rgba(120,75,20,0.9),rgba(60,110,30,0.5))' },
+                { title: 'Multimedia Localization',       desc: 'Scale global engagement through multilingual audio, video, subtitling, dubbing, and comprehensive multimedia adaptation.',                  hover: 'Every Frame Speaks Local.',             icon: '🎬', grad: 'linear-gradient(135deg,rgba(120,18,38,0.9),rgba(38,18,100,0.5))' },
+                { title: 'Linguistic QA & Transcreation', desc: 'Go beyond translation with linguistic validation and creative adaptation that preserve tone, meaning, and brand identity.',                hover: 'Quality Beyond Accuracy.',              icon: '✍️', grad: 'linear-gradient(135deg,rgba(18,95,75,0.9),rgba(60,38,120,0.5))' },
+                { title: 'AI-Enabled Localization',       desc: 'Accelerate multilingual delivery through AI-powered workflows enhanced by human expertise and enterprise-grade quality control.',          hover: 'AI Speed. Human Confidence.',           icon: '⚡', grad: 'linear-gradient(135deg,rgba(212,175,55,0.35),rgba(38,18,80,0.9))' },
+                { title: 'Legal & Compliance Localization', desc: 'Navigate international regulatory requirements with certified translation of contracts, compliance frameworks, and legal documentation.', hover: 'Every Clause. Every Market.',          icon: '⚖️', grad: 'linear-gradient(135deg,rgba(18,60,80,0.9),rgba(80,18,60,0.5))' },
+                { title: 'Gaming & Entertainment Localization', desc: 'Deliver immersive multilingual experiences covering UI, dialogue, lore, cultural adaptation, and platform-specific release workflows.', hover: 'Play Global. Feel Local.',             icon: '🎮', grad: 'linear-gradient(135deg,rgba(60,18,100,0.9),rgba(18,80,38,0.5))' }
+            ];
+            // 9 DTP & Publishing cards
+            var DTP = [
+                { title: 'Multilingual DTP',              desc: 'Maintain design consistency across every language with expert multilingual formatting, layout adaptation, and production-ready desktop publishing.', hover: 'Every Language. Perfect Layout.',       icon: '📐', grad: 'linear-gradient(135deg,rgba(18,55,120,0.9),rgba(80,18,60,0.5))' },
+                { title: 'Typesetting Services',           desc: 'Create visually refined multilingual publications with professional typography, formatting, and layout optimization for digital and print.',         hover: 'Designed for Readability Everywhere.', icon: '🔤', grad: 'linear-gradient(135deg,rgba(60,18,120,0.9),rgba(18,80,55,0.5))' },
+                { title: 'Publishing Production',          desc: 'Simplify complex publishing workflows with scalable production support from content preparation to final print and digital delivery.',                hover: 'From Content to Market-Ready.',         icon: '📖', grad: 'linear-gradient(135deg,rgba(80,55,18,0.9),rgba(18,60,80,0.5))' },
+                { title: 'Artwork Localization',           desc: 'Adapt marketing visuals, graphics, and creative assets for different markets while preserving brand identity and design impact.',                    hover: 'Same Brand. Local Expression.',         icon: '🎨', grad: 'linear-gradient(135deg,rgba(120,38,18,0.9),rgba(18,38,100,0.5))' },
+                { title: 'Packaging & Label Localization', desc: 'Prepare multilingual packaging and labels with accurate formatting, content adaptation, and market-ready production support.',                       hover: 'Ready for Every Shelf.',                icon: '📦', grad: 'linear-gradient(135deg,rgba(18,95,55,0.9),rgba(80,38,18,0.5))' },
+                { title: 'File Engineering & Conversion',  desc: 'Convert, prepare, and optimize complex files for smooth localization, publishing, and multilingual production workflows.',                           hover: 'Complex Files. Simplified.',            icon: '⚙️', grad: 'linear-gradient(135deg,rgba(38,38,100,0.9),rgba(80,18,38,0.5))' },
+                { title: 'QA & Compliance',                desc: 'Ensure every multilingual asset meets quality, formatting, brand, and technical standards before reaching your audience.',                          hover: 'Quality Before Delivery.',              icon: '✅', grad: 'linear-gradient(135deg,rgba(212,175,55,0.28),rgba(18,55,38,0.9))' },
+                { title: 'RTL Document Formatting',        desc: 'Expert right-to-left document adaptation for Arabic, Hebrew, Urdu, and Farsi across all DTP formats and publishing workflows.',                     hover: 'Right Direction. Perfect Output.',      icon: '↩️', grad: 'linear-gradient(135deg,rgba(80,20,80,0.9),rgba(20,60,100,0.5))' },
+                { title: 'EPUB & Digital Publishing',      desc: 'Standards-compliant EPUB 2/3 production with reflowable text, fixed layout, accessibility markup, and multi-storefront delivery.',                  hover: 'Digital-Ready. Everywhere.',            icon: '📲', grad: 'linear-gradient(135deg,rgba(18,80,100,0.9),rgba(60,18,80,0.5))' }
+            ];
+
+            function buildCard(d) {
+                return '<div class="svc-gc" style="opacity:0;transform:translateY(22px)">'
+                    + '<div class="svc-gc-top" style="background:' + d.grad + '"><span>' + d.icon + '</span></div>'
+                    + '<div class="svc-gc-body">'
+                    + '<div class="svc-gc-title">' + d.title + '</div>'
+                    + '<div class="svc-gc-desc">' + d.desc + '</div>'
+                    + '<span class="svc-gc-cta">Read More &#8594;</span>'
+                    + '</div>'
+                    + '<div class="svc-gc-hover">' + d.hover + '</div>'
+                    + '</div>';
+            }
+
+            var locGrid = document.getElementById('svc-loc-grid');
+            var dtpGrid = document.getElementById('svc-dtp-grid');
+            if (locGrid) locGrid.innerHTML = LOC.map(buildCard).join('');
+            if (dtpGrid) dtpGrid.innerHTML = DTP.map(buildCard).join('');
+
+            // Fallback: no GSAP
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+                document.querySelectorAll('.svc-gc').forEach(function(c) {
+                    c.style.opacity = '1'; c.style.transform = 'none';
+                });
+                return;
+            }
+
+            // LOC cards stagger in
+            if (locGrid) {
+                gsap.to(locGrid.querySelectorAll('.svc-gc'), {
+                    opacity: 1, y: 0,
+                    duration: 0.6,
+                    stagger: { each: 0.07, from: 'start' },
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: locGrid,
+                        start: 'top 82%',
+                        toggleActions: 'play none none reverse'
+                    }
+                });
+            }
+
+            // DTP section slides from right
+            var dtpSection = document.getElementById('svc-dtp-section');
+            var dtpOuter   = document.getElementById('svc-dtp-outer');
+            if (dtpSection && dtpOuter) {
+                gsap.fromTo(dtpSection,
+                    { x: '100vw' },
+                    {
+                        x: 0,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                            trigger: dtpOuter,
+                            start: 'top 90%',
+                            end:   'top 5%',
+                            scrub: 0.85
+                        }
+                    }
+                );
+            }
+
+            // DTP cards stagger in
+            if (dtpGrid) {
+                gsap.to(dtpGrid.querySelectorAll('.svc-gc'), {
+                    opacity: 1, y: 0,
+                    duration: 0.6,
+                    stagger: { each: 0.07, from: 'start' },
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: dtpGrid,
+                        start: 'top 82%',
+                        toggleActions: 'play none none reverse'
+                    }
+                });
+            }
+        })();
+
+        // (legacy services block removed — replaced by initSvcWordZoom + initSvcCards)
+        (function initServicesSection() {
+            var ITEMS_PER_PAGE = 6;
+
+            var SVC_DATA = {
+                loc: {
+                    label: 'Localization Services',
+                    desc: 'Adapting content for language, culture, and local market relevance',
+                    cats: [
+                        { id: 'loc-all', name: 'All Services', isAll: true },
+                        {
+                            id: 'loc-lang', name: 'Language & Translation',
+                            items: [
+                                { name: 'Translation (120+ Languages)', desc: 'Human-expert translation with native-speaker review across 120+ language pairs and specialist domains.' },
+                                { name: 'Website Localization', desc: 'End-to-end site translation, CMS integration, and locale-specific UX adaptation for global audiences.' },
+                                { name: 'Software & App Localization', desc: 'UI string translation, pseudo-localization testing, and build-ready file delivery for mobile and desktop apps.' },
+                                { name: 'eLearning Localization', desc: 'Course content adaptation, LMS integration, and multimedia localization for multilingual training programs.' },
+                                { name: 'Marketing Content Localization', desc: 'Culturally adapted copy, transcreation, and brand-consistent messaging for global marketing campaigns.' },
+                                { name: 'Technical Documentation Localization', desc: 'Precision translation of manuals, datasheets, and technical specifications with subject-matter expertise.' },
+                                { name: 'Multimedia Localization', desc: 'Subtitle, caption, and audio adaptation for multilingual video, e-learning, and broadcast content.' },
+                                { name: 'Gaming Localization', desc: 'Full game localization covering UI, dialogue, lore, and culturalization for worldwide player markets.' },
+                                { name: 'Legal Localization', desc: 'Certified translation of contracts, filings, compliance documents, and legal correspondence.' },
+                                { name: 'Healthcare & Life Sciences Localization', desc: 'Regulatory-compliant translation of patient materials, clinical documents, and medical device labeling.' }
+                            ]
+                        },
+                        {
+                            id: 'loc-indic', name: 'Indic Language Localization',
+                            items: [
+                                { name: 'Indic Language Translation', desc: 'Expert human translation across 22+ official Indian languages with native-speaker linguists and domain specialists.' },
+                                { name: 'Indic Script Typesetting', desc: 'Precision DTP for Devanagari, Tamil, Malayalam, Bengali, Kannada, Telugu, Gujarati, Punjabi, and more.' },
+                                { name: 'Hindi Localization', desc: 'Complete Hindi translation, transcreation, and DTP for marketing, corporate, and publishing content.' },
+                                { name: 'Urdu & Sindhi (RTL) Services', desc: 'Right-to-left Urdu and Sindhi language services with script-accurate typesetting and native-speaker review.' },
+                                { name: 'Regional Language QA', desc: 'In-language quality assurance by native-speaker reviewers for all major Indic scripts and dialects.' },
+                                { name: 'Government & Education Localization', desc: 'Official language compliance for government, public sector, and educational content in Indic languages.' }
+                            ]
+                        },
+                        {
+                            id: 'loc-ling', name: 'Linguistic Services',
+                            items: [
+                                { name: 'Transcreation', desc: 'Creative re-expression that preserves brand tone, emotional intent, and cultural resonance in the target language.' },
+                                { name: 'Copy Adaptation', desc: 'Localized rewriting of marketing and advertising copy for cultural relevance and audience engagement.' },
+                                { name: 'Linguistic QA (LQA)', desc: 'In-language review and quality assessment of translated content against style guides and terminology databases.' },
+                                { name: 'Editing & Proofreading', desc: 'Meticulous native-speaker review for grammatical accuracy, stylistic consistency, and publication quality.' },
+                                { name: 'Terminology Management', desc: 'Creation and maintenance of centralized multilingual glossaries to enforce consistency across all content.' },
+                                { name: 'Glossary Development', desc: 'Building project-specific terminology databases aligned to your brand voice and domain requirements.' },
+                                { name: 'Style Guide Creation', desc: 'Defining language-specific writing rules, tone of voice, and formatting standards for global content teams.' },
+                                { name: 'In-country Review Management', desc: 'Coordinating linguistic sign-off with native in-country reviewers for final accuracy and cultural fit.' }
+                            ]
+                        },
+                        {
+                            id: 'loc-av', name: 'Audio & Video Localization',
+                            items: [
+                                { name: 'Subtitling', desc: 'Timed, on-screen text localization for film, television, and online video in any target language.' },
+                                { name: 'Closed Captioning', desc: 'Accessibility-compliant caption creation for broadcast, streaming, and corporate video content.' },
+                                { name: 'Voice-over', desc: 'Studio-quality voice recording with native speakers matched to your brand tone and delivery style.' },
+                                { name: 'Dubbing', desc: 'Lip-synced dialogue replacement with native talent for seamless multilingual broadcast and film distribution.' },
+                                { name: 'Script Translation & Adaptation', desc: 'Source script localization adapted for timing, lip-sync, and target-market cultural norms.' },
+                                { name: 'Audio Transcription', desc: 'Accurate text transcription of audio recordings, interviews, and media content across languages.' },
+                                { name: 'Multilingual Video Production', desc: 'End-to-end multilingual video post-production including subtitling, voice-over, and final delivery.' }
+                            ]
+                        },
+                        {
+                            id: 'loc-ai', name: 'AI-Enabled Localization',
+                            items: [
+                                { name: 'AI Translation Post-Editing (MTPE)', desc: 'Expert human correction of machine-translated output to full publication quality and brand accuracy.' },
+                                { name: 'AI-Assisted Localization Workflows', desc: 'Hybrid pipelines combining NMT engines with linguist oversight for faster, scalable turnarounds.' },
+                                { name: 'Localization Automation', desc: 'CAT tool integration, workflow automation, and API connectivity to accelerate multilingual content delivery.' },
+                                { name: 'Multilingual Content Scaling', desc: 'High-volume content operations powered by AI tools and trained linguists for enterprise-scale output.' }
+                            ]
+                        }
+                    ]
+                },
+                dtp: {
+                    label: 'DTP & Multilingual Publishing',
+                    desc: 'Formatting, typesetting, design adaptation, and production-ready multilingual content',
+                    cats: [
+                        { id: 'dtp-all', name: 'All Services', isAll: true },
+                        {
+                            id: 'dtp-ml', name: 'Multilingual DTP',
+                            items: [
+                                { name: 'Multilingual Desktop Publishing', desc: 'Production-ready layout and typesetting of translated documents across InDesign, QuarkXPress, and FrameMaker.' },
+                                { name: 'Native-Language Typesetting', desc: 'Expert typesetting directly in the target language with character-accurate script rendering and typography.' },
+                                { name: 'Complex Script Typesetting', desc: 'Specialist handling of Arabic, Hebrew, Devanagari, CJK, and other complex writing systems in print and digital.' },
+                                { name: 'RTL (Right-to-Left) Formatting', desc: 'Full right-to-left document adaptation for Arabic, Hebrew, Farsi, and Urdu across all DTP formats.' },
+                                { name: 'CJK Typesetting', desc: 'Kana, Kanji, Hangul, and Simplified/Traditional Chinese typesetting with grid, ruby, and vertical text support.' },
+                                { name: 'Indic Language Typesetting', desc: 'Precision typesetting for Devanagari, Tamil, Malayalam, Bengali, Kannada, Telugu, and other Brahmic scripts.' }
+                            ]
+                        },
+                        {
+                            id: 'dtp-pub', name: 'Publishing & Production',
+                            items: [
+                                { name: 'Book Typesetting', desc: 'Full-book layout, chapter pagination, and print-ready file production for trade, academic, and reference titles.' },
+                                { name: 'Journal & Academic Publishing', desc: 'STM journal typesetting with citation management, figure placement, and XML-first structured workflows.' },
+                                { name: 'Magazine Layout Production', desc: 'High-impact editorial layouts for print and digital magazine editions in any language.' },
+                                { name: 'EPUB Creation', desc: 'Standards-compliant EPUB 2/3 production with reflowable text, fixed layout, and accessibility markup.' },
+                                { name: 'eBook Formatting', desc: 'Platform-ready eBook production for Kindle, Apple Books, Google Play, and international storefronts.' },
+                                { name: 'Print-Ready File Preparation', desc: 'Prepress services including bleed setup, color profiling, and print-supplier-ready PDF delivery.' },
+                                { name: 'XML to Publishing Workflows', desc: 'Structured XML content transformation to InDesign, EPUB, HTML, and PDF publishing outputs.' }
+                            ]
+                        },
+                        {
+                            id: 'dtp-design', name: 'Design Adaptation',
+                            items: [
+                                { name: 'Artwork Localization', desc: 'Text extraction and replacement within layered graphics while maintaining full design integrity in every language.' },
+                                { name: 'Graphic Recreation', desc: 'Full vector and raster graphic recreation when source files are unavailable or embedded.' },
+                                { name: 'Multilingual Brochure Production', desc: 'Print-ready multilingual brochures with culturally adapted imagery and target-language typography.' },
+                                { name: 'Marketing Collateral Adaptation', desc: 'Localization of brand assets, pitch decks, flyers, and promotional materials for global markets.' },
+                                { name: 'Packaging Localization & DTP', desc: 'Multi-language packaging layout with regulatory copy, nutritional tables, and barcode compliance.' },
+                                { name: 'Label & Product Documentation', desc: 'Compliance-ready product label and documentation formatting for global retail and regulatory markets.' }
+                            ]
+                        },
+                        {
+                            id: 'dtp-eng', name: 'Engineering & File Handling',
+                            items: [
+                                { name: 'Adobe InDesign Services', desc: 'Expert InDesign DTP including template creation, text fitting, and multi-language master page management.' },
+                                { name: 'FrameMaker Formatting', desc: 'Structured and unstructured FrameMaker document processing for technical manuals and documentation.' },
+                                { name: 'Illustrator File Localization', desc: 'Text localization and layout adaptation within Adobe Illustrator for multilingual artwork and graphics.' },
+                                { name: 'PowerPoint Localization', desc: 'Multilingual slide deck adaptation preserving design, font rendering, and presentation structure.' },
+                                { name: 'PDF Recreation', desc: 'Faithful PDF reconstruction from print-only files for localization, editing, and reproduction.' },
+                                { name: 'OCR & File Conversion', desc: 'Optical character recognition and format conversion for scanned legacy documents across languages.' },
+                                { name: 'Structured Content Formatting', desc: 'XML, DITA, and HTML content formatting for structured authoring and omnichannel publishing workflows.' }
+                            ]
+                        },
+                        {
+                            id: 'dtp-qa', name: 'Quality & Compliance',
+                            items: [
+                                { name: 'Preflight Checks', desc: 'Pre-delivery file inspection verifying fonts, links, bleeds, color profiles, and print specifications.' },
+                                { name: 'Layout QA', desc: 'Systematic visual review of typeset documents for overflow, spacing, alignment, and script-specific issues.' },
+                                { name: 'Linguistic + Visual QA', desc: 'Combined language accuracy and design correctness review performed in the final typeset file.' },
+                                { name: 'Print Compliance Verification', desc: 'Final-stage print specification audit against client and supplier standards before press.' },
+                                { name: 'Publishing Quality Assurance', desc: 'Comprehensive quality review of digital and print publications across all language and format dimensions.' }
+                            ]
+                        }
+                    ]
+                },
+                indic: {
+                    label: 'Indic Language Solutions',
+                    desc: 'Specialist localization, typesetting, and publishing for India\'s 22+ official languages and scripts',
+                    cats: [
+                        { id: 'indic-all', name: 'All Services', isAll: true },
+                        {
+                            id: 'indic-loc', name: 'Language Localization',
+                            items: [
+                                { name: 'Indic Language Translation', desc: 'Expert human translation across 22+ official Indian languages with native-speaker linguists and domain specialists.' },
+                                { name: 'Hindi Localization', desc: 'Complete Hindi translation, transcreation, and DTP for marketing, corporate, and publishing content.' },
+                                { name: 'Urdu & Sindhi Services', desc: 'Right-to-left Urdu and Sindhi language services with script-accurate typesetting and native review.' },
+                                { name: 'South Indian Language Localization', desc: 'Specialist Tamil, Telugu, Kannada, and Malayalam translation and typesetting with native-speaker review.' },
+                                { name: 'North-East Language Localization', desc: 'Localization for Bengali, Assamese, Manipuri, Bodo, and other North-East Indian languages.' },
+                                { name: 'Regional Language QA', desc: 'In-language quality assurance by native-speaker reviewers for all major Indic scripts and dialects.' }
+                            ]
+                        },
+                        {
+                            id: 'indic-pub', name: 'Indic Publishing & DTP',
+                            items: [
+                                { name: 'Indic Script Typesetting', desc: 'Precision DTP for Devanagari, Tamil, Malayalam, Bengali, Kannada, Telugu, Gujarati, Punjabi, and more.' },
+                                { name: 'RTL Publishing (Urdu / Sindhi)', desc: 'Full right-to-left document formatting and print-ready production for Urdu and Sindhi scripts.' },
+                                { name: 'Multilingual Indic eBooks', desc: 'EPUB and eBook production in Indian languages for domestic and international digital storefronts.' },
+                                { name: 'Academic & Scholarly Publishing', desc: 'Typesetting and production for Indic-language journals, textbooks, and reference publications.' },
+                                { name: 'Print-Ready Indic Production', desc: 'Prepress and print-ready file preparation for Indic-language books, brochures, and packaging.' },
+                                { name: 'Newspaper & Magazine Layout', desc: 'Complex multi-column Indic-language editorial layout for print and digital magazine editions.' }
+                            ]
+                        },
+                        {
+                            id: 'indic-gov', name: 'Government & Public Sector',
+                            items: [
+                                { name: 'Government Document Localization', desc: 'Official language compliance for central and state government documents, policies, and circulars.' },
+                                { name: 'Educational Content Localization', desc: 'Textbook translation, NCERT content adaptation, and multilingual eLearning for Indian curricula.' },
+                                { name: 'Public Sector Publishing', desc: 'Annual reports, tender documents, and public communication in all 22 scheduled Indian languages.' },
+                                { name: 'Legal & Judicial Translation', desc: 'Certified translation of legal documents, court orders, and compliance filings in Indic languages.' },
+                                { name: 'Healthcare Communication', desc: 'Patient-facing documents, drug labeling, and health-sector content in regional Indian languages.' }
+                            ]
+                        },
+                        {
+                            id: 'indic-media', name: 'eLearning & Multimedia',
+                            items: [
+                                { name: 'Indic eLearning Localization', desc: 'Course content adaptation, LMS integration, and voiceover localization for Indian language learners.' },
+                                { name: 'Multilingual Subtitling', desc: 'Timed subtitle creation for film, OTT, and corporate video content in major Indian languages.' },
+                                { name: 'Indic Voice-over Services', desc: 'Studio-quality voice recordings with native speakers across Hindi, Tamil, Telugu, and 15+ Indic languages.' },
+                                { name: 'Multimedia Localization', desc: 'End-to-end audio-visual localization for advertisements, training films, and broadcast content.' }
+                            ]
+                        }
+                    ]
+                }
+            };
+
+            var activeCat = 'loc';
+            var activeSubcat = 'loc-all';
+            var currentPage = 0;
+
+            var subnav   = document.getElementById('svc-subnav');
+            var grid     = document.getElementById('svc-items-grid');
+            var prevBtn  = document.getElementById('svc-prev');
+            var nextBtn  = document.getElementById('svc-next');
+            var pageInd  = document.getElementById('svc-page-indicator');
+            var catDesc  = document.getElementById('svc-cat-desc');
+
+            if (!subnav || !grid) return;
+
+            function getAllItems(cat) {
+                return SVC_DATA[cat].cats
+                    .filter(function(c) { return !c.isAll; })
+                    .reduce(function(acc, c) { return acc.concat(c.items); }, []);
+            }
+
+            function getDisplayItems() {
+                var catData = SVC_DATA[activeCat];
+                var sub = catData.cats.find(function(c) { return c.id === activeSubcat; });
+                if (!sub || sub.isAll) return getAllItems(activeCat);
+                return sub.items;
+            }
+
+            function renderSubnav() {
+                subnav.innerHTML = '';
+                var catData = SVC_DATA[activeCat];
+                catData.cats.forEach(function(cat) {
+                    var btn = document.createElement('button');
+                    btn.className = 'svc-subcat-btn' + (activeSubcat === cat.id ? ' active' : '');
+                    btn.dataset.subcat = cat.id;
+                    var count = cat.isAll ? getAllItems(activeCat).length : cat.items.length;
+                    btn.innerHTML = '<span class="svc-subcat-dot"></span>'
+                        + cat.name
+                        + '<span style="margin-left:auto;opacity:0.4;font-size:0.55rem;">' + count + '</span>';
+                    btn.addEventListener('click', function() {
+                        activeSubcat = cat.id;
+                        currentPage = 0;
+                        render();
+                    });
+                    subnav.appendChild(btn);
+                });
+            }
+
+            function renderItems() {
+                var items = getDisplayItems();
+                var totalPages = Math.max(1, Math.ceil(items.length / ITEMS_PER_PAGE));
+                var start = currentPage * ITEMS_PER_PAGE;
+                var pageItems = items.slice(start, start + ITEMS_PER_PAGE);
+
+                grid.innerHTML = '';
+                pageItems.forEach(function(item) {
+                    var card = document.createElement('div');
+                    card.className = 'svc-item-card';
+                    card.innerHTML = '<div class="svc-item-heading">' + item.name + '</div>'
+                        + '<div class="svc-item-sub">' + item.desc + '</div>';
+                    grid.appendChild(card);
+                });
+
+                pageInd.textContent = totalPages > 1 ? (currentPage + 1) + ' / ' + totalPages : '';
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage >= totalPages - 1;
+            }
+
+            function render() {
+                renderSubnav();
+                renderItems();
+            }
+
+            // Category tab clicks
+            document.querySelectorAll('.svc-cat-btn').forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    activeCat = btn.dataset.cat;
+                    activeSubcat = activeCat + '-all';
+                    currentPage = 0;
+                    document.querySelectorAll('.svc-cat-btn').forEach(function(b) {
+                        b.classList.toggle('active', b.dataset.cat === activeCat);
+                    });
+                    catDesc.textContent = SVC_DATA[activeCat].desc;
+                    render();
+                });
+            });
+
+            prevBtn.addEventListener('click', function() {
+                if (currentPage > 0) { currentPage--; renderItems(); }
+            });
+            nextBtn.addEventListener('click', function() {
+                var items = getDisplayItems();
+                var totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+                if (currentPage < totalPages - 1) { currentPage++; renderItems(); }
+            });
+
+            render();
+        })();
+
+        // ── Industry Solutions: sticky stacking cards ───────────────
+        (function initIndustryScroll() {
+            var section  = document.getElementById('industry-solutions');
+            var progBar  = document.getElementById('ind-progress');
+            if (!section) return;
+
+            var steps = Array.prototype.slice.call(section.querySelectorAll('.ind-step'));
+            var N     = steps.length; // 7
+
+            // Click any card (including a peeking strip) → scroll to that card's position
+            steps.forEach(function(step, i) {
+                var crd = step.querySelector('.ind-crd');
+                if (!crd) return;
+                crd.addEventListener('click', function() {
+                    var sectionTop = section.getBoundingClientRect().top + window.pageYOffset;
+                    // Step i becomes active when scroll = sectionTop + i * 100vh
+                    window.scrollTo({ top: sectionTop + i * window.innerHeight, behavior: 'smooth' });
+                });
+            });
+
+            // GSAP: subtle scale-down on each card as the next one slides over it
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                steps.forEach(function(step, i) {
+                    if (i === N - 1) return; // last card never scales down
+                    ScrollTrigger.create({
+                        trigger: step,
+                        start: 'top top',
+                        end: 'bottom top',
+                        scrub: true,
+                        onUpdate: function(self) {
+                            gsap.set(step.querySelector('.ind-crd'), {
+                                scale: 1 - self.progress * 0.04,
+                                transformOrigin: '50% 100%'
+                            });
+                        }
+                    });
+                });
+
+                // Progress bar across the whole section
+                ScrollTrigger.create({
+                    trigger: section,
+                    start: 'top top',
+                    end: 'bottom bottom',
+                    onUpdate: function(self) {
+                        if (progBar) progBar.style.width = (self.progress * 100).toFixed(2) + '%';
+                    }
+                });
+            }
+        })();
+
+        // ── Indic Language grid entrance ────────────────────────────
+        (function initIndicSection() {
+            if (typeof gsap === 'undefined') return;
+            gsap.from('.indic-lang-card', {
+                opacity: 0, scale: 0.88, stagger: 0.03, duration: 0.55, ease: 'back.out(1.6)',
+                scrollTrigger: { trigger: '#indic-excellence', start: 'top 80%', once: true }
+            });
+            gsap.from('.indic-stat-cell', {
+                opacity: 0, y: 28, stagger: 0.1, duration: 0.7, ease: 'power3.out',
+                scrollTrigger: { trigger: '.indic-stat-row', start: 'top 85%', once: true }
+            });
+        })();
+
+        // ── File Formats: scroll-jack pin + vertical list + bg color ──
+        (function initFmtScroll() {
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+            var section  = document.getElementById('fmt-section');
+            var track    = document.getElementById('fmt-list-track');
+            var bgFill   = document.getElementById('fmt-bg-fill');
+            var counterEl = document.getElementById('fmt-active-counter');
+            var bigEl    = document.getElementById('fmt-active-big');
+            var appEl    = document.getElementById('fmt-active-app');
+            var dotsWrap = document.getElementById('fmt-prog-dots');
+            var rows     = track ? track.querySelectorAll('.fmt-row') : [];
+            if (!section || !track || !rows.length) return;
+
+            var N = rows.length;
+
+            // Per-format background colours (dark app-brand tones)
+            var COLORS = [
+                '#1a0512',  // .indd  — InDesign magenta
+                '#1f0c00',  // .ai    — Illustrator amber
+                '#1e0000',  // .pdf   — Acrobat red
+                '#001524',  // .fm    — FrameMaker slate-blue
+                '#000d28',  // .docx  — Word navy
+                '#1a0800',  // .pptx  — PowerPoint orange
+                '#0a0018',  // .qxp   — QuarkXPress violet
+                '#001614',  // .epub  — eBook teal
+                '#001400',  // .xml   — XML forest green
+                '#100018',  // .idml  — InDesign ML purple
+                '#001220',  // .fig   — Figma blue
+                '#0e0f00',  // .svg   — Vector olive
+            ];
+
+            // Build progress dots
+            if (dotsWrap) {
+                for (var i = 0; i < N; i++) {
+                    var d = document.createElement('span');
+                    d.className = 'fmt-prog-dot' + (i === 0 ? ' active' : '');
+                    dotsWrap.appendChild(d);
+                }
+            }
+            var dots = dotsWrap ? dotsWrap.querySelectorAll('.fmt-prog-dot') : [];
+
+            var lastIdx = -1;
+
+            function setActive(idx) {
+                idx = Math.max(0, Math.min(idx, N - 1));
+                if (idx === lastIdx) return;
+                lastIdx = idx;
+
+                rows.forEach(function(r, i) { r.classList.toggle('active', i === idx); });
+                dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+
+                var row = rows[idx];
+                var ext = row.dataset.ext || '';
+                var app = row.dataset.app || '';
+
+                if (counterEl) counterEl.textContent = String(idx + 1).padStart(2,'0') + ' / ' + String(N).padStart(2,'0');
+                if (appEl) appEl.textContent = app;
+                if (bgFill) bgFill.style.background = COLORS[idx] || '#06060a';
+
+                var descPanel = document.getElementById('fmt-active-desc');
+                if (descPanel) {
+                    var rowDescEl = row.querySelector('.fmt-row-desc');
+                    descPanel.textContent = rowDescEl ? rowDescEl.textContent : '';
+                }
+
+                if (bigEl && typeof gsap !== 'undefined') {
+                    gsap.to(bigEl, { opacity: 0, y: -12, duration: 0.14, ease: 'power2.in', onComplete: function() {
+                        bigEl.textContent = ext;
+                        gsap.to(bigEl, { opacity: 1, y: 0, duration: 0.22, ease: 'power2.out' });
+                    }});
+                } else if (bigEl) {
+                    bigEl.textContent = ext;
+                }
+            }
+
+            function getTravel() {
+                // Move track so the LAST row's bottom lands exactly at panel bottom.
+                // rows[k].offsetTop is measured from the panel (positioned parent),
+                // so last row bottom = rows[N-1].offsetTop + rows[N-1].offsetHeight.
+                var lastRow = rows[N - 1];
+                if (!lastRow) return 0;
+                return Math.max(0, lastRow.offsetTop + lastRow.offsetHeight - window.innerHeight);
+            }
+
+            var tl = gsap.timeline({
+                scrollTrigger: {
+                    trigger: section,
+                    pin: true,
+                    anticipatePin: 1,
+                    scrub: 1,
+                    start: 'top top',
+                    end: function() {
+                        // N steps of 100px each; ensures comfortable scroll pace
+                        // regardless of actual pixel travel distance
+                        return '+=' + (N * 100);
+                    },
+                    invalidateOnRefresh: true,
+                    onUpdate: function(self) {
+                        setActive(Math.min(Math.floor(self.progress * N), N - 1));
+                    }
+                }
+            });
+
+            tl.to(track, {
+                y: function() { return -getTravel(); },
+                ease: 'none',
+                duration: 1
+            });
+
+            setActive(0);
+        })();
+
+        // ── World Map: fetch SVG, inject inline, highlight countries ─
+        (function initWorldMap() {
+            var container = document.getElementById('world-map-container');
+            var tooltip   = document.getElementById('map-tooltip');
+            if (!container) return;
+
+            var ACTIVE_COUNTRIES = [
+                'US','CA','MX','BR','AR','CO','CL',            // Americas
+                'GB','DE','FR','ES','IT','NL','SE','CH',       // Western Europe
+                'DK','NO','FI','BE','AT','PL','PT','GR',       // Northern/Southern EU
+                'CZ','HU','RO','SK','UA',                      // Eastern Europe
+                'RU',                                          // Russia
+                'IN','PK','BD','LK','NP',                      // South Asia
+                'JP','CN','KR','TW','HK','SG','MY','TH','ID',  // East / SE Asia
+                'AU','NZ',                                     // Oceania
+                'AE','SA','QA','KW','BH','JO','IL','EG','MA',  // MENA
+                'NG','ZA','KE','GH','TZ'                       // Africa
+            ];
+
+            var COUNTRY_NAMES = {
+                'US':'United States','CA':'Canada','MX':'Mexico','BR':'Brazil','AR':'Argentina','CO':'Colombia','CL':'Chile',
+                'GB':'United Kingdom','DE':'Germany','FR':'France','ES':'Spain','IT':'Italy','NL':'Netherlands','SE':'Sweden','CH':'Switzerland',
+                'DK':'Denmark','NO':'Norway','FI':'Finland','BE':'Belgium','AT':'Austria','PL':'Poland','PT':'Portugal','GR':'Greece',
+                'CZ':'Czech Republic','HU':'Hungary','RO':'Romania','SK':'Slovakia','UA':'Ukraine',
+                'RU':'Russia',
+                'IN':'India','PK':'Pakistan','BD':'Bangladesh','LK':'Sri Lanka','NP':'Nepal',
+                'JP':'Japan','CN':'China','KR':'South Korea','TW':'Taiwan','HK':'Hong Kong','SG':'Singapore','MY':'Malaysia','TH':'Thailand','ID':'Indonesia',
+                'AU':'Australia','NZ':'New Zealand',
+                'AE':'UAE','SA':'Saudi Arabia','QA':'Qatar','KW':'Kuwait','BH':'Bahrain','JO':'Jordan','IL':'Israel','EG':'Egypt','MA':'Morocco',
+                'NG':'Nigeria','ZA':'South Africa','KE':'Kenya','GH':'Ghana','TZ':'Tanzania'
+            };
+
+            // URL-encode the # in the filename
+            var svgUrl = 'static/colored_world_map.svg';
+
+            fetch(svgUrl)
+                .then(function(r) { return r.text(); })
+                .then(function(svgText) {
+                    container.innerHTML = svgText;
+                    container.className = 'map-container';
+                    var svg = container.querySelector('svg');
+                    if (!svg) return;
+
+                    svg.style.width  = '100%';
+                    svg.style.height = 'auto';
+                    svg.style.display = 'block';
+                    svg.removeAttribute('width');
+                    svg.removeAttribute('height');
+
+                    // Reset all path styles to base dark tone
+                    svg.querySelectorAll('path, polygon, rect[id]').forEach(function(el) {
+                        if (el.tagName === 'rect' && !el.id) return;
+                        el.style.fill         = 'rgba(255,255,255,0.06)';
+                        el.style.stroke       = 'rgba(255,255,255,0.09)';
+                        el.style.strokeWidth  = '0.4px';
+                        el.style.transition   = 'fill 0.3s ease';
+                    });
+
+                    // Highlight active countries
+                    ACTIVE_COUNTRIES.forEach(function(code) {
+                        var el = svg.querySelector('#' + code);
+                        if (!el) return;
+                        el.style.fill        = 'rgba(212,175,55,0.38)';
+                        el.style.stroke      = 'rgba(212,175,55,0.5)';
+                        el.style.strokeWidth = '0.6px';
+                        el.style.cursor      = 'pointer';
+
+                        el.addEventListener('mouseenter', function(e) {
+                            el.style.fill = 'rgba(212,175,55,0.68)';
+                            if (tooltip) {
+                                tooltip.textContent = COUNTRY_NAMES[code] || code;
+                                tooltip.style.display = 'block';
+                            }
+                        });
+                        el.addEventListener('mousemove', function(e) {
+                            if (!tooltip) return;
+                            var rect = container.getBoundingClientRect();
+                            tooltip.style.left = (e.clientX - rect.left + 14) + 'px';
+                            tooltip.style.top  = (e.clientY - rect.top  - 10) + 'px';
+                        });
+                        el.addEventListener('mouseleave', function() {
+                            el.style.fill = 'rgba(212,175,55,0.38)';
+                            if (tooltip) tooltip.style.display = 'none';
+                        });
+                    });
+
+                    // GSAP entrance
+                    if (typeof gsap !== 'undefined') {
+                        gsap.from(svg, {
+                            opacity: 0, duration: 1.2, ease: 'power2.out',
+                            scrollTrigger: { trigger: '#world-reach', start: 'top 80%', once: true }
+                        });
+                    }
+                })
+                .catch(function() {
+                    container.className = '';
+                    container.innerHTML = '<div style="min-height:380px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;">'
+                        + '<span style="font-family:\'Space Grotesk\',monospace;font-size:0.58rem;letter-spacing:0.28em;color:rgba(255,255,255,0.65);text-transform:uppercase;">Global Reach</span>'
+                        + '<span style="font-family:\'Instrument Serif\',serif;font-size:clamp(2.5rem,6vw,5rem);color:#d4af37;">60+ Markets</span>'
+                        + '<span style="font-family:\'Space Grotesk\',monospace;font-size:0.65rem;letter-spacing:0.2em;color:rgba(255,255,255,0.68);">6 Continents · 75+ Languages · 24/7 Production</span>'
+                        + '</div>';
+                });
+        })();
+
+        // ── Contact form: mailto submission ─────────────────────────
+        (function initContactForm() {
+            var form    = document.getElementById('contact-form');
+            var success = document.getElementById('contact-success');
+            if (!form) return;
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                var name     = document.getElementById('cf-name').value.trim();
+                var email    = document.getElementById('cf-email').value.trim();
+                var company  = document.getElementById('cf-company').value.trim();
+                var service  = document.getElementById('cf-service').value;
+                var langs    = document.getElementById('cf-languages').value.trim();
+                var message  = document.getElementById('cf-message').value.trim();
+
+                if (!name || !email) {
+                    document.getElementById('cf-name').focus();
+                    return;
+                }
+
+                var subject = 'SuperDTP Enquiry — ' + (service || 'General') + (company ? ' / ' + company : '');
+                var body    = 'Name: ' + name + '\nEmail: ' + email
+                            + (company  ? '\nCompany: '  + company  : '')
+                            + (service  ? '\nService: '  + service  : '')
+                            + (langs    ? '\nLanguages: ' + langs   : '')
+                            + (message  ? '\n\nBrief:\n' + message  : '');
+
+                window.location.href = 'mailto:dtp.bulgaria@gmail.com'
+                    + '?subject=' + encodeURIComponent(subject)
+                    + '&body='    + encodeURIComponent(body);
+
+                if (success) {
+                    success.style.display = 'flex';
+                    if (typeof gsap !== 'undefined') gsap.from(success, { opacity: 0, y: 8, duration: 0.5, ease: 'power2.out' });
+                }
+            });
+        })();
+
+        // ── Scroll-reveal for new sections ──────────────────────────
+        (function initNewSectionReveals() {
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+            ['#indic-excellence', '#fmt-section', '#world-reach', '#contact'].forEach(function(id) {
+                gsap.from(id + ' h2, ' + id + ' > div > p, ' + id + ' .font-mono', {
+                    opacity: 0, y: 22, stagger: 0.1, duration: 0.85, ease: 'power2.out',
+                    scrollTrigger: { trigger: id, start: 'top 78%', once: true }
+                });
+                gsap.from(id, {
+                    scale: 1.03, ease: 'none',
+                    scrollTrigger: { trigger: id, start: 'top bottom', end: 'top center', scrub: 1.4 }
+                });
+                gsap.to(id, {
+                    scale: 0.96, opacity: 0.6, ease: 'none', transformOrigin: 'center top',
+                    scrollTrigger: { trigger: id, start: 'top top', end: 'bottom top', scrub: 1.4 }
+                });
+            });
+
+            // Trusted-by section: pause tickers when off-screen (perf)
+            ScrollTrigger.create({
+                trigger: '#trusted-by',
+                start: 'top bottom', end: 'bottom top',
+                onToggle: function(self) {
+                    document.querySelectorAll('.ticker-row').forEach(function(r) {
+                        r.style.animationPlayState = self.isActive ? 'running' : 'paused';
+                    });
+                }
+            });
+        })();
 
     </script>
 </body>
