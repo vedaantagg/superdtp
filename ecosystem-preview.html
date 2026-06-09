@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SuperDTP Ecosystem — Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/three@0.161.0/build/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:#09090b;font-family:'Plus Jakarta Sans',sans-serif;color:#fff;overflow:hidden}
+
+/* ── Section ─────────────────────────────────────────────────────── */
+#eco-section {
+    position:relative;
+    height:100vh;
+    height:100dvh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    padding:1rem 1rem 1rem;
+    overflow:hidden;
+    background:radial-gradient(ellipse 100% 80% at 50% 50%, #121212 0%, #09090b 65%);
+}
+#eco-canvas {
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    pointer-events:none;
+}
+#eco-svg {
+    position:absolute;
+    inset:0;
+    z-index:1;
+    pointer-events:none;
+    overflow:visible;
+}
+.eco-label {
+    position:relative;
+    z-index:5;
+    font-family:'Space Grotesk',monospace;
+    font-size:0.62rem;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:rgba(212,175,55,0.55);
+    margin-bottom:0.6rem;
+    opacity:0;
+}
+
+/* ── Diagram wrapper ─────────────────────────────────────────────── */
+#eco-diagram {
+    position:relative;
+    z-index:2;
+    aspect-ratio:1;
+    flex-shrink:0;
+}
+
+/* ── Hub ─────────────────────────────────────────────────────────── */
+.eco-hub {
+    position:absolute;
+    top:50%;left:50%;
+    z-index:10;
+    opacity:0;
+}
+/* Glow backdrop */
+.eco-hub-glow {
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(212,175,55,0.22) 0%, rgba(180,140,20,0.07) 50%, transparent 70%);
+    pointer-events:none;
+    animation:hub-pulse 3.2s ease-in-out infinite;
+}
+@keyframes hub-pulse {
+    0%,100%{opacity:.75;transform:translate(-50%,-50%) scale(1)}
+    50%{opacity:1;transform:translate(-50%,-50%) scale(1.1)}
+}
+/* Rotating text rings (SVG injected by JS) */
+.eco-ring-svg {
+    position:absolute;
+    top:50%;left:50%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    overflow:visible;
+}
+.eco-ring-svg.fwd  { animation:ring-fwd  28s linear infinite; }
+.eco-ring-svg.rev  { animation:ring-rev  20s linear infinite; }
+@keyframes ring-fwd { from{transform:translate(-50%,-50%) rotate(0deg)}   to{transform:translate(-50%,-50%) rotate(360deg)} }
+@keyframes ring-rev { from{transform:translate(-50%,-50%) rotate(0deg)}   to{transform:translate(-50%,-50%) rotate(-360deg)} }
+/* Border circle */
+.eco-hub-border {
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    border:1.5px solid rgba(212,175,55,0.35);
+    background:radial-gradient(circle at 45% 38%, #111008 0%, #0a0901 100%);
+    box-shadow:0 0 36px rgba(212,175,55,0.14),inset 0 0 24px rgba(180,140,20,0.08);
+    overflow:hidden;
+}
+.eco-hub-border::before {
+    content:'';
+    position:absolute;
+    inset:-1px;
+    border-radius:50%;
+    padding:1px;
+    background:conic-gradient(rgba(212,175,55,0.8),rgba(255,248,216,0.4),rgba(146,130,76,0.5),rgba(212,175,55,0.8));
+    -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+    mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;
+    animation:conic-spin 9s linear infinite;
+}
+@keyframes conic-spin{to{transform:rotate(360deg)}}
+/* Core content */
+.eco-hub-core {
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+.eco-hub-logo { width:68%; height:auto; display:block; }
+
+/* ── Industry nodes ──────────────────────────────────────────────── */
+.eco-node {
+    position:absolute;
+    text-align:center;
+    z-index:8;
+    opacity:0;
+    cursor:grab;
+}
+.eco-node:active { cursor:grabbing; }
+.eco-node-circle {
+    border-radius:50%;
+    border:2px solid;
+    display:flex;flex-direction:column;
+    align-items:center;justify-content:center;
+    gap:2px;
+    margin:0 auto;
+    transition:transform .3s,box-shadow .35s;
+    position:relative;overflow:hidden;
+}
+.eco-node-circle::after {
+    content:'';
+    position:absolute;inset:0;border-radius:50%;
+    background:radial-gradient(circle at 35% 30%,rgba(255,255,255,0.08) 0%,transparent 60%);
+    pointer-events:none;
+}
+.eco-node:hover .eco-node-circle { transform:scale(1.12); }
+.eco-node-icon  { font-size:1.4rem;line-height:1;display:block; }
+.eco-node-label {
+    font-family:'Space Grotesk',monospace;
+    font-weight:700;letter-spacing:.03em;
+    line-height:1.2;text-transform:uppercase;
+    color:rgba(255,255,255,0.9);
+}
+
+/* ── Keyword tags ────────────────────────────────────────────────── */
+.eco-tags {
+    position:absolute;z-index:7;
+    display:flex;flex-direction:column;gap:5px;
+    opacity:0;pointer-events:none;
+}
+.eco-tag {
+    font-family:'Space Grotesk',monospace;
+    font-size:.6rem;
+    color:rgba(255,255,255,.62);
+    white-space:nowrap;
+    display:flex;align-items:center;gap:5px;
+    line-height:1;
+}
+.eco-tag::before { content:'•';font-size:.8rem;opacity:.45;flex-shrink:0; }
+.eco-tags.ta-r  { align-items:flex-start; }
+.eco-tags.ta-l  { align-items:flex-end; }
+.eco-tags.ta-l .eco-tag { flex-direction:row-reverse; }
+.eco-tags.ta-c  { align-items:center; }
+
+/* ── Stats bar ───────────────────────────────────────────────────── */
+.eco-stats {
+    position:relative;z-index:5;
+    margin-top:0.6rem;
+    display:flex;flex-wrap:nowrap;justify-content:center;
+    border:1px solid rgba(212,175,55,0.14);
+    border-radius:10px;overflow:hidden;
+    background:rgba(255,255,255,0.012);
+    max-width:960px;width:100%;
+    opacity:0;transform:translateY(10px);
+    flex-shrink:0;
+}
+.eco-stat {
+    display:flex;align-items:center;gap:8px;
+    padding:10px 14px;
+    border-right:1px solid rgba(212,175,55,0.08);
+    flex:1;min-width:0;
+}
+.eco-stat:last-child{border-right:none}
+.eco-stat-icon{font-size:1rem;flex-shrink:0}
+.eco-stat-text{
+    font-family:'Space Grotesk',monospace;
+    font-size:.52rem;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(255,255,255,.45);line-height:1.3;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.eco-stat-text strong{display:block;color:rgba(212,175,55,0.85);font-size:.65rem;letter-spacing:0;text-transform:none}
+@media(max-width:599px){.eco-stats{display:none}.eco-tags{display:none!important}}
+</style>
+</head>
+<body>
+<section id="eco-section">
+    <canvas id="eco-canvas"></canvas>
+    <svg id="eco-svg"></svg>
+
+    <span class="eco-label" id="eco-label">[ 05 / Industry Solutions ]</span>
+
+    <div id="eco-diagram">
+        <!-- Hub -->
+        <div class="eco-hub" id="eco-hub">
+            <div class="eco-hub-glow" id="eco-hub-glow"></div>
+            <div class="eco-hub-border" id="eco-hub-border">
+                <div class="eco-hub-core" id="eco-hub-core">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 132.31 44.26" class="eco-hub-logo">
+                      <defs>
+                        <linearGradient id="hubGold" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%"   stop-color="#d4af37"><animate attributeName="offset" values="-1;1" dur="8s" repeatCount="indefinite"/></stop>
+                          <stop offset="50%"  stop-color="#fff8d8"><animate attributeName="offset" values="0;2"  dur="8s" repeatCount="indefinite"/></stop>
+                          <stop offset="100%" stop-color="#92824c"><animate attributeName="offset" values="1;3"  dur="8s" repeatCount="indefinite"/></stop>
+                        </linearGradient>
+                      </defs>
+                      <line x1="0" y1="36.8" x2="127.7" y2="36.8" stroke="#d4af37" stroke-width="1" fill="none"/>
+                      <line x1="10" y1="3"   x2="10"    y2="42.5" stroke="#d4af37" stroke-width="1" fill="none"/>
+                      <text transform="translate(129.2 31.5) rotate(-90)" fill="url(#hubGold)" font-family="Impact,sans-serif" font-size="15">co</text>
+                      <text transform="translate(129.2 16.2) rotate(-90)" fill="url(#hubGold)" font-family="Impact,sans-serif" font-size="15">m</text>
+                      <rect x="126.3" y="30.9" width="1.4" height="1.4" fill="#d4af37"/>
+                      <text transform="translate(12 32.2) scale(.74 1)" fill="url(#hubGold)" font-family="Impact,sans-serif" font-size="36">SuperDTP</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <!-- 10 nodes -->
+        <div class="eco-node" id="eco-n0"></div>
+        <div class="eco-node" id="eco-n1"></div>
+        <div class="eco-node" id="eco-n2"></div>
+        <div class="eco-node" id="eco-n3"></div>
+        <div class="eco-node" id="eco-n4"></div>
+        <div class="eco-node" id="eco-n5"></div>
+        <div class="eco-node" id="eco-n6"></div>
+        <div class="eco-node" id="eco-n7"></div>
+        <div class="eco-node" id="eco-n8"></div>
+        <div class="eco-node" id="eco-n9"></div>
+        <!-- 10 tag groups -->
+        <div class="eco-tags" id="eco-t0"></div>
+        <div class="eco-tags" id="eco-t1"></div>
+        <div class="eco-tags" id="eco-t2"></div>
+        <div class="eco-tags" id="eco-t3"></div>
+        <div class="eco-tags" id="eco-t4"></div>
+        <div class="eco-tags" id="eco-t5"></div>
+        <div class="eco-tags" id="eco-t6"></div>
+        <div class="eco-tags" id="eco-t7"></div>
+        <div class="eco-tags" id="eco-t8"></div>
+        <div class="eco-tags" id="eco-t9"></div>
+    </div>
+
+    <!-- <div class="eco-stats" id="eco-stats">
+        <div class="eco-stat"><span class="eco-stat-icon">🌐</span><div class="eco-stat-text"><strong>120+</strong>Languages</div></div>
+        <div class="eco-stat"><span class="eco-stat-icon">✅</span><div class="eco-stat-text"><strong>Enterprise</strong>Quality Assurance</div></div>
+        <div class="eco-stat"><span class="eco-stat-icon">⚡</span><div class="eco-stat-text"><strong>AI-Powered</strong>Workflows</div></div>
+        <div class="eco-stat"><span class="eco-stat-icon">⇄</span><div class="eco-stat-text"><strong>RTL &amp; LTR</strong>Support</div></div>
+        <div class="eco-stat"><span class="eco-stat-icon">🖨</span><div class="eco-stat-text"><strong>Production</strong>Ready Output</div></div>
+        <div class="eco-stat"><span class="eco-stat-icon">🌍</span><div class="eco-stat-text"><strong>Global</strong>Delivery</div></div>
+    </div> -->
+</section>
+
+<script>
+(function () {
+'use strict';
+
+// ── Data ─────────────────────────────────────────────────────────────
+var NODES = [
+    { angle:  90, name:'Healthcare &\nLife Sciences',   color:'#00cfff', border:'rgba(0,207,255,.75)',   bg:'rgba(0,80,160,.22)',   icon:'🏥', tags:['Regulatory Content','IFU','Training','Patient Communication'] },
+    { angle:  54, name:'SaaS &\nTechnology',            color:'#5599ff', border:'rgba(85,153,255,.75)',  bg:'rgba(30,55,185,.22)',  icon:'⚙️', tags:['UI Localization','App Localization','Software QA','Product Documentation'] },
+    { angle:  18, name:'E-Commerce &\nRetail',          color:'#ff44cc', border:'rgba(255,68,204,.75)',  bg:'rgba(155,12,120,.22)', icon:'🛒', tags:['Product Content','Catalogs','Marketing Copy','Customer Experience'] },
+    { angle: -18, name:'Financial Services\n& FinTech', color:'#ffd700', border:'rgba(255,215,0,.75)',   bg:'rgba(140,100,0,.22)',  icon:'🏛️', tags:['Statements','Contracts','Compliance','User Guides'] },
+    { angle: -54, name:'Gaming &\nEntertainment',       color:'#ff5500', border:'rgba(255,85,0,.75)',    bg:'rgba(160,40,0,.22)',   icon:'🎮', tags:['UI & In-Game Text','Dialogue & Audio','Lore & Story','Cultural Adaptation'] },
+    { angle: -90, name:'Manufacturing &\nEngineering',  color:'#00e5cc', border:'rgba(0,229,204,.75)',   bg:'rgba(0,115,110,.22)',  icon:'🔧', tags:['Technical Manuals','Safety Instructions','Workflows','Product Documentation'] },
+    { angle:-126, name:'Education &\neLearning',        color:'#44dd00', border:'rgba(68,221,0,.75)',    bg:'rgba(25,118,0,.22)',   icon:'🎓', tags:['Course Content','Training Materials','Assessments','Multimedia Learning'] },
+    { angle:-162, name:'Legal &\nCompliance',           color:'#aadd00', border:'rgba(170,221,0,.75)',   bg:'rgba(100,130,0,.22)',  icon:'⚖️', tags:['Contracts','Policies','Regulations','Litigation Documents'] },
+    { angle: 162, name:'Marketing &\nAdvertising',      color:'#ff3388', border:'rgba(255,51,136,.75)',  bg:'rgba(155,10,80,.22)',  icon:'📢', tags:['Campaigns','Ad Copy','Brand Messaging','Creative Assets'] },
+    { angle: 126, name:'Travel &\nHospitality',         color:'#00ccee', border:'rgba(0,204,238,.75)',   bg:'rgba(0,105,158,.22)',  icon:'✈️', tags:['Web Content','Travel Guides','Booking Flow','Customer Support'] },
+];
+
+var LAYERS = [
+    { label:'AI WORKFLOWS',           color:'#7b61ff' },
+    { label:'HUMAN LINGUISTS',         color:'#00cfff' },
+    { label:'LOCALIZATION ENGINEERS',  color:'#00e5cc' },
+    { label:'DTP SPECIALISTS',         color:'#ffd700' },
+];
+
+// ── Helpers ────────────────────────────────────────────────────────────
+function hexToRgba(hex, a) {
+    var r = parseInt(hex.slice(1,3),16),
+        g = parseInt(hex.slice(3,5),16),
+        b = parseInt(hex.slice(5,7),16);
+    return 'rgba('+r+','+g+','+b+','+a+')';
+}
+function svgEl(tag) {
+    return document.createElementNS('http://www.w3.org/2000/svg', tag);
+}
+
+// ── Three.js background ────────────────────────────────────────────────
+var threeRenderer, threeScene, threeCamera, starPoints, globe;
+
+function initThree() {
+    var sect = document.getElementById('eco-section');
+    var canvas = document.getElementById('eco-canvas');
+    var W = sect.clientWidth, H = sect.clientHeight || window.innerHeight;
+
+    threeScene  = new THREE.Scene();
+    threeCamera = new THREE.PerspectiveCamera(60, W/H, 0.1, 100);
+    threeCamera.position.z = 22;
+
+    threeRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+    threeRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    threeRenderer.setSize(W, H);
+    threeRenderer.setClearColor(0x000000, 0);
+
+    // Star field
+    var N = 1000;
+    var pos = new Float32Array(N*3), col = new Float32Array(N*3);
+    for (var i = 0; i < N; i++) {
+        pos[i*3]   = (Math.random()-.5)*55;
+        pos[i*3+1] = (Math.random()-.5)*55;
+        pos[i*3+2] = (Math.random()-.5)*8;
+        var t = Math.random();
+        col[i*3]   = .60 + t*.40;
+        col[i*3+1] = .55 + t*.35;
+        col[i*3+2] = .40 + t*.25;
+    }
+    var pGeo = new THREE.BufferGeometry();
+    pGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    pGeo.setAttribute('color',    new THREE.BufferAttribute(col, 3));
+    var pMat = new THREE.PointsMaterial({ size:.06, vertexColors:true, transparent:true, opacity:.65 });
+    starPoints = new THREE.Points(pGeo, pMat);
+    threeScene.add(starPoints);
+
+    // Brighter accent stars
+    var bN = 80, bPos = new Float32Array(bN*3);
+    for (var j = 0; j < bN; j++) {
+        bPos[j*3]   = (Math.random()-.5)*55;
+        bPos[j*3+1] = (Math.random()-.5)*55;
+        bPos[j*3+2] = (Math.random()-.5)*8;
+    }
+    var bGeo = new THREE.BufferGeometry();
+    bGeo.setAttribute('position', new THREE.BufferAttribute(bPos, 3));
+    var bMat = new THREE.PointsMaterial({ color:0xffffff, size:.15, transparent:true, opacity:.85 });
+    threeScene.add(new THREE.Points(bGeo, bMat));
+
+    // Central globe
+    var sGeo = new THREE.SphereGeometry(2.2, 30, 30);
+    var sMat = new THREE.MeshBasicMaterial({ color:0x080601, transparent:true, opacity:.8 });
+    globe = new THREE.Mesh(sGeo, sMat);
+    threeScene.add(globe);
+
+    var wGeo = new THREE.SphereGeometry(2.28, 16, 16);
+    var wMat = new THREE.MeshBasicMaterial({ color:0x7a6010, wireframe:true, transparent:true, opacity:.18 });
+    globe.add(new THREE.Mesh(wGeo, wMat));
+
+    // Point light — warm gold
+    threeScene.add(new THREE.PointLight(0xd4a820, 2.5, 14));
+    threeScene.add(new THREE.AmbientLight(0x100c02, 3));
+
+    (function loop() {
+        requestAnimationFrame(loop);
+        var t = Date.now() * .001;
+        if (starPoints) { starPoints.rotation.z = t*.018; starPoints.rotation.y = t*.004; }
+        if (globe) { globe.rotation.y = t*.14; globe.rotation.x = t*.05; }
+        threeRenderer.render(threeScene, threeCamera);
+    })();
+
+    window.addEventListener('resize', function () {
+        var W2 = sect.clientWidth, H2 = sect.clientHeight || window.innerHeight;
+        threeCamera.aspect = W2/H2; threeCamera.updateProjectionMatrix();
+        threeRenderer.setSize(W2, H2);
+    });
+}
+
+// ── Build HTML content ─────────────────────────────────────────────────
+function buildContent() {
+    // Node + tag content
+    NODES.forEach(function(node, i) {
+        var n = document.getElementById('eco-n'+i);
+        var parts = node.name.split('\n');
+        n.innerHTML = '<div class="eco-node-circle" style="border-color:'+node.border
+            +';background:'+node.bg
+            +';box-shadow:0 0 18px '+hexToRgba(node.color,.28)+',0 0 6px '+hexToRgba(node.color,.5)+' inset;">'
+            +'<span class="eco-node-icon">'+node.icon+'</span>'
+            +'<span class="eco-node-label">'+parts.join('<br>')+'</span>'
+            +'</div>';
+
+        var t = document.getElementById('eco-t'+i);
+        t.innerHTML = node.tags.map(function(tag) {
+            return '<div class="eco-tag">'+tag+'</div>';
+        }).join('');
+
+        // Hover glow
+        n.addEventListener('mouseenter', function() {
+            var c = n.querySelector('.eco-node-circle');
+            if (c) c.style.boxShadow = '0 0 30px '+hexToRgba(node.color,.55)+',0 0 10px '+hexToRgba(node.color,.6)+' inset';
+        });
+        n.addEventListener('mouseleave', function() {
+            var c = n.querySelector('.eco-node-circle');
+            if (c) c.style.boxShadow = '0 0 18px '+hexToRgba(node.color,.28)+',0 0 6px '+hexToRgba(node.color,.5)+' inset';
+        });
+    });
+}
+
+// ── Layout + SVG lines ─────────────────────────────────────────────────
+var diag = document.getElementById('eco-diagram');
+var svgOverlay = document.getElementById('eco-svg');
+var sect = document.getElementById('eco-section');
+
+function calcD() {
+    var vw = window.innerWidth, vh = window.innerHeight;
+    var mobile = vw < 600;
+    // Height: label(26) + gap(10) + diagram + gap(10) + stats(46) + padding(32) = D + 124
+    var maxH = vh - (mobile ? 80 : 124);
+    // Width: tags extend D*0.46*cos(angle)+tagText beyond diagram center each side
+    var maxW = mobile ? vw - 16 : Math.max(200, (vw - 240) / 0.920);
+    return Math.min(maxH, maxW, 960);
+}
+
+function layout() {
+    gsap.set('#eco-hub',  { xPercent:-50, yPercent:-50 });
+    gsap.set('.eco-node', { xPercent:-50, yPercent:-50 });
+
+    var D = calcD();
+    diag.style.width = D + 'px';
+
+    var HUB_D = D * 0.225;
+    var HUB_R = HUB_D / 2;
+    var NODE_R = D * 0.345;
+    var NODE_D = D * 0.108;
+    var TAG_R  = D * 0.460;
+
+    // Hub sizing
+    var hub = document.getElementById('eco-hub');
+    hub.style.width  = HUB_D + 'px';
+    hub.style.height = HUB_D + 'px';
+
+    var glow = document.getElementById('eco-hub-glow');
+    glow.style.width  = (HUB_D * 2.4) + 'px';
+    glow.style.height = (HUB_D * 2.4) + 'px';
+
+    // Hub ring SVGs
+    hub.querySelectorAll('.eco-ring-svg').forEach(function(s) { s.remove(); });
+
+    var rs1 = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    rs1.setAttribute('class','eco-ring-svg fwd');
+    rs1.style.cssText = 'width:'+(HUB_D*1.42)+'px;height:'+(HUB_D*1.42)+'px';
+    rs1.setAttribute('viewBox','0 0 100 100');
+    rs1.innerHTML = '<defs><path id="rp1" d="M50,4 A46,46 0 1,1 49.999,4" fill="none"/></defs>'
+        +'<text fill="rgba(212,175,55,0.30)" font-size="4.6" font-family="Space Grotesk,monospace" letter-spacing="1.5">'
+        +'<textPath href="#rp1" startOffset="0%">120+ LANGUAGES  •  ENTERPRISE QA  •  PRODUCTION READY  •  </textPath>'
+        +'</text>';
+    hub.appendChild(rs1);
+
+    var rs2 = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    rs2.setAttribute('class','eco-ring-svg rev');
+    rs2.style.cssText = 'width:'+(HUB_D*1.22)+'px;height:'+(HUB_D*1.22)+'px';
+    rs2.setAttribute('viewBox','0 0 100 100');
+    rs2.innerHTML = '<defs><path id="rp2" d="M50,13 A37,37 0 1,1 49.999,13" fill="none"/></defs>'
+        +'<text fill="rgba(212,175,55,0.20)" font-size="3.8" font-family="Space Grotesk,monospace" letter-spacing="1.2">'
+        +'<textPath href="#rp2" startOffset="50%">AI POWERED  •  HUMAN EXPERTISE  •  GLOBAL DELIVERY  •  </textPath>'
+        +'</text>';
+    hub.appendChild(rs2);
+
+    // Node + tag positioning
+    NODES.forEach(function(node, i) {
+        var rad = node.angle * Math.PI / 180;
+        var cos = Math.cos(rad), sin = Math.sin(rad);
+        var nx = D/2 + cos * NODE_R, ny = D/2 - sin * NODE_R;
+        var tx = D/2 + cos * TAG_R,  ty = D/2 - sin * TAG_R;
+
+        var n = document.getElementById('eco-n'+i);
+        n.style.left = nx + 'px';
+        n.style.top  = ny + 'px';
+        var c = n.querySelector('.eco-node-circle');
+        if (c) { c.style.width = NODE_D+'px'; c.style.height = NODE_D+'px'; }
+        var lbl = n.querySelector('.eco-node-label');
+        if (lbl) lbl.style.fontSize = (NODE_D*.115)+'px';
+        var ico = n.querySelector('.eco-node-icon');
+        if (ico) ico.style.fontSize = (NODE_D*.28)+'px';
+
+        var t = document.getElementById('eco-t'+i);
+        t.style.left = tx + 'px';
+        t.style.top  = ty + 'px';
+        t.className = 'eco-tags';
+        var fs = Math.max(8.5, D * 0.0125) + 'px';
+        t.querySelectorAll('.eco-tag').forEach(function(el) { el.style.fontSize = fs; });
+
+        if      (cos >  0.25) { t.style.transform = 'translateY(-50%)'; t.classList.add('ta-r'); }
+        else if (cos < -0.25) { t.style.transform = 'translate(-100%,-50%)'; t.classList.add('ta-l'); }
+        else if (sin >  0)    { t.style.transform = 'translate(-50%,-100%)'; t.classList.add('ta-c'); }
+        else                  { t.style.transform = 'translateX(-50%)'; t.classList.add('ta-c'); }
+    });
+
+    drawLines(D, NODE_R, HUB_R);
+}
+
+function drawLines(D, nodeR, hubR) {
+    svgOverlay.innerHTML = '';
+
+    var diagR = diag.getBoundingClientRect();
+    var sectR = sect.getBoundingClientRect();
+    var ox = diagR.left - sectR.left;
+    var oy = diagR.top  - sectR.top;
+    var cx = ox + D/2, cy = oy + D/2;
+    var nodeEdgeR = nodeR - (D * 0.108) / 2;  /* stop line at circle edge */
+
+    svgOverlay.setAttribute('width',  sectR.width);
+    svgOverlay.setAttribute('height', sectR.height);
+
+    // Defs
+    var defs = svgEl('defs');
+    var filt = svgEl('filter');
+    filt.id = 'lnGlow';
+    filt.setAttribute('x','-60%'); filt.setAttribute('y','-60%');
+    filt.setAttribute('width','220%'); filt.setAttribute('height','220%');
+    filt.innerHTML = '<feGaussianBlur stdDeviation="3" result="b"/>'
+        +'<feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>';
+    defs.appendChild(filt);
+    svgOverlay.appendChild(defs);
+
+    NODES.forEach(function(node, i) {
+        var rad = node.angle * Math.PI / 180;
+        var cos = Math.cos(rad), sin = Math.sin(rad);
+        var hx = cx + cos * hubR,        hy = cy - sin * hubR;       /* hub edge  */
+        var ex = cx + cos * nodeEdgeR,   ey = cy - sin * nodeEdgeR;  /* node edge */
+
+        // Gradient (hub-blue → node colour, along the actual line)
+        var gId = 'lg'+i;
+        var lg = svgEl('linearGradient');
+        lg.id = gId;
+        lg.setAttribute('x1', hx); lg.setAttribute('y1', hy);
+        lg.setAttribute('x2', ex); lg.setAttribute('y2', ey);
+        lg.setAttribute('gradientUnits','userSpaceOnUse');
+        var s1 = svgEl('stop'); s1.setAttribute('offset','0%');   s1.setAttribute('stop-color','rgba(212,175,55,0.65)');
+        var s2 = svgEl('stop'); s2.setAttribute('offset','100%'); s2.setAttribute('stop-color', hexToRgba(node.color,.75));
+        lg.appendChild(s1); lg.appendChild(s2);
+        defs.appendChild(lg);
+
+        // Glow backing
+        var g = svgEl('line');
+        g.id = 'eco-gln'+i;
+        g.setAttribute('x1',hx); g.setAttribute('y1',hy);
+        g.setAttribute('x2',ex); g.setAttribute('y2',ey);
+        g.setAttribute('stroke', node.color);
+        g.setAttribute('stroke-width','4');
+        g.setAttribute('stroke-opacity','.10');
+        g.setAttribute('opacity','0');
+        g.setAttribute('filter','url(#lnGlow)');
+        svgOverlay.appendChild(g);
+
+        // Main line (animated, ends at node edge)
+        var ln = svgEl('line');
+        ln.id = 'eco-ln'+i;
+        ln.setAttribute('x1',hx); ln.setAttribute('y1',hy);
+        ln.setAttribute('x2',ex); ln.setAttribute('y2',ey);
+        ln.setAttribute('stroke','url(#'+gId+')');
+        ln.setAttribute('stroke-width','1.2');
+        ln.setAttribute('stroke-linecap','round');
+        var len = Math.hypot(ex-hx, ey-hy);
+        ln.setAttribute('stroke-dasharray', len);
+        ln.setAttribute('stroke-dashoffset', len);
+        svgOverlay.appendChild(ln);
+
+        // Endpoint dot at node edge
+        var dot = svgEl('circle');
+        dot.setAttribute('cx', ex); dot.setAttribute('cy', ey); dot.setAttribute('r','3');
+        dot.setAttribute('fill', node.color); dot.setAttribute('opacity','.0');
+        dot.id = 'eco-dot'+i;
+        svgOverlay.appendChild(dot);
+    });
+}
+
+// ── Travelling data dots ────────────────────────────────────────────────
+function startTravelDots() {
+    var diagR = diag.getBoundingClientRect();
+    var sectR = sect.getBoundingClientRect();
+    var ox = diagR.left - sectR.left, oy = diagR.top - sectR.top;
+    var D = diag.clientWidth;
+    var cx = ox + D/2, cy = oy + D/2;
+    var hubR      = D * 0.225 / 2;
+    var nodeR     = D * 0.345;
+    var nodeEdgeR = nodeR - (D * 0.108) / 2;
+
+    NODES.forEach(function(node, i) {
+        var rad = node.angle * Math.PI / 180;
+        var cos = Math.cos(rad), sin = Math.sin(rad);
+        var hx = cx + cos * hubR,        hy = cy - sin * hubR;
+        var ex = cx + cos * nodeEdgeR,   ey = cy - sin * nodeEdgeR;
+
+        var td = svgEl('circle');
+        td.setAttribute('r','2.5');
+        td.setAttribute('fill', node.color);
+        td.setAttribute('opacity','0');
+        svgOverlay.appendChild(td);
+
+        function shoot() {
+            gsap.fromTo(td,
+                { attr:{cx:hx,cy:hy}, opacity:0 },
+                { attr:{cx:ex,cy:ey}, opacity:.9, duration:1.8+Math.random()*.8, ease:'none',
+                  onComplete:function() {
+                      gsap.to(td, { opacity:0, duration:.25, onComplete:function() {
+                          setTimeout(shoot, 800 + Math.random()*2200);
+                      }});
+                  }
+                }
+            );
+        }
+        setTimeout(shoot, 400 + i*180 + Math.random()*600);
+    });
+}
+
+// ── GSAP entrance ──────────────────────────────────────────────────────
+function animateIn() {
+    var tl = gsap.timeline({ defaults:{ ease:'power3.out' } });
+
+    tl.to('#eco-label', { opacity:1, duration:.5 }, 0);
+    tl.fromTo('#eco-hub', { scale:0, opacity:0 }, { scale:1, opacity:1, duration:.85, ease:'back.out(1.4)' }, .2);
+
+    NODES.forEach(function(_, i) {
+        tl.to('#eco-gln'+i, { attr:{opacity:1}, duration:.5, ease:'power2.inOut' }, .6 + i*.065);
+        tl.to('#eco-ln'+i,  { attr:{strokeDashoffset:0}, duration:.75, ease:'power2.inOut' }, .6 + i*.065);
+        tl.to('#eco-dot'+i, { attr:{opacity:.75}, duration:.25 }, .6 + i*.065 + .68);
+    });
+
+    gsap.set('.eco-node', { scale:0, opacity:0 });
+    NODES.forEach(function(_, i) {
+        tl.to('#eco-n'+i, { scale:1, opacity:1, duration:.45, ease:'back.out(1.8)' }, .88 + i*.07);
+        tl.to('#eco-t'+i, { opacity:1, duration:.4 }, 1.15 + i*.07);
+    });
+
+    tl.to('#eco-stats', { opacity:1, y:0, duration:.6 }, 1.9);
+
+    tl.call(startTravelDots, [], 2.2);
+}
+
+// ── Update one connector line after drag ───────────────────────────────
+function updateNodeLine(i, nodeLeft, nodeTop) {
+    var diagR = diag.getBoundingClientRect();
+    var sectR = sect.getBoundingClientRect();
+    var ox = diagR.left - sectR.left, oy = diagR.top - sectR.top;
+    var D = diag.clientWidth;
+    var hubR     = D * 0.225 / 2;
+    var nodeCircR = (D * 0.108) / 2;
+    var cx = ox + D/2, cy = oy + D/2;
+    var nx = ox + nodeLeft, ny = oy + nodeTop;       /* node centre */
+    var dx = nx - cx, dy = ny - cy;
+    var dist = Math.sqrt(dx*dx + dy*dy) || 1;
+    var ux = dx/dist, uy = dy/dist;
+
+    var hx = cx + ux*hubR,            hy = cy + uy*hubR;   /* hub edge  */
+    var ex = nx - ux*nodeCircR,       ey = ny - uy*nodeCircR; /* node edge */
+
+    var ln  = document.getElementById('eco-ln'+i);
+    var gln = document.getElementById('eco-gln'+i);
+    var dot = document.getElementById('eco-dot'+i);
+    var lg  = document.getElementById('lg'+i);
+
+    if (gln) { gln.setAttribute('x1',hx); gln.setAttribute('y1',hy); gln.setAttribute('x2',ex); gln.setAttribute('y2',ey); gln.setAttribute('opacity','1'); }
+    if (ln)  {
+        ln.setAttribute('x1',hx); ln.setAttribute('y1',hy); ln.setAttribute('x2',ex); ln.setAttribute('y2',ey);
+        var len = Math.hypot(ex-hx, ey-hy);
+        ln.setAttribute('stroke-dasharray',len); ln.setAttribute('stroke-dashoffset','0');
+    }
+    if (dot) { dot.setAttribute('cx',ex); dot.setAttribute('cy',ey); }
+    if (lg)  { lg.setAttribute('x1',hx); lg.setAttribute('y1',hy); lg.setAttribute('x2',ex); lg.setAttribute('y2',ey); }
+}
+
+// ── Drag-to-reposition nodes ──────────────────────────────────────────
+function initDraggable() {
+    NODES.forEach(function(_, i) {
+        var el  = document.getElementById('eco-n'+i);
+        var tag = document.getElementById('eco-t'+i);
+        var dragging = false;
+        var sx, sy, sl, st, tl, tt;
+
+        function onStart(cx, cy) {
+            dragging = true;
+            sx = cx; sy = cy;
+            sl = parseFloat(el.style.left)  || 0;
+            st = parseFloat(el.style.top)   || 0;
+            tl = parseFloat(tag.style.left) || 0;
+            tt = parseFloat(tag.style.top)  || 0;
+            gsap.set(el, { zIndex:20 });
+        }
+        function onMove(cx, cy) {
+            if (!dragging) return;
+            var dx = cx - sx, dy = cy - sy;
+            var nl = sl+dx, nt = st+dy;
+            el.style.left  = nl + 'px'; el.style.top  = nt + 'px';
+            tag.style.left = (tl+dx)+'px'; tag.style.top = (tt+dy)+'px';
+            updateNodeLine(i, nl, nt);
+        }
+        function onEnd() {
+            if (!dragging) return;
+            dragging = false;
+            gsap.set(el, { zIndex:8 });
+        }
+
+        el.addEventListener('mousedown',  function(e){ e.preventDefault(); onStart(e.clientX, e.clientY); });
+        document.addEventListener('mousemove', function(e){ onMove(e.clientX, e.clientY); });
+        document.addEventListener('mouseup',   onEnd);
+
+        el.addEventListener('touchstart', function(e){ e.preventDefault(); onStart(e.touches[0].clientX, e.touches[0].clientY); }, {passive:false});
+        document.addEventListener('touchmove', function(e){ if(dragging){ e.preventDefault(); onMove(e.touches[0].clientX, e.touches[0].clientY); }}, {passive:false});
+        document.addEventListener('touchend', onEnd);
+    });
+}
+
+// ── Resize ─────────────────────────────────────────────────────────────
+var _rt;
+window.addEventListener('resize', function() {
+    clearTimeout(_rt);
+    _rt = setTimeout(layout, 200);
+});
+
+// ── Boot ───────────────────────────────────────────────────────────────
+function boot() {
+    buildContent();
+    setTimeout(function() {
+        layout();
+        try { initThree(); } catch(e) { console.warn('Three.js init skipped:', e); }
+        animateIn();
+        initDraggable();
+    }, 120);
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+} else {
+    boot();
+}
+
+})();
+</script>
+</body>
+</html>
