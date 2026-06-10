@@ -838,12 +838,18 @@
         /* Actor-column header bar — sits between tabs and body */
         #wf-actors-bar {
             height: 64px;
-            display: flex;
+            /* Same 2-col grid as .wf-body so pills align with SVG lifelines */
+            display: grid;
+            grid-template-columns: 200px 1fr;
             align-items: center;
-            position: relative;
             background: rgba(9,9,11,0.98);
             border-bottom: 1px solid rgba(255,255,255,0.07);
             flex-shrink: 0;
+        }
+        /* Diagram-column zone — pills are positioned relative to this */
+        .wf-actors-cols {
+            position: relative;
+            height: 100%;
         }
         .wf-actor-pill {
             position: absolute;
@@ -1977,13 +1983,18 @@
                     </div>
                 </div>
 
-                <!-- Actor column headers — always visible, above the scrolling diagram -->
+                <!-- Actor column headers — aligned to SVG lifelines via matching grid -->
                 <div id="wf-actors-bar">
-                    <div class="wf-actor-pill" id="wf-col-0" style="left:10%;color:#38bdf8;border-color:rgba(56,189,248,0.32);">Client</div>
-                    <div class="wf-actor-pill" id="wf-col-1" style="left:30%;color:#d4af37;border-color:rgba(212,175,55,0.32);">Project<br>Management</div>
-                    <div class="wf-actor-pill" id="wf-col-2" style="left:50%;color:#a78bfa;border-color:rgba(167,139,250,0.32);">DTP Team</div>
-                    <div class="wf-actor-pill" id="wf-col-3" style="left:70%;color:#34d399;border-color:rgba(52,211,153,0.32);">Internal QA<br>/ LSO</div>
-                    <div class="wf-actor-pill" id="wf-col-4" style="left:90%;color:#fb7185;border-color:rgba(251,113,133,0.32);">Accounts<br>&amp; Finance</div>
+                    <!-- 200px spacer matches the .wf-nav column so pills fall over the diagram -->
+                    <div></div>
+                    <!-- Pills are positioned relative to this cell (= diagram column width) -->
+                    <div class="wf-actors-cols">
+                        <div class="wf-actor-pill" id="wf-col-0" style="left:10%;color:#38bdf8;border-color:rgba(56,189,248,0.32);">Client</div>
+                        <div class="wf-actor-pill" id="wf-col-1" style="left:30%;color:#d4af37;border-color:rgba(212,175,55,0.32);">Project<br>Management</div>
+                        <div class="wf-actor-pill" id="wf-col-2" style="left:50%;color:#a78bfa;border-color:rgba(167,139,250,0.32);">DTP Team</div>
+                        <div class="wf-actor-pill" id="wf-col-3" style="left:70%;color:#34d399;border-color:rgba(52,211,153,0.32);">Internal QA<br>/ LSO</div>
+                        <div class="wf-actor-pill" id="wf-col-4" style="left:90%;color:#fb7185;border-color:rgba(251,113,133,0.32);">Accounts<br>&amp; Finance</div>
+                    </div>
                 </div>
 
                 <!-- BODY: Step navigator + SVG sequence diagram -->
