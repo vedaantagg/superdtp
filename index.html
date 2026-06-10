@@ -1189,10 +1189,13 @@
 
         /* ── INDUSTRY SOLUTIONS — Full Radial Ecosystem ─────────── */
         #industry-solutions {
-            position: relative;
-            background: radial-gradient(ellipse 100% 80% at 50% 50%, #121212 0%, #09090b 65%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            min-height: 100vh; padding: 2rem 1rem 5rem;
+            position: relative; overflow: hidden;
+            background: radial-gradient(ellipse 90% 90% at 50% 50%, #121212 0%, #09090b 62%);
+            display: flex; align-items: center; justify-content: center;
+            height: calc(100vh - 88px); padding: 0;
+        }
+        @media (max-width: 767px) {
+            #industry-solutions { height: auto; min-height: calc(100vh - 88px); padding: 3rem 1rem; }
         }
         #eco-canvas {
             position: absolute; inset: 0; width: 100%; height: 100%;
@@ -1303,16 +1306,63 @@
         }
         .eco-stat-text strong { display: block; color: rgba(212,175,55,0.85); font-size: .65rem; letter-spacing: 0; text-transform: none; }
         @media (max-width: 599px) { .eco-stats { display: none; } .eco-tags { display: none !important; } }
-        .ind-eco-hd { text-align: center; margin-bottom: 1.2rem; position: relative; z-index: 5; }
-        .ind-eco-eyebrow { display: block; font-family: 'Space Grotesk',monospace; font-size: 0.54rem; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(212,175,55,0.62); margin-bottom: 0.55rem; }
-        .ind-eco-hd h2 { font-family: 'Instrument Serif',serif; font-size: clamp(2rem,4.5vw,3.5rem); color: #fff; font-weight: 400; line-height: 1.1; margin: 0; }
+        .ind-eco-hd {
+            position: absolute; left: 3.5rem; top: 50%; transform: translateY(-50%);
+            z-index: 10; width: 200px; text-align: left;
+        }
+        .ind-eco-eyebrow { display: block; font-family: 'Space Grotesk',monospace; font-size: 0.54rem; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(212,175,55,0.62); margin-bottom: 0.75rem; }
+        .ind-eco-hd h2 { font-family: 'Instrument Serif',serif; font-size: clamp(1.6rem,2.4vw,2.6rem); color: #fff; font-weight: 400; line-height: 1.12; margin: 0; }
+        @media (max-width: 767px) {
+            .ind-eco-hd { position: relative; left: auto; top: auto; transform: none; width: auto; text-align: center; margin-bottom: 1.2rem; }
+            .ind-eco-hd h2 { font-size: clamp(2rem,7vw,2.8rem); }
+        }
 
         /* ── INDIC LANGUAGE EXCELLENCE ───────────────────────────────── */
-        .indic-lang-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(148px, 1fr)); gap: 1px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; overflow: hidden; }
-        .indic-lang-card { background: rgba(9,9,11,0.9); padding: 18px 14px; transition: background 0.25s ease; cursor: default; }
-        .indic-lang-card:hover { background: rgba(18,24,44,0.95); }
-        .indic-script { font-size: 1.55rem; line-height: 1.4; color: rgba(255,255,255,0.82); margin-bottom: 6px; }
-        .indic-lang-en  { font-family: 'Space Grotesk', monospace; font-size: 0.56rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+        #indic-brick-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: 14px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+            /* height set by JS */
+        }
+        #indic-logo-reveal {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 42%; max-width: 380px;
+            opacity: 0.09;
+            pointer-events: none;
+            z-index: 1;
+            filter: brightness(0) invert(1);
+            transition: opacity 0.5s ease;
+            user-select: none;
+        }
+        /* brick grid: height+positioning controlled by JS */
+        .indic-lang-grid {
+            position: relative;
+            z-index: 2;
+        }
+        .indic-lang-card {
+            position: absolute;          /* JS sets top/left/width/height */
+            box-sizing: border-box;
+            background: rgba(9,9,11,0.92);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 10px;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 16px 10px;
+            transition: transform 0.55s cubic-bezier(0.23, 1, 0.32, 1); /* spring back */
+            will-change: transform;
+            pointer-events: none;
+            cursor: default;
+            user-select: none;
+        }
+        .indic-lang-card.indic-flee {
+            transition: transform 0.08s ease-out; /* snap away instantly */
+        }
+        .indic-script { font-size: 1.45rem; line-height: 1.35; color: rgba(255,255,255,0.82); margin-bottom: 6px; }
+        .indic-lang-en { font-family: 'Space Grotesk', monospace; font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
         .indic-stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; margin-top: 40px; }
         @media (max-width: 768px) { .indic-stat-row { grid-template-columns: repeat(2,1fr); } }
         .indic-stat-cell { background: rgba(9,9,11,0.88); padding: 26px 20px; text-align: center; }
@@ -1494,7 +1544,7 @@
 
     <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md">
         <a href="/" aria-label="SuperDTP Home">
-            <img src="logo copy 5.svg" alt="SuperDTP logo" style="height:58px;width:auto;display:block;" fetchpriority="high" />
+            <img src="static/logo copy 5.svg" alt="SuperDTP logo" style="height:58px;width:auto;display:block;" fetchpriority="high" />
         </a>
         <nav aria-label="Main navigation" class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-400">
             <a href="#hero" class="nav-link active">01. HOME</a>
@@ -1624,7 +1674,7 @@
             </div>
 
             <aside class="flex items-center justify-center">
-                <object type="image/svg+xml" data="hero.svg" style="width:100%;aspect-ratio:960/560;display:block;" aria-label="SuperDTP Workflow Engine diagram"></object>
+                <object type="image/svg+xml" data="static/hero.svg" style="width:100%;aspect-ratio:960/560;display:block;" aria-label="SuperDTP Workflow Engine diagram"></object>
             </aside>
         </div>
 
@@ -1658,7 +1708,7 @@
     ═══════════════════════════════════════════════════════ -->
     <section id="trusted-by" class="relative py-12 border-t border-white/5 overflow-hidden bg-[#07070a]">
         <div class="max-w-7xl mx-auto px-6 md:px-12 mb-8 text-center">
-            <span class="font-mono text-[0.56rem] uppercase tracking-[0.32em] text-neutral-400">Trusted by global industry leaders</span>
+            <span class="font-mono text-[1rem] uppercase tracking-[0.32em] text-neutral-400">Trusted by global industry leaders</span>
         </div>
         <div class="ticker-outer space-y-2.5" style="-webkit-mask-image:linear-gradient(90deg,transparent,black 9%,black 91%,transparent);mask-image:linear-gradient(90deg,transparent,black 9%,black 91%,transparent)">
 
@@ -1730,30 +1780,36 @@
                 <p class="lg:col-span-4 lg:col-start-9 text-sm text-neutral-400 leading-relaxed">With expert DTP engineers and linguists specializing in every major Indic script — from Devanagari to Ol Chiki — SuperDTP delivers production-ready multilingual content for India's vast and diverse markets.</p>
             </div>
 
-            <!-- Language grid -->
-            <div class="indic-lang-grid">
-                <div class="indic-lang-card"><div class="indic-script">हिंदी</div><div class="indic-lang-en">Hindi</div></div>
-                <div class="indic-lang-card"><div class="indic-script">বাংলা</div><div class="indic-lang-en">Bengali</div></div>
-                <div class="indic-lang-card"><div class="indic-script">తెలుగు</div><div class="indic-lang-en">Telugu</div></div>
-                <div class="indic-lang-card"><div class="indic-script">தமிழ்</div><div class="indic-lang-en">Tamil</div></div>
-                <div class="indic-lang-card"><div class="indic-script">मराठी</div><div class="indic-lang-en">Marathi</div></div>
-                <div class="indic-lang-card"><div class="indic-script">ગુજરાતી</div><div class="indic-lang-en">Gujarati</div></div>
-                <div class="indic-lang-card"><div class="indic-script">ಕನ್ನಡ</div><div class="indic-lang-en">Kannada</div></div>
-                <div class="indic-lang-card"><div class="indic-script">മലയാളം</div><div class="indic-lang-en">Malayalam</div></div>
-                <div class="indic-lang-card"><div class="indic-script">ଓଡ଼ିଆ</div><div class="indic-lang-en">Odia</div></div>
-                <div class="indic-lang-card"><div class="indic-script">ਪੰਜਾਬੀ</div><div class="indic-lang-en">Punjabi</div></div>
-                <div class="indic-lang-card"><div class="indic-script">اردو</div><div class="indic-lang-en">Urdu</div></div>
-                <div class="indic-lang-card"><div class="indic-script">संस्कृत</div><div class="indic-lang-en">Sanskrit</div></div>
-                <div class="indic-lang-card"><div class="indic-script">অসমীয়া</div><div class="indic-lang-en">Assamese</div></div>
-                <div class="indic-lang-card"><div class="indic-script">मैथिली</div><div class="indic-lang-en">Maithili</div></div>
-                <div class="indic-lang-card"><div class="indic-script">سنڌي</div><div class="indic-lang-en">Sindhi</div></div>
-                <div class="indic-lang-card"><div class="indic-script">कॉशुर</div><div class="indic-lang-en">Kashmiri</div></div>
-                <div class="indic-lang-card"><div class="indic-script">डोगरी</div><div class="indic-lang-en">Dogri</div></div>
-                <div class="indic-lang-card"><div class="indic-script">कोंकणी</div><div class="indic-lang-en">Konkani</div></div>
-                <div class="indic-lang-card"><div class="indic-script">ᱥᱟᱱᱛᱟᱲᱤ</div><div class="indic-lang-en">Santali</div></div>
-                <div class="indic-lang-card"><div class="indic-script">মৈতৈলোন্</div><div class="indic-lang-en">Manipuri</div></div>
-                <div class="indic-lang-card"><div class="indic-script">बड़ो</div><div class="indic-lang-en">Bodo</div></div>
-                <div class="indic-lang-card"><div class="indic-script">नेपाली</div><div class="indic-lang-en">Nepali</div></div>
+            <!-- Brick language wall with logo reveal -->
+            <div id="indic-brick-wrap">
+                <!-- SuperDTP logo sits behind all tiles, revealed as they scatter -->
+                <img src="static/logo copy 5.svg" id="indic-logo-reveal" alt="SuperDTP" aria-hidden="true">
+
+                <!-- Tiles: positioned absolutely by JS in brick pattern -->
+                <div class="indic-lang-grid" id="indic-lang-grid">
+                    <div class="indic-lang-card"><div class="indic-script">हिंदी</div><div class="indic-lang-en">Hindi</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">বাংলা</div><div class="indic-lang-en">Bengali</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">తెలుగు</div><div class="indic-lang-en">Telugu</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">தமிழ்</div><div class="indic-lang-en">Tamil</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">मराठी</div><div class="indic-lang-en">Marathi</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">ગુજરાતી</div><div class="indic-lang-en">Gujarati</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">ಕನ್ನಡ</div><div class="indic-lang-en">Kannada</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">മലയാളം</div><div class="indic-lang-en">Malayalam</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">ଓଡ଼ିଆ</div><div class="indic-lang-en">Odia</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">ਪੰਜਾਬੀ</div><div class="indic-lang-en">Punjabi</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">اردو</div><div class="indic-lang-en">Urdu</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">संस्कृत</div><div class="indic-lang-en">Sanskrit</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">অসমীয়া</div><div class="indic-lang-en">Assamese</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">मैथिली</div><div class="indic-lang-en">Maithili</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">سنڌي</div><div class="indic-lang-en">Sindhi</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">कॉशुर</div><div class="indic-lang-en">Kashmiri</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">डोगरी</div><div class="indic-lang-en">Dogri</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">कोंकणी</div><div class="indic-lang-en">Konkani</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">ᱥᱟᱱᱛᱟᱲᱤ</div><div class="indic-lang-en">Santali</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">মৈতৈলোন্</div><div class="indic-lang-en">Manipuri</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">बड़ो</div><div class="indic-lang-en">Bodo</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">नेपाली</div><div class="indic-lang-en">Nepali</div></div>
+                </div>
             </div>
 
             <!-- Stats row -->
@@ -2400,7 +2456,7 @@
                 <!-- Brand (spans 2 cols on lg) -->
                 <div class="col-span-2 md:col-span-3 lg:col-span-2">
                     <a href="#hero" aria-label="SuperDTP Home" class="inline-block mb-5">
-                        <img src="logo copy 5.svg" alt="SuperDTP logo" style="height:48px;width:auto;display:block;opacity:0.9;" />
+                        <img src="static/logo copy 5.svg" alt="SuperDTP logo" style="height:48px;width:auto;display:block;opacity:0.9;" />
                     </a>
                     <p class="text-neutral-500 text-xs leading-relaxed max-w-xs">
                         Specialist multilingual DTP &amp; localization studio. Precision layouts in 100+ languages, delivered on time.
@@ -4093,10 +4149,13 @@
         var ecoSect  = document.getElementById('industry-solutions');
 
         function ecoCalcD() {
-            var vw = window.innerWidth, vh = window.innerHeight, mobile = vw < 600;
-            // overhead: padding(48+80) + heading(88) + stats(46) + tag bleed (~90px bottom)
-            var overhead = mobile ? 160 : 352;
-            return Math.min(vh - overhead, mobile ? vw - 16 : Math.max(200, (vw - 240) / 0.920), 880);
+            var vw = window.innerWidth, vh = window.innerHeight, mobile = vw < 768;
+            if (mobile) {
+                return Math.min(vw - 32, (vh - 88) * 0.80);
+            }
+            // Section height = vh - 88px (fixed header). Diagram centred inside.
+            // 0.90 leaves ~5% padding top+bottom so TAG labels never clip.
+            return Math.min((vh - 88) * 0.90, vw * 0.78, 1050);
         }
 
         function ecoLayout() {
@@ -4135,8 +4194,8 @@
                 n.style.left=nx+'px'; n.style.top=ny+'px';
                 var c=n.querySelector('.eco-node-circle');
                 if (c){ c.style.width=NODE_D+'px'; c.style.height=NODE_D+'px'; }
-                var lbl=n.querySelector('.eco-node-label'); if (lbl) lbl.style.fontSize=(NODE_D*.115)+'px';
-                var ico=n.querySelector('.eco-node-icon');  if (ico) ico.style.fontSize=(NODE_D*.28)+'px';
+                var lbl=n.querySelector('.eco-node-label'); if (lbl) lbl.style.fontSize=(NODE_D*.132)+'px';
+                var ico=n.querySelector('.eco-node-icon');  if (ico) ico.style.fontSize=(NODE_D*.26)+'px';
                 var t=document.getElementById('eco-t'+i);
                 if (!t) return;
                 t.style.left=tx+'px'; t.style.top=ty+'px'; t.className='eco-tags';
@@ -4652,6 +4711,130 @@
                 }
             });
         })();
+
+    // ── Indic Language Brick Wall + Mouse Repulsion ──────────────────
+    (function () {
+        // 6-5-6-5 row config = 22 tiles, zero ghost tiles
+        var ROW_CONFIG = [
+            { count: 6, stagger: false },
+            { count: 5, stagger: true  },
+            { count: 6, stagger: false },
+            { count: 5, stagger: true  }
+        ];
+        var GAP      = 10;   // px between tiles
+        var TILE_AR  = 0.60; // tile height / width
+        var PAD      = 16;   // container inner padding
+        var REPEL_R  = 180;  // cursor influence radius (px)
+        var MAX_PUSH = 420;  // max displacement — large enough to exit container
+
+        var grid  = null;
+        var wrap  = null;
+        var logo  = null;
+        var cards = [];
+
+        function layBricks() {
+            grid  = document.getElementById('indic-lang-grid');
+            wrap  = document.getElementById('indic-brick-wrap');
+            logo  = document.getElementById('indic-logo-reveal');
+            if (!grid || !wrap) return;
+
+            cards = Array.from(grid.querySelectorAll('.indic-lang-card'));
+            var COLS_FULL = ROW_CONFIG[0].count;
+            var W      = wrap.offsetWidth - PAD * 2;
+            var tileW  = (W - GAP * (COLS_FULL - 1)) / COLS_FULL;
+            var tileH  = Math.round(tileW * TILE_AR);
+            var step   = tileW + GAP;
+            var rowH   = tileH + GAP;
+            var halfSt = step / 2;
+
+            var idx = 0;
+            ROW_CONFIG.forEach(function (row, r) {
+                var offset = row.stagger ? halfSt : 0;
+                for (var col = 0; col < row.count; col++) {
+                    if (idx >= cards.length) return;
+                    var card = cards[idx++];
+                    var left = PAD + col * step + offset;
+                    var top  = PAD + r * rowH;
+                    card.style.width  = tileW + 'px';
+                    card.style.height = tileH + 'px';
+                    card.style.left   = left + 'px';
+                    card.style.top    = top  + 'px';
+                    card._hx      = left + tileW / 2;
+                    card._hy      = top  + tileH / 2;
+                    card._fleeing = false;
+                }
+            });
+
+            var wrapH = PAD + ROW_CONFIG.length * rowH - GAP + PAD;
+            grid.style.height = wrapH + 'px';
+            wrap.style.height = wrapH + 'px';
+        }
+
+        var lastMX = -9999, lastMY = -9999;
+
+        function repelTiles(viewportX, viewportY) {
+            if (!grid || cards.length === 0) return;
+            var gridRect  = grid.getBoundingClientRect();
+            var lx        = viewportX - gridRect.left;
+            var ly        = viewportY - gridRect.top;
+            var totalPush = 0;
+
+            cards.forEach(function (card) {
+                var dx   = card._hx - lx;
+                var dy   = card._hy - ly;
+                var dist = Math.sqrt(dx * dx + dy * dy);
+
+                if (dist < REPEL_R && dist > 0.5) {
+                    var t  = (REPEL_R - dist) / REPEL_R; // 0→1 as cursor approaches
+                    var f  = t * t;                       // quadratic: sharp near cursor
+                    var tx = (dx / dist) * f * MAX_PUSH;
+                    var ty = (dy / dist) * f * MAX_PUSH;
+                    if (!card._fleeing) {
+                        card.classList.add('indic-flee');
+                        card._fleeing = true;
+                    }
+                    card.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px)';
+                    totalPush += f;
+                } else if (card._fleeing) {
+                    card.classList.remove('indic-flee');
+                    card.style.transform = 'translate(0,0)';
+                    card._fleeing = false;
+                }
+            });
+
+            if (logo) {
+                logo.style.opacity = (0.09 + Math.min(totalPush / cards.length, 1) * 0.50).toFixed(3);
+            }
+        }
+
+        function onMouseMove(e) { lastMX = e.clientX; lastMY = e.clientY; repelTiles(lastMX, lastMY); }
+        function onScroll()     { if (lastMX > -9999) repelTiles(lastMX, lastMY); }
+        function onResize()     { layBricks(); if (lastMX > -9999) repelTiles(lastMX, lastMY); }
+
+        function onMouseLeave() {
+            lastMX = lastMY = -9999;
+            cards.forEach(function (c) {
+                c.classList.remove('indic-flee');
+                c.style.transform = 'translate(0,0)';
+                c._fleeing = false;
+            });
+            if (logo) logo.style.opacity = '0.09';
+        }
+
+        function init() {
+            layBricks();
+            document.addEventListener('mousemove',  onMouseMove, { passive: true });
+            window.addEventListener('scroll',       onScroll,    { passive: true });
+            window.addEventListener('resize',       onResize,    { passive: true });
+            document.addEventListener('mouseleave', onMouseLeave);
+        }
+
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
 
     </script>
 </body>
