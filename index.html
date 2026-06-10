@@ -195,6 +195,29 @@
         .dropdown-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18); flex-shrink: 0; }
         .dropdown-link:hover .dropdown-dot { background: rgba(212,175,55,0.5); }
 
+        /* ── Footer ─────────────────────────────────────────── */
+        .footer-col-hdr {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.55rem;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: #d4af37;
+            margin-bottom: 14px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid rgba(212,175,55,0.15);
+        }
+        .footer-nav-lnk {
+            display: block;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.08em;
+            color: rgba(255,255,255,0.45);
+            text-decoration: none;
+            padding: 4px 0;
+            transition: color 0.2s ease;
+        }
+        .footer-nav-lnk:hover { color: #d4af37; }
+
         #next-section-btn {
             position: fixed;
             right: 2rem;
@@ -1473,13 +1496,13 @@
         <a href="/" aria-label="SuperDTP Home">
             <img src="logo copy 5.svg" alt="SuperDTP logo" style="height:58px;width:auto;display:block;" fetchpriority="high" />
         </a>
-        <nav aria-label="Main navigation" class="hidden md:flex items-center space-x-8 font-mono text-xs tracking-wider text-neutral-400">
+        <nav aria-label="Main navigation" class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-400">
             <a href="#hero" class="nav-link active">01. HOME</a>
-            <a href="#visual-lab" class="nav-link">02. HOW WE WORK</a>
-            <a href="#industry-solutions" class="nav-link">03. INDUSTRIES</a>
+            <a href="#indic-excellence" class="nav-link">02. INDIC</a>
+            <!-- 03. SERVICES — dropdown preserved exactly -->
             <div class="services-trigger relative flex items-center cursor-pointer" role="none">
                 <a href="#services" class="nav-link flex items-center gap-1.5" aria-haspopup="true" aria-expanded="false">
-                    04. SERVICES
+                    03. SERVICES
                     <svg class="w-2.5 h-2.5" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </a>
                 <div class="services-dropdown" role="menu" aria-label="Services menu">
@@ -1522,7 +1545,11 @@
 
                 </div>
             </div>
-            <a href="#contact" class="nav-link">05. CONTACT</a>
+            <a href="#industry-solutions" class="nav-link">04. INDUSTRIES</a>
+            <a href="#visual-lab" class="nav-link">05. HOW WE WORK</a>
+            <a href="#fmt-section" class="nav-link">06. FORMATS</a>
+            <a href="#world-reach" class="nav-link">07. GLOBAL</a>
+            <a href="#contact" class="nav-link">08. CONTACT</a>
         </nav>
         <div class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block">
             ENGINE: ACTIVE
@@ -2264,7 +2291,7 @@
     <!-- ═══════════════════════════════════════════════════════
          09 / CONTACT US
     ═══════════════════════════════════════════════════════ -->
-    <section class="section-fade-bg py-32 px-6 md:px-12 border-t border-white/5 bg-[#060609]" id="contact" data-bg-opacity="0.7">
+    <section class="section-fade-bg py-20 px-6 md:px-12 border-t border-white/5 bg-[#060609]" id="contact" data-bg-opacity="0.7">
         <div class="max-w-7xl mx-auto">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16">
 
@@ -2364,12 +2391,82 @@
 
     </main>
 
-    <footer class="bg-neutral-950 border-t border-white/10 pt-24 pb-12 px-6 md:px-12" id="footer" role="contentinfo">
-        <div class="max-w-7xl mx-auto flex flex-col justify-between items-center gap-8 font-mono text-xs text-neutral-400 md:flex-row">
-            <div>&copy; 2026 SUPERDTP LABS. WORLDWIDE DISTRIBUTION.</div>
-            <div class="flex space-x-6 text-neutral-400">
-                <a href="mailto:dtp.bulgaria@gmail.com" class="hover:text-brandAccent transition-colors">CONNECT: DTP.BULGARIA@GMAIL.COM</a>
+    <footer class="bg-[#060609] border-t border-white/8 pt-16 pb-8 px-6 md:px-12" id="footer" role="contentinfo">
+        <div class="max-w-7xl mx-auto">
+
+            <!-- ── Main footer grid ── -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 pb-12 border-b border-white/8">
+
+                <!-- Brand (spans 2 cols on lg) -->
+                <div class="col-span-2 md:col-span-3 lg:col-span-2">
+                    <a href="#hero" aria-label="SuperDTP Home" class="inline-block mb-5">
+                        <img src="logo copy 5.svg" alt="SuperDTP logo" style="height:48px;width:auto;display:block;opacity:0.9;" />
+                    </a>
+                    <p class="text-neutral-500 text-xs leading-relaxed max-w-xs">
+                        Specialist multilingual DTP &amp; localization studio. Precision layouts in 100+ languages, delivered on time.
+                    </p>
+                    <div class="mt-5 inline-flex items-center gap-2 font-mono text-[0.6rem] tracking-widest text-brandAccent/70 border border-brandAccent/20 px-3 py-1.5 rounded-full bg-brandAccent/5">
+                        ENGINE: ACTIVE
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div>
+                    <div class="footer-col-hdr">Navigate</div>
+                    <a href="#hero" class="footer-nav-lnk">01 · Home</a>
+                    <a href="#indic-excellence" class="footer-nav-lnk">02 · Indic</a>
+                    <a href="#services" class="footer-nav-lnk">03 · Services</a>
+                    <a href="#industry-solutions" class="footer-nav-lnk">04 · Industries</a>
+                    <a href="#visual-lab" class="footer-nav-lnk">05 · How We Work</a>
+                    <a href="#fmt-section" class="footer-nav-lnk">06 · Formats</a>
+                    <a href="#world-reach" class="footer-nav-lnk">07 · Global</a>
+                    <a href="#contact" class="footer-nav-lnk">08 · Contact</a>
+                </div>
+
+                <!-- Localization -->
+                <div>
+                    <div class="footer-col-hdr">Localization</div>
+                    <a href="/localization/" class="footer-nav-lnk">Translation &amp; Localization</a>
+                    <a href="/localization/" class="footer-nav-lnk">Website Localization</a>
+                    <a href="/localization/" class="footer-nav-lnk">Software &amp; App</a>
+                    <a href="/e-learning/" class="footer-nav-lnk">eLearning</a>
+                    <a href="/localization/" class="footer-nav-lnk">Multimedia</a>
+                    <a href="/qa/" class="footer-nav-lnk">Linguistic QA</a>
+                    <a href="/localization/" class="footer-nav-lnk">AI-Enabled</a>
+                </div>
+
+                <!-- DTP & Publishing -->
+                <div>
+                    <div class="footer-col-hdr">DTP &amp; Publishing</div>
+                    <a href="/dtp-services/#multilingual-dtp" class="footer-nav-lnk">Multilingual DTP</a>
+                    <a href="/dtp-services/#prepress" class="footer-nav-lnk">Typesetting</a>
+                    <a href="/dtp-services/#prepress" class="footer-nav-lnk">Publishing Production</a>
+                    <a href="/dtp-services/#multilingual-dtp" class="footer-nav-lnk">Artwork Localization</a>
+                    <a href="/dtp-services/#multilingual-dtp" class="footer-nav-lnk">Packaging &amp; Labels</a>
+                    <a href="/dtp-services/#file-preparation" class="footer-nav-lnk">File Engineering</a>
+                    <a href="/dtp-services/#quality-assurance" class="footer-nav-lnk">QA &amp; Compliance</a>
+                </div>
+
+                <!-- Indic -->
+                <div>
+                    <div class="footer-col-hdr">Indic Languages <span style="color:#d4af37;">★</span></div>
+                    <a href="/localization/" class="footer-nav-lnk">Overview</a>
+                    <a href="/localization/" class="footer-nav-lnk">Indian Localization</a>
+                    <a href="/dtp-services/#multilingual-dtp" class="footer-nav-lnk">Indic DTP</a>
+                    <a href="/localization/" class="footer-nav-lnk">Gov &amp; Public Sector</a>
+                    <a href="/e-learning/" class="footer-nav-lnk">eLearning</a>
+                    <a href="/localization/" class="footer-nav-lnk">Languages We Support</a>
+                </div>
             </div>
+
+            <!-- ── Bottom bar ── -->
+            <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[0.65rem] text-neutral-600 tracking-wider">
+                <div>&copy; 2026 SUPERDTP LABS. WORLDWIDE DISTRIBUTION.</div>
+                <a href="mailto:dtp.bulgaria@gmail.com" class="hover:text-brandAccent transition-colors duration-200">
+                    DTP.BULGARIA@GMAIL.COM
+                </a>
+            </div>
+
         </div>
     </footer>
 
