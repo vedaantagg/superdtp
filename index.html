@@ -175,6 +175,7 @@
             background: none;
             border: none;
             color: inherit;
+            font-size: 1rem;
         }
 
         .nav-link:hover,
@@ -950,7 +951,7 @@
         }
         /* ── Services 3D Word Zoom ─────────────────────────────── */
         #svc-word-zoom {
-            height: 700vh;
+            height: 350vh;
             position: relative;
         }
         #svc-word-pin {
@@ -1362,10 +1363,11 @@
             transition: transform 0.08s ease-out; /* snap away instantly */
         }
         .indic-script { font-size: 1.45rem; line-height: 1.35; color: rgba(255,255,255,0.82); margin-bottom: 6px; }
-        .indic-lang-en { font-family: 'Space Grotesk', monospace; font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+        .indic-lang-en { font-family: 'Space Grotesk', monospace; font-size: 0.52rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(243, 238, 238, 0.986); }
         .indic-stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1px; background: rgba(255,255,255,0.06); border-radius: 10px; overflow: hidden; margin-top: 40px; }
         @media (max-width: 768px) { .indic-stat-row { grid-template-columns: repeat(2,1fr); } }
-        .indic-stat-cell { background: rgba(9,9,11,0.88); padding: 26px 20px; text-align: center; }
+        .indic-stat-cell { background: rgba(9,9,11,0.88); padding: 26px 20px; text-align: center; transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease; cursor: pointer; }
+        .indic-stat-cell:hover { transform: scale(1.08); box-shadow: 0 12px 32px rgba(255, 215, 0, 0.15); }
 
         /* ── FILE FORMATS SCROLL-JACK ─────────────────────────────────── */
         #fmt-section { position: relative; }
@@ -1546,7 +1548,7 @@
         <a href="/" aria-label="SuperDTP Home">
             <img src="static/logo copy 5.svg" alt="SuperDTP logo" style="height:58px;width:auto;display:block;" fetchpriority="high" />
         </a>
-        <nav aria-label="Main navigation" class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-400">
+        <nav aria-label="Main navigation" class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200">
             <a href="#hero" class="nav-link active">01. HOME</a>
             <a href="#indic-excellence" class="nav-link">02. INDIC</a>
             <!-- 03. SERVICES — dropdown preserved exactly -->
@@ -1615,7 +1617,7 @@
        
         <div class="grid gap-8 lg:gap-12 lg:grid hero-grid items-center hero-layer">
             <div class="z-10">
-                <div class="font-mono text-[0.6rem] md:text-xs uppercase tracking-widest text-neutral-400 mb-3 md:mb-4 flex items-center gap-2">
+                <div class="font-mono text-[0.6rem] md:text-xs uppercase tracking-widest text-neutral-200 mb-3 md:mb-4 flex items-center gap-2">
                     <span class="w-1.5 h-1.5 bg-brandAccent rounded-full animate-ping"></span>
                     SYSTEM LAYOUT AUDIT / SYSTEMIC METRICS
                 </div>
@@ -1681,23 +1683,23 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-8 pb-8">
             <div class="live-data-card rounded-3xl p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Words Processed</div>
-                <div class="text-4xl font-semibold text-white">15<span class="text-lg font-normal text-neutral-400">M+</span></div>
-                <div class="text-xs text-neutral-400 mt-3 leading-relaxed">End-to-end multilingual content handled across enterprise-scale production workflows.</div>
+                <div class="text-4xl font-semibold text-white">15<span class="text-lg font-normal text-neutral-200">M+</span></div>
+                <div class="text-xs text-neutral-200 mt-3 leading-relaxed">End-to-end multilingual content handled across enterprise-scale production workflows.</div>
             </div>
             <div class="live-data-card rounded-3xl p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Pages Formatted</div>
-                <div class="text-4xl font-semibold text-white">120<span class="text-lg font-normal text-neutral-400">k+</span></div>
-                <div class="text-xs text-neutral-400 mt-3 leading-relaxed">Production-ready layouts created with precision across print, digital, and learning formats.</div>
+                <div class="text-4xl font-semibold text-white">120<span class="text-lg font-normal text-neutral-200">k+</span></div>
+                <div class="text-xs text-neutral-200 mt-3 leading-relaxed">Production-ready layouts created with precision across print, digital, and learning formats.</div>
             </div>
             <div class="live-data-card rounded-3xl p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Languages Supported</div>
-                <div class="text-4xl font-semibold text-white">75<span class="text-lg font-normal text-neutral-400">+</span></div>
-                <div class="text-xs text-neutral-400 mt-3 leading-relaxed">From global business languages to complex scripts including Indic, RTL, and CJK systems.</div>
+                <div class="text-4xl font-semibold text-white">75<span class="text-lg font-normal text-neutral-200">+</span></div>
+                <div class="text-xs text-neutral-200 mt-3 leading-relaxed">From global business languages to complex scripts including Indic, RTL, and CJK systems.</div>
             </div>
             <div class="live-data-card rounded-3xl p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">QA Accuracy</div>
-                <div class="text-4xl font-semibold text-white">99<span class="text-lg font-normal text-neutral-400">%</span></div>
-                <div class="text-xs text-neutral-400 mt-3 leading-relaxed">Multi-layer quality checks ensuring consistency, formatting integrity, and publication-ready output.</div>
+                <div class="text-4xl font-semibold text-white">99<span class="text-lg font-normal text-neutral-200">%</span></div>
+                <div class="text-xs text-neutral-200 mt-3 leading-relaxed">Multi-layer quality checks ensuring consistency, formatting integrity, and publication-ready output.</div>
             </div>
         </div>
 
@@ -1708,7 +1710,7 @@
     ═══════════════════════════════════════════════════════ -->
     <section id="trusted-by" class="relative py-12 border-t border-white/5 overflow-hidden bg-[#07070a]">
         <div class="max-w-7xl mx-auto px-6 md:px-12 mb-8 text-center">
-            <span class="font-mono text-[1rem] uppercase tracking-[0.32em] text-neutral-400">Trusted by global industry leaders</span>
+            <span class="font-mono text-[1rem] uppercase tracking-[0.32em] text-neutral-200">Trusted by global industry leaders</span>
         </div>
         <div class="ticker-outer space-y-2.5" style="-webkit-mask-image:linear-gradient(90deg,transparent,black 9%,black 91%,transparent);mask-image:linear-gradient(90deg,transparent,black 9%,black 91%,transparent)">
 
@@ -1772,12 +1774,12 @@
     ═══════════════════════════════════════════════════════ -->
     <section class="section-fade-bg py-32 px-6 md:px-12 border-t border-white/5 bg-neutral-950" id="indic-excellence" data-bg-opacity="0.65">
         <div class="max-w-7xl mx-auto">
-            <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 02 / INDIC LANGUAGE EXCELLENCE ]</span>
+            <span class="font-mono text-xs text-neutral-200 uppercase tracking-widest block mb-4">[ 02 / Global Language Coverage ]</span>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-16 items-end">
                 <div class="lg:col-span-7">
-                    <h2 class="font-serif text-5xl md:text-6xl tracking-tight max-w-3xl">Deep Roots in India's 22 Official Languages</h2>
+                    <h2 class="font-serif text-5xl md:text-6xl tracking-tight max-w-3xl">Supporting enterprises across the world’s most important languages and markets.</h2>
                 </div>
-                <p class="lg:col-span-4 lg:col-start-9 text-sm text-neutral-400 leading-relaxed">With expert DTP engineers and linguists specializing in every major Indic script — from Devanagari to Ol Chiki — SuperDTP delivers production-ready multilingual content for India's vast and diverse markets.</p>
+                <p class="lg:col-span-4 lg:col-start-9 text-base lg:text-xl text-neutral-200 leading-relaxed">With expert DTP engineers and linguists specializing in every major Indic script — from Devanagari to Ol Chiki — SuperDTP delivers production-ready multilingual content for India's vast and diverse markets.</p>
             </div>
 
             <!-- Brick language wall with logo reveal -->
@@ -1793,46 +1795,46 @@
                     <div class="indic-lang-card"><div class="indic-script">தமிழ்</div><div class="indic-lang-en">Tamil</div></div>
                     <div class="indic-lang-card"><div class="indic-script">मराठी</div><div class="indic-lang-en">Marathi</div></div>
                     <div class="indic-lang-card"><div class="indic-script">ગુજરાતી</div><div class="indic-lang-en">Gujarati</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">ಕನ್ನಡ</div><div class="indic-lang-en">Kannada</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">മലയാളം</div><div class="indic-lang-en">Malayalam</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">ଓଡ଼ିଆ</div><div class="indic-lang-en">Odia</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">ਪੰਜਾਬੀ</div><div class="indic-lang-en">Punjabi</div></div>
                     <div class="indic-lang-card"><div class="indic-script">اردو</div><div class="indic-lang-en">Urdu</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">संस्कृत</div><div class="indic-lang-en">Sanskrit</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">অসমীয়া</div><div class="indic-lang-en">Assamese</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">मैथिली</div><div class="indic-lang-en">Maithili</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">سنڌي</div><div class="indic-lang-en">Sindhi</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">कॉशुर</div><div class="indic-lang-en">Kashmiri</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">डोगरी</div><div class="indic-lang-en">Dogri</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">कोंकणी</div><div class="indic-lang-en">Konkani</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">ᱥᱟᱱᱛᱟᱲᱤ</div><div class="indic-lang-en">Santali</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">মৈতৈলোন্</div><div class="indic-lang-en">Manipuri</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">बड़ो</div><div class="indic-lang-en">Bodo</div></div>
-                    <div class="indic-lang-card"><div class="indic-script">नेपाली</div><div class="indic-lang-en">Nepali</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">日本語</div><div class="indic-lang-en">Japanese</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">한국어</div><div class="indic-lang-en">Korean</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">ไทย</div><div class="indic-lang-en">Thai</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Tiếng Việt</div><div class="indic-lang-en">Vietnamese</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Bahasa</div><div class="indic-lang-en">Indonesian</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Deutsch</div><div class="indic-lang-en">German</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Français</div><div class="indic-lang-en">French</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Español</div><div class="indic-lang-en">Spanish</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Italiano</div><div class="indic-lang-en">Italian</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Português</div><div class="indic-lang-en">Portuguese</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">العربية</div><div class="indic-lang-en">Arabic</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">עברית</div><div class="indic-lang-en">Hebrew</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Türkçe</div><div class="indic-lang-en">Turkish</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">فارسی</div><div class="indic-lang-en">Persian (Farsi)</div></div>
+                    <div class="indic-lang-card"><div class="indic-script">Kurdî</div><div class="indic-lang-en">Kurdish</div></div>
                 </div>
             </div>
 
             <!-- Stats row -->
             <div class="indic-stat-row">
                 <div class="indic-stat-cell">
-                    <div class="text-4xl font-semibold text-white mb-2">22<span class="text-lg font-normal text-neutral-400">+</span></div>
+                    <div class="text-4xl font-semibold text-white mb-2">120<span class="text-lg font-normal text-neutral-200">+</span></div>
                     <div class="font-mono text-[0.58rem] uppercase tracking-widest text-brandAccent/70">Official Languages</div>
-                    <div class="text-xs text-neutral-400 mt-2 leading-relaxed">Full coverage of all languages recognized by the Indian Constitution</div>
+                    <div class="text-l text-neutral-200 mt-2 leading-relaxed ">Full coverage of all languages recognized by the Indian Constitution</div>
                 </div>
                 <div class="indic-stat-cell">
-                    <div class="text-4xl font-semibold text-white mb-2">12<span class="text-lg font-normal text-neutral-400">+</span></div>
+                    <div class="text-4xl font-semibold text-white mb-2">12<span class="text-lg font-normal text-neutral-200">+</span></div>
                     <div class="font-mono text-[0.58rem] uppercase tracking-widest text-brandAccent/70">Unique Scripts</div>
-                    <div class="text-xs text-neutral-400 mt-2 leading-relaxed">From Devanagari and Perso-Arabic to Ol Chiki and Meitei Mayek</div>
+                    <div class="text-l text-neutral-200 mt-2 leading-relaxed">From Devanagari and Perso-Arabic to Ol Chiki and Meitei Mayek</div>
                 </div>
                 <div class="indic-stat-cell">
-                    <div class="text-4xl font-semibold text-white mb-2">10<span class="text-lg font-normal text-neutral-400">M+</span></div>
+                    <div class="text-4xl font-semibold text-white mb-2">10<span class="text-lg font-normal text-neutral-200">M+</span></div>
                     <div class="font-mono text-[0.58rem] uppercase tracking-widest text-brandAccent/70">Indic Words Processed</div>
-                    <div class="text-xs text-neutral-400 mt-2 leading-relaxed">Across publishing, government, education, and corporate sectors</div>
+                    <div class="text-l text-neutral-200 mt-2 leading-relaxed">Across publishing, government, education, and corporate sectors</div>
                 </div>
                 <div class="indic-stat-cell">
-                    <div class="text-4xl font-semibold text-white mb-2">RTL<span class="text-lg font-normal text-neutral-400"> + LTR</span></div>
+                    <div class="text-4xl font-semibold text-white mb-2">RTL<span class="text-lg font-normal text-neutral-200"> + LTR</span></div>
                     <div class="font-mono text-[0.58rem] uppercase tracking-widest text-brandAccent/70">Bi-Directional Mastery</div>
-                    <div class="text-xs text-neutral-400 mt-2 leading-relaxed">Expert handling of mixed-direction layouts including Urdu and Sindhi</div>
+                    <div class="text-l text-neutral-200 mt-2 leading-relaxed">Expert handling of mixed-direction layouts including Urdu and Sindhi</div>
                 </div>
             </div>
         </div>
@@ -1841,15 +1843,15 @@
     <!-- ═══════════════════════════════════════════════════════
          04 / SERVICES — 3D Word Zoom + Sticky Card Sections
     ═══════════════════════════════════════════════════════ -->
-    <section id="services" class="section-fade-bg" data-bg-opacity="0.75">
+    <section id="services" class="section-fade-bg py-32 px-6 md:px-12" data-bg-opacity="0.75">
 
         <!-- 04a · Word Tunnel (pinned, 6 scroll-zoom steps) -->
         <div id="svc-word-zoom">
             <div id="svc-word-pin">
                 <div id="svc-zoom-label">
-                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 04 / SERVICES ]</span>
+                    <span class="font-mono text-xs text-neutral-200 uppercase tracking-widest block mb-4">[ 04 / SERVICES ]</span>
                     <h2 class="font-serif text-5xl md:text-7xl tracking-tight text-white leading-tight">Full-Spectrum<br>Language &amp; Publishing</h2>
-                    <p class="text-sm text-neutral-400 mt-4 max-w-sm leading-relaxed">From translation to print-ready production — under one studio.</p>
+                    <p class="text-sm text-neutral-200 mt-4 max-w-sm leading-relaxed">From translation to print-ready production — under one studio.</p>
                 </div>
                 <div id="svc-word-stage">
                     <div class="svc-wgroup" data-phase="0">
@@ -1859,8 +1861,6 @@
                         <span class="svc-word svc-word-md" style="--wx:30%;--wy:76%">Global Reach</span>
                         <span class="svc-word svc-word-sm" style="--wx:82%;--wy:36%">Cultural Adaptation</span>
                         <span class="svc-word svc-word-sm" style="--wx:14%;--wy:52%">Market-Ready</span>
-                    </div>
-                    <div class="svc-wgroup" data-phase="1">
                         <span class="svc-word svc-word-xl" style="--wx:62%;--wy:30%">DTP</span>
                         <span class="svc-word svc-word-xl" style="--wx:20%;--wy:60%">Typography</span>
                         <span class="svc-word svc-word-md" style="--wx:74%;--wy:70%">Publishing</span>
@@ -1868,13 +1868,20 @@
                         <span class="svc-word svc-word-sm" style="--wx:10%;--wy:30%">FrameMaker</span>
                         <span class="svc-word svc-word-sm" style="--wx:84%;--wy:22%">Typesetting</span>
                     </div>
+
                     <div class="svc-wgroup" data-phase="2">
-                        <span class="svc-word svc-word-xl" style="--wx:36%;--wy:32%">eLearning</span>
+                        <span class="svc-word svc-word-xl" style="--wx:36%;--wy:18%">eLearning</span>
                         <span class="svc-word svc-word-xl" style="--wx:66%;--wy:58%">Multimedia</span>
                         <span class="svc-word svc-word-md" style="--wx:18%;--wy:68%">Subtitling</span>
                         <span class="svc-word svc-word-md" style="--wx:60%;--wy:20%">Dubbing</span>
                         <span class="svc-word svc-word-sm" style="--wx:80%;--wy:78%">Voice-Over</span>
                         <span class="svc-word svc-word-sm" style="--wx:44%;--wy:84%">Broadcast</span>
+                         <span class="svc-word svc-word-xl" style="--wx:42%;--wy:36%">AI-Powered</span>
+                        <span class="svc-word svc-word-xl" style="--wx:70%;--wy:66%">MTPE</span>
+                        <span class="svc-word svc-word-md" style="--wx:20%;--wy:56%">Automation</span>
+                        <span class="svc-word svc-word-md" style="--wx:76%;--wy:24%">Workflow</span>
+                        <span class="svc-word svc-word-sm" style="--wx:34%;--wy:80%">Neural MT</span>
+                        <span class="svc-word svc-word-sm" style="--wx:12%;--wy:72%">AI Speed</span>
                     </div>
                     <div class="svc-wgroup" data-phase="3">
                         <span class="svc-word svc-word-xl" style="--wx:26%;--wy:42%">Enterprise QA</span>
@@ -1883,16 +1890,6 @@
                         <span class="svc-word svc-word-md" style="--wx:80%;--wy:55%">Devanagari</span>
                         <span class="svc-word svc-word-sm" style="--wx:14%;--wy:22%">Production-Ready</span>
                         <span class="svc-word svc-word-sm" style="--wx:72%;--wy:84%">Bi-directional</span>
-                    </div>
-                    <div class="svc-wgroup" data-phase="4">
-                        <span class="svc-word svc-word-xl" style="--wx:42%;--wy:36%">AI-Powered</span>
-                        <span class="svc-word svc-word-xl" style="--wx:70%;--wy:66%">MTPE</span>
-                        <span class="svc-word svc-word-md" style="--wx:20%;--wy:56%">Automation</span>
-                        <span class="svc-word svc-word-md" style="--wx:76%;--wy:24%">Workflow</span>
-                        <span class="svc-word svc-word-sm" style="--wx:34%;--wy:80%">Neural MT</span>
-                        <span class="svc-word svc-word-sm" style="--wx:12%;--wy:72%">AI Speed</span>
-                    </div>
-                    <div class="svc-wgroup" data-phase="5">
                         <span class="svc-word svc-word-xl" style="--wx:38%;--wy:34%">Transcreation</span>
                         <span class="svc-word svc-word-xl" style="--wx:66%;--wy:62%">Brand Voice</span>
                         <span class="svc-word svc-word-md" style="--wx:22%;--wy:64%">Cultural Fit</span>
@@ -1902,7 +1899,7 @@
                     </div>
                 </div>
                 <div id="svc-zoom-hud">
-                    <span id="svc-zoom-step">01 / 06</span>
+                    <span id="svc-zoom-step">01 / 03</span>
                     <div id="svc-zoom-bar-wrap"><div id="svc-zoom-bar"></div></div>
                 </div>
             </div>
@@ -1912,9 +1909,9 @@
         <div id="svc-loc-section">
             <div class="svc-split-wrap">
                 <div class="svc-split-left" id="svc-loc-head">
-                    <span class="font-mono text-[0.6rem] text-neutral-400 uppercase tracking-widest block mb-6">Localization Services</span>
+                    <span class="font-mono text-[0.6rem] text-neutral-200 uppercase tracking-widest block mb-6">Localization Services</span>
                     <h2 class="font-serif text-4xl lg:text-[2.8rem] tracking-tight text-white leading-tight mb-5">Build multilingual<br>experiences that<br>connect globally.</h2>
-                    <p class="text-sm text-neutral-400 leading-relaxed mb-8">Through enterprise localization, language adaptation, and production-ready delivery across 120+ languages.</p>
+                    <p class="text-sm text-neutral-200 leading-relaxed mb-8">Through enterprise localization, language adaptation, and production-ready delivery across 120+ languages.</p>
                     <div class="svc-split-pills">
                         <span>120+ Languages</span>
                         <span>Enterprise QA</span>
@@ -1933,9 +1930,9 @@
             <div id="svc-dtp-section">
                 <div class="svc-split-wrap">
                     <div class="svc-split-left" id="svc-dtp-head">
-                        <span class="font-mono text-[0.6rem] text-neutral-400 uppercase tracking-widest block mb-6">DTP &amp; Publishing Services</span>
+                        <span class="font-mono text-[0.6rem] text-neutral-200 uppercase tracking-widest block mb-6">DTP &amp; Publishing Services</span>
                         <h2 class="font-serif text-4xl lg:text-[2.8rem] tracking-tight text-white leading-tight mb-5">Transform multilingual<br>content into<br>production-ready work.</h2>
-                        <p class="text-sm text-neutral-400 leading-relaxed mb-8">Expert formatting, typesetting, artwork adaptation, and publishing workflows built for global enterprises.</p>
+                        <p class="text-sm text-neutral-200 leading-relaxed mb-8">Expert formatting, typesetting, artwork adaptation, and publishing workflows built for global enterprises.</p>
                         <div class="svc-split-pills">
                             <span>Print-Ready</span>
                             <span>RTL &amp; LTR</span>
@@ -2021,10 +2018,10 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16 items-end">
                 <div>
-                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 06 / WORKFLOW ENGINE ]</span>
+                    <span class="font-mono text-xs text-neutral-200 uppercase tracking-widest block mb-4">[ 06 / WORKFLOW ENGINE ]</span>
                     <h2 class="font-serif text-5xl md:text-7xl tracking-tight max-w-3xl">How we work?</h2>
                 </div>
-                <p class="text-sm text-neutral-400 leading-relaxed">
+                <p class="text-sm text-neutral-200 leading-relaxed">
                     Every project moves through a four-phase, quality-gated pipeline. From first brief to final invoice, the sequence runs automatically when you scroll here.
                 </p>
             </div>
@@ -2163,11 +2160,11 @@
 
                 
                 <div class="border-t border-white/5 px-5 py-3 flex items-center gap-4">
-                    <span class="font-mono text-[0.6rem] text-neutral-400 uppercase tracking-widest flex-shrink-0" id="wf-counter">0 / 20</span>
+                    <span class="font-mono text-[0.6rem] text-neutral-200 uppercase tracking-widest flex-shrink-0" id="wf-counter">0 / 20</span>
                     <div class="flex-1 relative overflow-hidden rounded-full" style="height:1px;background:rgba(255,255,255,0.08);">
                         <div id="wf-progress" style="position:absolute;inset:0 auto 0 0;width:0%;background:linear-gradient(90deg,#d4af37,#38bdf8);transition:width 0.45s ease;"></div>
                     </div>
-                    <span class="font-mono text-[0.6rem] text-neutral-400 tracking-wide flex-shrink-0" id="wf-current-label" aria-live="polite">--</span>
+                    <span class="font-mono text-[0.6rem] text-neutral-200 tracking-wide flex-shrink-0" id="wf-current-label" aria-live="polite">--</span>
                 </div>
 
             </div>
@@ -2189,9 +2186,9 @@
 
             <!-- LEFT: frozen heading + active format display -->
             <div class="fmt-left-panel">
-                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-5">[ 07 / FILE FORMATS ]</span>
+                <span class="font-mono text-xs text-neutral-200 uppercase tracking-widest block mb-5">[ 07 / FILE FORMATS ]</span>
                 <h2 class="font-serif text-5xl md:text-6xl tracking-tight leading-none mb-6">Every Format.<br>Every Language.<br>Production&#8209;Ready.</h2>
-                <p class="text-sm text-neutral-400 leading-relaxed mb-10 max-w-xs">We work natively in the tools your team already uses — no conversion bottlenecks, no quality compromise.</p>
+                <p class="text-sm text-neutral-200 leading-relaxed mb-10 max-w-xs">We work natively in the tools your team already uses — no conversion bottlenecks, no quality compromise.</p>
 
                 <!-- Active format spotlight -->
                 <div>
@@ -2304,22 +2301,22 @@
     ═══════════════════════════════════════════════════════ -->
     <section class="section-fade-bg py-32 px-6 md:px-12 border-t border-white/5 bg-neutral-950" id="world-reach" data-bg-opacity="0.68">
         <div class="max-w-7xl mx-auto">
-            <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 08 / GLOBAL REACH ]</span>
+            <span class="font-mono text-xs text-neutral-200 uppercase tracking-widest block mb-4">[ 08 / GLOBAL REACH ]</span>
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-14 items-end">
                 <div class="lg:col-span-7">
                     <h2 class="font-serif text-5xl md:text-6xl tracking-tight">Delivering to 60+ Markets Worldwide</h2>
                 </div>
-                <p class="lg:col-span-4 lg:col-start-9 text-sm text-neutral-400 leading-relaxed">SuperDTP's production network supports active client projects across North America, Europe, Asia Pacific, the Middle East, and South Asia — covering every major language market on earth.</p>
+                <p class="lg:col-span-4 lg:col-start-9 text-base lg:text-xl text-neutral-200 leading-relaxed">SuperDTP's production network supports active client projects across North America, Europe, Asia Pacific, the Middle East, and South Asia — covering every major language market on earth.</p>
             </div>
 
             <!-- Stat strip -->
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-14">
                 <div class="border border-white/6 rounded-xl p-5 bg-white/[0.02]">
-                    <div class="font-serif text-3xl text-white mb-1">60<span class="text-base font-sans font-normal text-neutral-400">+</span></div>
+                    <div class="font-serif text-3xl text-white mb-1">60<span class="text-base font-sans font-normal text-neutral-200">+</span></div>
                     <div class="font-mono text-[0.56rem] uppercase tracking-widest text-brandAccent/65">Markets Served</div>
                 </div>
                 <div class="border border-white/6 rounded-xl p-5 bg-white/[0.02]">
-                    <div class="font-serif text-3xl text-white mb-1">120<span class="text-base font-sans font-normal text-neutral-400">+</span></div>
+                    <div class="font-serif text-3xl text-white mb-1">120<span class="text-base font-sans font-normal text-neutral-200">+</span></div>
                     <div class="font-mono text-[0.56rem] uppercase tracking-widest text-brandAccent/65">Languages</div>
                 </div>
                 <div class="border border-white/6 rounded-xl p-5 bg-white/[0.02]">
@@ -2353,9 +2350,9 @@
 
                 <!-- Left: copy -->
                 <div class="lg:col-span-5">
-                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block mb-4">[ 09 / CONTACT ]</span>
+                    <span class="font-mono text-xs text-neutral-200 uppercase tracking-widest block mb-4">[ 09 / CONTACT ]</span>
                     <h2 class="font-serif text-5xl md:text-6xl tracking-tight mb-6">Let's Build Something Global Together</h2>
-                    <p class="text-sm text-neutral-400 leading-relaxed mb-10">Whether you have a single urgent project or an ongoing enterprise workflow, our team is ready to scope, quote, and deliver — typically within 24 hours.</p>
+                    <p class="text-sm text-neutral-200 leading-relaxed mb-10">Whether you have a single urgent project or an ongoing enterprise workflow, our team is ready to scope, quote, and deliver — typically within 24 hours.</p>
 
                     <div class="space-y-6">
                         <div class="flex items-start gap-4">
@@ -2363,7 +2360,7 @@
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#d4af37" stroke-width="1.5"><path d="M2 3h10l-5 5-5-5zm0 0v8h10V3"/></svg>
                             </div>
                             <div>
-                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-400 mb-1">Email</div>
+                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-200 mb-1">Email</div>
                                 <a href="mailto:dtp.bulgaria@gmail.com" class="text-sm text-white hover:text-brandAccent transition-colors">dtp.bulgaria@gmail.com</a>
                             </div>
                         </div>
@@ -2372,7 +2369,7 @@
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#d4af37" stroke-width="1.5"><circle cx="7" cy="7" r="5"/><path d="M7 4v3l2 2"/></svg>
                             </div>
                             <div>
-                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-400 mb-1">Response Time</div>
+                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-200 mb-1">Response Time</div>
                                 <div class="text-sm text-white">Within 24 hours, any timezone</div>
                             </div>
                         </div>
@@ -2381,7 +2378,7 @@
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="#d4af37" stroke-width="1.5"><path d="M7 1l1.8 3.6 4 .6-2.9 2.8.7 4L7 10l-3.6 1.9.7-4L1.2 5.2l4-.6z"/></svg>
                             </div>
                             <div>
-                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-400 mb-1">Enterprise Clients</div>
+                                <div class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-200 mb-1">Enterprise Clients</div>
                                 <div class="text-sm text-white">Dedicated PM assigned from day one</div>
                             </div>
                         </div>
