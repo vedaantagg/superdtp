@@ -1270,21 +1270,21 @@
         }
         .eco-ring-svg {
             position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%,-50%); pointer-events: none; overflow: visible;
+            transform: translate(-80%,-80%); pointer-events: none; overflow: visible;
         }
         .eco-ring-svg.fwd { animation: ring-fwd 28s linear infinite; }
         .eco-ring-svg.rev { animation: ring-rev 20s linear infinite; }
         @keyframes ring-fwd { from{transform:translate(-50%,-50%) rotate(0deg)}   to{transform:translate(-50%,-50%) rotate(360deg)} }
         @keyframes ring-rev { from{transform:translate(-50%,-50%) rotate(0deg)}   to{transform:translate(-50%,-50%) rotate(-360deg)} }
         .eco-hub-border {
-            position: absolute; inset: 0; border-radius: 50%;
+            position: absolute; inset: 0; border-radius: 500%;
             border: 1.5px solid rgba(212,175,55,0.35);
             background: radial-gradient(circle at 45% 38%, #111008 0%, #0a0901 100%);
             box-shadow: 0 0 36px rgba(212,175,55,0.14), inset 0 0 24px rgba(180,140,20,0.08);
             overflow: hidden;
         }
         .eco-hub-border::before {
-            content: ''; position: absolute; inset: -1px; border-radius: 50%; padding: 1px;
+            content: ''; position: absolute; inset: -1px; border-radius: 500%; padding: 1px;
             background: conic-gradient(rgba(212,175,55,0.8),rgba(255,248,216,0.4),rgba(146,130,76,0.5),rgba(212,175,55,0.8));
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -1295,21 +1295,21 @@
         .eco-hub-core {
             position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
         }
-        .eco-hub-logo { width: 68%; height: auto; display: block; }
+        .eco-hub-logo { width: 88%; height: auto; display: block; }
         .eco-node {
             position: absolute; text-align: center; z-index: 8; opacity: 0; cursor: grab;
         }
         .eco-node:active { cursor: grabbing; }
         .eco-node-circle {
-            border-radius: 50%; border: 2px solid;
+            border-radius: 500%; border: 2px solid;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             gap: 2px; margin: 0 auto;
             transition: transform .3s, box-shadow .35s;
             position: relative; overflow: hidden;
         }
         .eco-node-circle::after {
-            content: ''; position: absolute; inset: 0; border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.08) 0%, transparent 60%);
+            content: ''; position: absolute; inset: 0; border-radius: 500%;
+            background: radial-gradient(circle at 50% 45%, rgba(255,255,255,0.08) 0%, transparent 60%);
             pointer-events: none;
         }
         .eco-node:hover .eco-node-circle { transform: scale(1.12); }
@@ -2146,11 +2146,11 @@
                     <div></div>
                     <!-- Pills are positioned relative to this cell (= diagram column width) -->
                     <div class="wf-actors-cols">
-                        <div class="wf-actor-pill" id="wf-col-0" style="left:10%;color:#38bdf8;border-color:rgba(56,189,248,0.32);">Client</div>
-                        <div class="wf-actor-pill" id="wf-col-1" style="left:30%;color:#d4af37;border-color:rgba(212,175,55,0.32);">Project<br>Management</div>
-                        <div class="wf-actor-pill" id="wf-col-2" style="left:50%;color:#a78bfa;border-color:rgba(167,139,250,0.32);">DTP Team</div>
-                        <div class="wf-actor-pill" id="wf-col-3" style="left:70%;color:#34d399;border-color:rgba(52,211,153,0.32);">Internal QA<br>/ LSO</div>
-                        <div class="wf-actor-pill" id="wf-col-4" style="left:90%;color:#fb7185;border-color:rgba(251,113,133,0.32);">Accounts<br>&amp; Finance</div>
+                        <div class="wf-actor-pill" id="wf-col-0" style="left:10%;transform:translateX(-50%);width:140px;height:56px;color:#38bdf8;border-color:rgba(56,189,248,0.32);display:flex;align-items:center;justify-content:center;text-align:center;">Client</div>
+                        <div class="wf-actor-pill" id="wf-col-1" style="left:30%;transform:translateX(-50%);width:140px;height:56px;color:#d4af37;border-color:rgba(212,175,55,0.32);">Project<br>Management</div>
+                        <div class="wf-actor-pill" id="wf-col-2" style="left:50%;transform:translateX(-50%);width:140px;height:56px;color:#a78bfa;border-color:rgba(167,139,250,0.32);display:flex;align-items:center;justify-content:center;text-align:center;">DTP Team</div>
+                        <div class="wf-actor-pill" id="wf-col-3" style="left:70%;transform:translateX(-50%);width:140px;height:56px;color:#34d399;border-color:rgba(52,211,153,0.32);">Internal QA<br>/ LSO</div>
+                        <div class="wf-actor-pill" id="wf-col-4" style="left:90%;transform:translateX(-50%);width:140px;height:56px;color:#fb7185;border-color:rgba(251,113,133,0.32);">Accounts<br>&amp; Finance</div>
                     </div>
                 </div>
 
