@@ -1169,91 +1169,51 @@
         .svc-pillars-inner { max-width: 1160px; margin: 0 auto; }
         .svc-pillars-head { text-align: center; max-width: 720px; margin: 0 auto 30px; }
 
-        /* Sticky nested-dropdown selector */
+        /* Sticky tab pointer — advances as the cards stack one by one */
         #svc-tabs {
             position: sticky;
             top: 82px;
             z-index: 30;
             display: flex;
-            gap: 10px;
-            padding: 0;
+            padding: 6px;
             margin: 0 auto 30px;
             max-width: 720px;
-            background: none;
-            border: none;
-            border-radius: 0;
-            box-shadow: none;
-        }
-        .svc-dd-wrap { flex: 1; position: relative; }
-        .svc-tab {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            padding: 11px 18px;
-            border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
             background: rgba(13,13,18,0.94);
             backdrop-filter: blur(14px);
+            border: 1px solid rgba(255,255,255,0.09);
+            border-radius: 100px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+        }
+        .svc-tab {
+            flex: 1;
+            position: relative;
+            z-index: 1;
+            padding: 11px 6px;
+            border: none;
+            background: none;
             cursor: pointer;
             font-family: 'Space Grotesk', monospace;
             font-size: 0.6rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.55);
+            color: rgba(255,255,255,0.5);
+            border-radius: 100px;
             white-space: nowrap;
-            transition: color 0.28s ease, border-color 0.28s ease, background 0.28s ease;
-            position: relative;
-            z-index: 1;
+            transition: color 0.35s ease;
         }
-        .svc-tab:hover { color: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.22); }
-        .svc-tab.active { color: #d4af37; border-color: rgba(212,175,55,0.5); background: rgba(13,13,18,0.98); }
-        .svc-tab-arrow { flex-shrink: 0; opacity: 0.55; transition: transform 0.25s ease, opacity 0.25s ease; }
-        .svc-dd-wrap.open .svc-tab-arrow { transform: rotate(180deg); opacity: 0.9; }
-        .svc-dd-wrap.open .svc-tab { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; }
-        .svc-dd-panel {
+        .svc-tab:hover { color: rgba(255,255,255,0.85); }
+        .svc-tab.active { color: #09090b; }
+        #svc-tab-ind {
             position: absolute;
-            top: 100%;
-            left: 0; right: 0;
-            background: rgba(9,9,11,0.98);
-            backdrop-filter: blur(18px);
-            border: 1px solid rgba(212,175,55,0.28);
-            border-top: none;
-            border-radius: 0 0 12px 12px;
-            overflow: hidden;
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-4px);
-            transition: opacity 0.22s ease, visibility 0.22s ease, transform 0.22s ease;
-            padding: 6px 0 8px;
-        }
-        .svc-dd-wrap.open .svc-dd-panel { opacity: 1; visibility: visible; transform: translateY(0); }
-        .svc-dd-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 7px 18px;
-            width: 100%;
-            border: none;
-            background: none;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.62);
-            cursor: pointer;
-            text-align: left;
-            transition: color 0.2s ease, background 0.2s ease;
-        }
-        .svc-dd-item:hover { color: #d4af37; background: rgba(212,175,55,0.06); }
-        .svc-dd-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18); flex-shrink: 0; }
-        .svc-dd-item:hover .svc-dd-dot { background: rgba(212,175,55,0.5); }
-        @media (max-width: 640px) {
-            #svc-tabs { flex-direction: column; gap: 8px; }
-            .svc-dd-wrap.open .svc-tab { border-radius: 12px; border-bottom-color: rgba(212,175,55,0.5); }
-            .svc-dd-panel { border-top: 1px solid rgba(212,175,55,0.28); border-radius: 12px; top: calc(100% + 4px); }
+            top: 6px;
+            left: 6px;
+            height: calc(100% - 12px);
+            width: calc((100% - 12px) / 2);
+            background: #d4af37;
+            border-radius: 100px;
+            transform: translateX(0);
+            transition: transform 0.42s cubic-bezier(.5,.05,.2,1);
+            z-index: 0;
         }
 
         /* Stacking column */
@@ -2250,22 +2210,11 @@
                     <h2 class="font-serif text-4xl md:text-5xl tracking-tight text-white leading-tight">Four pillars, one studio.</h2>
                 </div>
 
-                <!-- Nested dropdown selectors -->
-                <div id="svc-tabs" aria-label="Service pillars">
-                    <div class="svc-dd-wrap" data-i="0">
-                        <button class="svc-tab active" type="button" data-i="0" aria-expanded="false" aria-haspopup="true">
-                            <span>Localization</span>
-                            <svg class="svc-tab-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                        <div class="svc-dd-panel" id="svc-dd-0" role="menu"></div>
-                    </div>
-                    <div class="svc-dd-wrap" data-i="1">
-                        <button class="svc-tab" type="button" data-i="1" aria-expanded="false" aria-haspopup="true">
-                            <span>DTP</span>
-                            <svg class="svc-tab-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                        <div class="svc-dd-panel" id="svc-dd-1" role="menu"></div>
-                    </div>
+                <!-- Tab pointer (advances as cards stack) -->
+                <div id="svc-tabs" role="tablist" aria-label="Service pillars">
+                    <span id="svc-tab-ind" aria-hidden="true"></span>
+                    <button class="svc-tab active" type="button" data-i="0" role="tab">Localization</button>
+                    <button class="svc-tab" type="button" data-i="1" role="tab">DTP</button>
                 </div>
 
                 <!-- Stacking pillar cards (built + wired by JS) -->
@@ -4067,49 +4016,14 @@
 
             var pillars  = Array.prototype.slice.call(stack.querySelectorAll('.pillar'));
             var tabs     = Array.prototype.slice.call(document.querySelectorAll('.svc-tab'));
-            var ddWraps  = Array.prototype.slice.call(document.querySelectorAll('.svc-dd-wrap'));
+            var ind      = document.getElementById('svc-tab-ind');
             var curKey   = '';
 
             function setActive(i) {
                 tabs.forEach(function(t, ti) { t.classList.toggle('active', ti === i); });
                 pillars.forEach(function(p, pi) { p.classList.toggle('is-active', pi === i); });
+                if (ind) ind.style.transform = 'translateX(' + (i * 100) + '%)';
             }
-
-            function closeAllPanels() {
-                ddWraps.forEach(function(w) {
-                    w.classList.remove('open');
-                    var btn = w.querySelector('.svc-tab');
-                    if (btn) btn.setAttribute('aria-expanded', 'false');
-                });
-            }
-
-            // Populate dropdown panels from PILLARS data
-            PILLARS.forEach(function(p, i) {
-                var panel = document.getElementById('svc-dd-' + i);
-                if (!panel) return;
-                panel.innerHTML = p.items.map(function(it, si) {
-                    return '<button class="svc-dd-item" type="button" data-p="' + i + '" data-s="' + si + '">'
-                        + '<span class="svc-dd-dot"></span>' + it.h
-                        + '</button>';
-                }).join('');
-                panel.addEventListener('click', function(e) {
-                    var btn = e.target.closest('.svc-dd-item');
-                    if (!btn) return;
-                    var pi2 = +btn.getAttribute('data-p');
-                    setActive(pi2);
-                    closeAllPanels();
-                    var target = pillars[pi2];
-                    if (target) {
-                        var y = window.pageYOffset + target.getBoundingClientRect().top - 150;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
-                    }
-                });
-            });
-
-            // Close panels on outside click
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('#svc-tabs')) closeAllPanels();
-            }, { passive: true });
 
             // ── Instant popover: enlarged detail appears right at the hovered sub-card ──
             function showPop(btn) {
@@ -4161,17 +4075,14 @@
             // Never let a stale popover linger on scroll
             window.addEventListener('scroll', hidePop, { passive: true });
 
-            // Tab click → toggle dropdown panel
+            // Tab click → scroll the matching pillar into view
             tabs.forEach(function(t) {
                 var i = +t.getAttribute('data-i');
-                var wrap = ddWraps[i];
-                t.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    var isOpen = wrap && wrap.classList.contains('open');
-                    closeAllPanels();
-                    if (!isOpen && wrap) {
-                        wrap.classList.add('open');
-                        t.setAttribute('aria-expanded', 'true');
+                t.addEventListener('click', function() {
+                    var target = pillars[i];
+                    if (target) {
+                        var y = window.pageYOffset + target.getBoundingClientRect().top - 150;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
                     }
                     setActive(i);
                 });
