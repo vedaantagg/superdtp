@@ -184,14 +184,64 @@
             color: #fff;
         }
 
-        .services-dropdown { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); width: 720px; max-width: 96vw; background: rgba(9,9,11,0.98); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity 0.22s ease, visibility 0.22s ease; z-index: 100; display: grid; grid-template-columns: 1fr 1fr 1fr; }
+        /* ── Header Services Nested Dropdown ─────────────────── */
+        .services-dropdown {
+            position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+            width: 620px; max-width: 96vw;
+            background: rgba(9,9,11,0.98); backdrop-filter: blur(18px);
+            border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; overflow: hidden;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.22s ease, visibility 0.22s ease;
+            z-index: 100;
+            display: grid; grid-template-columns: 195px 1fr;
+            min-height: 280px;
+        }
         .services-trigger:hover .services-dropdown, .services-trigger:focus-within .services-dropdown { opacity: 1; visibility: visible; }
         .services-trigger:hover .nav-link, .services-trigger:focus-within .nav-link { opacity: 1; color: #fff; }
-        .mega-col { border-right: 1px solid rgba(255,255,255,0.05); padding-bottom: 12px; }
-        .mega-col:last-child { border-right: none; background: rgba(212,175,55,0.03); }
-        .mega-col-hdr { padding: 14px 18px 10px; font-size: 0.56rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.2em; text-transform: uppercase; color: #d4af37; display: flex; align-items: center; gap: 6px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 4px; }
-        .mega-star { font-size: 0.6rem; opacity: 0.8; }
-        .dropdown-link { display: flex; align-items: center; gap: 8px; padding: 7px 18px 7px 18px; font-size: 0.6rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.72); text-decoration: none; transition: color 0.2s ease, background 0.2s ease; }
+        /* Left nav column */
+        .mega-cat-nav {
+            border-right: 1px solid rgba(255,255,255,0.05);
+            padding: 14px 0;
+            display: flex; flex-direction: column; gap: 2px;
+        }
+        .mega-cat-eyebrow {
+            padding: 4px 18px 10px;
+            font-family: 'Space Grotesk', monospace; font-size: 0.48rem;
+            letter-spacing: 0.28em; text-transform: uppercase;
+            color: rgba(255,255,255,0.22);
+            border-bottom: 1px solid rgba(255,255,255,0.04); margin-bottom: 6px;
+        }
+        .mega-cat-btn {
+            display: flex; align-items: center; justify-content: space-between; gap: 8px;
+            padding: 10px 16px 10px 18px; width: 100%;
+            border: none; border-left: 2px solid transparent;
+            background: none; cursor: pointer;
+            font-family: 'Space Grotesk', monospace; font-size: 0.56rem;
+            letter-spacing: 0.14em; text-transform: uppercase;
+            color: rgba(255,255,255,0.55); text-align: left;
+            transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+        .mega-cat-btn:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
+        .mega-cat-btn.active { color: #d4af37; border-left-color: #d4af37; background: rgba(212,175,55,0.06); }
+        .mega-cat-arrow { opacity: 0.35; flex-shrink: 0; transition: opacity 0.2s ease; }
+        .mega-cat-btn.active .mega-cat-arrow { opacity: 0.85; }
+        /* Right pane column */
+        .mega-pane-col { position: relative; }
+        .mega-pane { display: none; padding: 14px 0; }
+        .mega-pane.active { display: block; }
+        .mega-pane-hdr {
+            padding: 4px 18px 10px;
+            font-family: 'Space Grotesk', monospace; font-size: 0.48rem;
+            letter-spacing: 0.28em; text-transform: uppercase; color: #d4af37;
+            border-bottom: 1px solid rgba(255,255,255,0.04); margin-bottom: 6px;
+        }
+        .dropdown-link {
+            display: flex; align-items: center; gap: 8px;
+            padding: 7px 18px; font-size: 0.58rem;
+            font-family: 'Space Grotesk', monospace; letter-spacing: 0.1em;
+            text-transform: uppercase; color: rgba(255,255,255,0.68);
+            text-decoration: none; transition: color 0.2s ease, background 0.2s ease;
+        }
         .dropdown-link:hover { color: #d4af37; background: rgba(255,255,255,0.04); }
         .dropdown-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18); flex-shrink: 0; }
         .dropdown-link:hover .dropdown-dot { background: rgba(212,175,55,0.5); }
@@ -235,6 +285,7 @@
             border: none;
             display: none;
             grid-template-columns: 1fr;
+            min-height: auto;
             opacity: 1;
             visibility: visible;
         }
@@ -242,6 +293,20 @@
         #main-nav.mobile-open .services-trigger.active .services-dropdown {
             display: grid;
         }
+
+        #main-nav.mobile-open .mega-cat-nav {
+            border-right: none;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            flex-direction: row; flex-wrap: wrap; padding: 8px;
+        }
+        #main-nav.mobile-open .mega-cat-eyebrow { display: none; }
+        #main-nav.mobile-open .mega-cat-btn {
+            border-left: none; border-bottom: 2px solid transparent;
+            padding: 8px 14px; width: auto; flex: 1;
+        }
+        #main-nav.mobile-open .mega-cat-btn.active { border-bottom-color: #d4af37; }
+        #main-nav.mobile-open .mega-pane { display: none; }
+        #main-nav.mobile-open .mega-pane.active { display: block; }
 
         /* ── Footer ─────────────────────────────────────────── */
         .footer-col-hdr {
@@ -330,7 +395,7 @@
 
         .type-hero {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(1.75rem, 3.8vw, 4rem);
+            font-size: clamp(1.45rem, 3.8vw, 4rem);
             line-height: 1.05;
             letter-spacing: -0.03em;
             color: #fff;
@@ -775,8 +840,15 @@
             aside { display: none; }
         }
 
+        @media (min-width: 900px) and (max-width: 1280px) {
+            .type-hero { font-size: clamp(1.6rem, 3.2vw, 2.8rem); }
+        }
+
         @media (max-width: 480px) {
             #hero { padding-top: 4rem; }
+        }
+        @media (max-width: 390px) {
+            #hero { padding-top: 5.5rem; }
         }
 
         /* === LOADING REVEAL (commented out) ===
@@ -991,6 +1063,11 @@
         @media (max-width: 900px) {
             .wf-body { grid-template-columns: 1fr; }
             .wf-nav { position: relative; top: 0; max-height: 160px; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+            #wf-actors-bar { grid-template-columns: 0 1fr; }
+        }
+        @media (max-width: 768px) {
+            #wf-phase-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
+            .wf-phase-tab { font-size: 0.48rem; padding: 10px 10px; letter-spacing: 0.08em; flex-shrink: 0; }
         }
         @media (max-width: 480px) {
             .wf-phase-tab { padding: 11px 10px; font-size: 0.5rem; }
@@ -1092,51 +1169,91 @@
         .svc-pillars-inner { max-width: 1160px; margin: 0 auto; }
         .svc-pillars-head { text-align: center; max-width: 720px; margin: 0 auto 30px; }
 
-        /* Sticky tab pointer — advances as the cards stack one by one */
+        /* Sticky nested-dropdown selector */
         #svc-tabs {
             position: sticky;
             top: 82px;
             z-index: 30;
             display: flex;
-            padding: 6px;
+            gap: 10px;
+            padding: 0;
             margin: 0 auto 30px;
             max-width: 720px;
+            background: none;
+            border: none;
+            border-radius: 0;
+            box-shadow: none;
+        }
+        .svc-dd-wrap { flex: 1; position: relative; }
+        .svc-tab {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 11px 18px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
             background: rgba(13,13,18,0.94);
             backdrop-filter: blur(14px);
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 100px;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-        }
-        .svc-tab {
-            flex: 1;
-            position: relative;
-            z-index: 1;
-            padding: 11px 6px;
-            border: none;
-            background: none;
             cursor: pointer;
             font-family: 'Space Grotesk', monospace;
             font-size: 0.6rem;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-            border-radius: 100px;
+            color: rgba(255,255,255,0.55);
             white-space: nowrap;
-            transition: color 0.35s ease;
+            transition: color 0.28s ease, border-color 0.28s ease, background 0.28s ease;
+            position: relative;
+            z-index: 1;
         }
-        .svc-tab:hover { color: rgba(255,255,255,0.85); }
-        .svc-tab.active { color: #09090b; }
-        #svc-tab-ind {
+        .svc-tab:hover { color: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.22); }
+        .svc-tab.active { color: #d4af37; border-color: rgba(212,175,55,0.5); background: rgba(13,13,18,0.98); }
+        .svc-tab-arrow { flex-shrink: 0; opacity: 0.55; transition: transform 0.25s ease, opacity 0.25s ease; }
+        .svc-dd-wrap.open .svc-tab-arrow { transform: rotate(180deg); opacity: 0.9; }
+        .svc-dd-wrap.open .svc-tab { border-bottom-left-radius: 0; border-bottom-right-radius: 0; border-bottom-color: transparent; }
+        .svc-dd-panel {
             position: absolute;
-            top: 6px;
-            left: 6px;
-            height: calc(100% - 12px);
-            width: calc((100% - 12px) / 4);
-            background: #d4af37;
-            border-radius: 100px;
-            transform: translateX(0);
-            transition: transform 0.42s cubic-bezier(.5,.05,.2,1);
-            z-index: 0;
+            top: 100%;
+            left: 0; right: 0;
+            background: rgba(9,9,11,0.98);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(212,175,55,0.28);
+            border-top: none;
+            border-radius: 0 0 12px 12px;
+            overflow: hidden;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-4px);
+            transition: opacity 0.22s ease, visibility 0.22s ease, transform 0.22s ease;
+            padding: 6px 0 8px;
+        }
+        .svc-dd-wrap.open .svc-dd-panel { opacity: 1; visibility: visible; transform: translateY(0); }
+        .svc-dd-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 18px;
+            width: 100%;
+            border: none;
+            background: none;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.58rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.62);
+            cursor: pointer;
+            text-align: left;
+            transition: color 0.2s ease, background 0.2s ease;
+        }
+        .svc-dd-item:hover { color: #d4af37; background: rgba(212,175,55,0.06); }
+        .svc-dd-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18); flex-shrink: 0; }
+        .svc-dd-item:hover .svc-dd-dot { background: rgba(212,175,55,0.5); }
+        @media (max-width: 640px) {
+            #svc-tabs { flex-direction: column; gap: 8px; }
+            .svc-dd-wrap.open .svc-tab { border-radius: 12px; border-bottom-color: rgba(212,175,55,0.5); }
+            .svc-dd-panel { border-top: 1px solid rgba(212,175,55,0.28); border-radius: 12px; top: calc(100% + 4px); }
         }
 
         /* Stacking column */
@@ -1376,7 +1493,8 @@
             height: calc(100vh - 88px); padding: 24px 0 0 0; margin-top: 32px;
         }
         @media (max-width: 767px) {
-            #industry-solutions { height: auto; min-height: calc(100vh - 88px); padding: 3rem 1rem; }
+            #industry-solutions { height: auto; min-height: calc(100vh - 88px); padding: 3rem 1rem; overflow: hidden; }
+            #eco-diagram { width: min(90vw, 420px) !important; max-width: 100%; }
         }
         #eco-canvas {
             position: absolute; inset: 0; width: 100%; height: 100%;
@@ -1552,6 +1670,10 @@
             #indic-brick-wrap {
                 overflow: hidden !important;
                 touch-action: pan-y;
+                border-radius: 0;
+                margin-left: -1.5rem;
+                margin-right: -1.5rem;
+                width: calc(100% + 3rem);
             }
             .indic-lang-grid {
                 display: grid !important;
@@ -1669,6 +1791,11 @@
 
         /* ── WORLD REACH MAP ──────────────────────────────────────────── */
         #world-reach { position: relative; overflow: hidden; }
+        @media (max-width: 768px) {
+            #world-reach { padding-left: 0 !important; padding-right: 0 !important; }
+            #world-reach > .max-w-7xl { padding-left: 0; padding-right: 0; max-width: 100%; }
+            #world-reach .rounded-xl { border-radius: 0 !important; border-left: none !important; border-right: none !important; }
+        }
         #world-map-container svg { width: 100%; height: auto; display: block; }
         #world-map-container path, #world-map-container polygon { transition: fill 0.3s ease; }
         .country-base { fill: rgba(255,255,255,0.06) !important; stroke: rgba(255,255,255,0.09) !important; stroke-width: 0.4px !important; }
@@ -1756,12 +1883,12 @@
         <a href="/" aria-label="SuperDTP Home">
             <img src="static/logo copy 5.svg" alt="SuperDTP logo" style="height:58px;width:auto;display:block;" fetchpriority="high" />
         </a>
-        <button id="mobile-menu-btn" class="lg:hidden flex flex-col gap-1.5 cursor-pointer" aria-label="Toggle menu" aria-expanded="false">
+        <button id="mobile-menu-btn" class="xl:hidden flex flex-col gap-1.5 cursor-pointer" aria-label="Toggle menu" aria-expanded="false">
             <span class="w-6 h-0.5 bg-neutral-200 transition-all"></span>
             <span class="w-6 h-0.5 bg-neutral-200 transition-all"></span>
             <span class="w-6 h-0.5 bg-neutral-200 transition-all"></span>
         </button>
-        <nav aria-label="Main navigation" id="main-nav" class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200">
+        <nav aria-label="Main navigation" id="main-nav" class="hidden xl:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200">
             <a href="#hero" class="nav-link active">01. HOME</a>
             <a href="#indic-excellence" class="nav-link">02. INDIC</a>
             <!-- 03. SERVICES — dropdown preserved exactly -->
@@ -1772,40 +1899,41 @@
                 </a>
                 <div class="services-dropdown" role="menu" aria-label="Services menu">
 
-                    <!-- Col 1: Localization Services -->
-                    <div class="mega-col">
-                        <div class="mega-col-hdr">Localization Services</div>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Translation &amp; Localization</a>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Website Localization</a>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Software &amp; App Localization</a>
-                        <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia Localization</a>
-                        <a href="/qa/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Linguistic QA &amp; Transcreation</a>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>AI-Enabled Localization</a>
+                    <!-- Left: Category nav -->
+                    <div class="mega-cat-nav">
+                        <div class="mega-cat-eyebrow">Our Services</div>
+                        <button class="mega-cat-btn active" type="button" data-cat="loc" aria-controls="mega-pane-loc">
+                            <span>Localization</span>
+                            <svg class="mega-cat-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button class="mega-cat-btn" type="button" data-cat="dtp" aria-controls="mega-pane-dtp">
+                            <span>DTP &amp; Publishing</span>
+                            <svg class="mega-cat-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
                     </div>
 
-                    <!-- Col 2: DTP & Publishing Services -->
-                    <div class="mega-col">
-                        <div class="mega-col-hdr">DTP &amp; Publishing Services</div>
-                        <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP</a>
-                        <a href="/dtp-services/#prepress" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Typesetting Services</a>
-                        <a href="/dtp-services/#prepress" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Publishing Production</a>
-                        <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Artwork Localization</a>
-                        <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Packaging &amp; Label Localization</a>
-                        <a href="/dtp-services/#file-preparation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>File Engineering &amp; Conversion</a>
-                        <a href="/dtp-services/#quality-assurance" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>QA &amp; Compliance</a>
-                    </div>
-
-                    <!-- Col 3: Indic Language Solutions -->
-                    <div class="mega-col">
-                        <div class="mega-col-hdr">Indic Language Solutions <span class="mega-star">★</span></div>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Overview</a>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Indian Language Localization</a>
-                        <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Indic Publishing &amp; DTP</a>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Government &amp; Public Sector</a>
-                        <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia Localization</a>
-                        <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Languages We Support</a>
+                    <!-- Right: Service panes -->
+                    <div class="mega-pane-col">
+                        <div class="mega-pane active" id="mega-pane-loc" role="group" aria-label="Localization Services">
+                            <div class="mega-pane-hdr">Localization Services</div>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Translation &amp; Localization</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Website Localization</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Software &amp; App Localization</a>
+                            <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia Localization</a>
+                            <a href="/qa/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Linguistic QA &amp; Transcreation</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>AI-Enabled Localization</a>
+                        </div>
+                        <div class="mega-pane" id="mega-pane-dtp" role="group" aria-label="DTP &amp; Publishing Services">
+                            <div class="mega-pane-hdr">DTP &amp; Publishing Services</div>
+                            <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP</a>
+                            <a href="/dtp-services/#prepress" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Typesetting Services</a>
+                            <a href="/dtp-services/#prepress" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Publishing Production</a>
+                            <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Artwork Localization</a>
+                            <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Packaging &amp; Label Localization</a>
+                            <a href="/dtp-services/#file-preparation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>File Engineering &amp; Conversion</a>
+                            <a href="/dtp-services/#quality-assurance" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>QA &amp; Compliance</a>
+                        </div>
                     </div>
 
                 </div>
@@ -1890,23 +2018,23 @@
             </aside>
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-8 pb-8">
-            <div class="live-data-card rounded-3xl p-6 text-center">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mt-8 pb-8">
+            <div class="live-data-card rounded-3xl p-4 md:p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Words Processed</div>
                 <div class="text-4xl font-semibold text-white">15<span class="text-lg font-normal text-neutral-200">M+</span></div>
                 <div class="text-xs text-neutral-200 mt-3 leading-relaxed">End-to-end multilingual content handled across enterprise-scale production workflows.</div>
             </div>
-            <div class="live-data-card rounded-3xl p-6 text-center">
+            <div class="live-data-card rounded-3xl p-4 md:p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Pages Formatted</div>
                 <div class="text-4xl font-semibold text-white">120<span class="text-lg font-normal text-neutral-200">k+</span></div>
                 <div class="text-xs text-neutral-200 mt-3 leading-relaxed">Production-ready layouts created with precision across print, digital, and learning formats.</div>
             </div>
-            <div class="live-data-card rounded-3xl p-6 text-center">
+            <div class="live-data-card rounded-3xl p-4 md:p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">Languages Supported</div>
                 <div class="text-4xl font-semibold text-white">75<span class="text-lg font-normal text-neutral-200">+</span></div>
                 <div class="text-xs text-neutral-200 mt-3 leading-relaxed">From global business languages to complex scripts including Indic, RTL, and CJK systems.</div>
             </div>
-            <div class="live-data-card rounded-3xl p-6 text-center">
+            <div class="live-data-card rounded-3xl p-4 md:p-6 text-center">
                 <div class="text-[0.63rem] uppercase tracking-[0.28em] text-brandAccent/70 mb-3">QA Accuracy</div>
                 <div class="text-4xl font-semibold text-white">99<span class="text-lg font-normal text-neutral-200">%</span></div>
                 <div class="text-xs text-neutral-200 mt-3 leading-relaxed">Multi-layer quality checks ensuring consistency, formatting integrity, and publication-ready output.</div>
@@ -2119,17 +2247,25 @@
         <div id="svc-pillars">
             <div class="svc-pillars-inner">
                 <div class="svc-pillars-head">
-                    <span class="font-mono text-[0.6rem] text-neutral-200 uppercase tracking-widest block mb-5">What We Do</span>
                     <h2 class="font-serif text-4xl md:text-5xl tracking-tight text-white leading-tight">Four pillars, one studio.</h2>
                 </div>
 
-                <!-- Tab pointer (advances as cards stack) -->
-                <div id="svc-tabs" role="tablist" aria-label="Service pillars">
-                    <span id="svc-tab-ind" aria-hidden="true"></span>
-                    <button class="svc-tab active" type="button" data-i="0" role="tab">Localization</button>
-                    <button class="svc-tab" type="button" data-i="1" role="tab">DTP</button>
-                    <button class="svc-tab" type="button" data-i="2" role="tab">PDF Remediation</button>
-                    <button class="svc-tab" type="button" data-i="3" role="tab">ESG</button>
+                <!-- Nested dropdown selectors -->
+                <div id="svc-tabs" aria-label="Service pillars">
+                    <div class="svc-dd-wrap" data-i="0">
+                        <button class="svc-tab active" type="button" data-i="0" aria-expanded="false" aria-haspopup="true">
+                            <span>Localization</span>
+                            <svg class="svc-tab-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div class="svc-dd-panel" id="svc-dd-0" role="menu"></div>
+                    </div>
+                    <div class="svc-dd-wrap" data-i="1">
+                        <button class="svc-tab" type="button" data-i="1" aria-expanded="false" aria-haspopup="true">
+                            <span>DTP</span>
+                            <svg class="svc-tab-arrow" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <div class="svc-dd-panel" id="svc-dd-1" role="menu"></div>
+                    </div>
                 </div>
 
                 <!-- Stacking pillar cards (built + wired by JS) -->
@@ -3897,34 +4033,6 @@
                         { h: 'EPUB & Digital Publishing', line: 'Standards-compliant eBooks.', long: ['Standards-compliant EPUB 2/3 production supports reflowable and fixed-layout books with rich multilingual metadata.', 'Accessibility markup and multi-storefront delivery make your titles ready for every reader and platform.'] }
                     ]
                 },
-                {
-                    name: 'PDF Remediation', kicker: 'Accessibility',
-                    sub: 'Accessible, WCAG & PDF/UA-compliant tagged documents — reviewed by human specialists.',
-                    cta: { label: 'Explore PDF Remediation', url: '/pdf-remediation/' },
-                    items: [
-                        { h: 'Document Accessibility Review', line: 'Manual page-by-page audit.', long: ['Our specialists analyze every page by hand, identifying barriers that prevent users with disabilities from accessing your content.', 'Automated checkers alone miss context — human review ensures nothing slips through.'] },
-                        { h: 'Tags & Document Structure', line: 'Reading order & structure.', long: ['We add proper heading tags, logical reading order, and table structure so screen readers navigate documents correctly.', 'A well-tagged structure is the foundation of true PDF accessibility.'] },
-                        { h: 'Alt-Text for Images', line: 'Descriptions for every visual.', long: ['Descriptive alternative text gives screen-reader users the same information conveyed by images, charts, and diagrams.', 'We write concise, meaningful descriptions tailored to each visual’s purpose.'] },
-                        { h: 'Section 508 Remediation', line: 'Federal compliance.', long: ['Full Section 508 compliance for government agencies, contractors, and federally funded organizations.', 'We document conformance so your obligations are met and defensible.'] },
-                        { h: 'WCAG 2.1 / 2.2 Compliance', line: 'Level AA & PDF/UA.', long: ['Documents are brought to WCAG 2.1 / 2.2 Level AA and validated against PDF/UA technical requirements.', 'Perceivable, operable, understandable, and robust — across all content.'] },
-                        { h: 'ADA Compliance', line: 'Inclusive public documents.', long: ['Publications meet ADA requirements for insurance, finance, education, retail, and any organization serving the public.', 'Accessible documents reduce legal risk and demonstrate inclusive design.'] }
-                    ]
-                },
-                {
-                    name: 'ESG', kicker: 'Sustainability',
-                    sub: 'ESG & sustainability report design, data visualization, and accessible disclosure.',
-                    cta: { label: 'Explore ESG', url: '/esg/' },
-                    items: [
-                        { h: 'ESG Report Design', line: 'Investor-ready layouts.', long: ['Sustainability and annual reports are designed to communicate clearly with investors and stakeholders.', 'Editorial layout, infographics, and brand-aligned visuals turn dense data into a compelling narrative.'] },
-                        { h: 'Data Visualization', line: 'Charts, infographics & dashboards.', long: ['Complex ESG metrics become clear, accurate charts, infographics, and dashboards.', 'We design visuals that are both beautiful and faithful to the underlying data.'] },
-                        { h: 'GRI / SASB Alignment', line: 'Framework-aligned formatting.', long: ['Reports are structured and formatted to align with GRI, SASB, and other recognized disclosure frameworks.', 'Consistent indexing and cross-referencing make disclosures easy to audit.'] },
-                        { h: 'TCFD & Climate Disclosure', line: 'Climate & risk reporting.', long: ['Climate-related disclosures are organized around governance, strategy, risk, and metrics per TCFD guidance.', 'Clear structure helps readers understand exposure and response.'] },
-                        { h: 'Multilingual ESG', line: 'Localized for stakeholders.', long: ['Sustainability reporting is localized for global stakeholders without losing technical precision.', 'Consistent terminology keeps every language version aligned and credible.'] },
-                        { h: 'Interactive & Accessible PDF', line: 'Tagged, navigable reports.', long: ['Digital reports are tagged, navigable, and WCAG-compliant so every stakeholder can access them.', 'Interactive contents, bookmarks, and links improve the reading experience.'] },
-                        { h: 'Integrated Reporting', line: 'Financial + non-financial.', long: ['Integrated reports weave financial and non-financial performance into one coherent narrative.', 'Unified design connects strategy, value creation, and outcomes.'] },
-                        { h: 'Assurance-Ready Formatting', line: 'Audit-friendly output.', long: ['Consistent, well-structured formatting makes reports straightforward for assurance providers to review.', 'Version control and source traceability support a smooth audit.'] }
-                    ]
-                }
             ];
 
             // Build the stacking cards — each shows all sub-services inline
@@ -3959,14 +4067,49 @@
 
             var pillars  = Array.prototype.slice.call(stack.querySelectorAll('.pillar'));
             var tabs     = Array.prototype.slice.call(document.querySelectorAll('.svc-tab'));
-            var ind      = document.getElementById('svc-tab-ind');
+            var ddWraps  = Array.prototype.slice.call(document.querySelectorAll('.svc-dd-wrap'));
             var curKey   = '';
 
             function setActive(i) {
                 tabs.forEach(function(t, ti) { t.classList.toggle('active', ti === i); });
                 pillars.forEach(function(p, pi) { p.classList.toggle('is-active', pi === i); });
-                if (ind) ind.style.transform = 'translateX(' + (i * 100) + '%)';
             }
+
+            function closeAllPanels() {
+                ddWraps.forEach(function(w) {
+                    w.classList.remove('open');
+                    var btn = w.querySelector('.svc-tab');
+                    if (btn) btn.setAttribute('aria-expanded', 'false');
+                });
+            }
+
+            // Populate dropdown panels from PILLARS data
+            PILLARS.forEach(function(p, i) {
+                var panel = document.getElementById('svc-dd-' + i);
+                if (!panel) return;
+                panel.innerHTML = p.items.map(function(it, si) {
+                    return '<button class="svc-dd-item" type="button" data-p="' + i + '" data-s="' + si + '">'
+                        + '<span class="svc-dd-dot"></span>' + it.h
+                        + '</button>';
+                }).join('');
+                panel.addEventListener('click', function(e) {
+                    var btn = e.target.closest('.svc-dd-item');
+                    if (!btn) return;
+                    var pi2 = +btn.getAttribute('data-p');
+                    setActive(pi2);
+                    closeAllPanels();
+                    var target = pillars[pi2];
+                    if (target) {
+                        var y = window.pageYOffset + target.getBoundingClientRect().top - 150;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Close panels on outside click
+            document.addEventListener('click', function(e) {
+                if (!e.target.closest('#svc-tabs')) closeAllPanels();
+            }, { passive: true });
 
             // ── Instant popover: enlarged detail appears right at the hovered sub-card ──
             function showPop(btn) {
@@ -4018,14 +4161,17 @@
             // Never let a stale popover linger on scroll
             window.addEventListener('scroll', hidePop, { passive: true });
 
-            // Tab click → scroll the matching pillar into view
+            // Tab click → toggle dropdown panel
             tabs.forEach(function(t) {
                 var i = +t.getAttribute('data-i');
-                t.addEventListener('click', function() {
-                    var target = pillars[i];
-                    if (target) {
-                        var y = window.pageYOffset + target.getBoundingClientRect().top - 150;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
+                var wrap = ddWraps[i];
+                t.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    var isOpen = wrap && wrap.classList.contains('open');
+                    closeAllPanels();
+                    if (!isOpen && wrap) {
+                        wrap.classList.add('open');
+                        t.setAttribute('aria-expanded', 'true');
                     }
                     setActive(i);
                 });
@@ -5175,6 +5321,22 @@
                 servicesTrigger.classList.toggle('active');
             });
         }
+
+        // Mega-menu category switching (hover on desktop, click on mobile)
+        (function() {
+            var catBtns = document.querySelectorAll('.mega-cat-btn');
+            function activateCat(btn) {
+                catBtns.forEach(function(b) { b.classList.remove('active'); });
+                document.querySelectorAll('.mega-pane').forEach(function(p) { p.classList.remove('active'); });
+                btn.classList.add('active');
+                var pane = document.getElementById('mega-pane-' + btn.getAttribute('data-cat'));
+                if (pane) pane.classList.add('active');
+            }
+            catBtns.forEach(function(btn) {
+                btn.addEventListener('mouseenter', function() { activateCat(this); });
+                btn.addEventListener('click', function() { activateCat(this); });
+            });
+        })();
     </script>
 
     <script>
