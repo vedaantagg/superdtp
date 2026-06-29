@@ -1298,114 +1298,61 @@
         }
         @media (max-width: 460px) { .pillar-subs { grid-template-columns: 1fr; } }
 
-        /* ── Detail modal (centered card; Three.js fx behind, opens on hover/click) ── */
-        #svc-detail {
+        /* ── Quick detail popover (appears at the hovered sub-card, no backdrop) ── */
+        #psub-pop {
             position: fixed;
-            inset: 0;
-            z-index: 200;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 5vh 5vw;
+            z-index: 140;
+            width: 340px;
+            max-width: 88vw;
+            padding: 22px 24px 24px;
+            border-radius: 16px;
+            border: 1px solid rgba(212,175,55,0.45);
+            background: linear-gradient(165deg, #1a1a22 0%, #0e0e14 100%);
+            box-shadow: 0 26px 64px rgba(0,0,0,0.62);
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
-        #svc-detail.open { opacity: 1; visibility: visible; }
-        #svc-modal-backdrop {
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 50% 38%, rgba(20,20,28,0.86), rgba(5,5,9,0.95));
-        }
-        #svc-modal-fx {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            transform: translateY(6px) scale(0.985);
+            transform-origin: top left;
+            transition: opacity 0.13s ease, transform 0.15s cubic-bezier(.22,.61,.36,1), visibility 0.13s;
             pointer-events: none;
-            opacity: 0.9;
         }
-        .svc-detail-panel {
-            position: relative;
-            z-index: 1;
-            width: min(540px, 100%);
-            max-height: 86vh;
-            overflow-y: auto;
-            border-radius: 22px;
-            border: 1px solid rgba(212,175,55,0.26);
-            background: linear-gradient(165deg, rgba(23,23,31,0.965) 0%, rgba(12,12,18,0.975) 72%);
-            box-shadow: 0 50px 140px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.04);
-            padding: 46px 44px 42px;
-            transform: translateY(30px) scale(0.965);
-            opacity: 0;
-            transition: transform 0.5s cubic-bezier(.22,.61,.36,1), opacity 0.45s ease;
-        }
-        #svc-detail.open .svc-detail-panel { transform: none; opacity: 1; }
-        #svc-detail-close {
-            position: absolute;
-            top: 22px; right: 26px;
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.28);
-            background: rgba(255,255,255,0.04);
-            color: #fff;
-            font-size: 1.3rem;
-            line-height: 1;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: border-color 0.25s ease, color 0.25s ease, transform 0.3s ease;
-            z-index: 2;
-        }
-        #svc-detail-close:hover { border-color: #d4af37; color: #d4af37; transform: rotate(90deg); }
-        .svc-detail-kicker {
+        #psub-pop.show { opacity: 1; visibility: visible; transform: none; }
+        .pop-kicker {
+            display: block;
             font-family: 'Space Grotesk', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 0.26em;
+            font-size: 0.52rem;
+            letter-spacing: 0.24em;
             text-transform: uppercase;
             color: rgba(212,175,55,0.85);
-            margin-bottom: 16px;
-            display: block;
+            margin-bottom: 9px;
         }
-        .svc-detail-title {
+        .pop-title {
             font-family: 'Instrument Serif', serif;
-            font-size: 2.1rem;
-            line-height: 1.04;
+            font-size: 1.5rem;
+            line-height: 1.08;
             color: #fff;
-            margin-bottom: 18px;
+            margin-bottom: 12px;
         }
-        .svc-detail-text { margin-bottom: 28px; }
-        .svc-detail-text p {
+        .pop-text {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.86rem;
-            line-height: 1.72;
-            color: rgba(255,255,255,0.72);
-            margin-bottom: 13px;
+            font-size: 0.78rem;
+            line-height: 1.62;
+            color: rgba(255,255,255,0.74);
+            margin-bottom: 10px;
         }
-        .svc-detail-text p:last-child { margin-bottom: 0; }
-        .svc-detail-cta {
+        .pop-cta {
             display: inline-flex;
             align-items: center;
-            gap: 9px;
-            padding: 13px 26px;
-            border-radius: 100px;
-            background: #d4af37;
-            color: #09090b;
+            gap: 7px;
+            margin-top: 4px;
             font-family: 'Space Grotesk', monospace;
-            font-size: 0.6rem;
+            font-size: 0.54rem;
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            text-decoration: none;
-            transition: gap 0.25s ease, background 0.25s ease;
-        }
-        .svc-detail-cta:hover { gap: 13px; background: #e8c84a; }
-
-        @media (max-width: 720px) {
-            #svc-detail { padding: 0; }
-            .svc-detail-panel { width: 100%; max-height: 100vh; border-radius: 0; padding: 64px 24px 44px; }
-            .svc-detail-title { font-size: 2.2rem; }
+            color: #d4af37;
         }
         @media (prefers-reduced-motion: reduce) {
-            #svc-detail, #svc-detail .svc-detail-panel, .pillar-card, #svc-tab-ind, .svc-sub { transition: none; }
+            #psub-pop, .pillar-card, #svc-tab-ind { transition: none; }
         }
 
         /* ── TRUSTED BY TICKER ─────────────────────────────────────── */
@@ -2190,15 +2137,8 @@
             </div>
         </div>
 
-        <!-- Detail modal (shared; opens on hover/click of a pillar) -->
-        <aside id="svc-detail" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Service details">
-            <div id="svc-modal-backdrop"></div>
-            <canvas id="svc-modal-fx" aria-hidden="true"></canvas>
-            <div class="svc-detail-panel">
-                <button id="svc-detail-close" type="button" aria-label="Close details">&times;</button>
-                <div id="svc-detail-body"></div>
-            </div>
-        </aside>
+        <!-- Quick detail popover (appears at the hovered sub-card) -->
+        <div id="psub-pop" role="tooltip" aria-hidden="true"></div>
 
     </section>
 
@@ -3921,8 +3861,8 @@
         // ── Services: Stacking Pillars + Tab Pointer + Detail Drawer ──
         (function initSvcPillars() {
             var stack = document.getElementById('svc-stack');
-            var detail = document.getElementById('svc-detail');
-            if (!stack || !detail) return;
+            var pop = document.getElementById('psub-pop');
+            if (!stack || !pop) return;
 
             var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -4020,11 +3960,7 @@
             var pillars  = Array.prototype.slice.call(stack.querySelectorAll('.pillar'));
             var tabs     = Array.prototype.slice.call(document.querySelectorAll('.svc-tab'));
             var ind      = document.getElementById('svc-tab-ind');
-            var body     = document.getElementById('svc-detail-body');
-            var closeBtn = document.getElementById('svc-detail-close');
-            var backdrop = document.getElementById('svc-modal-backdrop');
-            var panel    = detail.querySelector('.svc-detail-panel');
-            var hoverTimer = null, openKey = '';
+            var curKey   = '';
 
             function setActive(i) {
                 tabs.forEach(function(t, ti) { t.classList.toggle('active', ti === i); });
@@ -4032,103 +3968,55 @@
                 if (ind) ind.style.transform = 'translateX(' + (i * 100) + '%)';
             }
 
-            // ── Three.js particle field behind the modal ──
-            var fx = (function() {
-                var canvas = document.getElementById('svc-modal-fx');
-                if (!canvas || !window.THREE) return { start: function() {}, stop: function() {} };
-                var renderer, scene, camera, points, raf, running = false, failed = false;
-                function init() {
-                    renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: false, powerPreference: 'low-power' });
-                    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
-                    scene = new THREE.Scene();
-                    camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-                    camera.position.z = 32;
-                    var N = 340, pos = new Float32Array(N * 3);
-                    for (var k = 0; k < N; k++) {
-                        var r = 19 * Math.cbrt(Math.random());
-                        var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
-                        pos[k * 3]     = r * Math.sin(ph) * Math.cos(th);
-                        pos[k * 3 + 1] = r * Math.sin(ph) * Math.sin(th);
-                        pos[k * 3 + 2] = r * Math.cos(ph);
-                    }
-                    var geo = new THREE.BufferGeometry();
-                    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-                    points = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xd4af37, size: 0.17, transparent: true, opacity: 0.65, depthWrite: false }));
-                    scene.add(points);
-                    resize();
-                }
-                function resize() {
-                    if (!renderer) return;
-                    var w = canvas.clientWidth || window.innerWidth, h = canvas.clientHeight || window.innerHeight;
-                    renderer.setSize(w, h, false);
-                    camera.aspect = w / h; camera.updateProjectionMatrix();
-                }
-                function loop() {
-                    raf = requestAnimationFrame(loop);
-                    points.rotation.y += 0.0017;
-                    points.rotation.x += 0.0009;
-                    renderer.render(scene, camera);
-                }
-                window.addEventListener('resize', resize);
-                return {
-                    start: function() {
-                        if (reduceMotion || failed) return;
-                        try {
-                            if (!renderer) init();
-                            if (running) return;
-                            running = true; resize(); loop();
-                        } catch (err) { failed = true; if (raf) cancelAnimationFrame(raf); }
-                    },
-                    stop: function() { running = false; if (raf) cancelAnimationFrame(raf); }
-                };
-            })();
-
-            // ── Small modal: details for a single sub-service ──
-            function openSub(pi, si) {
+            // ── Instant popover: enlarged detail appears right at the hovered sub-card ──
+            function showPop(btn) {
+                var pi = +btn.getAttribute('data-p'), si = +btn.getAttribute('data-s');
                 var key = pi + ':' + si;
-                if (detail.classList.contains('open') && key === openKey) return;
-                openKey = key;
-                var p = PILLARS[pi], it = p.items[si];
-                var paras = it.long.map(function(t) { return '<p>' + t + '</p>'; }).join('');
-                body.innerHTML =
-                      '<span class="svc-detail-kicker">' + p.name + '</span>'
-                    + '<h3 class="svc-detail-title">' + it.h + '</h3>'
-                    + '<div class="svc-detail-text">' + paras + '</div>'
-                    + '<a class="svc-detail-cta" href="' + p.cta.url + '">' + p.cta.label + ' &#8594;</a>';
-                if (panel) panel.scrollTop = 0;
-                detail.classList.add('open');
-                detail.setAttribute('aria-hidden', 'false');
-                setActive(pi);
-                fx.start();
-                // y-only stagger — never touches opacity, so content can't get stuck hidden
-                if (!reduceMotion && window.gsap) {
-                    gsap.from(body.children, { y: 12, duration: 0.45, stagger: 0.06, ease: 'power2.out' });
+                if (key !== curKey) {
+                    curKey = key;
+                    var p = PILLARS[pi], it = p.items[si];
+                    pop.innerHTML =
+                          '<span class="pop-kicker">' + p.name + '</span>'
+                        + '<h4 class="pop-title">' + it.h + '</h4>'
+                        + it.long.map(function(t) { return '<p class="pop-text">' + t + '</p>'; }).join('')
+                        + '<span class="pop-cta">' + p.cta.label + ' &#8594;</span>';
+                    setActive(pi);
                 }
+                // Position right at the hovered card, clamped to the viewport
+                var r = btn.getBoundingClientRect();
+                var pw = pop.offsetWidth || 340, ph = pop.offsetHeight || 200, m = 12;
+                var left = r.left - 12;
+                var top  = r.top - 12;
+                if (left + pw > window.innerWidth - m) left = window.innerWidth - pw - m;
+                if (left < m) left = m;
+                if (top + ph > window.innerHeight - m) top = window.innerHeight - ph - m;
+                if (top < m) top = m;
+                pop.style.left = left + 'px';
+                pop.style.top  = top + 'px';
+                pop.classList.add('show');
             }
-            function closeModal() {
-                detail.classList.remove('open');
-                detail.setAttribute('aria-hidden', 'true');
-                openKey = '';
-                fx.stop();
-            }
+            function hidePop() { pop.classList.remove('show'); curKey = ''; }
 
-            // Sub-card hover (intent delay) + click (event-delegated)
+            // Instant on hover · switches between cards · auto-closes when you leave them
+            stack.addEventListener('mouseover', function(e) {
+                var btn = e.target.closest('.psub');
+                if (btn) showPop(btn);
+            });
+            stack.addEventListener('mouseout', function(e) {
+                if (!e.target.closest('.psub')) return;
+                var to = e.relatedTarget;
+                // Keep open while moving within the sub-card grid (gaps included); close on exit
+                if (!to || !to.closest || !to.closest('.pillar-subs')) hidePop();
+            });
+            // Click a sub-card → open its pillar page
             stack.addEventListener('click', function(e) {
                 var btn = e.target.closest('.psub');
                 if (!btn) return;
-                clearTimeout(hoverTimer);
-                openSub(+btn.getAttribute('data-p'), +btn.getAttribute('data-s'));
+                var url = PILLARS[+btn.getAttribute('data-p')].cta.url;
+                if (url) window.location.href = url;
             });
-            stack.addEventListener('mouseover', function(e) {
-                var btn = e.target.closest('.psub');
-                if (!btn) return;
-                clearTimeout(hoverTimer);
-                var pi = +btn.getAttribute('data-p'), si = +btn.getAttribute('data-s');
-                hoverTimer = setTimeout(function() { openSub(pi, si); }, 160);
-            });
-            stack.addEventListener('mouseout', function(e) {
-                if (e.target.closest('.psub')) clearTimeout(hoverTimer);
-            });
+            // Never let a stale popover linger on scroll
+            window.addEventListener('scroll', hidePop, { passive: true });
 
             // Tab click → scroll the matching pillar into view
             tabs.forEach(function(t) {
@@ -4142,11 +4030,6 @@
                     setActive(i);
                 });
             });
-
-            // Close interactions
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            if (backdrop) backdrop.addEventListener('click', closeModal);
-            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
 
             // GSAP entrance — cards rise as they scroll in (y-only, never hides them)
             if (!reduceMotion && window.gsap && window.ScrollTrigger) {
