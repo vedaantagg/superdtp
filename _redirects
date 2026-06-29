@@ -19,4 +19,4 @@
 /typesetting/         /prepress/             301
 
 # 404 fallback
-/*                    /index.html            404
+/*                    /index.html            200

@@ -1082,332 +1082,230 @@
             transition: width 0.08s linear;
         }
 
-        /* ── Services · Stacking Pillars + Tab Pointer + Detail Drawer ─── */
-        #svc-pillars {
+        /* ── Dual Gear Services Section ─────────────────────────── */
+        /* ── Dual Gear Services Section ──────────────────────── */
+        #svc-gear-section {
             position: relative;
-            background: #07070b;
+            background: #06060a;
             border-top: 1px solid rgba(255,255,255,0.05);
-            padding: 80px 6% 110px;
+            margin-left: -1.5rem; margin-right: -1.5rem;
         }
-        .svc-pillars-inner { max-width: 1160px; margin: 0 auto; }
-        .svc-pillars-head { text-align: center; max-width: 720px; margin: 0 auto 30px; }
+        @media (min-width: 768px) { #svc-gear-section { margin-left: -3rem; margin-right: -3rem; } }
 
-        /* Sticky tab pointer — advances as the cards stack one by one */
-        #svc-tabs {
+        #svc-gear-pin {
             position: sticky;
-            top: 82px;
-            z-index: 30;
-            display: flex;
-            padding: 6px;
-            margin: 0 auto 30px;
-            max-width: 720px;
-            background: rgba(13,13,18,0.94);
-            backdrop-filter: blur(14px);
-            border: 1px solid rgba(255,255,255,0.09);
-            border-radius: 100px;
-            box-shadow: 0 12px 32px rgba(0,0,0,0.4);
-        }
-        .svc-tab {
-            flex: 1;
-            position: relative;
-            z-index: 1;
-            padding: 11px 6px;
-            border: none;
-            background: none;
-            cursor: pointer;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-            border-radius: 100px;
-            white-space: nowrap;
-            transition: color 0.35s ease;
-        }
-        .svc-tab:hover { color: rgba(255,255,255,0.85); }
-        .svc-tab.active { color: #09090b; }
-        #svc-tab-ind {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            height: calc(100% - 12px);
-            width: calc((100% - 12px) / 4);
-            background: #d4af37;
-            border-radius: 100px;
-            transform: translateX(0);
-            transition: transform 0.42s cubic-bezier(.5,.05,.2,1);
-            z-index: 0;
-        }
-
-        /* Stacking column */
-        #svc-stack { position: relative; }
-        .pillar {
-            position: sticky;
-            top: calc(150px + var(--i) * 56px);
-            margin-bottom: 26px;
-        }
-        .pillar:last-child { margin-bottom: 0; }
-        .pillar-card {
-            position: relative;
-            overflow: hidden;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-            /* FULLY OPAQUE — buried cards never bleed through */
-            background: linear-gradient(162deg, #16161e 0%, #0c0c12 58%, #0a0a0e 100%);
-            box-shadow: 0 -1px 0 rgba(255,255,255,0.05) inset, 0 26px 64px rgba(0,0,0,0.62);
-            cursor: pointer;
-            transition: border-color 0.35s ease, box-shadow 0.4s ease;
-        }
-        .pillar-card:hover, .pillar.is-active .pillar-card {
-            border-color: rgba(212,175,55,0.5);
-            box-shadow: 0 -1px 0 rgba(212,175,55,0.18) inset, 0 30px 72px rgba(0,0,0,0.66);
-        }
-
-        /* Header bar — stays visible inside the 56px peek when buried */
-        .pillar-head {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            height: 56px;
-            padding: 0 26px;
-            border-bottom: 1px solid rgba(255,255,255,0.06);
-        }
-        .pillar-no {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.62rem;
-            letter-spacing: 0.2em;
-            color: rgba(212,175,55,0.9);
-        }
-        .pillar-head-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.5rem;
-            line-height: 1;
-            color: #fff;
-        }
-        .pillar-head-cue {
-            margin-left: auto;
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.52rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.42);
-            transition: color 0.3s ease;
-        }
-        .pillar-card:hover .pillar-head-cue { color: rgba(212,175,55,0.9); }
-
-        /* Body — intro + all 8 sub-service cards (hidden behind next card once stacked) */
-        .pillar-body { padding: 26px 26px 30px; }
-        .pillar-intro {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-            gap: 24px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-        .pillar-kicker {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.55rem;
-            letter-spacing: 0.26em;
-            text-transform: uppercase;
-            color: rgba(212,175,55,0.78);
-            margin-bottom: 8px;
-            display: block;
-        }
-        .pillar-sub {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            color: rgba(255,255,255,0.66);
-            max-width: 48ch;
-        }
-        .pillar-cta {
-            flex-shrink: 0;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.56rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: #d4af37;
-            text-decoration: none;
-            transition: gap 0.25s ease;
-        }
-        .pillar-cta:hover { gap: 12px; }
-
-        /* 8 sub-service cards (4 × 2); each opens a small modal */
-        .pillar-subs {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-        .psub {
-            text-align: left;
-            cursor: pointer;
+            top: 0;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            min-height: 92px;
-            padding: 13px 14px;
-            border-radius: 12px;
-            border: 1px solid rgba(255,255,255,0.08);
-            background: rgba(255,255,255,0.022);
-            transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+            overflow: hidden;
+            background:
+                radial-gradient(ellipse 60% 80% at 22% 50%, rgba(10,24,60,0.55) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 80% at 78% 50%, rgba(45,20,8,0.5) 0%, transparent 70%),
+                #06060a;
         }
-        .psub:hover, .psub:focus-visible {
-            border-color: rgba(212,175,55,0.45);
-            background: rgba(212,175,55,0.06);
-            transform: translateY(-3px);
-            outline: none;
-        }
-        .psub-name {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.76rem;
-            font-weight: 600;
-            line-height: 1.25;
-            color: #fff;
-        }
-        .psub-line {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.64rem;
-            line-height: 1.45;
-            color: rgba(255,255,255,0.55);
-        }
-        .psub-more {
-            margin-top: auto;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.48rem;
-            letter-spacing: 0.16em;
-            text-transform: uppercase;
-            color: rgba(212,175,55,0);
-            transition: color 0.25s ease;
-        }
-        .psub:hover .psub-more, .psub:focus-visible .psub-more { color: rgba(212,175,55,0.85); }
 
-        @media (max-width: 1080px) { .pillar-subs { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 760px) {
-            .pillar { top: calc(132px + var(--i) * 48px); }
-            .pillar-body { padding: 22px 20px 26px; }
-            .pillar-head-cue { display: none; }
-            .pillar-subs { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-            .svc-tab { font-size: 0.5rem; letter-spacing: 0.04em; }
+        #svc-gear-canvas {
+            position: relative;
+            flex: 1;
+            min-height: 0;
+            overflow: hidden;
         }
-        @media (max-width: 460px) { .pillar-subs { grid-template-columns: 1fr; } }
 
-        /* ── Detail modal (centered card; Three.js fx behind, opens on hover/click) ── */
-        #svc-detail {
-            position: fixed;
+        #svc-gs {
+            position: absolute;
             inset: 0;
-            z-index: 200;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+
+        .g-ring {
+            position: absolute;
+            left: 0; top: 0;
+            width: 0; height: 0;
+            pointer-events: none;
+        }
+
+        .gtc {
+            position: absolute;
+            left: 0; top: 0;
+            pointer-events: auto;
+            will-change: transform;
+            z-index: 4;
+        }
+        .gtc-inner {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 5vh 5vw;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
+            gap: 6px;
+            padding: 6px 13px;
+            background: rgba(8,8,18,0.88);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 8px;
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
         }
-        #svc-detail.open { opacity: 1; visibility: visible; }
-        #svc-modal-backdrop {
-            position: absolute;
-            inset: 0;
-            background: rgba(4,4,7,0.74);
-            -webkit-backdrop-filter: blur(10px) saturate(120%);
-            backdrop-filter: blur(10px) saturate(120%);
+        .gtc.is-active .gtc-inner {
+            background: rgba(212,175,55,0.13);
+            border-color: rgba(212,175,55,0.65);
+            box-shadow: 0 0 32px rgba(212,175,55,0.22), 0 4px 22px rgba(0,0,0,0.55);
         }
-        #svc-modal-fx {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            opacity: 0.9;
+        .gtc.is-near .gtc-inner {
+            border-color: rgba(255,255,255,0.28);
+            background: rgba(255,255,255,0.07);
         }
-        .svc-detail-panel {
-            position: relative;
-            z-index: 1;
-            width: min(540px, 100%);
-            max-height: 86vh;
-            overflow-y: auto;
-            border-radius: 22px;
-            border: 1px solid rgba(212,175,55,0.26);
-            background: linear-gradient(165deg, rgba(23,23,31,0.965) 0%, rgba(12,12,18,0.975) 72%);
-            box-shadow: 0 50px 140px rgba(0,0,0,0.7), inset 0 0 0 1px rgba(255,255,255,0.04);
-            padding: 46px 44px 42px;
-            transform: translateY(30px) scale(0.965);
-            opacity: 0;
-            transition: transform 0.5s cubic-bezier(.22,.61,.36,1), opacity 0.45s ease;
-        }
-        #svc-detail.open .svc-detail-panel { transform: none; opacity: 1; }
-        #svc-detail-close {
-            position: absolute;
-            top: 22px; right: 26px;
-            width: 44px; height: 44px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.28);
-            background: rgba(255,255,255,0.04);
-            color: #fff;
-            font-size: 1.3rem;
-            line-height: 1;
-            cursor: pointer;
-            display: flex; align-items: center; justify-content: center;
-            transition: border-color 0.25s ease, color 0.25s ease, transform 0.3s ease;
-            z-index: 2;
-        }
-        #svc-detail-close:hover { border-color: #d4af37; color: #d4af37; transform: rotate(90deg); }
-        .svc-detail-kicker {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.58rem;
-            letter-spacing: 0.26em;
-            text-transform: uppercase;
-            color: rgba(212,175,55,0.85);
-            margin-bottom: 16px;
-            display: block;
-        }
-        .svc-detail-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: 2.1rem;
-            line-height: 1.04;
-            color: #fff;
-            margin-bottom: 18px;
-        }
-        .svc-detail-text { margin-bottom: 28px; }
-        .svc-detail-text p {
+        .gtc-icon { font-size: 0.92rem; line-height: 1; flex-shrink: 0; }
+        .gtc-name {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 0.86rem;
-            line-height: 1.72;
-            color: rgba(255,255,255,0.72);
-            margin-bottom: 13px;
+            font-size: clamp(0.5rem, 0.78vw, 0.72rem);
+            font-weight: 700;
+            color: rgba(255,255,255,0.52);
+            letter-spacing: 0.01em;
+            transition: color 0.3s ease;
         }
-        .svc-detail-text p:last-child { margin-bottom: 0; }
-        .svc-detail-cta {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 13px 26px;
-            border-radius: 100px;
-            background: #d4af37;
-            color: #09090b;
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            text-decoration: none;
-            transition: gap 0.25s ease, background 0.25s ease;
-        }
-        .svc-detail-cta:hover { gap: 13px; background: #e8c84a; }
+        .gtc.is-active .gtc-name { color: #fff; }
+        .gtc.is-near  .gtc-name  { color: rgba(255,255,255,0.88); }
 
-        @media (max-width: 720px) {
-            #svc-detail { padding: 0; }
-            .svc-detail-panel { width: 100%; max-height: 100vh; border-radius: 0; padding: 64px 24px 44px; }
-            .svc-detail-title { font-size: 2.2rem; }
+        .g-hub-overlay {
+            position: absolute;
+            left: 0; top: 0;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            pointer-events: none;
+            z-index: 5;
+            width: clamp(100px, 12vw, 162px);
         }
-        @media (prefers-reduced-motion: reduce) {
-            #svc-detail, #svc-detail .svc-detail-panel, .pillar-card, #svc-tab-ind, .svc-sub { transition: none; }
+        .gho-eye {
+            display: block;
+            font-family: 'Space Grotesk', monospace;
+            font-size: clamp(0.32rem, 0.44vw, 0.48rem);
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: rgba(212,175,55,0.65);
+            margin-bottom: 8px;
+        }
+        .gho-name {
+            display: block;
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(0.72rem, 1.05vw, 1.12rem);
+            color: #fff;
+            line-height: 1.3;
+            margin-bottom: 5px;
+            transition: opacity 0.22s ease;
+        }
+        .gho-name.fading { opacity: 0; }
+        .gho-ctr {
+            display: block;
+            font-family: 'Space Grotesk', monospace;
+            font-size: clamp(0.3rem, 0.38vw, 0.42rem);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: rgba(212,175,55,0.55);
+        }
+
+        #svc-gp {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid rgba(255,255,255,0.07);
+            background: rgba(4,4,9,0.98);
+            flex-shrink: 0;
+            height: 19vh;
+            min-height: 115px;
+            max-height: 165px;
+        }
+        .svc-gpi {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 14px 28px;
+            overflow: hidden;
+            position: relative;
+            transition: background 0.4s ease;
+        }
+        .svc-gpi::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(212,175,55,0.05) 0%, transparent 60%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .svc-gpi:hover::before { opacity: 1; }
+        #svc-gpi-l { border-right: 1px solid rgba(255,255,255,0.06); }
+        .gpi-icon {
+            font-size: 2.2rem;
+            flex-shrink: 0;
+            width: 50px;
+            text-align: center;
+            transition: transform 0.45s cubic-bezier(.22,1,.36,1);
+        }
+        .svc-gpi:hover .gpi-icon { transform: scale(1.18) rotate(-4deg); }
+        .gpi-body { min-width: 0; flex: 1; }
+        .gpi-lbl {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.4rem;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: rgba(212,175,55,0.55);
+            margin-bottom: 5px;
+        }
+        .gpi-title {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 700;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+            transition: opacity 0.2s ease;
+        }
+        .gpi-title.updating { opacity: 0; }
+        .gpi-desc {
+            font-size: 0.6rem;
+            color: rgba(255,255,255,0.5);
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .gpi-cta {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.42rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #d4af37;
+            display: inline-block;
+            margin-top: 6px;
+            text-decoration: none;
+            transition: letter-spacing 0.2s ease;
+        }
+        .gpi-cta:hover { letter-spacing: 0.25em; }
+
+        #svc-gear-bar {
+            position: absolute;
+            bottom: calc(19vh + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            width: 110px; height: 1.5px;
+            background: rgba(255,255,255,0.07);
+            overflow: hidden; z-index: 20;
+            border-radius: 1px;
+        }
+        #svc-gear-fill {
+            height: 100%; width: 0%;
+            background: linear-gradient(90deg, rgba(212,175,55,0.5), #d4af37);
+            border-radius: 1px;
+        }
+        @media (max-width: 768px) {
+            #svc-gp { grid-template-columns: 1fr; height: auto; max-height: 35vh; }
+            #svc-gpi-l { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+            .svc-gpi { padding: 10px 16px; }
+            #svc-gear-bar { bottom: calc(35vh + 10px); }
+            .g-hub-overlay { width: clamp(72px, 18vw, 112px); }
         }
 
         /* ── TRUSTED BY TICKER ─────────────────────────────────────── */
@@ -2170,37 +2068,58 @@
             </div>
         </div>
 
-        <!-- 04b · Service Pillars — stacking cards + tab pointer + detail drawer -->
-        <div id="svc-pillars">
-            <div class="svc-pillars-inner">
-                <div class="svc-pillars-head">
-                    <span class="font-mono text-[0.6rem] text-neutral-200 uppercase tracking-widest block mb-5">What We Do</span>
-                    <h2 class="font-serif text-4xl md:text-5xl tracking-tight text-white leading-tight">Four pillars, one studio.</h2>
+        <!-- 04b+c · Services — Dual Gear Mechanism -->
+        <div id="svc-gear-section">
+            <div id="svc-gear-pin">
+                <!-- Gear canvas: SVG rings + HTML card rings -->
+                <div id="svc-gear-canvas">
+                    <!-- SVG backdrop: dot grid, ring outlines, hub circles, mesh pulse -->
+                    <svg id="svc-gs" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+
+                    <!-- Left card ring (Localization Services) — positioned by JS -->
+                    <div class="g-ring" id="ring-l">
+                        <div class="g-hub-overlay" id="hub-l">
+                            <span class="gho-eye">Localization</span>
+                            <span class="gho-name" id="hub-l-name">Translation</span>
+                            <span class="gho-ctr" id="hub-l-ctr">01 / 09</span>
+                        </div>
+                    </div>
+
+                    <!-- Right card ring (DTP & Publishing) — positioned by JS -->
+                    <div class="g-ring" id="ring-r">
+                        <div class="g-hub-overlay" id="hub-r">
+                            <span class="gho-eye">DTP &amp; Publishing</span>
+                            <span class="gho-name" id="hub-r-name">Multilingual DTP</span>
+                            <span class="gho-ctr" id="hub-r-ctr">01 / 09</span>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Tab pointer (advances as cards stack) -->
-                <div id="svc-tabs" role="tablist" aria-label="Service pillars">
-                    <span id="svc-tab-ind" aria-hidden="true"></span>
-                    <button class="svc-tab active" type="button" data-i="0" role="tab">Localization</button>
-                    <button class="svc-tab" type="button" data-i="1" role="tab">DTP</button>
-                    <button class="svc-tab" type="button" data-i="2" role="tab">PDF Remediation</button>
-                    <button class="svc-tab" type="button" data-i="3" role="tab">ESG</button>
+                <!-- Bottom info panels -->
+                <div id="svc-gp">
+                    <div class="svc-gpi" id="svc-gpi-l">
+                        <span class="gpi-icon" id="gpi-li">🌐</span>
+                        <div class="gpi-body">
+                            <div class="gpi-lbl">Localization Services &middot; <span id="gpi-lc">01 / 09</span></div>
+                            <div class="gpi-title" id="gpi-lt">Translation &amp; Localization</div>
+                            <div class="gpi-desc" id="gpi-ld">Market-ready communication across 120+ languages maintaining brand consistency and business intent.</div>
+                            <a class="gpi-cta" id="gpi-la" href="/localization/">Learn More &rarr;</a>
+                        </div>
+                    </div>
+                    <div class="svc-gpi" id="svc-gpi-r">
+                        <span class="gpi-icon" id="gpi-ri">📐</span>
+                        <div class="gpi-body">
+                            <div class="gpi-lbl">DTP &amp; Publishing &middot; <span id="gpi-rc">01 / 09</span></div>
+                            <div class="gpi-title" id="gpi-rt">Multilingual DTP</div>
+                            <div class="gpi-desc" id="gpi-rd">Expert multilingual formatting, layout adaptation, and production-ready desktop publishing.</div>
+                            <a class="gpi-cta" id="gpi-ra" href="/dtp-services/">Learn More &rarr;</a>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Stacking pillar cards (built + wired by JS) -->
-                <div id="svc-stack"></div>
+                <div id="svc-gear-bar"><div id="svc-gear-fill"></div></div>
             </div>
         </div>
-
-        <!-- Detail modal (shared; opens on hover/click of a pillar) -->
-        <aside id="svc-detail" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Service details">
-            <div id="svc-modal-backdrop"></div>
-            <canvas id="svc-modal-fx" aria-hidden="true"></canvas>
-            <div class="svc-detail-panel">
-                <button id="svc-detail-close" type="button" aria-label="Close details">&times;</button>
-                <div id="svc-detail-body"></div>
-            </div>
-        </aside>
 
     </section>
 
@@ -3920,269 +3839,390 @@
             tl.to('#svc-word-pin', { opacity: 0, duration: 0.06, ease: 'power2.in' }, 0.94);
         })();
 
-        // ── Services: Stacking Pillars + Tab Pointer + Detail Drawer ──
-        (function initSvcPillars() {
-            var stack = document.getElementById('svc-stack');
-            var detail = document.getElementById('svc-detail');
-            if (!stack || !detail) return;
-
-            var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-            var PILLARS = [
-                {
-                    name: 'Localization', kicker: 'Language & Culture',
-                    sub: 'Translation & cultural adaptation across 120+ languages — market-ready in every market you serve.',
-                    cta: { label: 'Explore Localization', url: '/localization/' },
-                    items: [
-                        { h: 'Translation & Localization', line: 'Market-ready content across 120+ languages.', long: ['We adapt content far beyond word-for-word translation — every message is shaped for the target market while preserving brand voice, intent, and business meaning.', 'Native-speaker linguists and subject-matter experts work across 120+ language pairs, backed by terminology management and multi-stage quality review.'] },
-                        { h: 'Website Localization', line: 'Locale-specific sites & multilingual SEO.', long: ['Turn a single website into local digital experiences — translated copy, culturally adapted UX, and locale-aware formatting for dates, currencies, and layouts.', 'We handle CMS integration and multilingual SEO so each market ranks and converts in its own language.'] },
-                        { h: 'Software & App Localization', line: 'UI strings, testing & build-ready files.', long: ['From UI strings to in-context validation, we localize mobile and desktop products so they feel native in every market.', 'Pseudo-localization testing and build-ready file delivery keep your release cycles fast and bug-free across locales.'] },
-                        { h: 'eLearning Localization', line: 'Courses, LMS & multimedia.', long: ['Training content, assessments, and multimedia are adapted for language and culture so learners everywhere get an equivalent experience.', 'We integrate with major LMS platforms and localize voice-over, captions, and on-screen text as one coordinated package.'] },
-                        { h: 'Multimedia Localization', line: 'Subtitling, dubbing & voice-over.', long: ['Subtitling, captioning, dubbing, and voice-over bring your video and audio to global audiences without losing tone or timing.', 'Studio-quality recording and frame-accurate sync make every frame speak local.'] },
-                        { h: 'Linguistic QA & Transcreation', line: 'Tone, meaning & brand fidelity.', long: ['Beyond accuracy, we validate that translated content reads naturally and preserves tone, nuance, and brand identity.', 'Transcreation reworks creative and marketing copy so it lands with the same emotional impact in every market.'] },
-                        { h: 'AI-Enabled Localization', line: 'AI speed, human confidence.', long: ['AI-powered workflows accelerate large-volume projects, with neural machine translation tuned to your domain and glossaries.', 'Human linguists review and refine every output, giving you AI speed with enterprise-grade quality.'] },
-                        { h: 'Legal & Compliance Localization', line: 'Certified, jurisdiction-ready.', long: ['Contracts, filings, and compliance documents are translated by specialists who understand legal terminology and jurisdictional nuance.', 'Certified, defensible output supports regulatory submissions and cross-border agreements.'] }
-                    ]
-                },
-                {
-                    name: 'DTP', kicker: 'Design & Publishing',
-                    sub: 'Print-ready multilingual layout, typesetting & artwork, engineered for digital and print.',
-                    cta: { label: 'Explore DTP', url: '/dtp-services/' },
-                    items: [
-                        { h: 'Multilingual DTP', line: 'Layout intact across every script.', long: ['Expert formatting keeps your design intact across every language, script, and reading direction — including complex RTL and Indic layouts.', 'Production-ready desktop publishing in InDesign, FrameMaker, and more, for both print and digital output.'] },
-                        { h: 'Typesetting Services', line: 'Typography for print & digital.', long: ['Professional typesetting balances readability and aesthetics across complex multilingual layouts.', 'We optimize spacing, hyphenation, and font selection for each language and output format.'] },
-                        { h: 'Publishing Production', line: 'Content to final delivery.', long: ['End-to-end publishing support takes content from preparation through to final print and digital delivery.', 'Scalable workflows handle high-volume catalogs, manuals, and periodicals on deadline.'] },
-                        { h: 'Artwork Localization', line: 'Adapt visuals per market.', long: ['Marketing visuals, packaging graphics, and creative assets are adapted per market while preserving brand identity.', 'Layered source files are re-engineered so text and imagery stay pixel-perfect in every language.'] },
-                        { h: 'Packaging & Label Localization', line: 'Shelf-ready packaging & labels.', long: ['Multilingual packaging and labels are formatted accurately for regulatory and market requirements.', 'We manage variable content, regional compliance text, and print-ready output for every SKU.'] },
-                        { h: 'File Engineering & Conversion', line: 'Complex files, simplified.', long: ['We convert, repair, and optimize complex source files so localization and publishing run smoothly.', 'Legacy formats, scanned documents, and tagged files are prepared for clean downstream processing.'] },
-                        { h: 'QA & Compliance', line: 'Checked before delivery.', long: ['Every asset is verified against quality, formatting, brand, and technical standards before it ships.', 'Structured checklists and second-eye review catch issues early, protecting your deadlines and reputation.'] },
-                        { h: 'EPUB & Digital Publishing', line: 'Standards-compliant eBooks.', long: ['Standards-compliant EPUB 2/3 production supports reflowable and fixed-layout books with rich multilingual metadata.', 'Accessibility markup and multi-storefront delivery make your titles ready for every reader and platform.'] }
-                    ]
-                },
-                {
-                    name: 'PDF Remediation', kicker: 'Accessibility',
-                    sub: 'Accessible, WCAG & PDF/UA-compliant tagged documents — reviewed by human specialists.',
-                    cta: { label: 'Explore PDF Remediation', url: '/pdf-remediation/' },
-                    items: [
-                        { h: 'Document Accessibility Review', line: 'Manual page-by-page audit.', long: ['Our specialists analyze every page by hand, identifying barriers that prevent users with disabilities from accessing your content.', 'Automated checkers alone miss context — human review ensures nothing slips through.'] },
-                        { h: 'Tags & Document Structure', line: 'Reading order & structure.', long: ['We add proper heading tags, logical reading order, and table structure so screen readers navigate documents correctly.', 'A well-tagged structure is the foundation of true PDF accessibility.'] },
-                        { h: 'Alt-Text for Images', line: 'Descriptions for every visual.', long: ['Descriptive alternative text gives screen-reader users the same information conveyed by images, charts, and diagrams.', 'We write concise, meaningful descriptions tailored to each visual’s purpose.'] },
-                        { h: 'Section 508 Remediation', line: 'Federal compliance.', long: ['Full Section 508 compliance for government agencies, contractors, and federally funded organizations.', 'We document conformance so your obligations are met and defensible.'] },
-                        { h: 'WCAG 2.1 / 2.2 Compliance', line: 'Level AA & PDF/UA.', long: ['Documents are brought to WCAG 2.1 / 2.2 Level AA and validated against PDF/UA technical requirements.', 'Perceivable, operable, understandable, and robust — across all content.'] },
-                        { h: 'ADA Compliance', line: 'Inclusive public documents.', long: ['Publications meet ADA requirements for insurance, finance, education, retail, and any organization serving the public.', 'Accessible documents reduce legal risk and demonstrate inclusive design.'] }
-                    ]
-                },
-                {
-                    name: 'ESG', kicker: 'Sustainability',
-                    sub: 'ESG & sustainability report design, data visualization, and accessible disclosure.',
-                    cta: { label: 'Explore ESG', url: '/esg/' },
-                    items: [
-                        { h: 'ESG Report Design', line: 'Investor-ready layouts.', long: ['Sustainability and annual reports are designed to communicate clearly with investors and stakeholders.', 'Editorial layout, infographics, and brand-aligned visuals turn dense data into a compelling narrative.'] },
-                        { h: 'Data Visualization', line: 'Charts, infographics & dashboards.', long: ['Complex ESG metrics become clear, accurate charts, infographics, and dashboards.', 'We design visuals that are both beautiful and faithful to the underlying data.'] },
-                        { h: 'GRI / SASB Alignment', line: 'Framework-aligned formatting.', long: ['Reports are structured and formatted to align with GRI, SASB, and other recognized disclosure frameworks.', 'Consistent indexing and cross-referencing make disclosures easy to audit.'] },
-                        { h: 'TCFD & Climate Disclosure', line: 'Climate & risk reporting.', long: ['Climate-related disclosures are organized around governance, strategy, risk, and metrics per TCFD guidance.', 'Clear structure helps readers understand exposure and response.'] },
-                        { h: 'Multilingual ESG', line: 'Localized for stakeholders.', long: ['Sustainability reporting is localized for global stakeholders without losing technical precision.', 'Consistent terminology keeps every language version aligned and credible.'] },
-                        { h: 'Interactive & Accessible PDF', line: 'Tagged, navigable reports.', long: ['Digital reports are tagged, navigable, and WCAG-compliant so every stakeholder can access them.', 'Interactive contents, bookmarks, and links improve the reading experience.'] },
-                        { h: 'Integrated Reporting', line: 'Financial + non-financial.', long: ['Integrated reports weave financial and non-financial performance into one coherent narrative.', 'Unified design connects strategy, value creation, and outcomes.'] },
-                        { h: 'Assurance-Ready Formatting', line: 'Audit-friendly output.', long: ['Consistent, well-structured formatting makes reports straightforward for assurance providers to review.', 'Version control and source traceability support a smooth audit.'] }
-                    ]
-                }
+        // ── Services: Gear Mechanism ─────────────────────────
+        (function initGearSection() {
+            var LOC = [
+                { title: 'Translation & Localization',       url: '/localization/',   desc: 'Market-ready communication across 120+ languages, maintaining brand consistency and business intent across every market.',    icon: '🌐' },
+                { title: 'Website Localization',             url: '/localization/',   desc: 'Transform websites into local digital experiences through multilingual content adaptation, SEO localization, and UX journeys.',icon: '🖥️' },
+                { title: 'Software & App Localization',      url: '/localization/',   desc: 'Intuitive multilingual product experiences with UI localization, linguistic validation, and scalable release workflows.',     icon: '📱' },
+                { title: 'eLearning Localization',           url: '/e-learning/',     desc: 'Localize training experiences through multilingual content adaptation, media localization, and learning-ready delivery.',      icon: '🎓' },
+                { title: 'Multimedia Localization',          url: '/localization/',   desc: 'Scale global engagement through multilingual audio, video, subtitling, dubbing, and comprehensive multimedia adaptation.',    icon: '🎬' },
+                { title: 'Linguistic QA & Transcreation',   url: '/qa/',             desc: 'Go beyond translation with linguistic validation and creative adaptation that preserve tone, meaning, and brand identity.',    icon: '✍️' },
+                { title: 'AI-Enabled Localization',          url: '/localization/',   desc: 'Accelerate multilingual delivery through AI-powered workflows enhanced by human expertise and enterprise-grade quality control.',icon: '⚡' },
+                { title: 'Legal & Compliance Localization',  url: '/localization/',   desc: 'Certified translation of contracts, compliance frameworks, and legal documentation for international regulatory requirements.', icon: '⚖️' },
+                { title: 'Gaming & Entertainment',           url: '/localization/',   desc: 'Immersive multilingual experiences covering UI, dialogue, lore, cultural adaptation, and platform-specific release workflows.', icon: '🎮' }
             ];
+            var DTP = [
+                { title: 'Multilingual DTP',               url: '/dtp-services/', desc: 'Expert multilingual formatting, layout adaptation, and production-ready desktop publishing across every language.',              icon: '📐' },
+                { title: 'Typesetting Services',            url: '/dtp-services/', desc: 'Visually refined multilingual publications with professional typography, formatting, and layout optimization for digital and print.',icon: '🔤' },
+                { title: 'Publishing Production',           url: '/dtp-services/', desc: 'Scalable production support from content preparation to final print and digital delivery for global publishing workflows.',        icon: '📖' },
+                { title: 'Artwork Localization',            url: '/dtp-services/', desc: 'Adapt marketing visuals, graphics, and creative assets for different markets while preserving brand identity and impact.',         icon: '🎨' },
+                { title: 'Packaging & Label Localization',  url: '/dtp-services/', desc: 'Multilingual packaging and labels with accurate formatting, content adaptation, and market-ready production support.',             icon: '📦' },
+                { title: 'File Engineering & Conversion',   url: '/dtp-services/', desc: 'Convert, prepare, and optimize complex files for smooth localization, publishing, and multilingual production workflows.',         icon: '⚙️' },
+                { title: 'QA & Compliance',                 url: '/dtp-services/', desc: 'Every multilingual asset meets quality, formatting, brand, and technical standards before reaching your audience.',               icon: '✅' },
+                { title: 'RTL Document Formatting',         url: '/dtp-services/', desc: 'Expert right-to-left adaptation for Arabic, Hebrew, Urdu, and Farsi across all DTP formats and publishing workflows.',           icon: '↩️' },
+                { title: 'EPUB & Digital Publishing',       url: '/dtp-services/', desc: 'Standards-compliant EPUB 2/3 production with reflowable text, fixed layout, accessibility markup, and multi-storefront delivery.',icon: '📲' }
+            ];
+            var N    = 9;
+            var STEP = 360 / N; // 40° per tooth
 
-            // Build the stacking cards — each shows all sub-services inline
-            function escAttr(s) { return String(s).replace(/"/g, '&quot;'); }
-            stack.innerHTML = PILLARS.map(function(p, i) {
-                var no = (i < 9 ? '0' : '') + (i + 1);
-                var subs = p.items.map(function(it, si) {
-                    return '<button class="psub" type="button" data-p="' + i + '" data-s="' + si + '" aria-label="' + escAttr(it.h) + ' — details">'
-                        + '<span class="psub-name">' + it.h + '</span>'
-                        + '<span class="psub-line">' + it.line + '</span>'
-                        + '<span class="psub-more">Details &#8594;</span>'
-                        + '</button>';
-                }).join('');
-                return '<article class="pillar" style="--i:' + i + '" data-i="' + i + '">'
-                    + '<div class="pillar-card">'
-                    +   '<div class="pillar-head">'
-                    +     '<span class="pillar-no">' + no + '</span>'
-                    +     '<span class="pillar-head-title">' + p.name + '</span>'
-                    +     '<span class="pillar-head-cue">' + p.items.length + ' Services · hover a card</span>'
-                    +   '</div>'
-                    +   '<div class="pillar-body">'
-                    +     '<div class="pillar-intro">'
-                    +       '<div><span class="pillar-kicker">' + p.kicker + '</span>'
-                    +         '<p class="pillar-sub">' + p.sub + '</p></div>'
-                    +       '<a class="pillar-cta" href="' + p.cta.url + '">' + p.cta.label + ' &#8594;</a>'
-                    +     '</div>'
-                    +     '<div class="pillar-subs">' + subs + '</div>'
-                    +   '</div>'
-                    + '</div>'
-                    + '</article>';
-            }).join('');
+            var svgNS  = 'http://www.w3.org/2000/svg';
+            var svgEl  = document.getElementById('svc-gs');
+            var ringL  = document.getElementById('ring-l');
+            var ringR  = document.getElementById('ring-r');
+            if (!svgEl || !ringL || !ringR) return;
 
-            var pillars  = Array.prototype.slice.call(stack.querySelectorAll('.pillar'));
-            var tabs     = Array.prototype.slice.call(document.querySelectorAll('.svc-tab'));
-            var ind      = document.getElementById('svc-tab-ind');
-            var body     = document.getElementById('svc-detail-body');
-            var closeBtn = document.getElementById('svc-detail-close');
-            var backdrop = document.getElementById('svc-modal-backdrop');
-            var panel    = detail.querySelector('.svc-detail-panel');
-            var hoverTimer = null, openKey = '';
+            var DEG = Math.PI / 180;
+            var cos = Math.cos, sin = Math.sin;
 
-            function setActive(i) {
-                tabs.forEach(function(t, ti) { t.classList.toggle('active', ti === i); });
-                pillars.forEach(function(p, pi) { p.classList.toggle('is-active', pi === i); });
-                if (ind) ind.style.transform = 'translateX(' + (i * 100) + '%)';
+            // Gear geometry (SVG viewBox coords, gears centered at (0,0) then translated)
+            var VW = 1200, VH = 700;
+            var LCX = 275, LCY = 350, RCX = 925, RCY = 350;
+            // Center distance = 650. Pitch circles tangent → R_PITCH = 325
+            // Addendum 33 above pitch → R_OUT = 358. Dedendum 60 below pitch → R_IN = 265.
+            // Tooth tips overlap by 66px at mesh center → clearly interlocked.
+            var R_PITCH = 325, R_OUT = 358, R_IN = 265, R_HUB = 85;
+            var TW_TIP  = 8;   // tooth half-angle at tip (°) — trapezoidal
+            var TW_ROOT = 12;  // tooth half-angle at root (°)
+            var R_TOOTH_MID = (R_OUT + R_IN) / 2; // card orbit ≈ 311
+            var MESH_OFFSET = STEP / 2;            // 20° right gear initial offset
+
+            function svgMk(tag, attr) {
+                var el = document.createElementNS(svgNS, tag);
+                for (var k in attr) el.setAttribute(k, attr[k]);
+                return el;
             }
 
-            // ── Three.js particle field behind the modal ──
-            var fx = (function() {
-                var canvas = document.getElementById('svc-modal-fx');
-                if (!canvas || !window.THREE) return { start: function() {}, stop: function() {} };
-                var renderer, scene, camera, points, raf, running = false;
-                function init() {
-                    renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-                    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
-                    scene = new THREE.Scene();
-                    camera = new THREE.PerspectiveCamera(60, 1, 0.1, 100);
-                    camera.position.z = 32;
-                    var N = 520, pos = new Float32Array(N * 3);
-                    for (var k = 0; k < N; k++) {
-                        var r = 19 * Math.cbrt(Math.random());
-                        var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
-                        pos[k * 3]     = r * Math.sin(ph) * Math.cos(th);
-                        pos[k * 3 + 1] = r * Math.sin(ph) * Math.sin(th);
-                        pos[k * 3 + 2] = r * Math.cos(ph);
+            // ── Trapezoidal gear path centered at (0,0) ──────────
+            function buildGearPath() {
+                var stepR = STEP * DEG;
+                var d = '';
+                for (var i = 0; i < N; i++) {
+                    var a0      = (i * STEP - 90) * DEG;
+                    var aLroot  = a0 - TW_ROOT * DEG;
+                    var aRroot  = a0 + TW_ROOT * DEG;
+                    var aLtip   = a0 - TW_TIP  * DEG;
+                    var aRtip   = a0 + TW_TIP  * DEG;
+                    var prRoot  = a0 - stepR + TW_ROOT * DEG;
+
+                    if (i === 0) {
+                        d += 'M' + (R_IN * cos(prRoot)).toFixed(2) + ',' + (R_IN * sin(prRoot)).toFixed(2);
                     }
-                    var geo = new THREE.BufferGeometry();
-                    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
-                    points = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xd4af37, size: 0.17, transparent: true, opacity: 0.65, depthWrite: false }));
-                    scene.add(points);
-                    resize();
+                    // Valley arc (root circle)
+                    d += ' A' + R_IN + ',' + R_IN + ' 0 0 1 ' + (R_IN * cos(aLroot)).toFixed(2) + ',' + (R_IN * sin(aLroot)).toFixed(2);
+                    // Left flank (angled — trapezoidal tooth)
+                    d += ' L' + (R_OUT * cos(aLtip)).toFixed(2) + ',' + (R_OUT * sin(aLtip)).toFixed(2);
+                    // Tooth face arc (addendum circle)
+                    d += ' A' + R_OUT + ',' + R_OUT + ' 0 0 1 ' + (R_OUT * cos(aRtip)).toFixed(2) + ',' + (R_OUT * sin(aRtip)).toFixed(2);
+                    // Right flank (angled)
+                    d += ' L' + (R_IN * cos(aRroot)).toFixed(2) + ',' + (R_IN * sin(aRroot)).toFixed(2);
                 }
-                function resize() {
-                    if (!renderer) return;
-                    var w = canvas.clientWidth || window.innerWidth, h = canvas.clientHeight || window.innerHeight;
-                    renderer.setSize(w, h, false);
-                    camera.aspect = w / h; camera.updateProjectionMatrix();
-                }
-                function loop() {
-                    raf = requestAnimationFrame(loop);
-                    points.rotation.y += 0.0017;
-                    points.rotation.x += 0.0009;
-                    renderer.render(scene, camera);
-                }
-                window.addEventListener('resize', resize);
-                return {
-                    start: function() {
-                        if (reduceMotion) return;
-                        if (!renderer) init();
-                        if (running) return;
-                        running = true; resize(); loop();
-                    },
-                    stop: function() { running = false; if (raf) cancelAnimationFrame(raf); }
-                };
-            })();
-
-            // ── Small modal: details for a single sub-service ──
-            function openSub(pi, si) {
-                var key = pi + ':' + si;
-                if (detail.classList.contains('open') && key === openKey) return;
-                openKey = key;
-                var p = PILLARS[pi], it = p.items[si];
-                var paras = it.long.map(function(t) { return '<p>' + t + '</p>'; }).join('');
-                body.innerHTML =
-                      '<span class="svc-detail-kicker">' + p.name + '</span>'
-                    + '<h3 class="svc-detail-title">' + it.h + '</h3>'
-                    + '<div class="svc-detail-text">' + paras + '</div>'
-                    + '<a class="svc-detail-cta" href="' + p.cta.url + '">' + p.cta.label + ' &#8594;</a>';
-                if (panel) panel.scrollTop = 0;
-                detail.classList.add('open');
-                detail.setAttribute('aria-hidden', 'false');
-                setActive(pi);
-                fx.start();
-                if (!reduceMotion && window.gsap) {
-                    gsap.fromTo(body.children,
-                        { y: 16, opacity: 0 },
-                        { y: 0, opacity: 1, duration: 0.5, stagger: 0.07, ease: 'power2.out', delay: 0.08, overwrite: true });
-                }
-            }
-            function closeModal() {
-                detail.classList.remove('open');
-                detail.setAttribute('aria-hidden', 'true');
-                openKey = '';
-                fx.stop();
+                d += ' Z';
+                // Hub hole (CCW for evenodd punch-through)
+                d += ' M' + R_HUB + ',0 A' + R_HUB + ',' + R_HUB + ' 0 1 0 ' + (-R_HUB) + ',0 A' + R_HUB + ',' + R_HUB + ' 0 1 0 ' + R_HUB + ',0 Z';
+                return d;
             }
 
-            // Sub-card hover (intent delay) + click (event-delegated)
-            stack.addEventListener('click', function(e) {
-                var btn = e.target.closest('.psub');
-                if (!btn) return;
-                clearTimeout(hoverTimer);
-                openSub(+btn.getAttribute('data-p'), +btn.getAttribute('data-s'));
-            });
-            stack.addEventListener('mouseover', function(e) {
-                var btn = e.target.closest('.psub');
-                if (!btn) return;
-                clearTimeout(hoverTimer);
-                var pi = +btn.getAttribute('data-p'), si = +btn.getAttribute('data-s');
-                hoverTimer = setTimeout(function() { openSub(pi, si); }, 160);
-            });
-            stack.addEventListener('mouseout', function(e) {
-                if (e.target.closest('.psub')) clearTimeout(hoverTimer);
+            // ── SVG defs (gradients + glow filter) ───────────────
+            var defs = svgMk('defs', {});
+
+            function makeRadGrad(id, c1, c2) {
+                var g = svgMk('radialGradient', { id: id, cx: '50%', cy: '50%', r: '50%' });
+                var s1 = svgMk('stop', {}); s1.setAttribute('offset', '0%'); s1.setAttribute('stop-color', c1);
+                var s2 = svgMk('stop', {}); s2.setAttribute('offset', '100%'); s2.setAttribute('stop-color', c2);
+                g.appendChild(s1); g.appendChild(s2); return g;
+            }
+            // Left gear: cool navy → near-black (blue tint)
+            defs.appendChild(makeRadGrad('gg-l', 'rgba(12,22,55,0.96)', 'rgba(5,5,12,0.99)'));
+            // Right gear: warm umber → near-black (gold tint)
+            defs.appendChild(makeRadGrad('gg-r', 'rgba(40,20,6,0.96)', 'rgba(5,5,12,0.99)'));
+
+            // Glow filter for hub center
+            var flt = svgMk('filter', { id: 'g-hub-glow', x: '-40%', y: '-40%', width: '180%', height: '180%' });
+            var fBlur = svgMk('feGaussianBlur', { in: 'SourceGraphic', stdDeviation: '4', result: 'blur' });
+            var fMrg  = svgMk('feMerge', {});
+            var fN1   = svgMk('feMergeNode', { in: 'blur' });
+            var fN2   = svgMk('feMergeNode', { in: 'SourceGraphic' });
+            fMrg.appendChild(fN1); fMrg.appendChild(fN2);
+            flt.appendChild(fBlur); flt.appendChild(fMrg);
+            defs.appendChild(flt);
+            svgEl.appendChild(defs);
+
+            // ── Build gear SVG group (body + spokes + markers) ───
+            // All geometry relative to (0,0) — parent wrapper provides translate+rotate
+            function buildGearGroup(gradId) {
+                var g = document.createElementNS(svgNS, 'g');
+
+                // Gear body with gradient fill
+                g.appendChild(svgMk('path', {
+                    d: buildGearPath(),
+                    fill: 'url(#' + gradId + ')',
+                    stroke: 'rgba(212,175,55,0.45)',
+                    'stroke-width': '1.8',
+                    'fill-rule': 'evenodd'
+                }));
+                // Pitch circle reference (dashed)
+                g.appendChild(svgMk('circle', {
+                    cx: '0', cy: '0', r: String(R_PITCH),
+                    fill: 'none', stroke: 'rgba(212,175,55,0.08)',
+                    'stroke-width': '1', 'stroke-dasharray': '3 10'
+                }));
+                // Root ring
+                g.appendChild(svgMk('circle', {
+                    cx: '0', cy: '0', r: String(R_IN),
+                    fill: 'none', stroke: 'rgba(255,255,255,0.05)', 'stroke-width': '1'
+                }));
+                // 3 wide spokes (industrial look)
+                for (var s = 0; s < 3; s++) {
+                    var sa = (s * 120 - 90) * DEG;
+                    var x1 = ((R_HUB + 6) * cos(sa)).toFixed(1), y1 = ((R_HUB + 6) * sin(sa)).toFixed(1);
+                    var x2 = ((R_IN - 14)  * cos(sa)).toFixed(1), y2 = ((R_IN - 14)  * sin(sa)).toFixed(1);
+                    g.appendChild(svgMk('line', { x1: x1, y1: y1, x2: x2, y2: y2, stroke: 'rgba(212,175,55,0.14)', 'stroke-width': '9', 'stroke-linecap': 'round' }));
+                    g.appendChild(svgMk('line', { x1: x1, y1: y1, x2: x2, y2: y2, stroke: 'rgba(255,255,255,0.05)', 'stroke-width': '3', 'stroke-linecap': 'round' }));
+                }
+                // Hub rings
+                g.appendChild(svgMk('circle', { cx: '0', cy: '0', r: String(R_HUB),      fill: '#06060a', stroke: 'rgba(212,175,55,0.55)', 'stroke-width': '2.2' }));
+                g.appendChild(svgMk('circle', { cx: '0', cy: '0', r: String(R_HUB - 10), fill: 'none',    stroke: 'rgba(212,175,55,0.18)', 'stroke-width': '1.5' }));
+                g.appendChild(svgMk('circle', { cx: '0', cy: '0', r: '9', fill: '#d4af37', opacity: '0.82', filter: 'url(#g-hub-glow)' }));
+                g.appendChild(svgMk('circle', { cx: '0', cy: '0', r: '3.5', fill: '#fff', opacity: '0.6' }));
+
+                // Glowing tooth-corner markers
+                for (var j = 0; j < N; j++) {
+                    var ta = (j * STEP - 90) * DEG;
+                    [TW_TIP * DEG * -1, TW_TIP * DEG].forEach(function(dta) {
+                        var a  = ta + dta;
+                        var mx = (R_OUT * cos(a)).toFixed(1), my = (R_OUT * sin(a)).toFixed(1);
+                        g.appendChild(svgMk('circle', { cx: mx, cy: my, r: '6.5', fill: 'rgba(212,175,55,0.07)', stroke: 'rgba(212,175,55,0.3)', 'stroke-width': '0.9' }));
+                        g.appendChild(svgMk('circle', { cx: mx, cy: my, r: '2.6', fill: '#d4af37', opacity: '0.95' }));
+                    });
+                    // Valley floor accent dot
+                    var va = (j * STEP - 90 + STEP / 2) * DEG;
+                    g.appendChild(svgMk('circle', {
+                        cx: (R_IN * cos(va)).toFixed(1), cy: (R_IN * sin(va)).toFixed(1),
+                        r: '1.5', fill: 'rgba(255,255,255,0.15)'
+                    }));
+                }
+                return g;
+            }
+
+            // ── Dot-grid background ───────────────────────────────
+            var bgG = svgMk('g', {});
+            for (var gx0 = 40; gx0 < VW; gx0 += 80) {
+                for (var gy0 = 40; gy0 < VH; gy0 += 80) {
+                    bgG.appendChild(svgMk('circle', { cx: gx0, cy: gy0, r: '0.75', fill: 'rgba(255,255,255,0.028)' }));
+                }
+            }
+            svgEl.appendChild(bgG);
+
+            // Radial glow behind each gear (static, adds depth)
+            [[LCX, LCY, '180,210,255'], [RCX, RCY, '255,200,100']].forEach(function(g) {
+                var rg = svgMk('radialGradient', { id: 'bg-glow-' + g[0], cx: String(g[0]), cy: String(g[1]), r: '340', gradientUnits: 'userSpaceOnUse' });
+                var s1 = svgMk('stop', {}); s1.setAttribute('offset', '0%'); s1.setAttribute('stop-color', 'rgba(' + g[2] + ',0.06)');
+                var s2 = svgMk('stop', {}); s2.setAttribute('offset', '100%'); s2.setAttribute('stop-color', 'rgba(' + g[2] + ',0)');
+                rg.appendChild(s1); rg.appendChild(s2);
+                defs.appendChild(rg);
+                svgEl.appendChild(svgMk('circle', {
+                    cx: String(g[0]), cy: String(g[1]), r: '340',
+                    fill: 'url(#bg-glow-' + g[0] + ')'
+                }));
             });
 
-            // Tab click → scroll the matching pillar into view
-            tabs.forEach(function(t) {
-                var i = +t.getAttribute('data-i');
-                t.addEventListener('click', function() {
-                    var target = pillars[i];
-                    if (target) {
-                        var y = window.pageYOffset + target.getBoundingClientRect().top - 150;
-                        window.scrollTo({ top: y, behavior: 'smooth' });
-                    }
-                    setActive(i);
+            // Mesh dashed divide
+            svgEl.appendChild(svgMk('line', {
+                x1: '600', y1: '30', x2: '600', y2: '670',
+                stroke: 'rgba(212,175,55,0.1)', 'stroke-width': '1', 'stroke-dasharray': '5 12'
+            }));
+            // Section label
+            var eyeLbl = svgMk('text', { x: '600', y: '22', 'text-anchor': 'middle',
+                'font-family': 'Space Grotesk, monospace', 'font-size': '9',
+                'letter-spacing': '4', fill: 'rgba(255,255,255,0.13)' });
+            eyeLbl.textContent = '[ 04 / SERVICES ]';
+            svgEl.appendChild(eyeLbl);
+
+            // Translate wrappers + rotating inner groups.
+            // Rotation uses SVG's own rotate(r) attribute on the inner group.
+            // rotate(r) in SVG rotates around (0,0) of the CURRENT coordinate system.
+            // Since the parent has translate(cx,cy), (0,0) here = gear center in doc space. ✓
+            var wrapL = svgMk('g', { transform: 'translate(' + LCX + ',' + LCY + ')' });
+            var gRotL = document.createElementNS(svgNS, 'g');
+            gRotL.appendChild(buildGearGroup('gg-l'));
+            wrapL.appendChild(gRotL);
+
+            var wrapR = svgMk('g', { transform: 'translate(' + RCX + ',' + RCY + ')' });
+            var gRotR = document.createElementNS(svgNS, 'g');
+            gRotR.appendChild(buildGearGroup('gg-r'));
+            wrapR.appendChild(gRotR);
+
+            svgEl.appendChild(wrapL);
+            svgEl.appendChild(wrapR);
+
+            // Helper: set SVG rotate attribute on inner groups
+            function setGearRot(rotL, rotR) {
+                gRotL.setAttribute('transform', 'rotate(' + rotL + ')');
+                gRotR.setAttribute('transform', 'rotate(' + rotR + ')');
+            }
+            // Prime right gear with mesh offset
+            setGearRot(0, MESH_OFFSET);
+
+            // Active-zone gold arcs at 12 o'clock (static)
+            var arR = R_TOOTH_MID, asR = 22 * DEG;
+            [LCX, RCX].forEach(function(cx) {
+                svgEl.appendChild(svgMk('path', {
+                    d: 'M' + (cx + arR * cos(-Math.PI/2 - asR/2)).toFixed(1) + ','+  (LCY + arR * sin(-Math.PI/2 - asR/2)).toFixed(1)
+                     + ' A' + arR + ',' + arR + ' 0 0 1 '
+                     + (cx + arR * cos(-Math.PI/2 + asR/2)).toFixed(1) + ',' + (LCY + arR * sin(-Math.PI/2 + asR/2)).toFixed(1),
+                    fill: 'none', stroke: '#d4af37', 'stroke-width': '2.8',
+                    'stroke-linecap': 'round', opacity: '0.7'
+                }));
+            });
+
+            // Mesh-point pulse
+            var mpG = svgMk('g', {});
+            var mpp = svgMk('circle', { cx: '600', cy: '350', r: '5', fill: 'rgba(212,175,55,0.1)' });
+            var mpA1 = svgMk('animate', { attributeName: 'r',       values: '5;28;5',     dur: '2.8s', repeatCount: 'indefinite' });
+            var mpA2 = svgMk('animate', { attributeName: 'opacity', values: '0.55;0;0.55', dur: '2.8s', repeatCount: 'indefinite' });
+            mpp.appendChild(mpA1); mpp.appendChild(mpA2);
+            mpG.appendChild(mpp);
+            mpG.appendChild(svgMk('circle', { cx: '600', cy: '350', r: '3.5', fill: '#d4af37', opacity: '0.8' }));
+            svgEl.appendChild(mpG);
+
+            // ── HTML card rings ───────────────────────────────────
+            var cardsL = [], cardsR = [];
+            function buildCards(container, data, reversed) {
+                var cards = [];
+                for (var i = 0; i < N; i++) {
+                    var d = reversed ? data[(N - i) % N] : data[i];
+                    var el = document.createElement('div');
+                    el.className = 'gtc';
+                    el.innerHTML = '<div class="gtc-inner"><span class="gtc-icon">' + d.icon + '</span><span class="gtc-name">' + d.title + '</span></div>';
+                    container.appendChild(el);
+                    cards.push(el);
+                }
+                return cards;
+            }
+            cardsL = buildCards(ringL, LOC, true);
+            cardsR = buildCards(ringR, DTP, false);
+            cardsL.concat(cardsR).forEach(function(c) { gsap.set(c, { xPercent: -50, yPercent: -50 }); });
+
+            // ── Responsive layout ─────────────────────────────────
+            var svgScale = 1, svgOffX = 0, svgOffY = 0;
+            function computeLayout() {
+                var canvas = document.getElementById('svc-gear-canvas');
+                if (!canvas) return;
+                var cW = canvas.offsetWidth, cH = canvas.offsetHeight;
+                svgScale = Math.min(cW / VW, cH / VH);
+                svgOffX  = (cW - VW * svgScale) / 2;
+                svgOffY  = (cH - VH * svgScale) / 2;
+                ringL.style.left = (svgOffX + LCX * svgScale) + 'px';
+                ringL.style.top  = (svgOffY + LCY * svgScale) + 'px';
+                ringR.style.left = (svgOffX + RCX * svgScale) + 'px';
+                ringR.style.top  = (svgOffY + RCY * svgScale) + 'px';
+            }
+            computeLayout();
+            window.addEventListener('resize', computeLayout, { passive: true });
+
+            // ── GSAP animations ───────────────────────────────────
+            if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+            var hubLname = document.getElementById('hub-l-name');
+            var hubLctr  = document.getElementById('hub-l-ctr');
+            var hubRname = document.getElementById('hub-r-name');
+            var hubRctr  = document.getElementById('hub-r-ctr');
+            var gpiLi = document.getElementById('gpi-li'), gpiLt = document.getElementById('gpi-lt');
+            var gpiLd = document.getElementById('gpi-ld'), gpiLa = document.getElementById('gpi-la');
+            var gpiLc = document.getElementById('gpi-lc');
+            var gpiRi = document.getElementById('gpi-ri'), gpiRt = document.getElementById('gpi-rt');
+            var gpiRd = document.getElementById('gpi-rd'), gpiRa = document.getElementById('gpi-ra');
+            var gpiRc = document.getElementById('gpi-rc');
+            var gearFill = document.getElementById('svc-gear-fill');
+
+            function pad2(n) { return (n <= 8 ? '0' : '') + (n + 1); }
+
+            var prevIdx = -1;
+            function updatePanels(idx) {
+                if (idx === prevIdx) return;
+                prevIdx = idx;
+                var lD = LOC[idx], rD = DTP[idx];
+                if (hubLname) hubLname.textContent = lD.title;
+                if (hubLctr)  hubLctr.textContent  = pad2(idx) + ' / 09';
+                if (hubRname) hubRname.textContent  = rD.title;
+                if (hubRctr)  hubRctr.textContent   = pad2(idx) + ' / 09';
+                [gpiLt, gpiRt].forEach(function(el) { if (el) el.classList.add('updating'); });
+                setTimeout(function() {
+                    if (gpiLi) gpiLi.textContent = lD.icon;
+                    if (gpiLt) { gpiLt.textContent = lD.title;  gpiLt.classList.remove('updating'); }
+                    if (gpiLd) gpiLd.textContent   = lD.desc;
+                    if (gpiLa) gpiLa.href           = lD.url;
+                    if (gpiLc) gpiLc.textContent    = pad2(idx) + ' / 09';
+                    if (gpiRi) gpiRi.textContent    = rD.icon;
+                    if (gpiRt) { gpiRt.textContent  = rD.title;  gpiRt.classList.remove('updating'); }
+                    if (gpiRd) gpiRd.textContent    = rD.desc;
+                    if (gpiRa) gpiRa.href            = rD.url;
+                    if (gpiRc) gpiRc.textContent     = pad2(idx) + ' / 09';
+                }, 185);
+            }
+
+            // Cards do NOT rotate — they stay horizontal (readable) as they orbit the gear center.
+            function tickCards(cards, rotDeg, initOffset) {
+                var R_CSS = R_TOOTH_MID * svgScale;
+                cards.forEach(function(card, i) {
+                    var theta    = rotDeg + initOffset + i * STEP;
+                    var tRad     = theta * DEG;
+                    var norm     = ((theta % 360) + 360) % 360;
+                    var dist     = norm > 180 ? 360 - norm : norm;
+                    var isActive = dist < 20;
+                    var isNear   = dist < 60;
+                    gsap.set(card, {
+                        x: R_CSS * Math.sin(tRad),
+                        y: -R_CSS * Math.cos(tRad),
+                        opacity: Math.max(0.12, 1 - dist / 180),
+                        scale: isActive ? 1.15 : isNear ? 1.0 : 0.85
+                    });
+                    card.classList.toggle('is-active', isActive);
+                    card.classList.toggle('is-near',   !isActive && isNear);
                 });
+            }
+
+            // Idle autonomous rotation — gears always spin slowly when not scroll-scrubbing
+            var idleRot = 0;
+            var scrollActive = false;
+            gsap.ticker.add(function() {
+                if (!scrollActive) {
+                    idleRot += 0.07; // ~4 deg/s at 60fps (1 revolution ≈ 90s)
+                    setGearRot(idleRot, -idleRot + MESH_OFFSET);
+                    tickCards(cardsL, idleRot, 0);
+                    tickCards(cardsR, -idleRot, MESH_OFFSET);
+                }
             });
 
-            // Close interactions
-            if (closeBtn) closeBtn.addEventListener('click', closeModal);
-            if (backdrop) backdrop.addEventListener('click', closeModal);
-            document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+            ScrollTrigger.create({
+                trigger: '#svc-gear-section',
+                start: 'top top',
+                end:   '+=' + (Math.round(window.innerHeight * 5)) + 'px',
+                pin:   '#svc-gear-pin',
+                scrub: 1.2,
+                onEnter: function()     { scrollActive = true; },
+                onLeave: function()     { scrollActive = false; },
+                onLeaveBack: function() { scrollActive = false; },
+                onUpdate: function(self) {
+                    var prog = self.progress;
+                    var rotL = prog * 360;
+                    var rotR = -prog * 360;
+                    idleRot = rotL; // sync idle tracker for smooth resume
+                    setGearRot(rotL, rotR + MESH_OFFSET);
+                    tickCards(cardsL, rotL, 0);
+                    tickCards(cardsR, rotR, MESH_OFFSET);
+                    updatePanels(Math.round(prog * (N - 1)));
+                    if (gearFill) gearFill.style.width = (prog * 100) + '%';
+                }
+            });
 
-            // GSAP entrance — cards rise as they scroll in (doesn't affect sticky)
-            if (!reduceMotion && window.gsap && window.ScrollTrigger) {
-                gsap.utils.toArray('.pillar-card').forEach(function(card) {
-                    gsap.fromTo(card,
-                        { autoAlpha: 0, y: 46 },
-                        { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out',
-                          scrollTrigger: { trigger: card, start: 'top 92%' } });
-                });
-            }
-
-            // Scroll-spy → tab pointer follows the stacking cards one by one
-            var refY = 400;
-            function computeRef() {
-                var tabsEl = document.getElementById('svc-tabs');
-                var th = tabsEl ? tabsEl.getBoundingClientRect().height : 52;
-                refY = 82 + th + (pillars.length * 56) + 26;
-            }
-            var ticking = false;
-            function onScroll() {
-                if (ticking) return;
-                ticking = true;
-                requestAnimationFrame(function() {
-                    var act = 0;
-                    for (var i = 0; i < pillars.length; i++) {
-                        if (pillars[i].getBoundingClientRect().top <= refY) act = i;
-                    }
-                    setActive(act);
-                    ticking = false;
-                });
-            }
-            computeRef();
-            window.addEventListener('scroll', onScroll, { passive: true });
-            window.addEventListener('resize', function() { computeRef(); onScroll(); });
-            onScroll();
+            requestAnimationFrame(function() {
+                computeLayout();
+                tickCards(cardsL, 0, 0);
+                tickCards(cardsR, 0, MESH_OFFSET);
+                updatePanels(0);
+            });
         })();
 
         // (legacy services block removed — replaced by initSvcWordZoom + initSvcCards)
