@@ -75,6 +75,9 @@
     
     <style>
         html { scroll-behavior: smooth; }
+        .site-logo { height: 44px; width: auto; display: block; max-width: 160px; flex-shrink: 0; }
+        @media (min-width: 640px) { .site-logo { height: 52px; max-width: 200px; } }
+        @media (min-width: 1024px) { .site-logo { height: 58px; max-width: 240px; } }
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto !important; }
         .lenis.lenis-stopped { overflow: hidden; }
@@ -1453,8 +1456,13 @@
             height: calc(100vh - 88px); padding: 24px 0 0 0; margin-top: 32px;
         }
         @media (max-width: 767px) {
-            #industry-solutions { height: auto; min-height: calc(100vh - 88px); padding: 3rem 1rem; overflow: hidden; }
-            #eco-diagram { width: min(90vw, 420px) !important; max-width: 100%; }
+            #industry-solutions {
+                height: auto; min-height: calc(100svh - 88px);
+                padding: 2.5rem 0 2rem;
+                flex-direction: column; justify-content: flex-start; align-items: center;
+                overflow: hidden;
+            }
+            #eco-diagram { flex-shrink: 0; max-width: 100%; overflow: visible; }
         }
         #eco-canvas {
             position: absolute; inset: 0; width: 100%; height: 100%;
@@ -1574,8 +1582,9 @@
         .ind-eco-eyebrow { display: block; font-family: 'Space Grotesk',monospace; font-size: 0.54rem; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(212,175,55,0.62); margin-bottom: 0.75rem; }
         .ind-eco-hd h2 { font-family: 'Instrument Serif',serif; font-size: clamp(1.6rem,2.4vw,2.6rem); color: #fff; font-weight: 400; line-height: 1.12; margin: 0; }
         @media (max-width: 767px) {
-            .ind-eco-hd { position: relative; left: auto; top: auto; transform: none; width: auto; text-align: center; margin-bottom: 1.2rem; }
-            .ind-eco-hd h2 { font-size: clamp(2rem,7vw,2.8rem); }
+            .ind-eco-hd { position: relative; left: auto; top: auto; transform: none; width: auto; text-align: center; margin-bottom: 1rem; padding: 0 1rem; }
+            .ind-eco-hd h2 { font-size: clamp(1.8rem,6.5vw,2.6rem); }
+            .ind-eco-eyebrow { font-size: 0.6rem; letter-spacing: 0.22em; }
         }
 
         /* ── INDIC LANGUAGE EXCELLENCE ───────────────────────────────── */
@@ -1841,7 +1850,7 @@
 
     <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md">
         <a href="/" aria-label="SuperDTP Home">
-            <img src="static/logo copy 5.svg" alt="SuperDTP logo" style="height:58px;width:auto;display:block;" fetchpriority="high" />
+            <img src="static/logo copy 5.svg" alt="SuperDTP logo" class="site-logo" fetchpriority="high" />
         </a>
         <button id="mobile-menu-btn" class="xl:hidden flex flex-col gap-1.5 cursor-pointer" aria-label="Toggle menu" aria-expanded="false">
             <span class="w-6 h-0.5 bg-neutral-200 transition-all"></span>
@@ -2731,7 +2740,7 @@
                 <!-- Brand (spans 2 cols on lg) -->
                 <div class="col-span-2 md:col-span-3 lg:col-span-2">
                     <a href="#hero" aria-label="SuperDTP Home" class="inline-block mb-5">
-                        <img src="static/logo copy 5.svg" alt="SuperDTP logo" style="height:48px;width:auto;display:block;opacity:0.9;" />
+                        <img src="static/logo copy 5.svg" alt="SuperDTP logo" class="site-logo" style="opacity:0.9;" />
                     </a>
                     <p class="text-neutral-500 text-xs leading-relaxed max-w-xs">
                         Specialist multilingual DTP &amp; localization studio. Precision layouts in 100+ languages, delivered on time.
@@ -4503,7 +4512,9 @@
         function ecoCalcD() {
             var vw = window.innerWidth, vh = window.innerHeight, mobile = vw < 768;
             if (mobile) {
-                return Math.min(vw - 32, (vh - 88) * 0.80);
+                var hdEl = document.querySelector('.ind-eco-hd');
+                var hdH  = hdEl ? hdEl.getBoundingClientRect().height + 40 : 120;
+                return Math.min(vw - 16, (vh - 88 - hdH) * 0.92);
             }
             // Section height = vh - 88px (fixed header). Diagram centred inside.
             // 0.90 leaves ~5% padding top+bottom so TAG labels never clip.
