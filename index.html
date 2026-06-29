@@ -1072,13 +1072,13 @@
             #wf-phase-tabs { overflow-x: auto; -webkit-overflow-scrolling: touch; flex-wrap: nowrap; }
             .wf-phase-tab { font-size: 0.55rem; padding: 12px 12px; letter-spacing: 0.1em; flex-shrink: 0; }
 
-            /* Replace complex diagram with clean mobile list */
-            #workflow-engine { position: relative !important; top: 0 !important; height: auto !important; min-height: 0 !important; }
-            #wf-actors-bar   { display: none !important; }
-            .wf-body         { display: none !important; }
-            .wf-bottom-bar   { display: none !important; }
-            #wf-scroll-spacer { height: 0 !important; }
-            #wf-mobile-phases { display: block; }
+            /* Hide only the step-list sidebar; keep diagram and actors bar */
+            .wf-nav          { display: none !important; }
+            .wf-body         { grid-template-columns: 1fr !important; }
+            #wf-mobile-phases { display: none !important; }
+            /* Shrink actor pills so they fit on narrow screens */
+            #wf-actors-bar   { height: 46px !important; }
+            .wf-actor-pill   { width: 58px !important; height: 38px !important; font-size: 7.5px !important; padding: 3px 2px !important; line-height: 1.25 !important; letter-spacing: 0 !important; border-radius: 5px !important; }
         }
         @media (max-width: 480px) {
             .wf-phase-tab { padding: 11px 10px; font-size: 0.5rem; }
@@ -3863,8 +3863,6 @@
             // sentinel each scroll event, so layout shifts from lazy-built
             // sections above (e.g. the ecosystem) can never desync the steps.
             function initScrollPin() {
-                if (window.innerWidth <= 768) return; // mobile uses static list
-
                 var SCROLL_PER_STEP = 220;
                 var STICKY_TOP      = 88;   // matches #workflow-engine { top: 88px }
                 var totalScroll     = steps.length * SCROLL_PER_STEP;
@@ -3932,7 +3930,26 @@
             buildMessages();
             buildStepList();
             updateProgress(-1);
-            initScrollPin();
+
+            if (window.innerWidth <= 768) {
+                // Mobile: reveal arrows as their marker scrolls into the diagram viewport
+                var diagWrap = document.getElementById('wf-diagram-wrap');
+                if (diagWrap && 'IntersectionObserver' in window) {
+                    var mobileObs = new IntersectionObserver(function(entries) {
+                        entries.forEach(function(entry) {
+                            if (!entry.isIntersecting) return;
+                            var idx = parseInt(entry.target.id.replace('wf-marker-', ''), 10);
+                            if (!isNaN(idx) && idx > currentIdx) revealUpTo(idx);
+                        });
+                    }, { root: diagWrap, rootMargin: '0px 0px -10% 0px', threshold: 0 });
+                    for (var mi = 0; mi < steps.length; mi++) {
+                        var mk = document.getElementById('wf-marker-' + mi);
+                        if (mk) mobileObs.observe(mk);
+                    }
+                }
+            } else {
+                initScrollPin();
+            }
         })();
 
         function initAmbientCanvas() {
