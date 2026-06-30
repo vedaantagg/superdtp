@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 128 128"
+     width="128"
+     height="128">
+
+<style>
+.laptop{
+    animation:float 3.5s ease-in-out infinite;
+    transform-origin:center;
+}
+
+.cap{
+    animation:bounce 2.5s ease-in-out infinite;
+    transform-origin:64px 26px;
+}
+
+.globe{
+    animation:spin 12s linear infinite;
+    transform-origin:94px 88px;
+}
+
+.progress{
+    stroke:#10B981;
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    fill:none;
+    pathLength:100;
+    stroke-dasharray:100;
+    stroke-dashoffset:100;
+    animation:draw 2.8s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-3px);}
+}
+
+@keyframes bounce{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-2px);}
+}
+
+@keyframes spin{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+@keyframes draw{
+    0%{
+        stroke-dashoffset:100;
+    }
+    45%{
+        stroke-dashoffset:0;
+    }
+    75%{
+        stroke-dashoffset:0;
+    }
+    100%{
+        stroke-dashoffset:100;
+    }
+}
+</style>
+
+<!-- Laptop -->
+<g class="laptop">
+
+    <rect x="24"
+          y="34"
+          width="64"
+          height="42"
+          rx="6"
+          fill="#FFFFFF"
+          stroke="#2563EB"
+          stroke-width="3"/>
+
+    <!-- Screen -->
+    <rect x="30"
+          y="40"
+          width="52"
+          height="30"
+          rx="3"
+          fill="#EFF6FF"/>
+
+    <!-- Animated Check -->
+    <path class="progress"
+          d="M42 55 L51 63 L69 47"/>
+
+    <!-- Keyboard -->
+    <rect x="18"
+          y="76"
+          width="76"
+          height="8"
+          rx="4"
+          fill="#DBEAFE"/>
+
+</g>
+
+<!-- Graduation Cap -->
+<g class="cap">
+
+    <polygon points="64,16 84,25 64,34 44,25"
+             fill="#2563EB"/>
+
+    <path d="M50 29
+             V37
+             C50 43 78 43 78 37
+             V29"
+          fill="#DBEAFE"/>
+
+    <line x1="84"
+          y1="25"
+          x2="84"
+          y2="39"
+          stroke="#2563EB"
+          stroke-width="2"/>
+
+    <circle cx="84"
+            cy="41"
+            r="2"
+            fill="#2563EB"/>
+
+</g>
+
+</svg>

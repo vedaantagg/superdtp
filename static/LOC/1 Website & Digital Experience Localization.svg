@@ -10,10 +10,6 @@
     </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="800" height="500" fill="#F8FAFC"/>
-
- 
 
   <!-- Browser -->
   <g filter="url(#shadow)">
@@ -29,17 +25,17 @@
     </rect>
 
     <!-- Top bar -->
-    <rect x="251" y="120" width="303" height="32" rx="18" fill="#EEF4FF"/>
+    <rect x="251" y="120" width="303" height="32" rx="18" fill="#bfd1f1"/>
 
-    <circle cx="272" cy="136" r="5" fill="#93C5FD"/>
+    <circle cx="272" cy="136" r="5" fill="#9ac7fa"/>
     <circle cx="288" cy="136" r="5" fill="#60A5FA"/>
     <circle cx="304" cy="136" r="5" fill="#2563EB"/>
 
     <!-- Hero -->
-    <rect x="275" y="170" width="250" height="55" rx="10" fill="#DBEAFE"/>
+    <rect x="275" y="170" width="250" height="55" rx="10" fill="#b8d1f3"/>
 
   <!-- Animated Text Lines -->
-<g fill="#CBD5E1">
+<g fill="#aab2bb">
 
   <rect x="275" y="240" width="180" height="8" rx="4">
     <animate attributeName="width"

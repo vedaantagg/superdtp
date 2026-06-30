@@ -10,18 +10,16 @@
     </filter>
   </defs>
 
-  <rect width="800" height="500" fill="#F8FAFC"/>
-
   <!-- Browser -->
   <g filter="url(#shadow)">
     <g>
       <animateTransform attributeName="transform" type="translate"
         values="0 0;0 -4;0 0" dur="4s" repeatCount="indefinite"/>
       <rect x="235" y="120" width="330" height="210" rx="16" fill="#fff"/>
-      <rect x="235" y="120" width="330" height="34" rx="16" fill="#EEF4FF"/>
-      <rect x="260" y="175" width="180" height="50" rx="8" fill="#DBEAFE"/>
-      <rect x="260" y="240" width="200" height="8" rx="4" fill="#CBD5E1"/>
-      <rect x="260" y="258" width="170" height="8" rx="4" fill="#CBD5E1"/>
+      <rect x="235" y="120" width="330" height="34" rx="16" fill="#89a9e4"/>
+      <rect x="260" y="175" width="180" height="50" rx="8" fill="#88a2c4"/>
+      <rect x="260" y="240" width="200" height="8" rx="4" fill="#9ea5ad"/>
+      <rect x="260" y="258" width="170" height="8" rx="4" fill="#9ea5ad"/>
       <rect x="260" y="285" width="90" height="28" rx="14" fill="url(#g)">
         <animate attributeName="opacity" values="1;.7;1" dur="3s" repeatCount="indefinite"/>
       </rect>
@@ -33,10 +31,10 @@
     <g>
       <animateTransform attributeName="transform" type="translate"
         values="0 0;0 4;0 0" dur="4.2s" repeatCount="indefinite"/>
-      <rect x="495" y="165" width="82" height="150" rx="18" fill="#fff"/>
-      <rect x="512" y="185" width="48" height="30" rx="6" fill="#DBEAFE"/>
-      <rect x="512" y="228" width="45" height="6" rx="3" fill="#CBD5E1"/>
-      <rect x="512" y="242" width="52" height="6" rx="3" fill="#CBD5E1"/>
+      <rect x="495" y="165" width="82" height="150" rx="18" fill="#ffffff"/>
+      <rect x="512" y="185" width="48" height="30" rx="6" fill="#9dc4f8"/>
+      <rect x="512" y="228" width="45" height="6" rx="3" fill="#9ea5ad"/>
+      <rect x="512" y="242" width="52" height="6" rx="3" fill="#9ea5ad"/>
     </g>
   </g>
 

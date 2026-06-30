@@ -1,0 +1,158 @@
+<svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
+
+  <defs>
+    <linearGradient id="docGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#F4F8FF"/>
+    </linearGradient>
+  </defs>
+
+
+
+  <!-- ================= DOCUMENT ================= -->
+
+  <g>
+
+    <path
+      d="M66 42H132L156 66V165H66Z"
+      fill="url(#docGrad)"
+      stroke="#2563EB"
+      stroke-width="3"
+      stroke-linejoin="round"/>
+
+    <path
+      d="M132 42V66H156"
+      fill="#DBEAFE"
+      stroke="#2563EB"
+      stroke-width="3"/>
+
+    <line x1="82" y1="88" x2="138" y2="88"
+      stroke="#60A5FA"
+      stroke-width="3"
+      stroke-linecap="round"/>
+
+    <line x1="82" y1="108" x2="138" y2="108"
+      stroke="#60A5FA"
+      stroke-width="3"
+      stroke-linecap="round"/>
+
+    <line x1="82" y1="128" x2="125" y2="128"
+      stroke="#60A5FA"
+      stroke-width="3"
+      stroke-linecap="round"/>
+
+  </g>
+
+  <!-- ================= MAGNIFIER ================= -->
+
+  <g>
+
+    <!-- Scan movement -->
+
+    <animateTransform
+      attributeName="transform"
+      type="translate"
+      values="-10 -18;10 8;-6 20;-10 -18"
+      dur="4s"
+      repeatCount="indefinite"/>
+
+    <!-- Lens -->
+
+    <circle
+      cx="110"
+      cy="108"
+      r="20"
+      fill="white"
+      stroke="#2563EB"
+      stroke-width="3"/>
+
+    <!-- Handle -->
+
+    <line
+      x1="124"
+      y1="122"
+      x2="143"
+      y2="141"
+      stroke="#2563EB"
+      stroke-width="5"
+      stroke-linecap="round"/>
+
+    <!-- ================= LOADER ================= -->
+
+    <g>
+
+      <animate
+        attributeName="opacity"
+        values="1;1;0;0"
+        keyTimes="0;0.68;0.72;1"
+        dur="4s"
+        repeatCount="indefinite"/>
+
+      <circle
+        cx="110"
+        cy="108"
+        r="9"
+        fill="none"
+        stroke="#3B82F6"
+        stroke-width="3"
+        stroke-linecap="round"
+        stroke-dasharray="18 42">
+
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          from="0 110 108"
+          to="360 110 108"
+          dur=".8s"
+          repeatCount="indefinite"/>
+
+      </circle>
+
+    </g>
+
+    <!-- ================= CHECKMARK ================= -->
+
+    <path
+      d="M104 109 L109 114 L118 103"
+      fill="none"
+      stroke="#10B981"
+      stroke-width="3.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      stroke-dasharray="22"
+      stroke-dashoffset="22">
+
+      <!-- Draw check -->
+
+      <animate
+        attributeName="stroke-dashoffset"
+        values="22;22;0;0"
+        keyTimes="0;0.72;0.82;1"
+        dur="4s"
+        repeatCount="indefinite"/>
+
+      <!-- Hide before finished -->
+
+      <animate
+        attributeName="opacity"
+        values="0;0;1;1"
+        keyTimes="0;0.70;0.72;1"
+        dur="4s"
+        repeatCount="indefinite"/>
+
+    </path>
+
+    <!-- Lens success pulse -->
+
+    <animateTransform
+      attributeName="transform"
+      additive="sum"
+      type="scale"
+      values="1;1;1.08;1"
+      keyTimes="0;0.72;0.82;1"
+      dur="4s"
+      repeatCount="indefinite"/>
+
+  </g>
+
+</svg>

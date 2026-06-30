@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 128 128"
+     width="220"
+     height="220">
+
+<style>
+.monitor{
+    fill:#fff;
+    stroke:#2D7FF9;
+    stroke-width:3;
+}
+
+.screen{
+    fill:#F8FBFF;
+}
+
+.base{
+    fill:#2D7FF9;
+}
+
+.grid{
+    stroke:#D7E6FF;
+    stroke-width:1;
+}
+
+.text{
+    fill:#2D7FF9;
+}
+
+.image{
+    fill:#7CC8FF;
+}
+
+.palette1{fill:#FF6B6B;}
+.palette2{fill:#00C896;}
+.palette3{fill:#FFC857;}
+
+.globe{
+    fill:none;
+    stroke:#2D7FF9;
+    stroke-width:2;
+    opacity:.25;
+}
+
+.cursor{
+    fill:#2D7FF9;
+}
+
+.monitorFloat{
+    animation:float 3s ease-in-out infinite;
+    transform-origin:center;
+}
+
+.globeRotate{
+    animation:rotate 14s linear infinite;
+    transform-origin:64px 64px;
+}
+
+.spark{
+    fill:#2D7FF9;
+    animation:pulse 2s ease-in-out infinite;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-3px);}
+}
+
+@keyframes rotate{
+    from{transform:rotate(0deg);}
+    to{transform:rotate(360deg);}
+}
+
+@keyframes pulse{
+    0%,100%{opacity:.35;transform:scale(.8);}
+    50%{opacity:1;transform:scale(1.2);}
+}
+</style>
+
+<!-- Multilingual Globe -->
+<g class="globeRotate">
+    <circle class="globe" cx="64" cy="64" r="44"/>
+    <ellipse class="globe" cx="64" cy="64" rx="18" ry="44"/>
+    <ellipse class="globe" cx="64" cy="64" rx="34" ry="44"/>
+    <line class="globe" x1="20" y1="64" x2="108" y2="64"/>
+    <line class="globe" x1="28" y1="46" x2="100" y2="46"/>
+    <line class="globe" x1="28" y1="82" x2="100" y2="82"/>
+</g>
+
+<!-- Desktop Monitor -->
+<g class="monitorFloat">
+
+    <rect class="monitor" x="24" y="28" width="80" height="56" rx="6"/>
+    <rect class="screen" x="30" y="34" width="68" height="44" rx="2"/>
+
+    <!-- Layout Grid -->
+    <line class="grid" x1="52" y1="34" x2="52" y2="78"/>
+    <line class="grid" x1="30" y1="56" x2="98" y2="56"/>
+
+    <!-- Image Placeholder -->
+    <rect class="image" x="35" y="39" width="14" height="12" rx="2"/>
+    <circle fill="#fff" cx="40" cy="43" r="2"/>
+    <path fill="#fff"
+          d="M36 49l4-4 3 3 2-2 4 3z"/>
+
+    <!-- Text -->
+    <rect class="text" x="56" y="40" width="30" height="3" rx="1.5"/>
+    <rect class="text" x="56" y="47" width="24" height="3" rx="1.5"/>
+    <rect class="text" x="56" y="62" width="25" height="3" rx="1.5"/>
+    <rect class="text" x="56" y="69" width="20" height="3" rx="1.5"/>
+
+    <!-- Brand Colors -->
+    <circle class="palette1" cx="90" cy="63" r="2"/>
+    <circle class="palette2" cx="90" cy="68" r="2"/>
+    <circle class="palette3" cx="90" cy="73" r="2"/>
+    
+     <!-- Play Button -->
+    <circle cx="41" cy="67"
+            r="8"
+            fill="#FFE5E5"/>
+
+    <polygon points="37,63 37,71 43,67"
+    fill="#db4545"
+             class="play"/>
+
+
+
+    <!-- Stand -->
+    <rect class="base" x="58" y="84" width="12" height="8" rx="2"/>
+    <rect class="base" x="46" y="92" width="36" height="5" rx="2.5"/>
+
+</g>
+
+
+
+</svg>

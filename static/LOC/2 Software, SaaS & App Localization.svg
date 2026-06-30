@@ -36,11 +36,11 @@
   </style>
 
 
-  <rect width="1031" height="708" fill="#F4F6FC"/>
+>
 
   <!-- globe background -->
-  <circle cx="515" cy="290" r="270" fill="#DCE6FB" opacity="0.6"/>
-  <g stroke="#B9CCF2" stroke-width="1.5" fill="none" opacity="0.7">
+  <circle cx="515" cy="290" r="270" fill="#a4abbb" opacity="0.6"/>
+  <g stroke="#c6d3eb" stroke-width="1.5" fill="none" opacity="0.7">
     <ellipse cx="515" cy="290" rx="270" ry="270"/>
     <ellipse cx="515" cy="290" rx="270" ry="100"/>
     <ellipse cx="515" cy="290" rx="270" ry="180"/>
@@ -48,8 +48,6 @@
     <ellipse cx="515" cy="290" rx="200" ry="270"/>
     <line x1="245" y1="290" x2="785" y2="290"/>
   </g>
-  <path d="M 420 130 Q 460 160 440 200 Q 480 220 460 260 Q 510 250 520 300 Q 560 280 600 320 Q 580 360 620 380" 
-        fill="#C7D7F7" opacity="0.8"/>
   <path d="M 350 350 Q 390 370 370 410 Q 420 420 410 460" fill="#C7D7F7" opacity="0.8"/>
  
   <!-- Browser/dashboard window -->
