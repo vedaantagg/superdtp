@@ -1683,7 +1683,7 @@
       }
       /* ── Services 3D Word Zoom ─────────────────────────────── */
       #svc-word-zoom {
-        height: 110vh; /* 1 wgroup: 100vh pin + 40vh runway */
+        height: 220vh; /* 100vh pin + 120vh runway */
         position: relative;
       }
       @media (max-width: 768px) {
@@ -2700,7 +2700,7 @@
       /* Mobile language carousel */
       @media (max-width: 768px) {
         #indic-brick-wrap {
-          overflow: hidden !important;
+          overflow: visible;
           touch-action: pan-y;
           border-radius: 0;
           margin-left: -1.5rem;
@@ -2723,8 +2723,8 @@
           width: auto !important;
           height: auto !important;
           min-height: 80px;
-          transform: none !important;
         }
+        .indic-lang-card.indic-flee { z-index: 5; }
       }
       .indic-stat-row {
         display: grid;
@@ -5814,7 +5814,7 @@
       <div class="max-w-7xl mx-auto">
         <!-- ── Main footer grid ── -->
         <div
-          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 pb-12 border-b border-white/8"
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 pb-12 border-b border-white/8"
         >
           <!-- Brand (spans 2 cols on lg) -->
           <div class="col-span-2 md:col-span-3 lg:col-span-2">
@@ -5840,43 +5840,45 @@
           <div>
             <div class="footer-col-hdr">Localization</div>
             <a href="/localization/" class="footer-nav-lnk"
-              >Translation &amp; Localization</a
+              >Website &amp; Digital Experience Localization </a
             >
             <a href="/localization/" class="footer-nav-lnk"
-              >Website Localization</a
+              >Software, SaaS &amp; App Localization</a
             >
             <a href="/localization/" class="footer-nav-lnk"
-              >Software &amp; App</a
+              >Marketing &amp; Brand Localization</a
             >
-            <a href="/e-learning/" class="footer-nav-lnk">eLearning</a>
-            <a href="/localization/" class="footer-nav-lnk">Multimedia</a>
-            <a href="/qa/" class="footer-nav-lnk">Linguistic QA</a>
-            <a href="/localization/" class="footer-nav-lnk">AI-Enabled</a>
+            <a href="/e-learning/" class="footer-nav-lnk">Technical &amp; Business Document Localization</a>
+            <a href="/localization/" class="footer-nav-lnk">Multimedia &amp; eLearning Localization</a>
+            <a href="/qa/" class="footer-nav-lnk">eLearning Localization</a>
+            <a href="/localization/" class="footer-nav-lnk">Multimedia DTP &amp; Desktop Publishing</a>
+            <a href="/localization/" class="footer-nav-lnk">Localization QA &amp; Testing</a>
           </div>
 
           <!-- DTP & Publishing -->
           <div>
             <div class="footer-col-hdr">DTP &amp; Publishing</div>
             <a href="/dtp-services/#multilingual-dtp" class="footer-nav-lnk"
-              >Multilingual DTP</a
+              >Document Formatting &amp; Corporate Publishing</a
             >
             <a href="/dtp-services/#prepress" class="footer-nav-lnk"
-              >Typesetting</a
+              >PDF Remediation &amp; Accessible Documents </a
             >
             <a href="/dtp-services/#prepress" class="footer-nav-lnk"
-              >Publishing Production</a
+              >Layout Recreation &amp; File Conversion</a
             >
             <a href="/dtp-services/#multilingual-dtp" class="footer-nav-lnk"
-              >Artwork Localization</a
+              >Technical Documentation &amp; eLearning DTP</a
             >
             <a href="/dtp-services/#multilingual-dtp" class="footer-nav-lnk"
-              >Packaging &amp; Labels</a
+              >Image, Graphics &amp; Presentation Localization
+</a
             >
             <a href="/dtp-services/#file-preparation" class="footer-nav-lnk"
-              >File Engineering</a
+              >Translation File Engineering &amp; Production Support</a
             >
             <a href="/dtp-services/#quality-assurance" class="footer-nav-lnk"
-              >QA &amp; Compliance</a
+              >Print &amp; Digital Publishing Services</a
             >
           </div>
         </div>
@@ -7484,6 +7486,7 @@
             items: [
               {
                 h: "Website & Digital Experience Localization",
+                icon: "static/LOC/1%20Website%20%26%20Digital%20Experience%20Localization.svg",
                 line: "Deliver multilingual websites that feel native to every market with localized content, SEO, user experience, and cultural adaptation that drives global engagement.",
                 long: [
                   "We adapt websites for language, culture, search visibility, and user expectations while maintaining consistent branding and functionality across every market.",
@@ -7492,6 +7495,7 @@
               },
               {
                 h: "Software, SaaS & App Localization",
+                icon: "static/LOC/2%20Software%2C%20SaaS%20%26%20App%20Localization.svg",
                 line: "Localize software, mobile apps, SaaS platforms, and user interfaces to deliver intuitive multilingual experiences for users worldwide.",
                 long: [
                   "We localize user interfaces, in-app content, notifications, documentation, and workflows while preserving usability and technical accuracy.",
@@ -7500,6 +7504,7 @@
               },
               {
                 h: "Marketing & Brand Localization",
+                icon: "static/LOC/3%20Marketing%20%26%20Brand%20Localization.svg",
                 line: "Create culturally relevant marketing content that preserves your brand voice while connecting with customers across global markets.",
                 long: [
                   "Marketing campaigns are adapted for regional audiences while maintaining your brand personality, messaging, and business objectives.",
@@ -7508,6 +7513,7 @@
               },
               {
                 h: "Technical & Business Document Localization",
+                icon: "static/LOC/4%20Technical%20%26%20Business%20Document%20Localization.svg",
                 line: "Accurate localization for technical manuals, engineering documentation, reports, policies, SOPs, and business documents across industries.",
                 long: [
                   "We localize complex documentation with subject-matter expertise while preserving terminology, formatting, and regulatory accuracy.",
@@ -7516,6 +7522,7 @@
               },
               {
                 h: "Multimedia & eLearning Localization",
+                icon: "static/LOC/5%20Multimedia%20%26%20eLearning%20Localization.svg",
                 line: "Deliver engaging multilingual learning and multimedia experiences with localized videos, voice-overs, subtitles, and interactive courses.",
                 long: [
                   "We localize multimedia content by adapting subtitles, voice-overs, graphics, and interactive learning materials for diverse audiences.",
@@ -7524,6 +7531,7 @@
               },
               {
                 h: "eLearning Localization",
+                icon: "static/LOC/6%20eLearning%20Localization.svg",
                 line: "Create engaging multilingual learning experiences with professionally localized online courses, LMS content, and training materials.",
                 long: [
                   "We adapt online courses, assessments, simulations, and LMS content to provide consistent learning experiences across multiple languages.",
@@ -7532,6 +7540,7 @@
               },
               {
                 h: "Multimedia DTP & Desktop Publishing",
+                icon: "static/LOC/7%20Multimedia%20DTP%20%26%20Desktop%20Publishing.svg",
                 line: "Professional multilingual desktop publishing and formatting that preserves layout, readability, branding, and design across every language.",
                 long: [
                   "Our DTP specialists recreate layouts, typography, graphics, and multimedia assets while accommodating language expansion and complex scripts.",
@@ -7540,6 +7549,7 @@
               },
               {
                 h: "Localization QA & Testing",
+                icon: "static/LOC/8%20Localization%20QA%20%26%20Testing.svg",
                 line: "Comprehensive linguistic review, localization testing, visual validation, and quality assurance before global release.",
                 long: [
                   "We perform linguistic reviews, functional testing, and visual validation to identify translation, formatting, and usability issues before deployment.",
@@ -9794,6 +9804,7 @@
         var wrap = null;
         var logo = null;
         var cards = [];
+        var IS_TOUCH = window.matchMedia("(pointer: coarse)").matches;
 
         function layBricks() {
           grid = document.getElementById("indic-lang-grid");
@@ -9801,10 +9812,18 @@
           logo = document.getElementById("indic-logo-reveal");
           if (!grid || !wrap) return;
 
-          // Skip brick layout on mobile
-          if (window.innerWidth <= 768) return;
-
           cards = Array.from(grid.querySelectorAll(".indic-lang-card"));
+
+          if (window.innerWidth <= 768) {
+            var gRect = grid.getBoundingClientRect();
+            cards.forEach(function (card) {
+              var r = card.getBoundingClientRect();
+              card._hx = r.left - gRect.left + r.width / 2;
+              card._hy = r.top - gRect.top + r.height / 2;
+              card._fleeing = false;
+            });
+            return;
+          }
           var COLS_FULL = ROW_CONFIG[0].count;
           var W = wrap.offsetWidth - PAD * 2;
           var tileW = (W - GAP * (COLS_FULL - 1)) / COLS_FULL;
@@ -9851,11 +9870,13 @@
             var dy = card._hy - ly;
             var dist = Math.sqrt(dx * dx + dy * dy);
 
-            if (dist < REPEL_R && dist > 0.5) {
-              var t = (REPEL_R - dist) / REPEL_R; // 0→1 as cursor approaches
-              var f = t * t; // quadratic: sharp near cursor
-              var tx = (dx / dist) * f * MAX_PUSH;
-              var ty = (dy / dist) * f * MAX_PUSH;
+            var mPush = IS_TOUCH ? 60 : MAX_PUSH;
+            var mR    = IS_TOUCH ? 120 : REPEL_R;
+            if (dist < mR && dist > 0.5) {
+              var t  = (mR - dist) / mR;
+              var f  = t * t;
+              var tx = (dx / dist) * f * mPush;
+              var ty = (dy / dist) * f * mPush;
               if (!card._fleeing) {
                 card.classList.add("indic-flee");
                 card._fleeing = true;
@@ -9902,9 +9923,18 @@
         }
 
         function onTouchMove(e) {
-          var t = e.touches[0];
-          lastMX = t.clientX;
-          lastMY = t.clientY;
+          var touch = e.touches[0];
+          if (!touch) return;
+          lastMX = touch.clientX;
+          lastMY = touch.clientY;
+          if (grid && cards.length && window.innerWidth <= 768) {
+            var gRect = grid.getBoundingClientRect();
+            cards.forEach(function (c) {
+              var r = c.getBoundingClientRect();
+              c._hx = r.left - gRect.left + r.width  / 2;
+              c._hy = r.top  - gRect.top  + r.height / 2;
+            });
+          }
           repelTiles(lastMX, lastMY);
         }
         function onTouchEnd() {
@@ -9919,19 +9949,13 @@
 
         function init() {
           layBricks();
-          document.addEventListener("mousemove", onMouseMove, {
-            passive: true,
-          });
-          document.addEventListener("touchmove", onTouchMove, {
-            passive: true,
-          });
+          document.addEventListener("mousemove", onMouseMove, { passive: true });
+          document.addEventListener("mouseleave", onMouseLeave);
+          document.addEventListener("touchmove", onTouchMove, { passive: true });
           document.addEventListener("touchend", onTouchEnd, { passive: true });
-          document.addEventListener("touchcancel", onTouchEnd, {
-            passive: true,
-          });
+          document.addEventListener("touchcancel", onTouchEnd, { passive: true });
           window.addEventListener("scroll", onScroll, { passive: true });
           window.addEventListener("resize", onResize, { passive: true });
-          document.addEventListener("mouseleave", onMouseLeave);
         }
 
         if (document.readyState === "loading") {

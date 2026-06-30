@@ -403,6 +403,37 @@
         .infographic-placeholder.ph-wide { min-height: 200px; }
         .infographic-placeholder.ph-tall { min-height: 380px; }
         .infographic-placeholder.ph-medium { min-height: 280px; }
+
+        /* Service card icon — mirrors homepage .psub--has-icon / .psub-icon */
+        .loc-svc-card {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            gap: 14px;
+        }
+        .loc-svc-icon {
+            width: 36%;
+            max-width: 96px;
+            aspect-ratio: 1;
+            flex-shrink: 0;
+            object-fit: contain;
+            border-radius: 8px;
+            opacity: 0.88;
+            align-self: flex-start;
+            transition: opacity 0.25s ease;
+        }
+        .loc-svc-card:hover .loc-svc-icon { opacity: 1; }
+        .loc-svc-text {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1;
+            min-width: 0;
+        }
+        @media (max-width: 460px) {
+            .loc-svc-card { flex-direction: column; }
+            .loc-svc-icon { width: 56px; max-width: 56px; }
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-neutral-200">
@@ -914,45 +945,69 @@
                 <p class="text-neutral-400 font-light text-base max-w-2xl">A complete production ecosystem for Indic language localisation — from linguistic review to print-ready and digital-ready output.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-3">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">01</div>
-                    <h3 class="font-serif text-lg text-white">Indic Language Localisation</h3>
-                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Professional localisation across all major Indian languages — supported by linguistic review, terminology management, and quality assurance.</p>
+                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
+                    <img src="../static/LOC/1%20Website%20%26%20Digital%20Experience%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
+                    <div class="loc-svc-text">
+                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">01</div>
+                        <h3 class="font-serif text-lg text-white">Indic Language Localisation</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed">Professional localisation across all major Indian languages — supported by linguistic review, terminology management, and quality assurance.</p>
+                    </div>
                 </article>
-                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-3">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">02</div>
-                    <h3 class="font-serif text-lg text-white">Multilingual Desktop Publishing</h3>
-                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Production-ready multilingual DTP formatting for print, digital, and enterprise communication assets across Indic scripts.</p>
+                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
+                    <img src="../static/LOC/7%20Multimedia%20DTP%20%26%20Desktop%20Publishing.svg" alt="" aria-hidden="true" class="loc-svc-icon">
+                    <div class="loc-svc-text">
+                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">02</div>
+                        <h3 class="font-serif text-lg text-white">Multilingual Desktop Publishing</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed">Production-ready multilingual DTP formatting for print, digital, and enterprise communication assets across Indic scripts.</p>
+                    </div>
                 </article>
-                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-3">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">03</div>
-                    <h3 class="font-serif text-lg text-white">eLearning Localisation</h3>
-                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of eLearning modules, LMS content, training assessments, and interactive learning platforms.</p>
+                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
+                    <img src="../static/LOC/6%20eLearning%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
+                    <div class="loc-svc-text">
+                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">03</div>
+                        <h3 class="font-serif text-lg text-white">eLearning Localisation</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of eLearning modules, LMS content, training assessments, and interactive learning platforms.</p>
+                    </div>
                 </article>
-                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-3">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">04</div>
-                    <h3 class="font-serif text-lg text-white">Multimedia Localisation</h3>
-                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Subtitling, voice-over preparation, on-screen text localisation, and video adaptation for Indic language audiences.</p>
+                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
+                    <img src="../static/LOC/5%20Multimedia%20%26%20eLearning%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
+                    <div class="loc-svc-text">
+                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">04</div>
+                        <h3 class="font-serif text-lg text-white">Multimedia Localisation</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed">Subtitling, voice-over preparation, on-screen text localisation, and video adaptation for Indic language audiences.</p>
+                    </div>
                 </article>
-                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-3">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">05</div>
-                    <h3 class="font-serif text-lg text-white">Software &amp; Digital Localisation</h3>
-                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of applications, SaaS platforms, websites, and digital products for Indian language users.</p>
+                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
+                    <img src="../static/LOC/2%20Software%2C%20SaaS%20%26%20App%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
+                    <div class="loc-svc-text">
+                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">05</div>
+                        <h3 class="font-serif text-lg text-white">Software &amp; Digital Localisation</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of applications, SaaS platforms, websites, and digital products for Indian language users.</p>
+                    </div>
                 </article>
-                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-3">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">06</div>
-                    <h3 class="font-serif text-lg text-white">PDF Accessibility Services</h3>
-                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Remediation and accessibility compliance for multilingual PDF documents — WCAG and PDF/UA standards.</p>
+                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
+                    <img src="../static/LOC/8%20Localization%20QA%20%26%20Testing.svg" alt="" aria-hidden="true" class="loc-svc-icon">
+                    <div class="loc-svc-text">
+                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">06</div>
+                        <h3 class="font-serif text-lg text-white">PDF Accessibility Services</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed">Remediation and accessibility compliance for multilingual PDF documents — WCAG and PDF/UA standards.</p>
+                    </div>
                 </article>
-                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-3">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">07</div>
-                    <h3 class="font-serif text-lg text-white">Publishing &amp; Typesetting</h3>
-                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Books, journals, manuals, educational content, and corporate publications in Indian languages.</p>
+                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
+                    <img src="../static/LOC/4%20Technical%20%26%20Business%20Document%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
+                    <div class="loc-svc-text">
+                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">07</div>
+                        <h3 class="font-serif text-lg text-white">Publishing &amp; Typesetting</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed">Books, journals, manuals, educational content, and corporate publications in Indian languages.</p>
+                    </div>
                 </article>
-                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-3">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">08</div>
-                    <h3 class="font-serif text-lg text-white">Image &amp; Graphic Localisation</h3>
-                    <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of visual assets, infographics, diagrams, and marketing graphics for Indian markets.</p>
+                <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
+                    <img src="../static/LOC/3%20Marketing%20%26%20Brand%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
+                    <div class="loc-svc-text">
+                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">08</div>
+                        <h3 class="font-serif text-lg text-white">Image &amp; Graphic Localisation</h3>
+                        <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of visual assets, infographics, diagrams, and marketing graphics for Indian markets.</p>
+                    </div>
                 </article>
             </div>
         </div>
