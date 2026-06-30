@@ -121,22 +121,20 @@
         max-width: 100%;
       }
       .site-logo {
-        height: 44px;
+        height: 36px;
         width: auto;
         display: block;
-        max-width: 160px;
         flex-shrink: 0;
+        aspect-ratio: auto;
       }
       @media (min-width: 640px) {
         .site-logo {
-          height: 52px;
-          max-width: 200px;
+          height: 44px;
         }
       }
       @media (min-width: 1024px) {
         .site-logo {
-          height: 58px;
-          max-width: 240px;
+          height: 52px;
         }
       }
       html.lenis {
@@ -2036,11 +2034,12 @@
       }
       .psub-icon {
         width: 36%;
-        height: 85%;
+        aspect-ratio: 1;
         flex-shrink: 0;
         object-fit: contain;
         border-radius: 8px;
         opacity: 0.88;
+        align-self: flex-start;
         transition: opacity 0.25s ease;
       }
       .psub:hover .psub-icon,
