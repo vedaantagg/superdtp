@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg"
      viewBox="-2 -2 148 50"
-     overflow="visible"
+     overflow="hidden"
      preserveAspectRatio="xMinYMid meet">
 
   <defs>
@@ -86,12 +86,11 @@
     m
   </text>
 
-  <!-- Dot -->
-  <rect class="gold-dot"
-        x="126.3"
-        y="30.9"
-        width="1.4"
-        height="1.4" />
+  <!-- Dot — circle renders cleanly at all sizes unlike rect -->
+  <circle class="gold-dot"
+          cx="127.4"
+          cy="31.6"
+          r="1" />
 
   <!-- Brand Name -->
   <text class="brand"
