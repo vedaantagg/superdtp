@@ -15,8 +15,6 @@
     </marker>
   </defs>
 
-  <!-- Background -->
-  <rect width="1000" height="600" fill="#F8FAFC"/>
 
   <!-- Decorative circles -->
 
@@ -25,11 +23,11 @@
     <rect x="280" y="120" width="440" height="300" rx="20" fill="white"/>
 
     <!-- Header -->
-    <rect x="310" y="150" width="360" height="16" rx="8" fill="#DBEAFE"/>
+    <rect x="310" y="150" width="360" height="16" rx="8" fill="#91bdf7"/>
 
     <!-- Text -->
-    <rect x="310" y="190" width="180" height="12" rx="6" fill="#CBD5E1"/>
-    <rect x="310" y="215" width="220" height="12" rx="6" fill="#CBD5E1"/>
+    <rect x="310" y="190" width="180" height="12" rx="6" fill="#aab2bb"/>
+    <rect x="310" y="215" width="220" height="12" rx="6" fill="#aab2bb"/>
 
     <!-- Chart -->
     <g transform="translate(320 260)">
@@ -71,7 +69,7 @@
     </g>
 
     <!-- Image -->
-    <rect x="520" y="190" width="150" height="120" rx="14" fill="#E0F2FE"/>
+    <rect x="520" y="190" width="150" height="120" rx="14" fill="#b6d3e6"/>
 
     <circle cx="555" cy="225" r="15" fill="#06B6D4">
       <animate attributeName="fill"

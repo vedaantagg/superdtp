@@ -22,8 +22,7 @@
     </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="512" height="512" rx="40" fill="url(#bg)"/>
+
 
   <!-- Floating Group -->
   <g filter="url(#shadow)">

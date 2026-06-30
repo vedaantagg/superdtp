@@ -14,35 +14,34 @@
     </clipPath>
   </defs>
 
-  <!-- Background -->
-  <rect width="400" height="300" fill="#F8FAFC"/>
+
 
   <!-- Document -->
   <g filter="url(#shadow)">
     <rect x="130" y="55" width="140" height="185" rx="12" fill="#fff"/>
 
     <!-- Fold -->
-    <path d="M245 55 L270 80 L245 80 Z" fill="#E5E7EB"/>
+    <path d="M245 55 L270 80 L245 80 Z" fill="#1c4aa7"/>
 
     <!-- PDF Badge -->
-    <rect x="218" y="68" width="36" height="18" rx="9" fill="#EF4444"/>
+    <rect x="218" y="68" width="36" height="18" rx="9" fill="#ec3030"/>
     <text x="236" y="81" font-size="8" text-anchor="middle"
           font-family="Arial" fill="#fff" font-weight="700">PDF</text>
 
     <!-- Title -->
-    <rect x="150" y="100" width="80" height="8" rx="4" fill="#DBEAFE"/>
+    <rect x="150" y="100" width="80" height="8" rx="4" fill="#7fb1f3"/>
 
     <!-- Text -->
-    <rect x="150" y="118" width="90" height="5" rx="2.5" fill="#CBD5E1"/>
-    <rect x="150" y="132" width="75" height="5" rx="2.5" fill="#CBD5E1"/>
-    <rect x="150" y="146" width="85" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="150" y="118" width="90" height="5" rx="2.5" fill="#9499a0"/>
+    <rect x="150" y="132" width="75" height="5" rx="2.5" fill="#9499a0"/>
+    <rect x="150" y="146" width="85" height="5" rx="2.5" fill="#9499a0"/>
 
     <!-- Image -->
-    <rect x="150" y="165" width="45" height="35" rx="6" fill="#DBEAFE"/>
+    <rect x="150" y="165" width="45" height="35" rx="6" fill="#a3c7f5"/>
 
     <!-- Text beside image -->
-    <rect x="205" y="170" width="40" height="5" rx="2.5" fill="#CBD5E1"/>
-    <rect x="205" y="183" width="35" height="5" rx="2.5" fill="#CBD5E1"/>
+    <rect x="205" y="170" width="40" height="5" rx="2.5" fill="#9499a0"/>
+    <rect x="205" y="183" width="35" height="5" rx="2.5" fill="#9499a0"/>
 
     <!-- Scan Line -->
     <g clip-path="url(#docClip)">

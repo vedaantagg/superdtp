@@ -10,32 +10,30 @@
     </filter>
   </defs>
 
-  <!-- Background -->
-  <rect width="800" height="500" fill="#F8FAFC"/>
 
   <!-- Document -->
   <g filter="url(#shadow)">
     <rect x="260" y="100" width="280" height="300" rx="18" fill="#fff"/>
 
     <!-- Header -->
-    <rect x="285" y="125" width="170" height="14" rx="7" fill="#DBEAFE"/>
+    <rect x="285" y="125" width="170" height="14" rx="7" fill="#81b7ff"/>
 
     <!-- Text -->
-    <rect x="285" y="160" width="180" height="8" rx="4" fill="#CBD5E1"/>
-    <rect x="285" y="178" width="150" height="8" rx="4" fill="#CBD5E1"/>
-    <rect x="285" y="196" width="170" height="8" rx="4" fill="#CBD5E1"/>
+    <rect x="285" y="160" width="180" height="8" rx="4" fill="#8c939c"/>
+    <rect x="285" y="178" width="150" height="8" rx="4" fill="#8c939c"/>
+    <rect x="285" y="196" width="170" height="8" rx="4" fill="#8c939c"/>
 
     <!-- Image -->
-    <rect x="285" y="225" width="95" height="70" rx="10" fill="#E0F2FE"/>
+    <rect x="285" y="225" width="95" height="70" rx="10" fill="#75b6e2"/>
 
     <!-- Text block -->
-    <rect x="395" y="230" width="110" height="8" rx="4" fill="#CBD5E1"/>
-    <rect x="395" y="248" width="95" height="8" rx="4" fill="#CBD5E1"/>
-    <rect x="395" y="266" width="110" height="8" rx="4" fill="#CBD5E1"/>
+    <rect x="395" y="230" width="110" height="8" rx="4" fill="#8c939c"/>
+    <rect x="395" y="248" width="95" height="8" rx="4" fill="#8c939c"/>
+    <rect x="395" y="266" width="110" height="8" rx="4" fill="#8c939c"/>
 
     <!-- Bottom text -->
-    <rect x="285" y="325" width="220" height="8" rx="4" fill="#CBD5E1"/>
-    <rect x="285" y="343" width="180" height="8" rx="4" fill="#CBD5E1"/>
+    <rect x="285" y="325" width="220" height="8" rx="4" fill="#8c939c"/>
+    <rect x="285" y="343" width="180" height="8" rx="4" fill="#8c939c"/>
 
     <!-- Blinking Cursor -->
     <rect x="470" y="342" width="2" height="10" fill="#2563EB">
