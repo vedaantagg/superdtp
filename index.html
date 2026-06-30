@@ -121,11 +121,13 @@
         max-width: 100%;
       }
       .site-logo {
-        height: 28px;
+        height: clamp(20px, 6vw, 28px); /* shrinks below 28px on narrow screens */
         width: auto;
+        max-width: 44vw;  /* never wider than 44% of viewport — leaves room for hamburger */
         display: block;
-        flex-shrink: 0;
+        flex-shrink: 1;   /* allow shrink inside flex header */
       }
+      @media (min-width: 480px) { .site-logo { height: 28px; max-width: none; } }
       @media (min-width: 640px) { .site-logo { height: 34px; } }
       @media (min-width: 1024px) { .site-logo { height: 42px; } }
       html.lenis {
@@ -3179,7 +3181,7 @@
       class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md"
       style="height: 64px"
     >
-      <a href="/" aria-label="SuperDTP Home" class="flex-shrink-0">
+      <a href="/" aria-label="SuperDTP Home" class="flex-shrink min-w-0">
         <img
           src="static/logo copy 5.svg"
           alt="SuperDTP logo"
