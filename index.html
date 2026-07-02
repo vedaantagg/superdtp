@@ -564,50 +564,6 @@
         color: #d4af37;
       }
 
-      #next-section-btn {
-        position: fixed;
-        right: 2rem;
-        bottom: 2rem;
-        z-index: 80;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #fff;
-        background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(14px);
-        opacity: 0;
-        visibility: hidden;
-        cursor: pointer;
-        transition:
-          transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
-          border-color 0.35s ease;
-      }
-
-      #next-section-btn:hover {
-        transform: translateY(-4px);
-        border-color: rgba(212, 175, 55, 0.45);
-      }
-
-      #next-section-btn svg {
-        position: absolute;
-        transition:
-          opacity 0.25s ease,
-          transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
-      }
-
-      #next-section-btn.is-bottom #arr-down {
-        opacity: 0;
-        transform: rotate(180deg);
-      }
-
-      #next-section-btn:not(.is-bottom) #arr-up {
-        opacity: 0;
-        transform: rotate(-180deg);
-      }
       .hero-grid {
         grid-template-columns: 1fr 1fr;
         align-items: center;
@@ -1309,6 +1265,53 @@
         background: rgba(212, 175, 55, 0.14);
         border-color: rgba(212, 175, 55, 0.45);
         color: #d4af37;
+      }
+
+      /* Fixed section-jump buttons (up/down) */
+      #section-nav {
+        position: fixed;
+        right: 1.5rem;
+        bottom: 1.5rem;
+        z-index: 40;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .section-nav-btn {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(9, 9, 11, 0.6);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.7);
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .section-nav-btn:hover {
+        color: #fff;
+        border-color: rgba(212, 175, 55, 0.5);
+        background: rgba(212, 175, 55, 0.12);
+      }
+      .section-nav-btn:disabled {
+        opacity: 0.25;
+        cursor: default;
+        pointer-events: none;
+      }
+      @media (max-width: 640px) {
+        #section-nav {
+          right: 1rem;
+          bottom: 1rem;
+          gap: 0.4rem;
+        }
+        .section-nav-btn {
+          width: 38px;
+          height: 38px;
+        }
       }
 
       /* Body: sidebar + diagram */
@@ -3152,30 +3155,6 @@
     <div id="page-bg-overlay" aria-hidden="true"></div>
     <div id="cursor-light" aria-hidden="true"></div>
     <div class="grain-overlay" aria-hidden="true"></div>
-    <button id="next-section-btn" aria-label="Next section">
-      <svg
-        id="arr-down"
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-      >
-        <path d="M9 3v12M4 10l5 5 5-5" />
-      </svg>
-      <svg
-        id="arr-up"
-        width="18"
-        height="18"
-        viewBox="0 0 18 18"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.5"
-      >
-        <path d="M9 15V3M4 8l5-5 5 5" />
-      </svg>
-    </button>
 
     <header
       class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md"
@@ -3194,8 +3173,8 @@
         id="main-nav"
         class="hidden xl:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200"
       >
-        <a href="#hero" class="nav-link active">01. HOME</a>
-        <a href="#indic-excellence" class="nav-link">02. GLOBAL</a>
+        <a href="#hero" class="nav-link active">HOME</a>
+        <a href="#indic-excellence" class="nav-link">GLOBAL</a>
         <!-- 03. SERVICES — dropdown preserved exactly -->
         <div
           class="services-trigger relative flex items-center cursor-pointer"
@@ -3207,7 +3186,7 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            03. SERVICES
+            SERVICES
             <svg
               class="w-2.5 h-2.5"
               viewBox="0 0 10 6"
@@ -3366,10 +3345,10 @@
             </div>
           </div>
         </div>
-        <a href="#industry-solutions" class="nav-link">04. INDUSTRIES</a>
-        <a href="#visual-lab" class="nav-link">05. HOW WE WORK</a>
-        <a href="#fmt-section" class="nav-link">06. FORMATS</a>
-        <a href="#world-reach" class="nav-link">07. MARKET REACH</a>
+        <a href="#industry-solutions" class="nav-link">INDUSTRIES</a>
+        <a href="#visual-lab" class="nav-link">HOW WE WORK</a>
+        <a href="#fmt-section" class="nav-link">FORMATS</a>
+        <a href="#world-reach" class="nav-link">MARKET REACH</a>
       </nav>
       <!-- Right-side group: CONTACT US + hamburger stay together at all breakpoints -->
       <div class="flex items-center gap-3 flex-shrink-0">
@@ -5900,6 +5879,47 @@
       </div>
     </footer>
 
+    <div id="section-nav">
+      <button
+        id="section-nav-up"
+        class="section-nav-btn"
+        type="button"
+        aria-label="Scroll to previous section"
+      >
+        <svg
+          width="13"
+          height="12"
+          viewBox="0 0 13 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M2.5 8L6.5 4L10.5 8" />
+        </svg>
+      </button>
+      <button
+        id="section-nav-down"
+        class="section-nav-btn"
+        type="button"
+        aria-label="Scroll to next section"
+      >
+        <svg
+          width="13"
+          height="12"
+          viewBox="0 0 13 12"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M2.5 4L6.5 8L10.5 4" />
+        </svg>
+      </button>
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r161/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -6239,56 +6259,6 @@
         });
       }
 
-      function initNextSectionButton() {
-        const nextBtn = document.getElementById("next-section-btn");
-        if (!nextBtn) return;
-
-        const targets = gsap.utils.toArray("section, footer");
-        let isBottom = false;
-
-        nextBtn.addEventListener("click", () => {
-          if (isBottom) {
-            scrollToTarget(0, 1.9);
-            return;
-          }
-
-          const next = targets.find(
-            (target) => target.offsetTop > window.scrollY + 180,
-          );
-          scrollToTarget(next || 0, next ? 1.5 : 1.9);
-        });
-
-        ScrollTrigger.create({
-          trigger: "#hero",
-          start: "12% top",
-          onEnter: () =>
-            gsap.to(nextBtn, {
-              autoAlpha: 1,
-              duration: 0.35,
-              ease: "power2.out",
-            }),
-          onLeaveBack: () =>
-            gsap.to(nextBtn, {
-              autoAlpha: 0,
-              duration: 0.25,
-              ease: "power2.in",
-            }),
-        });
-
-        ScrollTrigger.create({
-          trigger: "#footer",
-          start: "top 75%",
-          onEnter: () => {
-            isBottom = true;
-            nextBtn.classList.add("is-bottom");
-          },
-          onLeaveBack: () => {
-            isBottom = false;
-            nextBtn.classList.remove("is-bottom");
-          },
-        });
-      }
-
       function initSectionBackgrounds() {
         const overlay = document.getElementById("page-bg-overlay");
         if (!overlay) return;
@@ -6531,7 +6501,6 @@
           initReferenceNavigation();
           initSectionBackgrounds();
           initReferenceReveals();
-          initNextSectionButton();
           initCursorLight();
           initMagneticCards();
           initCountingMetrics();
@@ -10109,6 +10078,87 @@
       } else {
         initLanguageCarousel();
       }
+    </script>
+
+    <script>
+      (function () {
+        var HEADER_OFFSET = 64;
+        var SECTION_IDS = [
+          "hero",
+          "trusted-by",
+          "indic-excellence",
+          "services",
+          "svc-pillars-section",
+          "industry-solutions",
+          "visual-lab",
+          "fmt-section",
+          "world-reach",
+          "contact",
+          "footer",
+        ];
+
+        var btnUp = document.getElementById("section-nav-up");
+        var btnDown = document.getElementById("section-nav-down");
+        if (!btnUp || !btnDown) return;
+
+        function getSections() {
+          return SECTION_IDS.map(function (id) {
+            return document.getElementById(id);
+          }).filter(Boolean);
+        }
+
+        function getCurrentIndex(sections) {
+          var pos = window.scrollY + HEADER_OFFSET + 1;
+          var idx = 0;
+          for (var i = 0; i < sections.length; i++) {
+            var top = sections[i].getBoundingClientRect().top + window.scrollY;
+            if (top <= pos) idx = i;
+          }
+          return idx;
+        }
+
+        function scrollToIndex(idx, sections) {
+          if (idx < 0 || idx >= sections.length) return;
+          var top =
+            sections[idx].getBoundingClientRect().top +
+            window.scrollY -
+            HEADER_OFFSET;
+          window.scrollTo({ top: top, behavior: "smooth" });
+        }
+
+        function updateButtonState() {
+          var sections = getSections();
+          var idx = getCurrentIndex(sections);
+          btnUp.disabled = idx <= 0;
+          btnDown.disabled = idx >= sections.length - 1;
+        }
+
+        btnUp.addEventListener("click", function () {
+          var sections = getSections();
+          scrollToIndex(getCurrentIndex(sections) - 1, sections);
+        });
+
+        btnDown.addEventListener("click", function () {
+          var sections = getSections();
+          scrollToIndex(getCurrentIndex(sections) + 1, sections);
+        });
+
+        var ticking = false;
+        window.addEventListener(
+          "scroll",
+          function () {
+            if (ticking) return;
+            ticking = true;
+            requestAnimationFrame(function () {
+              updateButtonState();
+              ticking = false;
+            });
+          },
+          { passive: true },
+        );
+
+        updateButtonState();
+      })();
     </script>
   </body>
 </html>
