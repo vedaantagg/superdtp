@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+<svg width="220" height="220" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="g" x1="0%" y1="0%" x2="100%">
       <stop offset="0%" stop-color="#2563EB"/>
@@ -14,60 +14,61 @@
     </clipPath>
   </defs>
 
+  <g transform="translate(-127.837,-65.405) scale(1.189189)">
 
+    <!-- Document -->
+    <g filter="url(#shadow)">
+      <rect x="130" y="55" width="140" height="185" rx="12" fill="#fff"/>
 
-  <!-- Document -->
-  <g filter="url(#shadow)">
-    <rect x="130" y="55" width="140" height="185" rx="12" fill="#fff"/>
+      <!-- Fold -->
+      <path d="M245 55 L270 80 L245 80 Z" fill="#1c4aa7"/>
 
-    <!-- Fold -->
-    <path d="M245 55 L270 80 L245 80 Z" fill="#1c4aa7"/>
+      <!-- PDF Badge -->
+      <rect x="218" y="68" width="36" height="18" rx="9" fill="#ec3030"/>
+      <text x="236" y="81" font-size="8" text-anchor="middle"
+            font-family="Arial" fill="#fff" font-weight="700">PDF</text>
 
-    <!-- PDF Badge -->
-    <rect x="218" y="68" width="36" height="18" rx="9" fill="#ec3030"/>
-    <text x="236" y="81" font-size="8" text-anchor="middle"
-          font-family="Arial" fill="#fff" font-weight="700">PDF</text>
+      <!-- Title -->
+      <rect x="150" y="100" width="80" height="8" rx="4" fill="#7fb1f3"/>
 
-    <!-- Title -->
-    <rect x="150" y="100" width="80" height="8" rx="4" fill="#7fb1f3"/>
+      <!-- Text -->
+      <rect x="150" y="118" width="90" height="5" rx="2.5" fill="#9499a0"/>
+      <rect x="150" y="132" width="75" height="5" rx="2.5" fill="#9499a0"/>
+      <rect x="150" y="146" width="85" height="5" rx="2.5" fill="#9499a0"/>
 
-    <!-- Text -->
-    <rect x="150" y="118" width="90" height="5" rx="2.5" fill="#9499a0"/>
-    <rect x="150" y="132" width="75" height="5" rx="2.5" fill="#9499a0"/>
-    <rect x="150" y="146" width="85" height="5" rx="2.5" fill="#9499a0"/>
+      <!-- Image -->
+      <rect x="150" y="165" width="45" height="35" rx="6" fill="#a3c7f5"/>
 
-    <!-- Image -->
-    <rect x="150" y="165" width="45" height="35" rx="6" fill="#a3c7f5"/>
+      <!-- Text beside image -->
+      <rect x="205" y="170" width="40" height="5" rx="2.5" fill="#9499a0"/>
+      <rect x="205" y="183" width="35" height="5" rx="2.5" fill="#9499a0"/>
 
-    <!-- Text beside image -->
-    <rect x="205" y="170" width="40" height="5" rx="2.5" fill="#9499a0"/>
-    <rect x="205" y="183" width="35" height="5" rx="2.5" fill="#9499a0"/>
+      <!-- Scan Line -->
+      <g clip-path="url(#docClip)">
+        <rect x="130" y="55" width="140" height="10"
+              fill="#60A5FA" opacity=".35">
+          <animate attributeName="y"
+                   values="55;235;55"
+                   dur="3s"
+                   repeatCount="indefinite"/>
+        </rect>
+      </g>
 
-    <!-- Scan Line -->
-    <g clip-path="url(#docClip)">
-      <rect x="130" y="55" width="140" height="10"
-            fill="#60A5FA" opacity=".35">
-        <animate attributeName="y"
-                 values="55;235;55"
+      <!-- Check -->
+      <g opacity="0">
+        <animate attributeName="opacity"
+                 values="0;1;1;0"
                  dur="3s"
                  repeatCount="indefinite"/>
-      </rect>
+
+        <path d="M215 210 L223 218 L238 200"
+              fill="none"
+              stroke="#2563EB"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"/>
+      </g>
     </g>
 
-    <!-- Check -->
-    <g opacity="0">
-      <animate attributeName="opacity"
-               values="0;1;1;0"
-               dur="3s"
-               repeatCount="indefinite"/>
-
-      <path d="M215 210 L223 218 L238 200"
-            fill="none"
-            stroke="#2563EB"
-            stroke-width="3"
-            stroke-linecap="round"
-            stroke-linejoin="round"/>
-    </g>
   </g>
-
 </svg>

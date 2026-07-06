@@ -1,117 +1,118 @@
-<svg width="100%" viewBox="0 0 200 200"
-     xmlns="http://www.w3.org/2000/svg"
-     role="img">
+<svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg" role="img">
 
   <title>Print and Digital Publishing Services</title>
 
-  <!-- Connections -->
-  <line x1="100" y1="100" x2="44" y2="56"
-        stroke="#CBD5E1" stroke-width="1.5"/>
+  <g transform="translate(-35.2,-49.865) scale(1.466667)">
 
-  <line x1="100" y1="100" x2="156" y2="56"
-        stroke="#CBD5E1" stroke-width="1.5"/>
+    <!-- Connections -->
+    <line x1="100" y1="100" x2="44" y2="56"
+          stroke="#CBD5E1" stroke-width="1.5"/>
 
-  <line x1="100" y1="100" x2="100" y2="166"
-        stroke="#CBD5E1" stroke-width="1.5"/>
+    <line x1="100" y1="100" x2="156" y2="56"
+          stroke="#CBD5E1" stroke-width="1.5"/>
 
-  <!-- Animated dots -->
-  <circle r="2.5" fill="#2563EB">
-    <animateMotion dur="2.5s" repeatCount="indefinite"
-      path="M100 100 L44 56"/>
-  </circle>
+    <line x1="100" y1="100" x2="100" y2="166"
+          stroke="#CBD5E1" stroke-width="1.5"/>
 
-  <circle r="2.5" fill="#4F46E5">
-    <animateMotion dur="2.8s" begin=".4s"
-      repeatCount="indefinite"
-      path="M100 100 L156 56"/>
-  </circle>
+    <!-- Animated dots -->
+    <circle r="2.5" fill="#2563EB">
+      <animateMotion dur="2.5s" repeatCount="indefinite"
+        path="M100 100 L44 56"/>
+    </circle>
 
-  <circle r="2.5" fill="#2563EB">
-    <animateMotion dur="2.6s" begin=".8s"
-      repeatCount="indefinite"
-      path="M100 100 L100 166"/>
-  </circle>
+    <circle r="2.5" fill="#4F46E5">
+      <animateMotion dur="2.8s" begin=".4s"
+        repeatCount="indefinite"
+        path="M100 100 L156 56"/>
+    </circle>
 
-  <!-- Printer -->
-  <g>
-    <animateTransform attributeName="transform"
-      type="scale"
-      values="1;1.03;1"
-      dur="2s"
-      repeatCount="indefinite"
-      additive="sum"
-      origin="44 56"/>
+    <circle r="2.5" fill="#2563EB">
+      <animateMotion dur="2.6s" begin=".8s"
+        repeatCount="indefinite"
+        path="M100 100 L100 166"/>
+    </circle>
 
-    <rect x="24" y="38" width="40" height="36" rx="5" fill="#DBEAFE"/>
-    <rect x="29" y="44" width="30" height="13" rx="2" fill="#2563EB"/>
-    <rect x="32" y="60" width="24" height="9" rx="1.5" fill="#fff"/>
+    <!-- Printer -->
+    <g>
+      <animateTransform attributeName="transform"
+        type="scale"
+        values="1;1.03;1"
+        dur="2s"
+        repeatCount="indefinite"
+        additive="sum"
+        origin="44 56"/>
+
+      <rect x="24" y="38" width="40" height="36" rx="5" fill="#DBEAFE"/>
+      <rect x="29" y="44" width="30" height="13" rx="2" fill="#2563EB"/>
+      <rect x="32" y="60" width="24" height="9" rx="1.5" fill="#fff"/>
+    </g>
+
+    <!-- PDF -->
+    <g>
+      <animateTransform attributeName="transform"
+        type="scale"
+        values="1;1.03;1"
+        dur="2s"
+        begin=".3s"
+        repeatCount="indefinite"
+        additive="sum"
+        origin="156 56"/>
+
+      <rect x="138" y="36" width="36" height="40" rx="5" fill="#DBEAFE"/>
+      <polygon points="166,36 174,44 166,44" fill="#4F46E5"/>
+      <rect x="144" y="56" width="24" height="11" rx="2" fill="#4F46E5"/>
+    </g>
+
+    <!-- Monitor -->
+    <g>
+      <animateTransform attributeName="transform"
+        type="scale"
+        values="1;1.03;1"
+        dur="2s"
+        begin=".6s"
+        repeatCount="indefinite"
+        additive="sum"
+        origin="100 166"/>
+
+      <rect x="78" y="148" width="44" height="30" rx="4" fill="#DBEAFE"/>
+      <rect x="83" y="153" width="34" height="20" rx="2" fill="#2563EB"/>
+      <rect x="92" y="178" width="16" height="4" rx="1" fill="#CBD5E1"/>
+    </g>
+
+    <!-- Main document -->
+    <g>
+      <animateTransform attributeName="transform"
+        type="translate"
+        values="0 0;0 -3;0 0"
+        dur="3s"
+        repeatCount="indefinite"/>
+
+      <rect x="72" y="64" width="56" height="72"
+            rx="8"
+            fill="#fff"
+            stroke="#CBD5E1"
+            stroke-width="1.5"/>
+
+      <rect x="82" y="76" width="36" height="18"
+            rx="2"
+            fill="#DBEAFE"/>
+
+      <rect x="82" y="100" width="36" height="4"
+            rx="2"
+            fill="#CBD5E1"/>
+
+      <rect x="82" y="108" width="28" height="4"
+            rx="2"
+            fill="#2563EB"/>
+
+      <rect x="82" y="116" width="32" height="4"
+            rx="2"
+            fill="#CBD5E1"/>
+
+      <rect x="82" y="124" width="20" height="4"
+            rx="2"
+            fill="#CBD5E1"/>
+    </g>
+
   </g>
-
-  <!-- PDF -->
-  <g>
-    <animateTransform attributeName="transform"
-      type="scale"
-      values="1;1.03;1"
-      dur="2s"
-      begin=".3s"
-      repeatCount="indefinite"
-      additive="sum"
-      origin="156 56"/>
-
-    <rect x="138" y="36" width="36" height="40" rx="5" fill="#DBEAFE"/>
-    <polygon points="166,36 174,44 166,44" fill="#4F46E5"/>
-    <rect x="144" y="56" width="24" height="11" rx="2" fill="#4F46E5"/>
-  </g>
-
-  <!-- Monitor -->
-  <g>
-    <animateTransform attributeName="transform"
-      type="scale"
-      values="1;1.03;1"
-      dur="2s"
-      begin=".6s"
-      repeatCount="indefinite"
-      additive="sum"
-      origin="100 166"/>
-
-    <rect x="78" y="148" width="44" height="30" rx="4" fill="#DBEAFE"/>
-    <rect x="83" y="153" width="34" height="20" rx="2" fill="#2563EB"/>
-    <rect x="92" y="178" width="16" height="4" rx="1" fill="#CBD5E1"/>
-  </g>
-
-  <!-- Main document -->
-  <g>
-    <animateTransform attributeName="transform"
-      type="translate"
-      values="0 0;0 -3;0 0"
-      dur="3s"
-      repeatCount="indefinite"/>
-
-    <rect x="72" y="64" width="56" height="72"
-          rx="8"
-          fill="#fff"
-          stroke="#CBD5E1"
-          stroke-width="1.5"/>
-
-    <rect x="82" y="76" width="36" height="18"
-          rx="2"
-          fill="#DBEAFE"/>
-
-    <rect x="82" y="100" width="36" height="4"
-          rx="2"
-          fill="#CBD5E1"/>
-
-    <rect x="82" y="108" width="28" height="4"
-          rx="2"
-          fill="#2563EB"/>
-
-    <rect x="82" y="116" width="32" height="4"
-          rx="2"
-          fill="#CBD5E1"/>
-
-    <rect x="82" y="124" width="20" height="4"
-          rx="2"
-          fill="#CBD5E1"/>
-  </g>
-
 </svg>
