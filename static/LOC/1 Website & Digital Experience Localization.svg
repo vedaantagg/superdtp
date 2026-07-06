@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500">
+<svg width="220" height="220" viewBox="0 0 220 220" xmlns="http://www.w3.org/2000/svg">
   <defs>
     <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#2563EB"/>
@@ -10,170 +10,173 @@
     </filter>
   </defs>
 
+  <g transform="translate(-169.75,-54.32) scale(0.6790)">
 
-  <!-- Browser -->
-  <g filter="url(#shadow)">
-    <rect x="250" y="120" width="300" height="210" rx="18" fill="#fff">
+    <!-- Browser -->
+    <g filter="url(#shadow)">
+      <rect x="250" y="120" width="300" height="210" rx="18" fill="#fff">
 
-      <animateTransform
-        attributeName="transform"
-        type="scale"
-        values="1;1.015;1"
-        dur="4s"
-        additive="sum"
-        repeatCount="indefinite"/>
-    </rect>
+        <animateTransform
+          attributeName="transform"
+          type="scale"
+          values="1;1.015;1"
+          dur="4s"
+          additive="sum"
+          repeatCount="indefinite"/>
+      </rect>
 
-    <!-- Top bar -->
-    <rect x="251" y="120" width="303" height="32" rx="18" fill="#bfd1f1"/>
+      <!-- Top bar -->
+      <rect x="251" y="120" width="303" height="32" rx="18" fill="#bfd1f1"/>
 
-    <circle cx="272" cy="136" r="5" fill="#9ac7fa"/>
-    <circle cx="288" cy="136" r="5" fill="#60A5FA"/>
-    <circle cx="304" cy="136" r="5" fill="#2563EB"/>
+      <circle cx="272" cy="136" r="5" fill="#9ac7fa"/>
+      <circle cx="288" cy="136" r="5" fill="#60A5FA"/>
+      <circle cx="304" cy="136" r="5" fill="#2563EB"/>
 
-    <!-- Hero -->
-    <rect x="275" y="170" width="250" height="55" rx="10" fill="#b8d1f3"/>
+      <!-- Hero -->
+      <rect x="275" y="170" width="250" height="55" rx="10" fill="#b8d1f3"/>
 
-  <!-- Animated Text Lines -->
-<g fill="#aab2bb">
+    <!-- Animated Text Lines -->
+  <g fill="#aab2bb">
 
-  <rect x="275" y="240" width="180" height="8" rx="4">
-    <animate attributeName="width"
-             values="180;195;180"
-             dur="2.5s"
-             repeatCount="indefinite"/>
-    <animate attributeName="opacity"
-             values="1;0.65;1"
-             dur="2.5s"
-             repeatCount="indefinite"/>
-  </rect>
-
-  <rect x="275" y="258" width="220" height="8" rx="4">
-    <animate attributeName="width"
-             values="220;205;220"
-             dur="2.5s"
-             begin=".2s"
-             repeatCount="indefinite"/>
-    <animate attributeName="opacity"
-             values="1;0.65;1"
-             dur="2.5s"
-             begin=".2s"
-             repeatCount="indefinite"/>
-  </rect>
-
-  <rect x="275" y="276" width="160" height="8" rx="4">
-    <animate attributeName="width"
-             values="160;175;160"
-             dur="2.5s"
-             begin=".4s"
-             repeatCount="indefinite"/>
-    <animate attributeName="opacity"
-             values="1;0.65;1"
-             dur="2.5s"
-             begin=".4s"
-             repeatCount="indefinite"/>
-  </rect>
-
-</g>
-
-    <!-- CTA -->
-    <rect x="275" y="300" width="90" height="28" rx="14" fill="url(#grad)">
+    <rect x="275" y="240" width="180" height="8" rx="4">
+      <animate attributeName="width"
+               values="180;195;180"
+               dur="2.5s"
+               repeatCount="indefinite"/>
       <animate attributeName="opacity"
-               values="1;.75;1"
-               dur="3s"
+               values="1;0.65;1"
+               dur="2.5s"
                repeatCount="indefinite"/>
     </rect>
+
+    <rect x="275" y="258" width="220" height="8" rx="4">
+      <animate attributeName="width"
+               values="220;205;220"
+               dur="2.5s"
+               begin=".2s"
+               repeatCount="indefinite"/>
+      <animate attributeName="opacity"
+               values="1;0.65;1"
+               dur="2.5s"
+               begin=".2s"
+               repeatCount="indefinite"/>
+    </rect>
+
+    <rect x="275" y="276" width="160" height="8" rx="4">
+      <animate attributeName="width"
+               values="160;175;160"
+               dur="2.5s"
+               begin=".4s"
+               repeatCount="indefinite"/>
+      <animate attributeName="opacity"
+               values="1;0.65;1"
+               dur="2.5s"
+               begin=".4s"
+               repeatCount="indefinite"/>
+    </rect>
+
   </g>
 
-  <!-- Location Pin -->
-  <g transform="translate(435 145)">
-    <path d="M0-15
-             C10-15 18-7 18 3
-             C18 16 0 35 0 35
-             C0 35-18 16-18 3
-             C-18-7-10-15 0-15z"
-          fill="url(#grad)"/>
+      <!-- CTA -->
+      <rect x="275" y="300" width="90" height="28" rx="14" fill="url(#grad)">
+        <animate attributeName="opacity"
+                 values="1;.75;1"
+                 dur="3s"
+                 repeatCount="indefinite"/>
+      </rect>
+    </g>
 
-    <circle cx="0" cy="2" r="5" fill="#fff"/>
+    <!-- Location Pin -->
+    <g transform="translate(435 145)">
+      <path d="M0-15
+               C10-15 18-7 18 3
+               C18 16 0 35 0 35
+               C0 35-18 16-18 3
+               C-18-7-10-15 0-15z"
+            fill="url(#grad)"/>
 
-    <animateTransform
-      attributeName="transform"
-      type="translate"
-      values="435 145;435 140;435 145"
-      dur="3s"
-      repeatCount="indefinite"/>
-  </g>
+      <circle cx="0" cy="2" r="5" fill="#fff"/>
 
-  <!-- Animated Globe -->
-  <g transform="translate(540 330)">
-
-    <!-- Globe -->
-    <circle r="34" fill="#DBEAFE"/>
-    <circle r="34" fill="none" stroke="#2563EB" stroke-width="2"/>
-
-    <!-- Rotating Grid -->
-    <g>
       <animateTransform
         attributeName="transform"
-        type="rotate"
-        from="0"
-        to="360"
-        dur="18s"
+        type="translate"
+        values="435 145;435 140;435 145"
+        dur="3s"
         repeatCount="indefinite"/>
+    </g>
 
-      <!-- Equator -->
-      <path d="M-34 0H34"
-            stroke="#2563EB"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-dasharray="6 4">
-        <animate attributeName="stroke-dashoffset"
-                 from="10"
-                 to="0"
-                 dur="2s"
-                 repeatCount="indefinite"/>
-      </path>
+    <!-- Animated Globe -->
+    <g transform="translate(540 330)">
 
-      <!-- Prime Meridian -->
-      <path d="M0-34V34"
-            stroke="#2563EB"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-dasharray="6 4">
-        <animate attributeName="stroke-dashoffset"
-                 from="10"
-                 to="0"
-                 dur="2s"
-                 repeatCount="indefinite"/>
-      </path>
+      <!-- Globe -->
+      <circle r="34" fill="#DBEAFE"/>
+      <circle r="34" fill="none" stroke="#2563EB" stroke-width="2"/>
 
-      <!-- Longitude -->
-      <ellipse rx="24"
-               ry="34"
-               fill="none"
-               stroke="#2563EB"
-               stroke-width="1.5"
-               stroke-dasharray="6 4">
-        <animate attributeName="stroke-dashoffset"
-                 from="20"
-                 to="0"
-                 dur="2.5s"
-                 repeatCount="indefinite"/>
-      </ellipse>
+      <!-- Rotating Grid -->
+      <g>
+        <animateTransform
+          attributeName="transform"
+          type="rotate"
+          from="0"
+          to="360"
+          dur="18s"
+          repeatCount="indefinite"/>
 
-      <!-- Inner Longitude -->
-      <ellipse rx="12"
-               ry="34"
-               fill="none"
-               stroke="#2563EB"
-               stroke-width="1.5"
-               stroke-dasharray="6 4">
-        <animate attributeName="stroke-dashoffset"
-                 from="20"
-                 to="0"
-                 dur="2.5s"
-                 repeatCount="indefinite"/>
-      </ellipse>
+        <!-- Equator -->
+        <path d="M-34 0H34"
+              stroke="#2563EB"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-dasharray="6 4">
+          <animate attributeName="stroke-dashoffset"
+                   from="10"
+                   to="0"
+                   dur="2s"
+                   repeatCount="indefinite"/>
+        </path>
+
+        <!-- Prime Meridian -->
+        <path d="M0-34V34"
+              stroke="#2563EB"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-dasharray="6 4">
+          <animate attributeName="stroke-dashoffset"
+                   from="10"
+                   to="0"
+                   dur="2s"
+                   repeatCount="indefinite"/>
+        </path>
+
+        <!-- Longitude -->
+        <ellipse rx="24"
+                 ry="34"
+                 fill="none"
+                 stroke="#2563EB"
+                 stroke-width="1.5"
+                 stroke-dasharray="6 4">
+          <animate attributeName="stroke-dashoffset"
+                   from="20"
+                   to="0"
+                   dur="2.5s"
+                   repeatCount="indefinite"/>
+        </ellipse>
+
+        <!-- Inner Longitude -->
+        <ellipse rx="12"
+                 ry="34"
+                 fill="none"
+                 stroke="#2563EB"
+                 stroke-width="1.5"
+                 stroke-dasharray="6 4">
+          <animate attributeName="stroke-dashoffset"
+                   from="20"
+                   to="0"
+                   dur="2.5s"
+                   repeatCount="indefinite"/>
+        </ellipse>
+
+      </g>
 
     </g>
 
