@@ -291,8 +291,8 @@
 
       /* ── Header Services Nested Dropdown ─────────────────── */
       .services-dropdown {
-        position: absolute;
-        top: calc(100% + 12px);
+        position: fixed;
+        top: 76px;
         left: 50%;
         transform: translateX(-50%);
         width: 620px;
@@ -2000,6 +2000,28 @@
         }
       }
 
+      /* On short/narrow viewports (small laptops, tablets, phones) the
+         full 8-card pillar body is taller than the space the sticky
+         "peek stack" leaves between its pin offset and the viewport
+         bottom, so its lower rows are permanently cut off. Below this
+         breakpoint, drop the stacking/pin illusion entirely and let
+         every pillar render in normal document flow so all cards are
+         always reachable by scrolling. */
+      @media (max-width: 1080px), (max-height: 820px) {
+        .pillar {
+          position: static;
+          top: auto;
+          z-index: auto;
+          margin-bottom: 24px;
+        }
+        .pillar:last-child {
+          margin-bottom: 0;
+        }
+        .pillar-head-cue {
+          display: none;
+        }
+      }
+
       /* ── Quick detail popover (appears at the hovered sub-card, no backdrop) ── */
       #psub-pop {
         position: fixed;
@@ -3179,6 +3201,7 @@
                 class="mega-cat-btn active"
                 type="button"
                 data-cat="loc"
+                data-url="/localization/"
                 aria-controls="mega-pane-loc"
               >
                 <span>Localization</span>
@@ -3203,6 +3226,7 @@
                 class="mega-cat-btn"
                 type="button"
                 data-cat="dtp"
+                data-url="/dtp-services/"
                 aria-controls="mega-pane-dtp"
               >
                 <span>DTP &amp; Publishing</span>
@@ -7314,6 +7338,9 @@
         var reduceMotion =
           window.matchMedia &&
           window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        var supportsHover =
+          window.matchMedia &&
+          window.matchMedia("(hover: hover) and (pointer: fine)").matches;
 
         var PILLARS = [
           {
@@ -7597,16 +7624,19 @@
               " &#8594;</span>";
             setActive(pi);
           }
-          // Position right at the hovered card, clamped to the viewport
+          // Position beside the hovered card (right, then left, then
+          // clamped) rather than directly on top of it, so the popover
+          // never appears to float detached over unrelated cards.
           var r = btn.getBoundingClientRect();
           var pw = pop.offsetWidth || 340,
             ph = pop.offsetHeight || 200,
+            gap = 14,
             m = 12;
-          var left = r.left - 12;
-          var top = r.top - 12;
-          if (left + pw > window.innerWidth - m)
-            left = window.innerWidth - pw - m;
-          if (left < m) left = m;
+          var left = r.right + gap;
+          if (left + pw > window.innerWidth - m) left = r.left - pw - gap;
+          if (left < m)
+            left = Math.min(Math.max(r.left, m), window.innerWidth - pw - m);
+          var top = r.top;
           if (top + ph > window.innerHeight - m)
             top = window.innerHeight - ph - m;
           if (top < m) top = m;
@@ -7619,17 +7649,22 @@
           curKey = "";
         }
 
-        // Instant on hover · switches between cards · auto-closes when you leave them
-        stack.addEventListener("mouseover", function (e) {
-          var btn = e.target.closest(".psub");
-          if (btn) showPop(btn);
-        });
-        stack.addEventListener("mouseout", function (e) {
-          if (!e.target.closest(".psub")) return;
-          var to = e.relatedTarget;
-          // Keep open while moving within the sub-card grid (gaps included); close on exit
-          if (!to || !to.closest || !to.closest(".pillar-subs")) hidePop();
-        });
+        // Instant on hover · switches between cards · auto-closes when you
+        // leave them. Skipped on touch/coarse-pointer devices, where
+        // "hover" doesn't apply — tapping goes straight to the click
+        // handler below, which navigates to the pillar page.
+        if (supportsHover) {
+          stack.addEventListener("mouseover", function (e) {
+            var btn = e.target.closest(".psub");
+            if (btn) showPop(btn);
+          });
+          stack.addEventListener("mouseout", function (e) {
+            if (!e.target.closest(".psub")) return;
+            var to = e.relatedTarget;
+            // Keep open while moving within the sub-card grid (gaps included); close on exit
+            if (!to || !to.closest || !to.closest(".pillar-subs")) hidePop();
+          });
+        }
         // Click a sub-card → open its pillar page
         stack.addEventListener("click", function (e) {
           var btn = e.target.closest(".psub");
@@ -7654,24 +7689,41 @@
           });
         });
 
-        // GSAP entrance — cards rise as they scroll in (y-only, never hides them)
+        // GSAP entrance — cards rise as they scroll in (y-only, never hides
+        // them). Trigger only once the card is substantially on screen
+        // (not the instant its top edge appears at the bottom of the
+        // viewport) so the reveal reads as "settling in" rather than
+        // popping in before it's actually visible; toggleActions keeps it
+        // to a single play so it never re-fires oddly on scroll-back.
         if (!reduceMotion && window.gsap && window.ScrollTrigger) {
           gsap.utils.toArray(".pillar-card").forEach(function (card) {
             gsap.from(card, {
               y: 40,
               duration: 0.7,
               ease: "power3.out",
-              scrollTrigger: { trigger: card, start: "top 94%" },
+              scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none none",
+              },
             });
           });
         }
 
         // Scroll-spy → tab pointer follows the stacking cards one by one
+        var stackedLayoutQuery =
+          window.matchMedia &&
+          window.matchMedia("(max-width: 1080px), (max-height: 820px)");
         var refY = 400;
         function computeRef() {
           var tabsEl = document.getElementById("svc-tabs");
           var th = tabsEl ? tabsEl.getBoundingClientRect().height : 52;
-          refY = 82 + th + pillars.length * 56 + 26;
+          // Below the stacked-layout breakpoint, pillars sit in normal
+          // flow with no peek overlap, so drop the per-pillar offset.
+          refY =
+            stackedLayoutQuery && stackedLayoutQuery.matches
+              ? 82 + th + 26
+              : 82 + th + pillars.length * 56 + 26;
         }
         var ticking = false;
         function onScroll() {
@@ -9945,11 +9997,39 @@
           e.preventDefault();
           servicesTrigger.classList.toggle("active");
         });
+
+        // Keep the mega-menu inside the viewport at every laptop width —
+        // it's centered on the trigger, not the viewport, so on narrower
+        // desktop widths it can otherwise overflow off-screen.
+        var servicesDropdown = servicesTrigger.querySelector(
+          ".services-dropdown",
+        );
+        function positionServicesDropdown() {
+          if (!servicesDropdown || window.innerWidth < 1024) return;
+          var r = servicesTrigger.getBoundingClientRect();
+          var ddw = servicesDropdown.offsetWidth || 620;
+          var margin = 16;
+          var left = r.left + r.width / 2 - ddw / 2;
+          if (left + ddw > window.innerWidth - margin)
+            left = window.innerWidth - ddw - margin;
+          if (left < margin) left = margin;
+          servicesDropdown.style.left = left + "px";
+          servicesDropdown.style.transform = "none";
+        }
+        servicesTrigger.addEventListener(
+          "mouseenter",
+          positionServicesDropdown,
+        );
+        servicesTrigger.addEventListener("focusin", positionServicesDropdown);
+        window.addEventListener("resize", positionServicesDropdown);
       }
 
       // Mega-menu category switching (hover on desktop, click on mobile)
       (function () {
         var catBtns = document.querySelectorAll(".mega-cat-btn");
+        var supportsHover =
+          window.matchMedia &&
+          window.matchMedia("(hover: hover) and (pointer: fine)").matches;
         function activateCat(btn) {
           catBtns.forEach(function (b) {
             b.classList.remove("active");
@@ -9968,6 +10048,15 @@
             activateCat(this);
           });
           btn.addEventListener("click", function () {
+            // On hover-capable devices the pane is already previewed on
+            // hover, so a click means "go to that services page." On
+            // touch, hover never fires, so a tap must reveal the pane
+            // first instead of navigating away immediately.
+            var url = this.getAttribute("data-url");
+            if (supportsHover && url) {
+              window.location.href = url;
+              return;
+            }
             activateCat(this);
           });
         });
