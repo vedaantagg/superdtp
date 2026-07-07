@@ -229,3 +229,9 @@ Tony Mak _ Creative at the Speed of Next.html
 
 Extras/
 Resources/Problems in landing page.pdf
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
