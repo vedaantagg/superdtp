@@ -446,6 +446,14 @@
         transform: rotate(-45deg) translate(6px, -6px);
       }
 
+      /* Desktop nav on smaller laptops (1024–1279px): tighter link spacing
+         so all items fit beside the logo and CONTACT US pill */
+      @media (min-width: 1024px) and (max-width: 1279.98px) {
+        #main-nav > * + * {
+          margin-left: 0.6rem !important;
+        }
+      }
+
       #main-nav.mobile-open {
         display: flex !important;
         position: fixed;
@@ -1686,129 +1694,6 @@
         margin-top: 2px;
         letter-spacing: 0.06em;
       }
-      /* ── Services 3D Word Zoom ─────────────────────────────── */
-      #svc-word-zoom {
-        height: 220vh; /* 100vh pin + 120vh runway */
-        position: relative;
-      }
-      @media (max-width: 768px) {
-        #svc-word-zoom {
-          height: 130vh;
-        }
-        #services {
-          padding-top: 0 !important;
-          padding-bottom: 0 !important;
-        }
-        /* Words wrap inside their position box so nothing bleeds past edges */
-        .svc-word {
-          white-space: normal !important;
-          text-align: center;
-          max-width: min(42vw, 165px);
-        }
-        .svc-word-xl {
-          font-size: clamp(0.8rem, 3.5vw, 4.5rem);
-        }
-        .svc-word-md {
-          font-size: clamp(0.55rem, 2vw, 2.2rem);
-        }
-        .svc-word-sm {
-          font-size: clamp(0.4rem, 1.2vw, 1.3rem);
-        }
-      }
-      #svc-word-pin {
-        position: sticky;
-        top: 0;
-        height: 100vh;
-        width: 100%;
-        overflow: hidden;
-        background: #07070b;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #svc-zoom-label {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        text-align: center;
-        z-index: 10;
-        pointer-events: none;
-        white-space: normal;
-        width: 90vw;
-        max-width: 700px;
-      }
-      #svc-word-stage {
-        position: absolute;
-        inset: 0;
-      }
-      .svc-wgroup {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-      }
-      .svc-word {
-        position: absolute;
-        left: var(--wx);
-        top: var(--wy);
-        transform: translate(-50%, -50%) scale(0.04);
-        transform-origin: center center;
-        font-family: "Plus Jakarta Sans", sans-serif;
-        font-weight: 700;
-        color: #fff;
-        white-space: nowrap;
-        opacity: 0;
-        will-change: transform, opacity;
-      }
-      .svc-word-xl {
-        font-size: clamp(2rem, 5vw, 4.5rem);
-        color: rgba(255, 255, 255, 0.92);
-      }
-      .svc-word-md {
-        font-size: clamp(1.1rem, 2.8vw, 2.2rem);
-        color: rgba(255, 255, 255, 0.55);
-      }
-      .svc-word-sm {
-        font-size: clamp(0.7rem, 1.6vw, 1.3rem);
-        color: rgba(255, 255, 255, 0.28);
-      }
-
-      /* Gold accent on every 3rd word */
-      .svc-wgroup:nth-child(odd) .svc-word-xl:first-child {
-        color: #d4af37;
-      }
-
-      #svc-zoom-hud {
-        position: absolute;
-        bottom: 40px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        z-index: 20;
-      }
-      #svc-zoom-step {
-        font-family: "Space Grotesk", monospace;
-        font-size: 0.55rem;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.62);
-      }
-      #svc-zoom-bar-wrap {
-        width: 80px;
-        height: 1.5px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 1px;
-      }
-      #svc-zoom-bar {
-        height: 100%;
-        width: 0%;
-        background: #d4af37;
-        border-radius: 1px;
-        transition: width 0.08s linear;
-      }
-
       /* ── Services · Stacking Pillars + Tab Pointer + Detail Drawer ─── */
       #svc-pillars {
         position: relative;
@@ -3083,6 +2968,90 @@
         letter-spacing: 0.18em;
         color: #34d399;
       }
+      /* ── Contact form: attachments (up to 50 MB total) ── */
+      .contact-file-input {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+      }
+      .contact-file-drop {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 18px;
+        border: 1px dashed rgba(255, 255, 255, 0.18);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.03);
+        color: rgba(255, 255, 255, 0.55);
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition:
+          border-color 0.25s ease,
+          background 0.25s ease,
+          color 0.25s ease;
+      }
+      .contact-file-drop:hover,
+      .contact-file-drop.dragover,
+      .contact-file-input:focus-visible + .contact-file-drop {
+        border-color: rgba(212, 175, 55, 0.48);
+        background: rgba(212, 175, 55, 0.05);
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .contact-file-list {
+        margin-top: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .cf-file-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 8px;
+        font-size: 0.78rem;
+        color: #fff;
+      }
+      .cf-file-name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .cf-file-size {
+        margin-left: auto;
+        flex-shrink: 0;
+        font-family: "Space Grotesk", monospace;
+        font-size: 0.68rem;
+        color: rgba(255, 255, 255, 0.45);
+      }
+      .cf-file-remove {
+        flex-shrink: 0;
+        background: none;
+        border: none;
+        padding: 2px 4px;
+        font-size: 0.9rem;
+        line-height: 1;
+        color: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+      }
+      .cf-file-remove:hover {
+        color: #f87171;
+      }
+      .contact-file-error {
+        display: none;
+        margin-top: 8px;
+        font-family: "Space Grotesk", monospace;
+        font-size: 0.65rem;
+        letter-spacing: 0.12em;
+        color: #f87171;
+      }
 
       /* ── Accessibility ─────────────────────────────────────── */
       /* Skip-to-main link */
@@ -3171,7 +3140,7 @@
       <nav
         aria-label="Main navigation"
         id="main-nav"
-        class="hidden xl:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200"
+        class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200"
       >
         <a href="#hero" class="nav-link active">HOME</a>
         <a href="#indic-excellence" class="nav-link">GLOBAL</a>
@@ -3359,7 +3328,7 @@
         </div>
         <button
           id="mobile-menu-btn"
-          class="xl:hidden flex flex-col justify-center gap-[5px] w-10 h-10 cursor-pointer"
+          class="lg:hidden flex flex-col justify-center gap-[5px] w-10 h-10 cursor-pointer"
           aria-label="Toggle menu"
           aria-expanded="false"
         >
@@ -4197,65 +4166,10 @@
       </section>
 
       <!-- ═══════════════════════════════════════════════════════
-         03a / SERVICES — Word Cloud Tunnel (1 screen)
-    ═══════════════════════════════════════════════════════ -->
-      <section id="services" class="section-fade-bg" data-bg-opacity="0.75">
-        <div id="svc-word-zoom">
-          <div id="svc-word-pin">
-            <div id="svc-zoom-label">
-              <span
-                class="font-mono text-xs text-neutral-200 uppercase tracking-widest block mb-4 text-center"
-                >[ 03 / SERVICES ]</span
-              >
-              <h2
-                class="font-serif text-5xl md:text-7xl tracking-tight text-white leading-tight text-center"
-              >
-                Full-Spectrum<br />Language &amp; Publishing
-              </h2>
-              <p
-                class="text-sm text-neutral-400 mt-4 max-w-sm leading-relaxed text-center mx-auto"
-              >
-                From translation to print-ready production — under one studio.
-              </p>
-            </div>
-            <div id="svc-word-stage">
-              <div class="svc-wgroup" data-phase="0">
-                <span class="svc-word svc-word-xl" style="--wx: 22%; --wy: 28%"
-                  >Multilingual DTP Services</span
-                >
-                <span class="svc-word svc-word-xl" style="--wx: 68%; --wy: 62%"
-                  >Localization</span
-                >
-                <span class="svc-word svc-word-md" style="--wx: 52%; --wy: 18%"
-                  >Document Formatting Services</span
-                >
-                <span class="svc-word svc-word-md" style="--wx: 30%; --wy: 76%"
-                  >Global Reach</span
-                >
-                <span class="svc-word svc-word-sm" style="--wx: 82%; --wy: 36%"
-                  >Cultural Adaptation</span
-                >
-                <span class="svc-word svc-word-sm" style="--wx: 14%; --wy: 52%"
-                  >Localization Engineering</span
-                >
-                <span class="svc-word svc-word-xl" style="--wx: 20%; --wy: 60%"
-                  >PDF Remediation & Accessibility</span
-                >
-              </div>
-            </div>
-            <div id="svc-zoom-hud">
-              <span id="svc-zoom-step">01 / 01</span>
-              <div id="svc-zoom-bar-wrap"><div id="svc-zoom-bar"></div></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- ═══════════════════════════════════════════════════════
-         03b / SERVICES — Two Pillars (stacking cards)
+         03 / SERVICES — Two Pillars (stacking cards)
     ═══════════════════════════════════════════════════════ -->
       <section
-        id="svc-pillars-section"
+        id="services"
         class="section-fade-bg"
         data-bg-opacity="0.75"
       >
@@ -5707,17 +5621,32 @@
                     </select>
                   </div>
                 </div>
-                <div>
-                  <label class="contact-label" for="cf-languages"
-                    >Target Languages</label
-                  >
-                  <input
-                    type="text"
-                    id="cf-languages"
-                    name="languages"
-                    class="contact-field"
-                    placeholder="e.g. German, Japanese, Arabic, Hindi…"
-                  />
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                  <div>
+                    <label class="contact-label" for="cf-phone"
+                      >Phone Number</label
+                    >
+                    <input
+                      type="tel"
+                      id="cf-phone"
+                      name="phone"
+                      class="contact-field"
+                      placeholder="+1 555 000 0000"
+                      autocomplete="tel"
+                    />
+                  </div>
+                  <div>
+                    <label class="contact-label" for="cf-languages"
+                      >Target Languages</label
+                    >
+                    <input
+                      type="text"
+                      id="cf-languages"
+                      name="languages"
+                      class="contact-field"
+                      placeholder="e.g. German, Japanese, Arabic, Hindi…"
+                    />
+                  </div>
                 </div>
                 <div>
                   <label class="contact-label" for="cf-message"
@@ -5729,6 +5658,43 @@
                     class="contact-field"
                     placeholder="Describe your project — file formats, volume, deadline, and any special requirements…"
                   ></textarea>
+                </div>
+                <div>
+                  <label class="contact-label" for="cf-files"
+                    >Attachments · Optional · Up to 50 MB</label
+                  >
+                  <input
+                    type="file"
+                    id="cf-files"
+                    name="attachments"
+                    multiple
+                    class="contact-file-input"
+                  />
+                  <label
+                    for="cf-files"
+                    class="contact-file-drop"
+                    id="cf-file-drop"
+                  >
+                    <svg
+                      width="15"
+                      height="15"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      aria-hidden="true"
+                      focusable="false"
+                    >
+                      <path d="M7 10V2M3.5 5.5L7 2l3.5 3.5M2 12h10" />
+                    </svg>
+                    Attach reference files — drag &amp; drop or click to browse
+                  </label>
+                  <div id="cf-file-list" class="contact-file-list"></div>
+                  <div
+                    id="cf-file-error"
+                    class="contact-file-error"
+                    role="alert"
+                  ></div>
                 </div>
                 <div class="flex items-center gap-6 pt-2">
                   <button
@@ -7319,117 +7285,6 @@
           requestAnimationFrame(frame);
         })(0);
       }
-
-      // ── Services: 3D Word Zoom ────────────────────────────
-      (function initSvcWordZoom() {
-        if (
-          typeof gsap === "undefined" ||
-          typeof ScrollTrigger === "undefined"
-        ) {
-          document.querySelectorAll(".svc-word").forEach(function (w) {
-            w.style.opacity = "0.6";
-            w.style.transform = "translate(-50%,-50%) scale(1)";
-          });
-          return;
-        }
-        var section = document.getElementById("svc-word-zoom");
-        var label = document.getElementById("svc-zoom-label");
-        var bar = document.getElementById("svc-zoom-bar");
-        var stepEl = document.getElementById("svc-zoom-step");
-        var groups = document.querySelectorAll(".svc-wgroup");
-        if (!section || !groups.length) return;
-
-        var PHASES = groups.length; // 6
-        var phaseDur = 1 / PHASES;
-
-        // Initial state: all words hidden small
-        gsap.set(groups, { opacity: 0 });
-        groups.forEach(function (g) {
-          gsap.set(g.querySelectorAll(".svc-word"), {
-            scale: 0.04,
-            opacity: 0,
-            transformOrigin: "50% 50%",
-          });
-        });
-
-        var tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: section,
-            start: "top top",
-            end: "bottom bottom",
-            scrub: 0.4,
-            onUpdate: function (self) {
-              if (bar) bar.style.width = self.progress * 100 + "%";
-              var ph = Math.min(PHASES - 1, Math.floor(self.progress * PHASES));
-              if (stepEl)
-                stepEl.textContent =
-                  String(ph + 1).padStart(2, "0") + " / 0" + PHASES;
-            },
-          },
-        });
-
-        // Label disappears immediately when words start zooming in
-        tl.to(
-          label,
-          { opacity: 0, y: -20, duration: phaseDur * 0.12, ease: "power2.in" },
-          0,
-        );
-
-        groups.forEach(function (group, gi) {
-          var words = Array.from(group.querySelectorAll(".svc-word"));
-          var t0 = gi * phaseDur; // phase start
-          var tMid = t0 + phaseDur * 0.28; // words at full size
-          var tEnd = t0 + phaseDur * 0.92; // phase end
-          var tNext = (gi + 1) * phaseDur;
-
-          // Reveal group
-          tl.to(group, { opacity: 1, duration: 0.001 }, t0);
-
-          words.forEach(function (word, wi) {
-            var wordOffset = wi * phaseDur * 0.02; // stagger between words
-            var tWord = t0 + wordOffset;
-            var targetOpacity = word.className.includes("svc-word-xl")
-              ? 0.9
-              : word.className.includes("svc-word-md")
-                ? 0.52
-                : 0.25;
-
-            // Phase 1: tiny → visible (approach camera)
-            tl.to(
-              word,
-              {
-                scale: 1,
-                opacity: targetOpacity,
-                duration: phaseDur * 0.26,
-                ease: "power2.out",
-              },
-              tWord,
-            );
-
-            // Phase 2: normal → blow past (rush through camera)
-            tl.to(
-              word,
-              {
-                scale: 10,
-                opacity: 0,
-                duration: phaseDur * 0.62,
-                ease: "power3.in",
-              },
-              tWord + phaseDur * 0.24,
-            );
-          });
-
-          // Hide group container cleanly before next phase
-          tl.to(group, { opacity: 0, duration: 0.001 }, tNext - 0.002);
-        });
-
-        // Pin fades at the very end so the empty frame coincides with release
-        tl.to(
-          "#svc-word-pin",
-          { opacity: 0, duration: 0.04, ease: "power2.in" },
-          0.96,
-        );
-      })();
 
       // ── Services: Stacking Pillars + Tab Pointer + Detail Drawer ──
       (function initSvcPillars() {
@@ -9611,11 +9466,107 @@
           });
       })();
 
-      // ── Contact form: Web3Forms API submission ───────────────────
+      // ── Contact form: submission + attachments (up to 50 MB) ─────
       (function initContactForm() {
         var form = document.getElementById("contact-form");
         var success = document.getElementById("contact-success");
         if (!form) return;
+
+        // Set this to your mail API endpoint to enable attachment delivery.
+        // When set, the form posts multipart/form-data (all fields + files
+        // under "attachments"). When empty, it falls back to Web3Forms JSON
+        // and attachments are NOT sent.
+        var CONTACT_API_URL = "";
+        var MAX_TOTAL_BYTES = 50 * 1024 * 1024; // 50 MB across all files
+
+        var fileInput = document.getElementById("cf-files");
+        var fileList = document.getElementById("cf-file-list");
+        var fileError = document.getElementById("cf-file-error");
+        var dropZone = document.getElementById("cf-file-drop");
+        var attached = [];
+
+        function fmtSize(b) {
+          if (b >= 1024 * 1024) return (b / (1024 * 1024)).toFixed(1) + " MB";
+          if (b >= 1024) return Math.round(b / 1024) + " KB";
+          return b + " B";
+        }
+        function totalBytes() {
+          return attached.reduce(function (s, f) {
+            return s + f.size;
+          }, 0);
+        }
+        function showFileError(msg) {
+          if (!fileError) return;
+          fileError.textContent = msg;
+          fileError.style.display = msg ? "block" : "none";
+        }
+        function renderFiles() {
+          if (!fileList) return;
+          fileList.innerHTML = "";
+          attached.forEach(function (f, i) {
+            var row = document.createElement("div");
+            row.className = "cf-file-item";
+            var name = document.createElement("span");
+            name.className = "cf-file-name";
+            name.textContent = f.name;
+            var size = document.createElement("span");
+            size.className = "cf-file-size";
+            size.textContent = fmtSize(f.size);
+            var rm = document.createElement("button");
+            rm.type = "button";
+            rm.className = "cf-file-remove";
+            rm.setAttribute("aria-label", "Remove " + f.name);
+            rm.textContent = "✕";
+            rm.addEventListener("click", function () {
+              attached.splice(i, 1);
+              showFileError("");
+              renderFiles();
+            });
+            row.appendChild(name);
+            row.appendChild(size);
+            row.appendChild(rm);
+            fileList.appendChild(row);
+          });
+        }
+        function addFiles(files) {
+          var rejected = [];
+          Array.prototype.forEach.call(files, function (f) {
+            if (totalBytes() + f.size > MAX_TOTAL_BYTES) rejected.push(f.name);
+            else attached.push(f);
+          });
+          showFileError(
+            rejected.length
+              ? "Attachments must stay under 50 MB total — couldn't add: " +
+                  rejected.join(", ")
+              : "",
+          );
+          renderFiles();
+        }
+
+        if (fileInput) {
+          fileInput.addEventListener("change", function () {
+            addFiles(fileInput.files);
+            fileInput.value = "";
+          });
+        }
+        if (dropZone) {
+          ["dragenter", "dragover"].forEach(function (ev) {
+            dropZone.addEventListener(ev, function (e) {
+              e.preventDefault();
+              dropZone.classList.add("dragover");
+            });
+          });
+          ["dragleave", "drop"].forEach(function (ev) {
+            dropZone.addEventListener(ev, function (e) {
+              e.preventDefault();
+              dropZone.classList.remove("dragover");
+            });
+          });
+          dropZone.addEventListener("drop", function (e) {
+            if (e.dataTransfer && e.dataTransfer.files.length)
+              addFiles(e.dataTransfer.files);
+          });
+        }
 
         form.addEventListener("submit", function (e) {
           e.preventDefault();
@@ -9623,6 +9574,7 @@
           var email = document.getElementById("cf-email").value.trim();
           var company = document.getElementById("cf-company").value.trim();
           var service = document.getElementById("cf-service").value;
+          var phone = document.getElementById("cf-phone").value.trim();
           var langs = document.getElementById("cf-languages").value.trim();
           var message = document.getElementById("cf-message").value.trim();
 
@@ -9630,64 +9582,101 @@
             document.getElementById("cf-name").focus();
             return;
           }
+          if (totalBytes() > MAX_TOTAL_BYTES) {
+            showFileError("Attachments must stay under 50 MB total.");
+            return;
+          }
+
+          var subject =
+            "SuperDTP Enquiry — " +
+            (service || "General") +
+            (company ? " / " + company : "");
 
           var submitBtn = form.querySelector('button[type="submit"]');
           var origHtml = submitBtn.innerHTML;
           submitBtn.disabled = true;
           submitBtn.textContent = "Sending…";
 
-          fetch("https://api.web3forms.com/submit", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json",
-            },
-            body: JSON.stringify({
-              access_key: "75703a66-e5a7-497d-9bf5-f747be94c7a2",
-              subject:
-                "SuperDTP Enquiry — " +
-                (service || "General") +
-                (company ? " / " + company : ""),
-              from_name: "SuperDTP Website",
-              name: name,
-              email: email,
-              company: company || "",
-              service: service || "",
-              languages: langs || "",
-              message: message || "",
-            }),
-          })
-            .then(function (res) {
-              return res.json();
-            })
-            .then(function (data) {
-              if (data.success) {
-                if (success) {
-                  success.style.display = "flex";
-                  if (typeof gsap !== "undefined")
-                    gsap.from(success, {
-                      opacity: 0,
-                      y: 8,
-                      duration: 0.5,
-                      ease: "power2.out",
-                    });
-                }
-                form.reset();
-              } else {
-                alert(
-                  "Something went wrong. Please try again or email us at dtp.bulgaria@gmail.com",
-                );
-              }
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = origHtml;
-            })
-            .catch(function () {
-              alert(
-                "Network error. Please check your connection and try again.",
-              );
-              submitBtn.disabled = false;
-              submitBtn.innerHTML = origHtml;
+          function restoreBtn() {
+            submitBtn.disabled = false;
+            submitBtn.innerHTML = origHtml;
+          }
+          function onSuccess() {
+            if (success) {
+              success.style.display = "flex";
+              if (typeof gsap !== "undefined")
+                gsap.from(success, {
+                  opacity: 0,
+                  y: 8,
+                  duration: 0.5,
+                  ease: "power2.out",
+                });
+            }
+            form.reset();
+            attached = [];
+            renderFiles();
+            showFileError("");
+            restoreBtn();
+          }
+          function onFailure() {
+            alert(
+              "Something went wrong. Please try again or email us at dtp.bulgaria@gmail.com",
+            );
+            restoreBtn();
+          }
+          function onNetworkError() {
+            alert("Network error. Please check your connection and try again.");
+            restoreBtn();
+          }
+
+          if (CONTACT_API_URL) {
+            var fd = new FormData();
+            fd.append("subject", subject);
+            fd.append("name", name);
+            fd.append("email", email);
+            fd.append("company", company);
+            fd.append("service", service);
+            fd.append("phone", phone);
+            fd.append("languages", langs);
+            fd.append("message", message);
+            attached.forEach(function (f) {
+              fd.append("attachments", f, f.name);
             });
+            fetch(CONTACT_API_URL, { method: "POST", body: fd })
+              .then(function (res) {
+                if (res.ok) onSuccess();
+                else onFailure();
+              })
+              .catch(onNetworkError);
+          } else {
+            fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                access_key: "75703a66-e5a7-497d-9bf5-f747be94c7a2",
+                subject: subject,
+                from_name: "SuperDTP Website",
+                name: name,
+                email: email,
+                company: company || "",
+                service: service || "",
+                phone: phone || "",
+                languages: langs || "",
+                message: message || "",
+              }),
+            })
+              .then(function (res) {
+                return res.json();
+              })
+              .then(function (data) {
+                if (data.success) onSuccess();
+                else onFailure();
+              })
+              .catch(onNetworkError);
+          }
         });
       })();
 
@@ -10079,7 +10068,6 @@
           "trusted-by",
           "indic-excellence",
           "services",
-          "svc-pillars-section",
           "industry-solutions",
           "visual-lab",
           "fmt-section",
