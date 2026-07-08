@@ -4,16 +4,4 @@
 # Canonical redirects (no trailing slash → with trailing slash)
 /localization         /localization/         301
 /multilingual-dtp     /multilingual-dtp/     301
-/e-learning           /e-learning/           301
-/file-preparation     /file-preparation/     301
-/qa                   /qa/                   301
-/pdf-remediation      /pdf-remediation/      301
-/prepress             /prepress/             301
 
-# Legacy URL compatibility (if old WordPress URLs are referenced)
-/dtp-services/        /multilingual-dtp/     301
-/e-learning/          /e-learning/           200
-/file-preparation/    /file-preparation/     200
-/iqa/                 /qa/                   301
-/pdf-accessibility/   /pdf-remediation/      301
-/typesetting/         /prepress/             301
