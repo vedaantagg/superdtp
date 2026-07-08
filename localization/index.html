@@ -435,33 +435,42 @@
             .loc-svc-icon { width: 56px; max-width: 56px; }
         }
 
-        /* Stacking cards — Enterprise Localization Services collapse into one another on scroll */
+        /* Stacking cards — Enterprise Localization Services collapse into one another on scroll.
+           Each card sticks slightly lower than the last (--i * 40px), so earlier card
+           headers stay visible as a ladder of peek strips above whichever card is
+           currently open. Card bodies are capped to the viewport room actually left
+           below their own peek offset (100vh - offset - buffer) with internal scroll
+           as a safety net, so the active card — including the very last one — is
+           always fully on-screen, never cropped by the viewport edge. */
         #loc-svc-stack { position: relative; }
         .loc-svc-head {
             position: sticky;
-            top: 80px;
+            top: 74px;
             z-index: 45;
             text-align: center;
             max-width: 640px;
-            margin: 0 auto 36px;
-            padding: 14px 20px 18px;
+            margin: 0 auto 18px;
+            padding: 10px 20px 12px;
             background: rgba(9,9,11,0.88);
             backdrop-filter: blur(14px);
             border-radius: 16px;
         }
         .loc-pillar {
             position: sticky;
-            top: 196px;
+            top: calc(168px + var(--i) * 40px);
             z-index: calc(10 + var(--i));
         }
         .loc-pillar-card {
             position: relative;
-            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.1);
             background: linear-gradient(162deg, #16161e 0%, #0c0c12 58%, #0a0a0e 100%);
             box-shadow: 0 -1px 0 rgba(255,255,255,0.05) inset, 0 26px 64px rgba(0,0,0,0.55);
             transition: border-color 0.35s ease, box-shadow 0.4s ease;
+            max-height: calc(100vh - 192px - var(--i) * 40px);
+            overflow: hidden;
         }
         .loc-pillar-card:hover {
             border-color: rgba(212,175,55,0.35);
@@ -470,20 +479,21 @@
             display: flex;
             align-items: center;
             gap: 14px;
-            height: 50px;
+            height: 40px;
             padding: 0 20px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
+            flex-shrink: 0;
         }
         .loc-pillar-no {
             font-family: 'Space Grotesk', monospace;
-            font-size: 0.62rem;
+            font-size: 0.6rem;
             letter-spacing: 0.2em;
             color: rgba(212,175,55,0.9);
             flex-shrink: 0;
         }
         .loc-pillar-head-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(1rem, 1.1vw + 0.75rem, 1.35rem);
+            font-size: clamp(0.95rem, 1vw + 0.7rem, 1.2rem);
             line-height: 1.15;
             color: #fff;
             white-space: nowrap;
@@ -492,12 +502,15 @@
             min-width: 0;
         }
         .loc-pillar-body {
-            padding: 26px 26px 34px;
+            padding: 18px 24px 22px;
+            overflow-y: auto;
+            flex: 1;
+            min-height: 0;
         }
         /* Non-sticky runway so the last card fully releases and scrolls away
            before the next section's content appears — without this the final
            sticky card keeps overlapping whatever follows. */
-        .loc-svc-stack-spacer { height: 260px; }
+        .loc-svc-stack-spacer { height: 120px; }
 
         /* Below this breakpoint the sticky peek-stack illusion is dropped —
            card bodies are taller than the available pin window, so keep
@@ -505,8 +518,10 @@
         @media (max-width: 1024px), (max-height: 820px) {
             .loc-svc-head { position: static; top: auto; margin: 0 0 32px; padding: 0; background: none; backdrop-filter: none; text-align: left; max-width: none; }
             .loc-pillar { position: static; top: auto; z-index: auto; margin-bottom: 20px; }
+            .loc-pillar-card { max-height: none; }
             .loc-pillar-head { height: auto; min-height: 50px; padding: 12px 20px; flex-wrap: wrap; }
             .loc-pillar-head-title { white-space: normal; overflow: visible; text-overflow: clip; }
+            .loc-pillar-body { padding: 26px 26px 34px; overflow-y: visible; }
             .loc-svc-stack-spacer { display: none; }
         }
         @media (max-width: 640px) {
