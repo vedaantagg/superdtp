@@ -147,7 +147,23 @@
   <g transform="translate(300,300)">
     <circle class="hub-pulse" r="66" />
     <circle r="65" fill="url(#hubGrad)" stroke="#f6dd94" stroke-width="1.5" style="filter:url(#glow)" />
-    <text x="-25" y="0" font-size="50px">🌏︎</text>
+    
+<g transform="translate(-25,-45) scale(0.78)">
+
+  <g fill="none"
+     stroke="black"
+     stroke-width="3"
+     stroke-linecap="round"
+     stroke-linejoin="round">
+    <circle cx="32" cy="32" r="28"/>
+    <line x1="5" y1="32" x2="59" y2="32"/>
+    <line x1="32" y1="5" x2="32" y2="59"/>
+    <path d="M20 7 C12 18 12 46 20 57"/>
+    <path d="M44 7 C52 18 52 46 44 57"/>
+    <path d="M10 15 C22 22 42 22 54 15"/>
+    <path d="M10 49 C22 42 42 42 54 49"/>
+  </g>
+</g>
     <text class="hub-title" text-anchor="middle" y="24">Global Content</text>
     <text class="hub-sub" text-anchor="middle" y="40">Localization Hub</text>
   </g>
