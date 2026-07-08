@@ -130,7 +130,7 @@
     </script>
     
     <style>
-        html { scroll-behavior: smooth; }
+        html, body { scroll-behavior: smooth; width: 100%; margin: 0; padding: 0; }
         .site-logo { height: 44px; width: auto; display: block; max-width: 160px; flex-shrink: 0; } @media (min-width: 640px) { .site-logo { height: 52px; max-width: 200px; } } @media (min-width: 1024px) { .site-logo { height: 58px; max-width: 240px; } }
         body {
             background-color: #09090b;
@@ -138,6 +138,7 @@
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
         }
+        section { width: 100%; }
 
         /* Ambient Film Grain Overlay */
         .grain-overlay {
@@ -443,64 +444,77 @@
     <div id="cursor-light" aria-hidden="true"></div>
     <div class="grain-overlay"></div>
 
-    <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md">
-        <a href="/" aria-label="SuperDTP Home" class="flex items-center gap-3">
-            <img src="../static/logo copy 5.svg" alt="SuperDTP" class="site-logo" />
-
-        </a>
-        <nav class="hidden md:flex items-center space-x-8 font-mono text-xs tracking-wider">
-            <a href="#hero" class="nav-link active">01. INCEPTION</a>
-            <a href="#visual-lab" class="nav-link">02. REFLOW ENGINE</a>
-            <a href="#solutions" class="nav-link">03. SOLUTIONS</a>
-            <div class="services-trigger relative flex items-center cursor-pointer">
-                <button type="button" class="nav-link flex items-center gap-1.5 cursor-pointer">
-                    SERVICES
-                    <svg class="w-2.5 h-2.5" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <div class="services-dropdown" role="menu">
-                    <a href="/localization/" class="dropdown-link current" role="menuitem"><span class="dropdown-dot"></span>Indic Localisation</a>
-                    <a href="/multilingual-dtp/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP</a>
-                    <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>E-learning</a>
-                    <a href="/file-preparation/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>File Preparation</a>
-                    <a href="/qa/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Quality Assurance</a>
-                    <a href="/pdf-remediation/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Accessibility</a>
-                    <a href="/prepress/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Prepress & Typesetting</a>
-                </div>
-            </div>
-            <a href="#footer" class="nav-link">05. TERMINUS</a>
-        </nav>
-      <div class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block">
-            <a href="/#contact" class="nav-link">CONTACT US</a>
+    <header
+      class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md"
+      style="height: 64px"
+    >
+      <a href="/" aria-label="SuperDTP Home" class="flex-shrink min-w-0">
+        <img
+          src="../static/logo copy 5.svg"
+          alt="SuperDTP logo"
+          class="site-logo"
+          fetchpriority="high"
+        />
+      </a>
+      <nav
+        aria-label="Main navigation"
+        id="main-nav"
+        class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200"
+      >
+        <a href="#hero" class="nav-link active">HOME</a>
+        <div class="services-trigger relative flex items-center cursor-pointer" role="none">
+          <a href="#services" class="nav-link flex items-center gap-1.5" aria-haspopup="true" aria-expanded="false">
+            SERVICES
+            <svg class="w-2.5 h-2.5" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <div class="services-dropdown" role="menu" aria-label="Services menu">
+            <a href="/localization/" class="dropdown-link current" role="menuitem"><span class="dropdown-dot"></span>Localization</a>
+            <a href="/multilingual-dtp/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>DTP & Publishing</a>
+            <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>E-learning</a>
+            <a href="/file-preparation/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>File Preparation</a>
+            <a href="/qa/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Quality Assurance</a>
+            <a href="/pdf-remediation/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Accessibility</a>
+            <a href="/prepress/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Prepress</a>
+          </div>
         </div>
+        <a href="#why-localization" class="nav-link">WHY LOCALIZE</a>
+        <a href="#services" class="nav-link">SERVICES</a>
+      </nav>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <div class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block">
+          <a href="/#contact" class="nav-link">CONTACT US</a>
+        </div>
+      </div>
     </header>
 
     <main id="main-content" aria-label="SuperDTP Indic Language Localisation Services">
 
     <section id="hero" aria-labelledby="hero-heading" class="min-h-screen flex flex-col justify-center relative pt-24 px-6 md:px-10 w-full overflow-hidden" style="overflow-x:clip;">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 py-12">
-            
-            <div class="lg:col-span-5 space-y-6">
+            <div class="lg:col-span-6 space-y-6">
                 <div class="font-mono text-xs uppercase tracking-widest text-neutral-400 flex items-center gap-2">
                     <span class="w-2 h-2 bg-brandAccent rounded-full animate-pulse"></span>
-                    Enterprise-Grade Indic Engine / Typography Pipeline
+                    Enterprise Localization Services
                 </div>
 
                 <h1 id="hero-heading" class="type-hero">
-                    Enterprise Localization Services with <br>
-                    <span id="hero-word" style="color:#d4af37; display:inline-block; transition: all 0.4s ease;">Visual Integrity</span><br>
-                    for Global Business Growth.
+                    Enterprise Localization Services for Global Business Growth
                 </h1>
 
                 <p class="text-neutral-400 font-light leading-relaxed max-w-xl text-base md:text-lg">
-                  Your Content. Every Language. Every Market. Every Format.
+                    Your Content. Every Language. Every Market. Every Format. Expand globally with end-to-end localization services that combine translation, multilingual desktop publishing, software localization, technical documentation, website localization, and cultural adaptation.
                 </p>
 
                 <div class="flex flex-row flex-wrap gap-4 pt-2">
-                    <a href="#visual-lab" class="pill-button pill-button-primary">Launch Reflow Lab</a>
-                    <a href="#framework" class="pill-button pill-button-secondary">Consultation Architecture</a>
+                    <a href="/#contact" class="pill-button pill-button-primary">Request a Consultation</a>
+                    <a href="#services" class="pill-button pill-button-secondary">Explore Services</a>
                 </div>
             </div>
-            <img class="lg:col-span-7 rounded-xl shadow-lg shadow-brandAccent/10 w-full h-full object-contain" style="max-height:70vh;" src="../static/Localization.svg" alt="Localization">
+            <div class="lg:col-span-6 flex justify-center">
+                <img class="rounded-xl shadow-lg shadow-brandAccent/10 w-full h-full object-contain" style="max-height:70vh;" src="../static/Localization.svg" alt="Localization Services">
+            </div>
         </div>
             <!-- <div class="lg:col-span-5 flex justify-center relative">
                 <div class="absolute inset-0 bg-gradient-to-tr from-brandAccent/10 to-transparent blur-3xl -z-10 rounded-full"></div>
@@ -572,58 +586,72 @@
         </div>
     </section> -->
 
-    <section class="border-t border-white/5 py-28 px-6 md:px-12" id="why-localisation" aria-labelledby="why-localisation-heading">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-end">
-                <div class="lg:col-span-7 space-y-4">
-                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">[ 02 / MARKET CONTEXT ]</span>
-                    <h2 id="why-localisation-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Why Indic Language Localisation Matters</h2>
-                    <p class="text-neutral-400 font-light leading-relaxed text-base">
-                        India is one of the world's fastest-growing digital economies — home to hundreds of millions of consumers, employees, learners, and technology users who prefer engaging with content in their native languages. Success in India requires more than translation.
+    <section class="border-t border-white/5 py-28 px-6 md:px-12" id="why-localization" aria-labelledby="why-localization-heading">
+        <div class="w-full px-6 md:px-12 mx-auto">
+            <div class="mb-16 space-y-4">
+                <h2 id="why-localization-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Localization Beyond Translation</h2>
+                <p class="text-neutral-400 font-light text-base max-w-2xl">
+                    Localization is much more than translation. Every customer interaction—from websites and software to product manuals, investor presentations, and ESG reports—must feel native to local audiences.
+                </p>
+            </div>
+            <p class="text-neutral-300 font-light leading-relaxed text-base max-w-3xl mb-12">
+                SuperDTP combines native-language expertise, multilingual DTP, cultural adaptation, localization engineering, linguistic QA, and enterprise project management to deliver market-ready content. We help enterprises expand globally with end-to-end services that support business growth while preserving quality, brand consistency, and speed.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
+                    <h3 class="font-serif text-2xl text-white">Website Localization</h3>
+                    <p class="text-neutral-400 text-sm font-light leading-relaxed">
+                        Adapt content, navigation, visuals, SEO elements, and UX for each target market. From corporate websites to eCommerce platforms and customer portals—we ensure every page feels natural to local users.
                     </p>
                 </div>
-                <div class="lg:col-span-5">
-                    <div class="p-6 border border-white/5 rounded-2xl bg-white/[0.02] space-y-4">
-                        <div class="font-mono text-xs text-brandAccent uppercase tracking-widest">Regional-language engagement drives:</div>
-                        <ul class="space-y-3" aria-label="Benefits of Indic language localisation">
-                            <li class="flex items-center gap-3 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Product adoption</li>
-                            <li class="flex items-center gap-3 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Customer trust</li>
-                            <li class="flex items-center gap-3 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Workforce training effectiveness</li>
-                            <li class="flex items-center gap-3 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Brand engagement</li>
-                            <li class="flex items-center gap-3 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Customer support outcomes</li>
-                            <li class="flex items-center gap-3 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Digital transformation initiatives</li>
-                        </ul>
-                    </div>
+
+                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
+                    <h3 class="font-serif text-2xl text-white">Software & App Localization</h3>
+                    <p class="text-neutral-400 text-sm font-light leading-relaxed">
+                        Localize desktop software, web applications, SaaS platforms, mobile apps, UIs, and help systems while preserving usability and functionality. Includes localization testing across devices and platforms.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
+                    <h3 class="font-serif text-2xl text-white">Marketing Localization</h3>
+                    <p class="text-neutral-400 text-sm font-light leading-relaxed">
+                        Localize marketing campaigns, promotional materials, digital content, and sales assets. Ensure your message resonates naturally while maintaining consistent global branding.
+                    </p>
                 </div>
             </div>
 
-            <blockquote class="p-6 border border-brandAccent/20 bg-brandAccent/[0.03] rounded-2xl text-center">
-                <p class="text-neutral-300 font-light leading-relaxed">Organizations that invest in high-quality localisation are better positioned to <strong class="text-brandAccent font-normal">communicate, engage, educate, and grow</strong> across India's diverse multilingual landscape.</p>
-            </blockquote>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
+                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
+                    <h3 class="font-serif text-2xl text-white">Technical Documentation</h3>
+                    <p class="text-neutral-400 text-sm font-light leading-relaxed">
+                        Localize user manuals, engineering documents, SOPs, and technical publications while maintaining terminology consistency, formatting, and regulatory compliance. Combined with multilingual DTP for production-ready output.
+                    </p>
+                </div>
 
-            <!-- INFOGRAPHIC 02 — India Language Reach -->
-            <div class="mt-12">
-                <div class="infographic-placeholder ph-tall">
-                    <div class="ph-tag">Infographic Placeholder 02</div>
-                    <svg class="ph-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-                        <circle cx="12" cy="12" r="9"/><path d="M2 12h20M12 2a14 14 0 0 1 0 20M12 2a14 14 0 0 0 0 20"/>
-                    </svg>
-                    <p class="ph-title">India Language Reach — Speaker Population by Major Language</p>
-                    <p class="ph-hint">Recommended: Horizontal stacked bar chart or bubble map showing speaker populations — Hindi ~520M, Bengali ~230M, Telugu ~83M, Marathi ~83M, Tamil ~69M, Gujarati ~56M, Kannada ~44M, Malayalam ~35M, Punjabi ~32M, Odia ~38M — with percentage of total India population. Secondary layer: percentage who prefer native-language digital content.</p>
+                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
+                    <h3 class="font-serif text-2xl text-white">eLearning Localization</h3>
+                    <p class="text-neutral-400 text-sm font-light leading-relaxed">
+                        Localize Storyline, Rise, SCORM packages, LMS courses, simulations, assessments, and training materials while preserving learning objectives, interactions, and visual consistency.
+                    </p>
+                </div>
+
+                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
+                    <h3 class="font-serif text-2xl text-white">Multilingual DTP</h3>
+                    <p class="text-neutral-400 text-sm font-light leading-relaxed">
+                        Format translated content while maintaining typography, page layouts, graphics, and brand consistency. Full support for complex scripts, RTL languages, and Asian typography.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <section class="border-t border-white/5 bg-[#07070a]/90 py-28 px-6 md:px-12" id="visual-lab" aria-labelledby="visual-lab-heading">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-16 items-end">
-                <div class="lg:col-span-7 space-y-2">
-                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block">[ 02 / REFLOW LAB ]</span>
-                    <h2 id="visual-lab-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Localisation without sacrificing design mechanics.</h2>
-                </div>
-                <p class="lg:col-span-5 text-sm text-neutral-400 leading-relaxed font-light">
-                    SuperDTP balances algorithmic layout calculation with meticulous typographic balance. The interface console showcases live viewport adjustments handling regional font dynamics, line height metrics, and bounding-box shifts dynamically.
+        <div class="w-full px-6 md:px-12 mx-auto">
+            <div class="mb-16 space-y-4">
+                <h2 id="visual-lab-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Localization without Compromising Design</h2>
+                <p class="text-neutral-400 font-light text-base max-w-2xl">
+                    SuperDTP balances precise layout calculation with meticulous typographic balance. Every localized document maintains visual integrity across languages—no compromises on design, formatting, or brand consistency.
                 </p>
             </div>
 
@@ -708,124 +736,69 @@
     </section>
 
     <section class="border-t border-white/5 py-28 px-6 md:px-12" id="challenges" aria-labelledby="challenges-heading">
-        <div class="max-w-7xl mx-auto">
+        <div class="w-full px-6 md:px-12 mx-auto">
             <div class="mb-16 space-y-4">
-                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">[ 04 / ENTERPRISE PAIN POINTS ]</span>
-                <h2 id="challenges-heading" class="font-serif text-5xl md:text-6xl tracking-tight">The Challenges of Indic Language Localisation</h2>
-                <p class="text-neutral-400 font-light text-base max-w-2xl">Many enterprise localisation programs are designed around Latin-script languages and encounter significant barriers when deployed across Indic markets at scale.</p>
+                <h2 id="challenges-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Why Partner with SuperDTP</h2>
+                <p class="text-neutral-400 font-light text-base max-w-2xl">Global enterprises choose SuperDTP for comprehensive, enterprise-grade localization across 100+ languages with multilingual DTP expertise, dedicated project management, and production-ready deliverables.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <article class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                    <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">01 // Linguistic</div>
-                    <h3 class="font-serif text-2xl text-white">Linguistic Complexity</h3>
-                    <ul class="space-y-2" aria-label="Linguistic complexity challenges">
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Multiple writing systems and scripts</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Regional language variations and dialects</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Industry-specific terminology requirements</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Cultural adaptation and contextual accuracy needs</li>
-                    </ul>
+                    <h3 class="font-serif text-2xl text-white">100+ Languages</h3>
+                    <p class="text-neutral-400 text-sm font-light">Support for all major global languages with specialized expertise in complex scripts, right-to-left languages, and multilingual publishing.</p>
                 </article>
                 <article class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                    <div class="font-mono text-xs text-cyan-500/70 tracking-widest uppercase">02 // Design</div>
-                    <h3 class="font-serif text-2xl text-white">Design &amp; Formatting Challenges</h3>
-                    <ul class="space-y-2" aria-label="Design and formatting challenges">
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Text expansion breaking original layouts</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Layout inconsistencies across locales</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Font rendering problems for complex scripts</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Multilingual publishing complexities</li>
-                    </ul>
+                    <h3 class="font-serif text-2xl text-white">Native Linguists</h3>
+                    <p class="text-neutral-400 text-sm font-light">Subject matter experts with deep industry knowledge ensuring cultural accuracy, terminology precision, and local context.</p>
                 </article>
                 <article class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                    <div class="font-mono text-xs text-emerald-500/70 tracking-widest uppercase">03 // Operational</div>
-                    <h3 class="font-serif text-2xl text-white">Operational Challenges</h3>
-                    <ul class="space-y-2" aria-label="Operational challenges">
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Multiple vendor dependencies and fragmentation</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Inconsistent quality standards across vendors</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Slow turnaround times under volume pressure</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Difficult cross-team project coordination</li>
-                    </ul>
+                    <h3 class="font-serif text-2xl text-white">Multilingual DTP Experts</h3>
+                    <p class="text-neutral-400 text-sm font-light">Expert typesetting and layout specialists handling complex formatting, font management, and production-ready delivery across all languages.</p>
                 </article>
                 <article class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                    <div class="font-mono text-xs text-purple-500/70 tracking-widest uppercase">04 // Scale</div>
-                    <h3 class="font-serif text-2xl text-white">Scale Challenges</h3>
-                    <ul class="space-y-2" aria-label="Scale challenges">
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Managing multiple Indian languages simultaneously</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Maintaining terminology consistency at scale</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Ensuring brand alignment across regions</li>
-                        <li class="flex items-start gap-2 text-sm text-neutral-400"><span class="w-1 h-1 rounded-full bg-neutral-600 mt-2 flex-shrink-0" aria-hidden="true"></span>Supporting continuous content updates</li>
-                    </ul>
+                    <h3 class="font-serif text-2xl text-white">Enterprise Scale</h3>
+                    <p class="text-neutral-400 text-sm font-light">Dedicated project managers, scalable teams, fast turnaround times, and proven workflows for high-volume, mission-critical projects.</p>
                 </article>
             </div>
 
-            <!-- INFOGRAPHIC 03 — Before vs After Localisation -->
-            <div class="mt-12">
-                <div class="infographic-placeholder ph-medium">
-                    <div class="ph-tag">Infographic Placeholder 03</div>
-                    <svg class="ph-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-                        <rect x="2" y="3" width="9" height="13" rx="1"/><rect x="13" y="3" width="9" height="13" rx="1"/>
-                        <path d="M7 19h10M12 16v3"/>
-                        <path d="M5 7h5M5 10h3M16 7h3M16 10h5" stroke-dasharray="2 1"/>
-                        <circle cx="17" cy="17" r="3"/><path d="M15.5 17h3M17 15.5v3" stroke-width="1.5"/>
-                    </svg>
-                    <p class="ph-title">Localisation Done Wrong vs. Done Right — Side-by-Side Layout Comparison</p>
-                    <p class="ph-hint">Recommended: Two-panel document mockup — Left panel (red-tinted) showing a typical broken Indic layout: overflowing text boxes, wrong font rendering, overlapping elements, unscaled copy expansion. Right panel (gold-tinted) showing the same document post SuperDTP processing: clean type, proper conjunct characters, fitted layout, consistent spacing.</p>
-                </div>
-            </div>
         </div>
     </section>
 
-    <section class="py-28 px-6 md:px-12 max-w-7xl mx-auto w-full" id="framework" aria-labelledby="framework-heading">
+    <section class="py-28 px-6 md:px-12 w-full px-6 md:px-12 mx-auto w-full" id="framework" aria-labelledby="framework-heading">
         <div class="mb-20 space-y-2">
-            <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block">[ 03 / PRODUCTION ECOSYSTEM ]</span>
-            <h2 id="framework-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Structured Quality Framework</h2>
+            <h2 id="framework-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Our Quality Framework</h2>
+            <p class="text-neutral-400 font-light text-base max-w-2xl">A structured, multi-point verification process ensuring production-ready deliverables across all projects.</p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">STAGE_01 // INTEGRITY</div>
                 <h3 class="font-serif text-2xl text-white">Linguistic Review</h3>
                 <p class="text-neutral-400 text-sm font-light leading-relaxed">
-                    Moving far beyond raw text transposition. Native in-country language subject matter experts validate cultural terminology context, industry vocabulary precision, and local expressions carefully.
+                    Native language experts validate terminology context, industry vocabulary precision, cultural accuracy, and local expressions. Moving far beyond raw text transposition.
                 </p>
             </div>
 
             <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">STAGE_02 // LAYOUT SETUP</div>
-                <h3 class="font-serif text-2xl text-white">Visual Reflow Balancing</h3>
+                <h3 class="font-serif text-2xl text-white">Terminology & DTP</h3>
                 <p class="text-neutral-400 text-sm font-light leading-relaxed">
-                    Automated layout scaling infrastructure precisely handles text length growth profiles, adjusts tracking patterns, fixes line splits, and optimizes whitespace safely.
+                    Multilingual typesetting with automated layout scaling handling text length growth, adjusting tracking patterns, fixing line breaks, and optimizing spacing safely.
                 </p>
             </div>
 
             <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">STAGE_03 // VERIFICATION</div>
-                <h3 class="font-serif text-2xl text-white">Final Output Audit</h3>
+                <h3 class="font-serif text-2xl text-white">Quality Assurance</h3>
                 <p class="text-neutral-400 text-sm font-light leading-relaxed">
-                    Comprehensive systematic multi-point evaluations verifying production-ready standards across print CMYK matrices, web accessibility frameworks, and interactive tag trees.
+                    Comprehensive linguistic QA, layout verification, visual inspection, functionality testing, and accessibility compliance across print, web, and digital platforms.
                 </p>
             </div>
         </div>
 
-        <!-- INFOGRAPHIC 04 — Quality Gate Workflow -->
-        <div class="mt-16">
-            <div class="infographic-placeholder ph-wide">
-                <div class="ph-tag">Infographic Placeholder 04</div>
-                <svg class="ph-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-                    <path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/>
-                    <path d="M12 3v2M12 19v2M3 12h2M19 12h2" stroke-dasharray="1 2"/>
-                </svg>
-                <p class="ph-title">SuperDTP Quality Gate — 6-Point Verification Checklist Visual</p>
-                <p class="ph-hint">Recommended: Horizontal connected checklist or scorecard infographic — 6 nodes: Linguistic Review → Terminology Validation → Functional Verification → DTP Quality Check → Formatting Review → Final Delivery Audit — each with a pass/fail indicator and brief tooltip. Color-coded: gold for in-progress, green for cleared.</p>
-            </div>
-        </div>
     </section>
 
     <section class="border-t border-white/5 bg-[#07070a]/90 py-28 px-6 md:px-12" id="solutions" aria-labelledby="solutions-heading">
-        <div class="max-w-7xl mx-auto">
+        <div class="w-full px-6 md:px-12 mx-auto">
             <div class="mb-16 space-y-4">
-                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">[ 06 / ENTERPRISE SOLUTIONS ]</span>
-                <h2 id="solutions-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Department-Wise Localisation Solutions</h2>
-                <p class="text-neutral-400 font-light text-base max-w-2xl">Tailored Indic language localisation programs for every enterprise function — from marketing and sales to HR, product, and compliance.</p>
+                <h2 id="solutions-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Enterprise Solutions by Department</h2>
+                <p class="text-neutral-400 font-light text-base max-w-2xl">Tailored localization programs for every enterprise function—from marketing and sales to HR, product, compliance, and ESG reporting.</p>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <article class="live-data-card rounded-2xl p-6 space-y-4">
@@ -935,17 +908,15 @@
 
     <!-- Core Services -->
     <section class="border-t border-white/5 py-28 px-6 md:px-12" id="services" aria-labelledby="services-heading">
-        <div class="max-w-7xl mx-auto">
+        <div class="w-full px-6 md:px-12 mx-auto">
             <div class="mb-16 space-y-4">
-                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">[ 07 / SERVICE CATALOGUE ]</span>
-                <h2 id="services-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Our Core Services</h2>
-                <p class="text-neutral-400 font-light text-base max-w-2xl">A complete production ecosystem for Indic language localisation — from linguistic review to print-ready and digital-ready output.</p>
+                <h2 id="services-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Comprehensive Localization Services</h2>
+                <p class="text-neutral-400 font-light text-base max-w-2xl">Complete production ecosystem for language localization—from linguistic review through print-ready and digital-ready output.</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
                     <img src="../static/LOC/1%20Website%20%26%20Digital%20Experience%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
                     <div class="loc-svc-text">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">01</div>
                         <h3 class="font-serif text-lg text-white">Indic Language Localisation</h3>
                         <p class="text-neutral-400 text-xs font-light leading-relaxed">Professional localisation across all major Indian languages — supported by linguistic review, terminology management, and quality assurance.</p>
                     </div>
@@ -953,7 +924,6 @@
                 <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
                     <img src="../static/LOC/7%20Multimedia%20DTP%20%26%20Desktop%20Publishing.svg" alt="" aria-hidden="true" class="loc-svc-icon">
                     <div class="loc-svc-text">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">02</div>
                         <h3 class="font-serif text-lg text-white">Multilingual Desktop Publishing</h3>
                         <p class="text-neutral-400 text-xs font-light leading-relaxed">Production-ready multilingual DTP formatting for print, digital, and enterprise communication assets across Indic scripts.</p>
                     </div>
@@ -961,7 +931,7 @@
                 <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
                     <img src="../static/LOC/6%20eLearning%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
                     <div class="loc-svc-text">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">03</div>
+                        
                         <h3 class="font-serif text-lg text-white">eLearning Localisation</h3>
                         <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of eLearning modules, LMS content, training assessments, and interactive learning platforms.</p>
                     </div>
@@ -969,7 +939,7 @@
                 <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
                     <img src="../static/LOC/5%20Multimedia%20%26%20eLearning%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
                     <div class="loc-svc-text">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">04</div>
+                        
                         <h3 class="font-serif text-lg text-white">Multimedia Localisation</h3>
                         <p class="text-neutral-400 text-xs font-light leading-relaxed">Subtitling, voice-over preparation, on-screen text localisation, and video adaptation for Indic language audiences.</p>
                     </div>
@@ -977,7 +947,7 @@
                 <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
                     <img src="../static/LOC/2%20Software%2C%20SaaS%20%26%20App%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
                     <div class="loc-svc-text">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">05</div>
+                        
                         <h3 class="font-serif text-lg text-white">Software &amp; Digital Localisation</h3>
                         <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of applications, SaaS platforms, websites, and digital products for Indian language users.</p>
                     </div>
@@ -985,7 +955,7 @@
                 <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
                     <img src="../static/LOC/8%20Localization%20QA%20%26%20Testing.svg" alt="" aria-hidden="true" class="loc-svc-icon">
                     <div class="loc-svc-text">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">06</div>
+                        
                         <h3 class="font-serif text-lg text-white">PDF Accessibility Services</h3>
                         <p class="text-neutral-400 text-xs font-light leading-relaxed">Remediation and accessibility compliance for multilingual PDF documents — WCAG and PDF/UA standards.</p>
                     </div>
@@ -993,7 +963,7 @@
                 <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
                     <img src="../static/LOC/4%20Technical%20%26%20Business%20Document%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
                     <div class="loc-svc-text">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">07</div>
+                        
                         <h3 class="font-serif text-lg text-white">Publishing &amp; Typesetting</h3>
                         <p class="text-neutral-400 text-xs font-light leading-relaxed">Books, journals, manuals, educational content, and corporate publications in Indian languages.</p>
                     </div>
@@ -1001,7 +971,7 @@
                 <article class="p-6 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl loc-svc-card">
                     <img src="../static/LOC/3%20Marketing%20%26%20Brand%20Localization.svg" alt="" aria-hidden="true" class="loc-svc-icon">
                     <div class="loc-svc-text">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">08</div>
+                        
                         <h3 class="font-serif text-lg text-white">Image &amp; Graphic Localisation</h3>
                         <p class="text-neutral-400 text-xs font-light leading-relaxed">Localisation of visual assets, infographics, diagrams, and marketing graphics for Indian markets.</p>
                     </div>
@@ -1012,10 +982,10 @@
 
     <!-- Languages & Industries Coverage -->
     <section class="border-t border-white/5 bg-[#07070a]/90 py-28 px-6 md:px-12" id="coverage" aria-labelledby="coverage-heading">
-        <div class="max-w-7xl mx-auto">
+        <div class="w-full px-6 md:px-12 mx-auto">
             <div class="mb-16 space-y-4">
-                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">[ 08 / COVERAGE ]</span>
-                <h2 id="coverage-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Languages &amp; Industries</h2>
+                <h2 id="coverage-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Languages & Industries We Serve</h2>
+                <p class="text-neutral-400 font-light text-base max-w-2xl">Global coverage across 100+ languages with specialized expertise across all major industries.</p>
             </div>
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-6">
@@ -1054,30 +1024,15 @@
                 </div>
             </div>
 
-            <!-- INFOGRAPHIC 05 — India Language Map -->
-            <div class="mt-12">
-                <div class="infographic-placeholder ph-tall">
-                    <div class="ph-tag">Infographic Placeholder 05</div>
-                    <svg class="ph-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-                        <path d="M12 2C8.5 4 5 7 4 11c-1 4 1 7 3 9 1 1 3 2 5 2s4-1 5-2c2-2 4-5 3-9-1-4-4.5-7-8-9z"/>
-                        <circle cx="10" cy="10" r="1.2" fill="currentColor"/><circle cx="14" cy="13" r="1.2" fill="currentColor"/>
-                        <circle cx="9" cy="15" r="1.2" fill="currentColor"/><circle cx="13" cy="8" r="1.2" fill="currentColor"/>
-                        <circle cx="16" cy="10" r="1.2" fill="currentColor"/>
-                    </svg>
-                    <p class="ph-title">India Language Coverage Map — Regional Script Distribution</p>
-                    <p class="ph-hint">Recommended: Illustrated choropleth or pin map of India with color-coded states by dominant language script — Devanagari belt (Hindi, Marathi), Dravidian belt (Tamil, Telugu, Kannada, Malayalam), Eastern (Bengali, Odia, Assamese), Western (Gujarati, Punjabi). Each region shows the language name in its native script + a coverage badge linking to SuperDTP service details.</p>
-                </div>
-            </div>
         </div>
     </section>
 
     <!-- CTA — Enterprise Consultation -->
     <section class="border-t border-white/5 py-28 px-6 md:px-12" id="cta" aria-labelledby="cta-heading">
-        <div class="max-w-4xl mx-auto text-center space-y-8">
-            <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">[ 09 / GET STARTED ]</span>
-            <h2 id="cta-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Ready to Scale Across India?</h2>
+        <div class="w-full px-6 md:px-12 mx-auto text-center space-y-8">
+            <h2 id="cta-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Ready to Grow Beyond Borders?</h2>
             <p class="text-neutral-400 font-light leading-relaxed text-base max-w-2xl mx-auto">
-                Whether you are localising software, training programs, technical documentation, marketing assets, customer support content, or enterprise communications — SuperDTP provides the expertise, infrastructure, and scalability to succeed across India's multilingual market.
+                Whether you're entering new markets, launching multilingual products, publishing ESG reports, or expanding across India—SuperDTP helps you deliver content that feels local every time. Enterprise-grade localization with dedicated project management, fast turnaround, and production-ready deliverables.
             </p>
             <div class="p-6 border border-white/5 bg-white/[0.02] rounded-2xl text-left max-w-2xl mx-auto">
                 <div class="font-mono text-xs text-brandAccent uppercase tracking-widest mb-4">Why Global Enterprises Choose SuperDTP</div>
@@ -1092,19 +1047,6 @@
                     <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Dedicated project governance</li>
                 </ul>
             </div>
-            <!-- INFOGRAPHIC 06 — Engagement Journey -->
-            <div class="w-full max-w-4xl mx-auto">
-                <div class="infographic-placeholder ph-medium">
-                    <div class="ph-tag">Infographic Placeholder 06</div>
-                    <svg class="ph-icon" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
-                        <path d="M2 17l4-8 4 5 3-3 4 6"/><circle cx="2" cy="17" r="1.5" fill="currentColor"/>
-                        <circle cx="6" cy="9" r="1.5" fill="currentColor"/><circle cx="10" cy="14" r="1.5" fill="currentColor"/>
-                        <circle cx="13" cy="11" r="1.5" fill="currentColor"/><circle cx="17" cy="17" r="1.5" fill="currentColor"/>
-                    </svg>
-                    <p class="ph-title">Enterprise Localisation Journey — From Brief to Production-Ready Delivery</p>
-                    <p class="ph-hint">Recommended: 5-phase horizontal timeline — (1) Discovery &amp; Scoping → (2) Linguistic Setup &amp; Glossary Build → (3) Translation &amp; DTP → (4) QA &amp; Review Cycles → (5) Production Delivery &amp; Handoff — with typical turnaround times per phase and a "SuperDTP Advantage" callout showing 40% faster delivery vs. multi-vendor model.</p>
-                </div>
-            </div>
 
             <div class="flex flex-row flex-wrap gap-4 justify-center pt-4">
                 <a href="/#contact" class="pill-button pill-button-primary" aria-label="Request an enterprise localisation consultation">Request Enterprise Consultation</a>
@@ -1115,27 +1057,55 @@
 
     </main>
 
-    <footer id="footer" class="border-t border-white/5 bg-neutral-950/60 py-16 px-6 md:px-12 text-neutral-400 font-mono text-xs" aria-label="Site footer">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="space-y-2 text-center md:text-left">
-                <img src="../logo copy 5.svg" alt="SuperDTP" class="site-logo" />
-                <div>Enterprise Localization Layout Architecture & Content Engineering Infrastructure</div>
-            </div>
-            
-            <nav aria-label="Footer navigation" class="flex flex-wrap justify-center gap-6 text-neutral-400">
-                <a href="#hero" class="hover:text-brandAccent transition-colors">Top</a>
-                <a href="#why-localisation" class="hover:text-brandAccent transition-colors">Why Localisation</a>
-                <a href="#visual-lab" class="hover:text-brandAccent transition-colors">Reflow Lab</a>
-                <a href="#solutions" class="hover:text-brandAccent transition-colors">Solutions</a>
-                <a href="#services" class="hover:text-brandAccent transition-colors">Services</a>
-                <a href="#coverage" class="hover:text-brandAccent transition-colors">Languages</a>
-                <a href="#cta" class="hover:text-brandAccent transition-colors">Contact</a>
-            </nav>
+    <footer
+      class="bg-[#060609] border-t border-white/8 pt-16 pb-8 px-6 md:px-12"
+      id="footer"
+      role="contentinfo"
+    >
+      <div class="w-full px-6 md:px-12 mx-auto">
+        <div
+          class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 pb-12 border-b border-white/8"
+        >
+          <div class="col-span-2 md:col-span-3 lg:col-span-1">
+            <a href="/" aria-label="SuperDTP Home" class="inline-block mb-5">
+              <img src="../static/logo copy 5.svg" alt="SuperDTP logo" class="site-logo" style="opacity: 0.9"/>
+            </a>
+            <p class="text-neutral-500 text-xs leading-relaxed max-w-xs">
+              Specialist multilingual localization, DTP &amp; content production. Precision layouts in 100+ languages, delivered on time.
+            </p>
+          </div>
 
-            <div class="text-[10px] text-neutral-400 tracking-wider">
-                &copy; 2026 SUPERDTP. Enterprise Indic Language Localisation &amp; Multilingual DTP. India.
-            </div>
+          <div>
+            <div class="text-neutral-300 font-semibold text-xs uppercase tracking-widest mb-4">Services</div>
+            <a href="#services" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block mb-2">Localization Services</a>
+            <a href="#services" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block mb-2">Multilingual DTP</a>
+            <a href="#services" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block mb-2">eLearning Localization</a>
+            <a href="#services" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block mb-2">Technical Documentation</a>
+            <a href="#services" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block">Quality Assurance</a>
+          </div>
+
+          <div>
+            <div class="text-neutral-300 font-semibold text-xs uppercase tracking-widest mb-4">Company</div>
+            <a href="#hero" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block mb-2">Home</a>
+            <a href="#why-localization" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block mb-2">Why Localize</a>
+            <a href="#solutions" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block mb-2">Solutions</a>
+            <a href="#coverage" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block mb-2">Languages</a>
+            <a href="/#contact" class="text-neutral-400 text-xs hover:text-brandAccent transition-colors block">Contact</a>
+          </div>
         </div>
+
+        <div
+          class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[0.65rem] text-neutral-600 tracking-wider"
+        >
+          <div>&copy; 2026 SUPERDTP LABS. WORLDWIDE DISTRIBUTION.</div>
+          <a
+            href="mailto:dtp.bulgaria@gmail.com"
+            class="hover:text-brandAccent transition-colors duration-200"
+          >
+            DTP.BULGARIA@GMAIL.COM
+          </a>
+        </div>
+      </div>
     </footer>
 
     <script>
