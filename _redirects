@@ -3,5 +3,5 @@
 
 # Canonical redirects (no trailing slash → with trailing slash)
 /localization         /localization/         301
-/multilingual-dtp     /multilingual-dtp/     301
+/dtp-services     /dtp-services/     301
 

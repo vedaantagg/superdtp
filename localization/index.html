@@ -218,15 +218,24 @@
             opacity: 1;
             color: #fff;
         }
-        .services-dropdown { position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%); width: 260px; background: rgba(9,9,11,0.98); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity 0.2s ease, visibility 0.2s ease; z-index: 100; }
+        /* Header Services Nested Dropdown — mirrors homepage mega-menu exactly */
+        .services-dropdown { position: fixed; top: 76px; left: 50%; transform: translateX(-50%); width: 620px; max-width: 96vw; background: rgba(9,9,11,0.98); backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; overflow: hidden; opacity: 0; visibility: hidden; transition: opacity 0.22s ease, visibility 0.22s ease; z-index: 100; display: grid; grid-template-columns: 195px 1fr; min-height: 280px; }
         .services-trigger:hover .services-dropdown, .services-trigger:focus-within .services-dropdown { opacity: 1; visibility: visible; }
         .services-trigger:hover .nav-link, .services-trigger:focus-within .nav-link { opacity: 1; color: #fff; }
-        .dropdown-link { display: flex; align-items: center; gap: 8px; padding: 10px 16px; font-size: 0.62rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.04); transition: color 0.2s ease, background 0.2s ease; }
-        .dropdown-link:last-child { border-bottom: none; }
+        .mega-cat-nav { border-right: 1px solid rgba(255,255,255,0.05); padding: 14px 0; display: flex; flex-direction: column; gap: 2px; }
+        .mega-cat-eyebrow { padding: 4px 18px 10px; font-family: 'Space Grotesk', monospace; font-size: 0.48rem; letter-spacing: 0.28em; text-transform: uppercase; color: rgba(255,255,255,0.22); border-bottom: 1px solid rgba(255,255,255,0.04); margin-bottom: 6px; }
+        .mega-cat-btn { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 16px 10px 18px; width: 100%; border: none; border-left: 2px solid transparent; background: none; cursor: pointer; font-family: 'Space Grotesk', monospace; font-size: 0.56rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.55); text-align: left; transition: color 0.2s ease, background 0.2s ease, border-color 0.2s ease; }
+        .mega-cat-btn:hover { color: rgba(255,255,255,0.9); background: rgba(255,255,255,0.04); }
+        .mega-cat-btn.active { color: #d4af37; border-left-color: #d4af37; background: rgba(212,175,55,0.06); }
+        .mega-cat-arrow { opacity: 0.35; flex-shrink: 0; transition: opacity 0.2s ease; }
+        .mega-cat-btn.active .mega-cat-arrow { opacity: 0.85; }
+        .mega-pane-col { position: relative; }
+        .mega-pane { display: none; padding: 14px 0; }
+        .mega-pane.active { display: block; }
+        .mega-pane-hdr { padding: 4px 18px 10px; font-family: 'Space Grotesk', monospace; font-size: 0.48rem; letter-spacing: 0.28em; text-transform: uppercase; color: #d4af37; border-bottom: 1px solid rgba(255,255,255,0.04); margin-bottom: 6px; }
+        .dropdown-link { display: flex; align-items: center; gap: 8px; padding: 7px 18px; font-size: 0.58rem; font-family: 'Space Grotesk', monospace; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.68); text-decoration: none; transition: color 0.2s ease, background 0.2s ease; }
         .dropdown-link:hover { color: #d4af37; background: rgba(255,255,255,0.04); }
-        .dropdown-link.current { color: #d4af37; }
-        .dropdown-dot { width: 5px; height: 5px; border-radius: 50%; background: rgba(255,255,255,0.2); flex-shrink: 0; }
-        .dropdown-link.current .dropdown-dot { background: #d4af37; }
+        .dropdown-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18); flex-shrink: 0; }
         .dropdown-link:hover .dropdown-dot { background: rgba(212,175,55,0.5); }
 
         .live-data-card {
@@ -632,19 +641,47 @@
             <a href="#services" class="nav-link">02. SERVICES</a>
             <a href="#indic" class="nav-link">03. INDIC</a>
             <a href="#esg" class="nav-link">04. ESG</a>
-            <div class="services-trigger relative flex items-center cursor-pointer">
-                <button type="button" class="nav-link flex items-center gap-1.5 cursor-pointer">
+            <div class="services-trigger relative flex items-center cursor-pointer" role="none">
+                <a href="#services" class="nav-link flex items-center gap-1.5" aria-haspopup="true" aria-expanded="false">
                     SERVICES
                     <svg class="w-2.5 h-2.5" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </button>
-                <div class="services-dropdown" role="menu">
-                    <a href="/localization/" class="dropdown-link current" role="menuitem"><span class="dropdown-dot"></span>Indic Localisation</a>
-                    <a href="/multilingual-dtp/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP</a>
-                    <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>E-learning</a>
-                    <a href="/file-preparation/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>File Preparation</a>
-                    <a href="/qa/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Quality Assurance</a>
-                    <a href="/pdf-remediation/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Accessibility</a>
-                    <a href="/prepress/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Prepress & Typesetting</a>
+                </a>
+                <div class="services-dropdown" role="menu" aria-label="Services menu">
+                    <div class="mega-cat-nav">
+                        <div class="mega-cat-eyebrow">Our Services</div>
+                        <button class="mega-cat-btn active" type="button" data-cat="loc" data-url="/localization/" aria-controls="mega-pane-loc">
+                            <span>Localization</span>
+                            <svg class="mega-cat-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                        <button class="mega-cat-btn" type="button" data-cat="dtp" data-url="/dtp-services/" aria-controls="mega-pane-dtp">
+                            <span>DTP &amp; Publishing</span>
+                            <svg class="mega-cat-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                        </button>
+                    </div>
+                    <div class="mega-pane-col">
+                        <div class="mega-pane active" id="mega-pane-loc" role="group" aria-label="Localization Services">
+                            <div class="mega-pane-hdr">Localization Services</div>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Website &amp; Digital Experience Localization</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Software, SaaS &amp; App Localization</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Marketing &amp; Brand Localization</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical &amp; Business Document Localization</a>
+                            <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia &amp; eLearning Localization</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
+                            <a href="/qa/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia DTP &amp; Desktop Publishing</a>
+                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Localization QA &amp; Testing</a>
+                        </div>
+                        <div class="mega-pane" id="mega-pane-dtp" role="group" aria-label="DTP &amp; Publishing Services">
+                            <div class="mega-pane-hdr">DTP &amp; Publishing Services</div>
+                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP &amp; Typesetting</a>
+                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Document Formatting &amp; Corporate Publishing</a>
+                            <a href="/dtp-services/#pdf-remediation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Remediation &amp; Accessible Documents</a>
+                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Layout Recreation &amp; File Conversion</a>
+                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical Documentation &amp; eLearning DTP</a>
+                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Image, Graphics &amp; Presentation Localization</a>
+                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Translation File Engineering &amp; Production Support</a>
+                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Print &amp; Digital Publishing Services</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             <a href="#footer" class="nav-link">05. TERMINUS</a>
@@ -1382,6 +1419,46 @@
             requestAnimationFrame(runAmbientEngine);
         }
         requestAnimationFrame(runAmbientEngine);
+    </script>
+
+    <script>
+        (function () {
+            var servicesTrigger = document.querySelector(".services-trigger");
+            if (!servicesTrigger) return;
+            var servicesDropdown = servicesTrigger.querySelector(".services-dropdown");
+            function positionServicesDropdown() {
+                if (!servicesDropdown || window.innerWidth < 1024) return;
+                var r = servicesTrigger.getBoundingClientRect();
+                var ddw = servicesDropdown.offsetWidth || 620;
+                var margin = 16;
+                var left = r.left + r.width / 2 - ddw / 2;
+                if (left + ddw > window.innerWidth - margin) left = window.innerWidth - ddw - margin;
+                if (left < margin) left = margin;
+                servicesDropdown.style.left = left + "px";
+                servicesDropdown.style.transform = "none";
+            }
+            servicesTrigger.addEventListener("mouseenter", positionServicesDropdown);
+            servicesTrigger.addEventListener("focusin", positionServicesDropdown);
+            window.addEventListener("resize", positionServicesDropdown);
+
+            var catBtns = document.querySelectorAll(".mega-cat-btn");
+            var supportsHover = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+            function activateCat(btn) {
+                catBtns.forEach(function (b) { b.classList.remove("active"); });
+                document.querySelectorAll(".mega-pane").forEach(function (p) { p.classList.remove("active"); });
+                btn.classList.add("active");
+                var pane = document.getElementById("mega-pane-" + btn.getAttribute("data-cat"));
+                if (pane) pane.classList.add("active");
+            }
+            catBtns.forEach(function (btn) {
+                btn.addEventListener("mouseenter", function () { activateCat(this); });
+                btn.addEventListener("click", function () {
+                    var url = this.getAttribute("data-url");
+                    if (supportsHover && url) { window.location.href = url; return; }
+                    activateCat(this);
+                });
+            });
+        })();
     </script>
 
     <script>

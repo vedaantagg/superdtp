@@ -1,0 +1,604 @@
+<svg viewBox="0 0 1600 980" xmlns="http://www.w3.org/2000/svg" font-family="'Plus Jakarta Sans','Segoe UI',Arial,sans-serif">
+  <defs>
+    <!-- Background: dark navy-black matching SuperDTP brand (#09090b) -->
+    <linearGradient id="bgBase" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0c0c12"/>
+      <stop offset="100%" stop-color="#09090b"/>
+    </linearGradient>
+    <radialGradient id="glowBlue" cx="10%" cy="8%" r="45%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowTeal" cx="92%" cy="10%" r="45%">
+      <stop offset="0%" stop-color="#d4af37" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#d4af37" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glowGray" cx="50%" cy="98%" r="50%">
+      <stop offset="0%" stop-color="#34d399" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#34d399" stop-opacity="0"/>
+    </radialGradient>
+
+    <!-- Brand gold header (matches SuperDTP #d4af37) -->
+    <linearGradient id="headerBlue" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#96751f"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+    <linearGradient id="badgeBlue" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#f2da85"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+    <!-- Secondary accent: brand green, replacing former teal -->
+    <linearGradient id="tealAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1a7a52"/>
+      <stop offset="100%" stop-color="#34d399"/>
+    </linearGradient>
+    <!-- Signature brand gradient: gold -> blue (matches SuperDTP CTA gradient) -->
+    <linearGradient id="arrowGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <linearGradient id="lineGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#d4af37"/>
+      <stop offset="50%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#d4af37"/>
+    </linearGradient>
+
+    <filter id="softShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+    <filter id="softShadowSmall" x="-70%" y="-70%" width="240%" height="240%">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+
+    <!-- Glow filters: gold / blue / green, for the "glowing" brand elements -->
+    <filter id="glowGold" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#d4af37" flood-opacity="0.9" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowBlueSoft" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#38bdf8" flood-opacity="0.9" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowGreen" x="-120%" y="-120%" width="340%" height="340%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feFlood flood-color="#34d399" flood-opacity="0.9" result="color"/>
+      <feComposite in="color" in2="blur" operator="in" result="glow"/>
+      <feMerge>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="glow"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glowLine" x="-60%" y="-200%" width="220%" height="500%">
+      <feGaussianBlur stdDeviation="3.2" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- ============ BACKGROUND ============ -->
+  <rect x="0" y="0" width="1600" height="980" fill="url(#bgBase)"/>
+  <rect x="0" y="0" width="1600" height="980" fill="url(#glowBlue)"/>
+  <rect x="0" y="0" width="1600" height="980" fill="url(#glowTeal)"/>
+  <rect x="0" y="0" width="1600" height="980" fill="url(#glowGray)"/>
+
+  
+  <!-- ============ LEFT: SOURCE DOCUMENT (EN) ============ -->
+  <g id="source-document">
+    <rect x="110" y="120" width="340" height="460" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#softShadow)"/>
+    <rect x="110" y="120" width="340" height="64" rx="16" fill="url(#headerBlue)"/>
+    <rect x="110" y="168" width="340" height="16" fill="url(#headerBlue)"/>
+    <circle cx="136" cy="152" r="5" fill="#ffffff" opacity="0.55"/>
+    <circle cx="154" cy="152" r="5" fill="#ffffff" opacity="0.35"/>
+    <circle cx="172" cy="152" r="5" fill="#ffffff" opacity="0.22"/>
+    <text x="424" y="165" font-size="12.5" fill="#ffffff" text-anchor="end" font-weight="700" opacity="0.9" letter-spacing="1.5">SOURCE FILE</text>
+
+    <!-- EN badge with pulse -->
+    <g>
+      <circle cx="424" cy="120" r="34" fill="#d4af37" opacity="0.22">
+        <animate attributeName="r" values="30;40;30" dur="2.6s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.28;0.03;0.28" dur="2.6s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="424" cy="120" r="28" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
+      <text x="424" y="127" font-size="18" fill="#09090b" text-anchor="middle" font-weight="700">EN</text>
+    </g>
+
+    <!-- document body -->
+    <rect x="138" y="202" width="190" height="15" rx="7" fill="url(#tealAccent)"/>
+    <g fill="#64748b" opacity="0.28">
+      <rect x="138" y="236" width="284" height="8" rx="4"/>
+      <rect x="138" y="254" width="284" height="8" rx="4"/>
+      <rect x="138" y="272" width="220" height="8" rx="4"/>
+      <rect x="138" y="300" width="284" height="8" rx="4"/>
+      <rect x="138" y="318" width="284" height="8" rx="4"/>
+      <rect x="138" y="336" width="250" height="8" rx="4"/>
+      <rect x="138" y="354" width="284" height="8" rx="4"/>
+      <rect x="138" y="382" width="150" height="8" rx="4"/>
+      <rect x="138" y="410" width="284" height="8" rx="4"/>
+      <rect x="138" y="428" width="284" height="8" rx="4"/>
+      <rect x="138" y="446" width="230" height="8" rx="4"/>
+    </g>
+    <!-- chart placeholder -->
+    <rect x="138" y="474" width="284" height="60" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+    <rect x="154" y="498" width="12" height="26" fill="#d4af37"/>
+    <rect x="174" y="486" width="12" height="38" fill="#38bdf8"/>
+    <rect x="194" y="506" width="12" height="18" fill="#d4af37"/>
+    <rect x="214" y="492" width="12" height="32" fill="#38bdf8"/>
+    <rect x="234" y="500" width="12" height="24" fill="#d4af37"/>
+    <text x="406" y="500" font-size="9" fill="#94a3b8" text-anchor="end" letter-spacing="1" font-weight="700">DATA</text>
+    <text x="424" y="562" font-size="11" fill="#94a3b8" text-anchor="end">Page 1</text>
+
+    <!-- scanning sweep highlight -->
+    <clipPath id="docClip"><rect x="110" y="120" width="340" height="460" rx="16"/></clipPath>
+    <g clip-path="url(#docClip)">
+      <rect x="110" y="-80" width="340" height="90" fill="#d4af37" opacity="0.10">
+        <animate attributeName="y" values="-90;660" dur="3.6s" repeatCount="indefinite"/>
+      </rect>
+    </g>
+  </g>
+
+  <!-- ============ CENTER: TRANSFORMATION ZONE ============ -->
+  <g id="transformation" stroke-linecap="round" filter="url(#glowLine)">
+    <path d="M 452 230 C 570 190, 660 190, 780 230" fill="none" stroke="url(#arrowGrad)" stroke-width="4" opacity="0.9" stroke-dasharray="7 9">
+      <animate attributeName="stroke-dashoffset" values="0;-32" dur="1.4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M 452 350 C 580 350, 660 350, 780 350" fill="none" stroke="url(#arrowGrad)" stroke-width="4" opacity="0.75" stroke-dasharray="7 9">
+      <animate attributeName="stroke-dashoffset" values="0;-32" dur="1.4s" repeatCount="indefinite" begin="0.25s"/>
+    </path>
+    <path d="M 452 470 C 570 510, 660 510, 780 470" fill="none" stroke="url(#arrowGrad)" stroke-width="4" opacity="0.75" stroke-dasharray="7 9">
+      <animate attributeName="stroke-dashoffset" values="0;-32" dur="1.4s" repeatCount="indefinite" begin="0.5s"/>
+    </path>
+
+    <path d="M 820 230 C 940 190, 1030 190, 1148 230" fill="none" stroke="url(#arrowGrad)" stroke-width="4" opacity="0.75" stroke-dasharray="7 9">
+      <animate attributeName="stroke-dashoffset" values="0;-32" dur="1.4s" repeatCount="indefinite" begin="0.15s"/>
+    </path>
+    <path d="M 820 350 C 940 350, 1030 350, 1148 350" fill="none" stroke="url(#arrowGrad)" stroke-width="4" opacity="0.75" stroke-dasharray="7 9">
+      <animate attributeName="stroke-dashoffset" values="0;-32" dur="1.4s" repeatCount="indefinite" begin="0.4s"/>
+    </path>
+    <path d="M 820 470 C 940 510, 1030 510, 1148 470" fill="none" stroke="url(#arrowGrad)" stroke-width="4" opacity="0.75" stroke-dasharray="7 9">
+      <animate attributeName="stroke-dashoffset" values="0;-32" dur="1.4s" repeatCount="indefinite" begin="0.65s"/>
+    </path>
+
+    <!-- arrowheads -->
+    <g fill="#38bdf8" opacity="0.9">
+      <path d="M 775 224 l 13 6 l -13 6 z"/>
+      <path d="M 775 344 l 13 6 l -13 6 z"/>
+      <path d="M 775 464 l 13 6 l -13 6 z"/>
+      <path d="M 1143 224 l 13 6 l -13 6 z"/>
+      <path d="M 1143 344 l 13 6 l -13 6 z"/>
+      <path d="M 1143 464 l 13 6 l -13 6 z"/>
+    </g>
+
+    <!-- floating particles -->
+    <circle cx="620" cy="270" r="4" fill="#d4af37" filter="url(#glowGold)">
+      <animate attributeName="cy" values="270;258;270" dur="2.2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.2s" repeatCount="indefinite"/>
+    </circle>
+    <circle cx="960" cy="430" r="4" fill="#38bdf8" filter="url(#glowBlueSoft)">
+      <animate attributeName="cy" values="430;418;430" dur="2.4s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.6;0.1;0.6" dur="2.4s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- central hub -->
+    <g transform="translate(800,350)">
+      <circle r="52" fill="#14141c" filter="url(#softShadow)"/>
+      <circle r="52" fill="none" stroke="#2a2a35" stroke-width="2"/>
+      <circle r="52" fill="none" stroke="url(#lineGrad)" stroke-width="3" stroke-dasharray="12 315" stroke-linecap="round" filter="url(#glowGold)">
+        <animateTransform attributeName="transform" type="rotate" from="0 0 0" to="360 0 0" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <!-- translate glyph: A -> 文 style swap arrows -->
+      <text x="-16" y="8" font-size="20" fill="#d4af37" text-anchor="middle" font-weight="800">A</text>
+      <path d="M -2 -2 L 10 -2 L 10 -9 L 22 0 L 10 9 L 10 2 L -2 2 Z" fill="#38bdf8" transform="translate(-4,0) scale(0.85)"/>
+      <text x="20" y="8" font-size="18" fill="#38bdf8" text-anchor="middle" font-weight="800">文</text>
+    </g>
+    <text x="800" y="422" font-size="12.5" fill="#9aa1b0" text-anchor="middle" font-weight="700" letter-spacing="1.5">LOCALIZING</text>
+
+    <!-- current language cycling label -->
+    <g font-size="15" font-weight="800" text-anchor="middle" fill="#d4af37">
+      <text x="800" y="445" opacity="0">French
+        <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.15417;0.16667;1" dur="12s" repeatCount="indefinite"/>
+      </text>
+      <text x="800" y="445" opacity="0">German
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.16667;0.17917;0.32083;0.33333;1" dur="12s" repeatCount="indefinite"/>
+      </text>
+      <text x="800" y="445" opacity="0">Spanish
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.33333;0.34583;0.4875;0.5;1" dur="12s" repeatCount="indefinite"/>
+      </text>
+      <text x="800" y="445" opacity="0">Japanese
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.5;0.5125;0.65417;0.66667;1" dur="12s" repeatCount="indefinite"/>
+      </text>
+      <text x="800" y="445" opacity="0">Arabic
+        <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.66667;0.67917;0.82083;0.83333;1" dur="12s" repeatCount="indefinite"/>
+      </text>
+      <text x="800" y="445" opacity="0">Chinese
+        <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.83333;0.84583;0.9875;1" dur="12s" repeatCount="indefinite"/>
+      </text>
+    </g>
+  </g>
+
+  <!-- ============ RIGHT: LOCALIZED DOCUMENT (single position, cycling) ============ -->
+  <g id="localized-document">
+    <!-- static frame stays fixed; only inner content group cycles -->
+    <rect x="1150" y="120" width="340" height="460" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#softShadow)"/>
+
+    <!-- FR -->
+    <g id="doc-fr">
+      <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.15417;0.16667;1" dur="12s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0,0; 0,0; 0,-10; 0,-10" keyTimes="0;0.15417;0.16667;1" dur="12s" repeatCount="indefinite"/>
+      <rect x="1150" y="120" width="340" height="64" rx="16" fill="url(#headerBlue)"/>
+      <rect x="1150" y="168" width="340" height="16" fill="url(#headerBlue)"/>
+      <circle cx="1176" cy="152" r="5" fill="#ffffff" opacity="0.55"/>
+      <circle cx="1194" cy="152" r="5" fill="#ffffff" opacity="0.35"/>
+      <circle cx="1212" cy="152" r="5" fill="#ffffff" opacity="0.22"/>
+      <text x="1464" y="165" font-size="12.5" fill="#ffffff" text-anchor="end" font-weight="700" opacity="0.9" letter-spacing="1.5">FICHIER CIBLE</text>
+      <circle cx="1464" cy="120" r="28" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
+      <text x="1464" y="127" font-size="18" fill="#09090b" text-anchor="middle" font-weight="700">FR</text>
+      <rect x="1178" y="202" width="205" height="15" rx="7" fill="url(#tealAccent)"/>
+      <g fill="#64748b" opacity="0.28">
+        <rect x="1178" y="236" width="284" height="8" rx="4"/>
+        <rect x="1178" y="254" width="270" height="8" rx="4"/>
+        <rect x="1178" y="272" width="230" height="8" rx="4"/>
+        <rect x="1178" y="300" width="284" height="8" rx="4"/>
+        <rect x="1178" y="318" width="260" height="8" rx="4"/>
+        <rect x="1178" y="336" width="240" height="8" rx="4"/>
+        <rect x="1178" y="354" width="284" height="8" rx="4"/>
+        <rect x="1178" y="382" width="170" height="8" rx="4"/>
+        <rect x="1178" y="410" width="284" height="8" rx="4"/>
+        <rect x="1178" y="428" width="250" height="8" rx="4"/>
+        <rect x="1178" y="446" width="215" height="8" rx="4"/>
+      </g>
+      <rect x="1178" y="474" width="284" height="60" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="1194" y="498" width="12" height="26" fill="#d4af37"/>
+      <rect x="1214" y="486" width="12" height="38" fill="#38bdf8"/>
+      <rect x="1234" y="506" width="12" height="18" fill="#d4af37"/>
+      <rect x="1254" y="492" width="12" height="32" fill="#38bdf8"/>
+      <rect x="1274" y="500" width="12" height="24" fill="#d4af37"/>
+      <text x="1446" y="500" font-size="9" fill="#94a3b8" text-anchor="end" letter-spacing="1" font-weight="700">DONNÉES</text>
+      <text x="1464" y="562" font-size="11" fill="#94a3b8" text-anchor="end">Page 1</text>
+    </g>
+
+    <!-- DE -->
+    <g id="doc-de" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.16667;0.17917;0.32083;0.33333;1" dur="12s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0,10; 0,10; 0,0; 0,0; 0,-10; 0,-10" keyTimes="0;0.16667;0.17917;0.32083;0.33333;1" dur="12s" repeatCount="indefinite"/>
+      <rect x="1150" y="120" width="340" height="64" rx="16" fill="url(#headerBlue)"/>
+      <rect x="1150" y="168" width="340" height="16" fill="url(#headerBlue)"/>
+      <circle cx="1176" cy="152" r="5" fill="#ffffff" opacity="0.55"/>
+      <circle cx="1194" cy="152" r="5" fill="#ffffff" opacity="0.35"/>
+      <circle cx="1212" cy="152" r="5" fill="#ffffff" opacity="0.22"/>
+      <text x="1464" y="165" font-size="12.5" fill="#ffffff" text-anchor="end" font-weight="700" opacity="0.9" letter-spacing="1.5">ZIELDATEI</text>
+      <circle cx="1464" cy="120" r="28" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
+      <text x="1464" y="127" font-size="18" fill="#09090b" text-anchor="middle" font-weight="700">DE</text>
+      <rect x="1178" y="202" width="230" height="15" rx="7" fill="url(#tealAccent)"/>
+      <g fill="#64748b" opacity="0.28">
+        <rect x="1178" y="236" width="284" height="8" rx="4"/>
+        <rect x="1178" y="254" width="284" height="8" rx="4"/>
+        <rect x="1178" y="272" width="245" height="8" rx="4"/>
+        <rect x="1178" y="300" width="284" height="8" rx="4"/>
+        <rect x="1178" y="318" width="284" height="8" rx="4"/>
+        <rect x="1178" y="336" width="260" height="8" rx="4"/>
+        <rect x="1178" y="354" width="284" height="8" rx="4"/>
+        <rect x="1178" y="382" width="190" height="8" rx="4"/>
+        <rect x="1178" y="410" width="284" height="8" rx="4"/>
+        <rect x="1178" y="428" width="284" height="8" rx="4"/>
+        <rect x="1178" y="446" width="240" height="8" rx="4"/>
+      </g>
+      <rect x="1178" y="474" width="284" height="60" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="1194" y="498" width="12" height="26" fill="#d4af37"/>
+      <rect x="1214" y="486" width="12" height="38" fill="#38bdf8"/>
+      <rect x="1234" y="506" width="12" height="18" fill="#d4af37"/>
+      <rect x="1254" y="492" width="12" height="32" fill="#38bdf8"/>
+      <rect x="1274" y="500" width="12" height="24" fill="#d4af37"/>
+      <text x="1446" y="500" font-size="9" fill="#94a3b8" text-anchor="end" letter-spacing="1" font-weight="700">DATEN</text>
+      <text x="1464" y="562" font-size="11" fill="#94a3b8" text-anchor="end">Seite 1</text>
+    </g>
+
+    <!-- ES -->
+    <g id="doc-es" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.33333;0.34583;0.4875;0.5;1" dur="12s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0,10; 0,10; 0,0; 0,0; 0,-10; 0,-10" keyTimes="0;0.33333;0.34583;0.4875;0.5;1" dur="12s" repeatCount="indefinite"/>
+      <rect x="1150" y="120" width="340" height="64" rx="16" fill="url(#headerBlue)"/>
+      <rect x="1150" y="168" width="340" height="16" fill="url(#headerBlue)"/>
+      <circle cx="1176" cy="152" r="5" fill="#ffffff" opacity="0.55"/>
+      <circle cx="1194" cy="152" r="5" fill="#ffffff" opacity="0.35"/>
+      <circle cx="1212" cy="152" r="5" fill="#ffffff" opacity="0.22"/>
+      <text x="1464" y="165" font-size="12.5" fill="#ffffff" text-anchor="end" font-weight="700" opacity="0.9" letter-spacing="1.5">ARCHIVO META</text>
+      <circle cx="1464" cy="120" r="28" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
+      <text x="1464" y="127" font-size="18" fill="#09090b" text-anchor="middle" font-weight="700">ES</text>
+      <rect x="1178" y="202" width="215" height="15" rx="7" fill="url(#tealAccent)"/>
+      <g fill="#64748b" opacity="0.28">
+        <rect x="1178" y="236" width="284" height="8" rx="4"/>
+        <rect x="1178" y="254" width="284" height="8" rx="4"/>
+        <rect x="1178" y="272" width="215" height="8" rx="4"/>
+        <rect x="1178" y="300" width="284" height="8" rx="4"/>
+        <rect x="1178" y="318" width="284" height="8" rx="4"/>
+        <rect x="1178" y="336" width="255" height="8" rx="4"/>
+        <rect x="1178" y="354" width="284" height="8" rx="4"/>
+        <rect x="1178" y="382" width="160" height="8" rx="4"/>
+        <rect x="1178" y="410" width="284" height="8" rx="4"/>
+        <rect x="1178" y="428" width="284" height="8" rx="4"/>
+        <rect x="1178" y="446" width="225" height="8" rx="4"/>
+      </g>
+      <rect x="1178" y="474" width="284" height="60" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="1194" y="498" width="12" height="26" fill="#d4af37"/>
+      <rect x="1214" y="486" width="12" height="38" fill="#38bdf8"/>
+      <rect x="1234" y="506" width="12" height="18" fill="#d4af37"/>
+      <rect x="1254" y="492" width="12" height="32" fill="#38bdf8"/>
+      <rect x="1274" y="500" width="12" height="24" fill="#d4af37"/>
+      <text x="1446" y="500" font-size="9" fill="#94a3b8" text-anchor="end" letter-spacing="1" font-weight="700">DATOS</text>
+      <text x="1464" y="562" font-size="11" fill="#94a3b8" text-anchor="end">Página 1</text>
+    </g>
+
+    <!-- JA -->
+    <g id="doc-ja" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.5;0.5125;0.65417;0.66667;1" dur="12s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0,10; 0,10; 0,0; 0,0; 0,-10; 0,-10" keyTimes="0;0.5;0.5125;0.65417;0.66667;1" dur="12s" repeatCount="indefinite"/>
+      <rect x="1150" y="120" width="340" height="64" rx="16" fill="url(#headerBlue)"/>
+      <rect x="1150" y="168" width="340" height="16" fill="url(#headerBlue)"/>
+      <circle cx="1176" cy="152" r="5" fill="#ffffff" opacity="0.55"/>
+      <circle cx="1194" cy="152" r="5" fill="#ffffff" opacity="0.35"/>
+      <circle cx="1212" cy="152" r="5" fill="#ffffff" opacity="0.22"/>
+      <text x="1464" y="165" font-size="12.5" fill="#ffffff" text-anchor="end" font-weight="700" opacity="0.9" letter-spacing="1.5">ターゲットファイル</text>
+      <circle cx="1464" cy="120" r="28" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
+      <text x="1464" y="127" font-size="18" fill="#09090b" text-anchor="middle" font-weight="700">JA</text>
+      <rect x="1178" y="202" width="190" height="15" rx="7" fill="url(#tealAccent)"/>
+      <g fill="#64748b" opacity="0.28">
+        <rect x="1178" y="236" width="284" height="8" rx="4"/>
+        <rect x="1178" y="254" width="284" height="8" rx="4"/>
+        <rect x="1178" y="272" width="200" height="8" rx="4"/>
+        <rect x="1178" y="300" width="284" height="8" rx="4"/>
+        <rect x="1178" y="318" width="284" height="8" rx="4"/>
+        <rect x="1178" y="336" width="235" height="8" rx="4"/>
+        <rect x="1178" y="354" width="284" height="8" rx="4"/>
+        <rect x="1178" y="382" width="140" height="8" rx="4"/>
+        <rect x="1178" y="410" width="284" height="8" rx="4"/>
+        <rect x="1178" y="428" width="284" height="8" rx="4"/>
+        <rect x="1178" y="446" width="205" height="8" rx="4"/>
+      </g>
+      <rect x="1178" y="474" width="284" height="60" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="1194" y="498" width="12" height="26" fill="#d4af37"/>
+      <rect x="1214" y="486" width="12" height="38" fill="#38bdf8"/>
+      <rect x="1234" y="506" width="12" height="18" fill="#d4af37"/>
+      <rect x="1254" y="492" width="12" height="32" fill="#38bdf8"/>
+      <rect x="1274" y="500" width="12" height="24" fill="#d4af37"/>
+      <text x="1446" y="500" font-size="9" fill="#94a3b8" text-anchor="end" letter-spacing="1" font-weight="700">データ</text>
+      <text x="1464" y="562" font-size="11" fill="#94a3b8" text-anchor="end">1 ページ</text>
+    </g>
+
+    <!-- AR (right-to-left) -->
+    <g id="doc-ar" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0;0" keyTimes="0;0.66667;0.67917;0.82083;0.83333;1" dur="12s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0,10; 0,10; 0,0; 0,0; 0,-10; 0,-10" keyTimes="0;0.66667;0.67917;0.82083;0.83333;1" dur="12s" repeatCount="indefinite"/>
+      <rect x="1150" y="120" width="340" height="64" rx="16" fill="url(#headerBlue)"/>
+      <rect x="1150" y="168" width="340" height="16" fill="url(#headerBlue)"/>
+      <circle cx="1424" cy="152" r="5" fill="#ffffff" opacity="0.55"/>
+      <circle cx="1406" cy="152" r="5" fill="#ffffff" opacity="0.35"/>
+      <circle cx="1388" cy="152" r="5" fill="#ffffff" opacity="0.22"/>
+      <text x="1176" y="165" font-size="12.5" fill="#ffffff" text-anchor="start" font-weight="700" opacity="0.9" letter-spacing="1.5">ملف الهدف</text>
+      <circle cx="1176" cy="120" r="28" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
+      <text x="1176" y="127" font-size="18" fill="#09090b" text-anchor="middle" font-weight="700">AR</text>
+      <rect x="1257" y="202" width="205" height="15" rx="7" fill="url(#tealAccent)"/>
+      <g fill="#64748b" opacity="0.28">
+        <rect x="1178" y="236" width="284" height="8" rx="4"/>
+        <rect x="1178" y="254" width="284" height="8" rx="4"/>
+        <rect x="1248" y="272" width="214" height="8" rx="4"/>
+        <rect x="1178" y="300" width="284" height="8" rx="4"/>
+        <rect x="1178" y="318" width="284" height="8" rx="4"/>
+        <rect x="1208" y="336" width="254" height="8" rx="4"/>
+        <rect x="1178" y="354" width="284" height="8" rx="4"/>
+        <rect x="1322" y="382" width="140" height="8" rx="4"/>
+        <rect x="1178" y="410" width="284" height="8" rx="4"/>
+        <rect x="1178" y="428" width="284" height="8" rx="4"/>
+        <rect x="1258" y="446" width="204" height="8" rx="4"/>
+      </g>
+      <rect x="1178" y="474" width="284" height="60" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="1434" y="498" width="12" height="26" fill="#d4af37"/>
+      <rect x="1414" y="486" width="12" height="38" fill="#38bdf8"/>
+      <rect x="1394" y="506" width="12" height="18" fill="#d4af37"/>
+      <rect x="1374" y="492" width="12" height="32" fill="#38bdf8"/>
+      <rect x="1354" y="500" width="12" height="24" fill="#d4af37"/>
+      <text x="1194" y="500" font-size="9" fill="#94a3b8" text-anchor="start" letter-spacing="1" font-weight="700">بيانات</text>
+      <text x="1176" y="562" font-size="11" fill="#94a3b8" text-anchor="start">صفحة ١</text>
+    </g>
+
+    <!-- ZH -->
+    <g id="doc-zh" opacity="0">
+      <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.83333;0.84583;0.9875;1" dur="12s" repeatCount="indefinite"/>
+      <animateTransform attributeName="transform" type="translate" values="0,10; 0,10; 0,0; 0,0; 0,-10" keyTimes="0;0.83333;0.84583;0.9875;1" dur="12s" repeatCount="indefinite"/>
+      <rect x="1150" y="120" width="340" height="64" rx="16" fill="url(#headerBlue)"/>
+      <rect x="1150" y="168" width="340" height="16" fill="url(#headerBlue)"/>
+      <circle cx="1176" cy="152" r="5" fill="#ffffff" opacity="0.55"/>
+      <circle cx="1194" cy="152" r="5" fill="#ffffff" opacity="0.35"/>
+      <circle cx="1212" cy="152" r="5" fill="#ffffff" opacity="0.22"/>
+      <text x="1464" y="165" font-size="12.5" fill="#ffffff" text-anchor="end" font-weight="700" opacity="0.9" letter-spacing="1.5">目标文件</text>
+      <circle cx="1464" cy="120" r="28" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
+      <text x="1464" y="127" font-size="18" fill="#09090b" text-anchor="middle" font-weight="700">ZH</text>
+      <rect x="1178" y="202" width="170" height="15" rx="7" fill="url(#tealAccent)"/>
+      <g fill="#64748b" opacity="0.28">
+        <rect x="1178" y="236" width="284" height="8" rx="4"/>
+        <rect x="1178" y="254" width="284" height="8" rx="4"/>
+        <rect x="1178" y="272" width="185" height="8" rx="4"/>
+        <rect x="1178" y="300" width="284" height="8" rx="4"/>
+        <rect x="1178" y="318" width="284" height="8" rx="4"/>
+        <rect x="1178" y="336" width="225" height="8" rx="4"/>
+        <rect x="1178" y="354" width="284" height="8" rx="4"/>
+        <rect x="1178" y="382" width="120" height="8" rx="4"/>
+        <rect x="1178" y="410" width="284" height="8" rx="4"/>
+        <rect x="1178" y="428" width="284" height="8" rx="4"/>
+        <rect x="1178" y="446" width="195" height="8" rx="4"/>
+      </g>
+      <rect x="1178" y="474" width="284" height="60" rx="8" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="1194" y="498" width="12" height="26" fill="#d4af37"/>
+      <rect x="1214" y="486" width="12" height="38" fill="#38bdf8"/>
+      <rect x="1234" y="506" width="12" height="18" fill="#d4af37"/>
+      <rect x="1254" y="492" width="12" height="32" fill="#38bdf8"/>
+      <rect x="1274" y="500" width="12" height="24" fill="#d4af37"/>
+      <text x="1446" y="500" font-size="9" fill="#94a3b8" text-anchor="end" letter-spacing="1" font-weight="700">数据</text>
+      <text x="1464" y="562" font-size="11" fill="#94a3b8" text-anchor="end">第 1 页</text>
+    </g>
+  </g>
+
+  <!-- ============ ICON ROW: applications & content types ============ -->
+  <g id="icon-row">
+    <rect x="80" y="618" width="1440" height="140" rx="18"  stroke="#e2e8f0" stroke-width="1.5" filter="url(#softShadowSmall)"/>
+    <text x="800" y="648" font-size="16" fill="#64748b" text-anchor="middle" font-weight="700" letter-spacing="1.5">SUPPORTED FORMATS &amp; CONTENT TYPES</text>
+
+    <!-- Layout software -->
+    <g transform="translate(118,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="14" y="14" width="38" height="38" rx="6" fill="url(#badgeBlue)"/>
+      <line x1="20" y1="26" x2="46" y2="26" stroke="#ffffff" stroke-width="2.5"/>
+      <line x1="20" y1="34" x2="40" y2="34" stroke="#ffffff" stroke-width="2.5" opacity="0.7"/>
+      <line x1="20" y1="42" x2="46" y2="42" stroke="#ffffff" stroke-width="2.5" opacity="0.5"/>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Layout App</text>
+    </g>
+
+    <!-- PDF -->
+    <g transform="translate(268,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <path d="M18 13 h20 l10 10 v29 a3 3 0 0 1 -3 3 h-27 a3 3 0 0 1 -3 -3 v-36 a3 3 0 0 1 3 -3 z" fill="#ef4444"/>
+      <path d="M38 13 v10 h10 z" fill="#b91c1c"/>
+      <text x="33" y="43" font-size="8.5" fill="#ffffff" text-anchor="middle" font-weight="700">PDF</text>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">PDF File</text>
+    </g>
+
+    <!-- Word -->
+    <g transform="translate(418,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="14" y="13" width="38" height="42" rx="4" fill="url(#badgeBlue)"/>
+      <text x="33" y="40" font-size="15" fill="#ffffff" text-anchor="middle" font-weight="700">W</text>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Word Doc</text>
+    </g>
+
+    <!-- Presentation -->
+    <g transform="translate(568,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="14" y="13" width="38" height="42" rx="4" fill="#f59e0b"/>
+      <text x="33" y="40" font-size="15" fill="#ffffff" text-anchor="middle" font-weight="700">P</text>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Slides</text>
+    </g>
+
+    <!-- Technical manual -->
+    <g transform="translate(718,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <path d="M17 14 h18 v38 h-18 a4 4 0 0 1 -4 -4 v-30 a4 4 0 0 1 4 -4 z" fill="#6ee7b7"/>
+      <path d="M35 14 h14 a4 4 0 0 1 4 4 v30 a4 4 0 0 1 -4 4 h-14 z" fill="#34d399"/>
+      <line x1="35" y1="18" x2="35" y2="52" stroke="#ffffff" stroke-width="1.5" opacity="0.5"/>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Manuals</text>
+    </g>
+
+    <!-- Report -->
+    <g transform="translate(868,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <rect x="14" y="13" width="38" height="42" rx="4" fill="#ffffff" stroke="#d4af37" stroke-width="2"/>
+      <rect x="22" y="35" width="6" height="13" fill="#d4af37"/>
+      <rect x="30" y="27" width="6" height="21" fill="#34d399"/>
+      <rect x="38" y="21" width="6" height="27" fill="#d4af37"/>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Reports</text>
+    </g>
+
+    <!-- Brochure -->
+    <g transform="translate(1018,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <path d="M15 17 l13 -5 l13 5 v32 l-13 5 l-13 -5 z" fill="#d4af37"/>
+      <path d="M41 17 l11 -4 v32 l-11 4 z" fill="#34d399"/>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Brochures</text>
+    </g>
+
+    <!-- Accessibility -->
+    <g transform="translate(1168,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <circle cx="33" cy="33" r="19" fill="none" stroke="#d4af37" stroke-width="3"/>
+      <circle cx="33" cy="24" r="4" fill="#d4af37"/>
+      <path d="M22 31 h22 M33 31 v13 M33 37 l-7 9 M33 37 l7 9" stroke="#d4af37" stroke-width="3" stroke-linecap="round" fill="none"/>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Accessible</text>
+    </g>
+
+    <!-- QA -->
+    <g transform="translate(1318,662)">
+      <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+      <path d="M33 12 l18 7 v15 c0 14 -9 23 -18 27 c-9 -4 -18 -13 -18 -27 v-15 z" fill="url(#tealAccent)"/>
+      <path d="M25 33 l6 6 l12 -12" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">QA Check</text>
+    </g>
+  </g>
+
+  <!-- ============ BOTTOM WORKFLOW TIMELINE ============ -->
+  <g id="timeline">
+    <line x1="160" y1="850" x2="1440" y2="850" stroke="#23232e" stroke-width="4" stroke-linecap="round"/>
+    <line x1="160" y1="850" x2="1440" y2="850" stroke="url(#lineGrad)" stroke-width="4" stroke-linecap="round" stroke-dasharray="1280" stroke-dashoffset="1280">
+      <animate attributeName="stroke-dashoffset" values="1280;0" dur="3.2s" fill="freeze" begin="0.2s"/>
+    </line>
+
+    <circle r="6" fill="#ffffff" stroke="#d4af37" stroke-width="2" filter="url(#softShadowSmall)">
+      <animateMotion path="M160,850 L1440,850" dur="3.6s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;0.05;0.9;1" dur="3.6s" repeatCount="indefinite"/>
+    </circle>
+
+    <!-- Step 1: Source File -->
+    <g transform="translate(160,850)">
+      <circle r="26" fill="#14141c" stroke="#d4af37" stroke-width="3" filter="url(#glowGold)"/>
+      <path d="M -8 -10 h10 l6 6 v14 h-16 z" fill="none" stroke="#d4af37" stroke-width="2" stroke-linejoin="round"/>
+      <line x1="-4" y1="-2" x2="6" y2="-2" stroke="#d4af37" stroke-width="1.6"/>
+      <line x1="-4" y1="3" x2="6" y2="3" stroke="#d4af37" stroke-width="1.6"/>
+      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">Source File</text>
+    </g>
+
+    <!-- Step 2: Translation -->
+    <g transform="translate(480,850)">
+      <circle r="26" fill="#14141c" stroke="#34d399" stroke-width="3" filter="url(#glowGreen)"/>
+      <text x="0" y="6" font-size="13" fill="#34d399" text-anchor="middle" font-weight="700">文A</text>
+      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">Translation</text>
+    </g>
+
+    <!-- Step 3: DTP -->
+    <g transform="translate(800,850)">
+      <circle r="26" fill="#14141c" stroke="#d4af37" stroke-width="3" filter="url(#glowGold)"/>
+      <rect x="-11" y="-11" width="22" height="22" rx="3" fill="none" stroke="#d4af37" stroke-width="2"/>
+      <line x1="-6" y1="-4" x2="6" y2="-4" stroke="#d4af37" stroke-width="1.6"/>
+      <line x1="-6" y1="1" x2="6" y2="1" stroke="#d4af37" stroke-width="1.6"/>
+      <line x1="-6" y1="6" x2="2" y2="6" stroke="#d4af37" stroke-width="1.6"/>
+      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">DTP</text>
+    </g>
+
+    <!-- Step 4: QA -->
+    <g transform="translate(1120,850)">
+      <circle r="26" fill="#14141c" stroke="#34d399" stroke-width="3" filter="url(#glowGreen)"/>
+      <path d="M -9 0 l 6 6 l 12 -12" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">QA</text>
+    </g>
+
+    <!-- Step 5: Final Delivery -->
+    <g transform="translate(1440,850)">
+      <circle r="30" fill="#d4af37" opacity="0.14">
+        <animate attributeName="r" values="27;36;27" dur="2.4s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values="0.2;0.02;0.2" dur="2.4s" repeatCount="indefinite"/>
+      </circle>
+      <circle r="26" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
+      <path d="M -10 4 l 7 7 l 15 -17" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">Final Delivery</text>
+    </g>
+
+    <!-- connecting chevrons -->
+    <g fill="none" stroke="#94a3b8" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M312 846 l10 4 l-10 4"/>
+      <path d="M632 846 l10 4 l-10 4"/>
+      <path d="M952 846 l10 4 l-10 4"/>
+      <path d="M1272 846 l10 4 l-10 4"/>
+    </g>
+  </g>
+</svg>
