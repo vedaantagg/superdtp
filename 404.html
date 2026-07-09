@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aww, Snap! Page Not Found | SuperDTP</title>
+  <link rel="icon" type="image/png" href="/static/favicon.png" />
+  <meta name="description" content="This page took a wrong turn. Head back to SuperDTP's homepage for multilingual DTP, localization, and document layout services." />
+  <meta name="robots" content="noindex, follow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      min-height: 100vh;
+      background: #09090b;
+      color: #fafafa;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+    }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      position: relative;
+    }
+    #bg-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(212,175,55,0.14), transparent 38%),
+        radial-gradient(circle at 82% 78%, rgba(56,189,248,0.08), transparent 38%),
+        #050507;
+    }
+    .grain {
+      position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: 0.03;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .wrap {
+      position: relative;
+      z-index: 5;
+      max-width: 560px;
+      width: 100%;
+      text-align: center;
+    }
+    .graphic {
+      width: clamp(160px, 32vw, 220px);
+      height: auto;
+      margin: 0 auto 8px;
+      display: block;
+    }
+    .eyebrow {
+      font-family: 'Space Grotesk', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #d4af37;
+      margin: 0 0 18px;
+    }
+    h1.aww {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.4rem, 7vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      margin: 0 0 14px;
+    }
+    h1.aww em { color: #d4af37; font-style: normal; }
+    .lost-line {
+      font-size: clamp(1rem, 2.4vw, 1.15rem);
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      margin: 0 0 34px;
+    }
+    .code {
+      display: inline-block;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.4);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 6px 16px;
+      margin-bottom: 34px;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .pill-button {
+      height: 48px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 30px;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.25s ease;
+      text-decoration: none;
+      font-family: 'Space Grotesk', monospace;
+    }
+    .pill-button-primary { background: #d4af37; color: #09090b; border-color: #d4af37; }
+    .pill-button-primary:hover { background: #e8c84a; border-color: #e8c84a; transform: translateY(-1px); }
+    .pill-button-secondary { background: transparent; color: rgba(255,255,255,0.7); }
+    .pill-button-secondary:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); color: #fff; transform: translateY(-1px); }
+    .quicklinks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 22px;
+      justify-content: center;
+      font-family: 'Space Grotesk', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .quicklinks a { color: rgba(255,255,255,0.45); text-decoration: none; transition: color 0.2s ease; }
+    .quicklinks a:hover { color: #d4af37; }
+    @media (max-width: 480px) {
+      .actions { flex-direction: column; align-items: stretch; }
+      .pill-button { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+  <div id="bg-overlay"></div>
+  <div class="grain"></div>
+
+  <main class="wrap">
+    <svg class="graphic" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Broken document illustration">
+      <circle cx="100" cy="100" r="92" stroke="rgba(212,175,55,0.25)" stroke-width="1.5" stroke-dasharray="4 6"/>
+      <g transform="translate(38,34)">
+        <path d="M8 6 H70 L94 30 V150 A6 6 0 0 1 88 156 H8 A6 6 0 0 1 2 150 V12 A6 6 0 0 1 8 6 Z" fill="#111114" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+        <path d="M70 6 V24 A6 6 0 0 0 76 30 H94" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="2"/>
+        <path d="M2 96 L34 60 L52 82 L70 52 L94 88" stroke="#d4af37" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <line x1="18" y1="118" x2="78" y2="118" stroke="rgba(255,255,255,0.18)" stroke-width="3" stroke-linecap="round"/>
+        <line x1="18" y1="132" x2="60" y2="132" stroke="rgba(255,255,255,0.12)" stroke-width="3" stroke-linecap="round"/>
+      </g>
+      <g stroke="#d4af37" stroke-width="2.5" stroke-linecap="round">
+        <line x1="14" y1="30" x2="26" y2="42"/>
+        <line x1="26" y1="30" x2="14" y2="42"/>
+      </g>
+      <g stroke="rgba(56,189,248,0.7)" stroke-width="2.5" stroke-linecap="round">
+        <line x1="170" y1="152" x2="182" y2="164"/>
+        <line x1="182" y1="152" x2="170" y2="164"/>
+      </g>
+    </svg>
+
+    <p class="eyebrow">Error 404 // Page Not Found</p>
+    <h1 class="aww">Aww, <em>Snap!</em></h1>
+    <p class="lost-line">You must be lost somewhere. This page doesn't exist — go home!</p>
+    <span class="code">HTTP 404 · NO ROUTE MATCHED</span>
+
+    <div class="actions">
+      <a href="/" class="pill-button pill-button-primary">Take Me Home</a>
+      <a href="/#contact" class="pill-button pill-button-secondary">Contact Us</a>
+    </div>
+
+    <nav class="quicklinks" aria-label="Popular pages">
+      <a href="/">Home</a>
+      <a href="/localization/">Indic Localization</a>
+      <a href="/dtp-services/">DTP Services</a>
+    </nav>
+  </main>
+</body>
+</html>
