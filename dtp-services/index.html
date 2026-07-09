@@ -311,6 +311,144 @@
             .cap-chip:hover, .cap-grid.cap-in .cap-chip:hover { transform: none; }
         }
 
+        /* ── PDF Remediation showcase ─────────────────────────────
+           Three.js drifting document sheets sit behind an animated SVG that
+           narrates the remediation itself: tags land, reading order draws,
+           a scan beam sweeps, PDF/UA validates. */
+        #pdf-remediation { overflow-x: clip; }
+        .pdfr-grid { display: grid; grid-template-columns: 1fr; gap: 44px; align-items: center; }
+        @media (min-width: 1024px) { .pdfr-grid { grid-template-columns: 1.05fr 1fr; gap: 56px; } }
+        .pdfr-stage { position: relative; width: 100%; max-width: 540px; margin: 0 auto; aspect-ratio: 21 / 20; }
+        #pdf-three-canvas {
+            position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1;
+            opacity: 0; transition: opacity 1.1s ease;
+            -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 45%, transparent 78%);
+            mask-image: radial-gradient(circle at 50% 48%, #000 45%, transparent 78%);
+        }
+        #pdf-three-canvas.pdfr-lit { opacity: 0.85; }
+        .pdfr-svg { position: relative; z-index: 2; width: 100%; height: 100%; overflow: visible; }
+
+        /* Compliance badges */
+        .pdfr-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+        .pdfr-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 7px 14px; border-radius: 999px;
+            border: 1px solid rgba(212,175,55,0.2);
+            background: rgba(212,175,55,0.04);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+        .pdfr-badge::before {
+            content: ""; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+            background: #d4af37;
+            animation: pdfrPulse 2.8s ease-out infinite;
+            animation-delay: var(--d, 0s);
+        }
+        .pdfr-badge:hover { border-color: rgba(212,175,55,0.5); background: rgba(212,175,55,0.08); color: #fff; transform: translateY(-2px); }
+        @keyframes pdfrPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(212,175,55,0.45); }
+            70%  { box-shadow: 0 0 0 7px rgba(212,175,55,0); }
+            100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+        }
+
+        /* Tag pills — replace the old two 12-item bullet lists */
+        .pdfr-panel {
+            padding: 26px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+            border-radius: 18px;
+            transition: border-color 0.4s ease;
+        }
+        .pdfr-panel:hover { border-color: rgba(255,255,255,0.12); }
+        .pdfr-panel-hdr {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .pdfr-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+        .pdfr-tag {
+            --tag: #d4af37;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 7px 13px; border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.022);
+            font-size: 0.72rem; color: rgba(255,255,255,0.76);
+            opacity: 0; transform: translateY(10px);
+            transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+        }
+        .pdfr-tag::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--tag); opacity: 0.75; flex-shrink: 0; }
+        .pdfr-tag:hover { border-color: var(--tag); background: rgba(255,255,255,0.05); color: #fff; }
+        .pdfr-tags.cap-in .pdfr-tag { opacity: 1; transform: none; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(1)  { transition-delay: 0ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(2)  { transition-delay: 40ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(3)  { transition-delay: 80ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(4)  { transition-delay: 120ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(5)  { transition-delay: 160ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(6)  { transition-delay: 200ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(7)  { transition-delay: 240ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(8)  { transition-delay: 280ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(9)  { transition-delay: 320ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(10) { transition-delay: 360ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(11) { transition-delay: 400ms; }
+        .pdfr-tags.cap-in .pdfr-tag:nth-child(12) { transition-delay: 440ms; }
+
+        /* ── SVG document animation ── */
+        .pdfr-svg text { font-family: 'Space Grotesk', monospace; }
+        .pf-page-shell { opacity: 0; transform: scale(0.97); transform-box: fill-box; transform-origin: center; }
+        .pdfr-svg.cap-in .pf-page-shell { animation: pfPageIn 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
+        @keyframes pfPageIn { to { opacity: 1; transform: scale(1); } }
+
+        .pf-block { opacity: 0; transform: translateY(7px); transform-box: fill-box; }
+        .pdfr-svg.cap-in .pf-block { animation: pfRise 0.55s ease forwards; animation-delay: calc(0.35s + var(--b, 0) * 0.11s); }
+        @keyframes pfRise { to { opacity: 1; transform: none; } }
+
+        .pf-leader { stroke-dasharray: 14; stroke-dashoffset: 14; }
+        .pdfr-svg.cap-in .pf-leader { animation: pfDash 0.4s ease forwards; animation-delay: calc(0.9s + var(--b, 0) * 0.13s); }
+        @keyframes pfDash { to { stroke-dashoffset: 0; } }
+
+        .pf-tag { opacity: 0; transform: translateX(-9px); transform-box: fill-box; }
+        .pdfr-svg.cap-in .pf-tag { animation: pfTagIn 0.5s cubic-bezier(0.22,1,0.36,1) forwards; animation-delay: calc(1s + var(--b, 0) * 0.13s); }
+        @keyframes pfTagIn { to { opacity: 1; transform: none; } }
+
+        .pf-dot { opacity: 0; transform: scale(0.4); transform-box: fill-box; transform-origin: center; }
+        .pdfr-svg.cap-in .pf-dot { animation: pfPop 0.45s cubic-bezier(0.34,1.56,0.64,1) forwards; animation-delay: calc(1.75s + var(--b, 0) * 0.14s); }
+        @keyframes pfPop { to { opacity: 1; transform: scale(1); } }
+
+        .pf-order { stroke-dasharray: 420; stroke-dashoffset: 420; }
+        .pdfr-svg.cap-in .pf-order { animation: pfDrawOrder 2s ease-in-out forwards 1.7s; }
+        @keyframes pfDrawOrder { to { stroke-dashoffset: 0; } }
+
+        .pf-beam { opacity: 0; }
+        .pdfr-svg.cap-in .pf-beam { animation: pfScan 4.2s ease-in-out infinite 1.1s; }
+        @keyframes pfScan {
+            0%        { opacity: 0; transform: translateY(0); }
+            8%, 72%   { opacity: 1; }
+            80%, 100% { opacity: 0; transform: translateY(272px); }
+        }
+
+        .pf-seal-ring { stroke-dasharray: 126; stroke-dashoffset: 126; }
+        .pdfr-svg.cap-in .pf-seal-ring { animation: pfSealRing 0.9s ease forwards 3.1s; }
+        @keyframes pfSealRing { to { stroke-dashoffset: 0; } }
+        .pf-seal-tick { stroke-dasharray: 26; stroke-dashoffset: 26; }
+        .pdfr-svg.cap-in .pf-seal-tick { animation: pfSealTick 0.45s ease forwards 3.8s; }
+        @keyframes pfSealTick { to { stroke-dashoffset: 0; } }
+        .pf-seal-txt, .pf-seal-glow { opacity: 0; }
+        .pdfr-svg.cap-in .pf-seal-txt { animation: pfRise 0.5s ease forwards 4s; }
+        .pdfr-svg.cap-in .pf-seal-glow { animation: pfSealGlow 2.6s ease-in-out infinite 4.2s; }
+        @keyframes pfSealGlow { 0%, 100% { opacity: 0.08; } 50% { opacity: 0.3; } }
+
+        @media (prefers-reduced-motion: reduce) {
+            .pdfr-badge::before { animation: none; }
+            .pdfr-tag { opacity: 1; transform: none; }
+            .pf-page-shell, .pf-block, .pf-tag, .pf-dot, .pf-seal-txt { opacity: 1; transform: none; }
+            .pf-leader, .pf-order, .pf-seal-ring, .pf-seal-tick { stroke-dashoffset: 0; }
+            .pf-beam { opacity: 0; }
+            .pf-seal-glow { opacity: 0.18; }
+            .pdfr-svg.cap-in * { animation: none !important; }
+        }
+
         /* Compressed ladder for short-but-wide screens (11–14" laptops, ~768px tall). */
         @media (min-width: 1025px) and (max-height: 900px) {
             #svc-stack { --peek: 44px; --base: 128px; --buf: 16px; --head-top: 60px;
@@ -548,7 +686,7 @@
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:2" data-accent="emerald" id="pdf-remediation">
+                <div class="svc-pillar" style="--i:2" data-accent="emerald">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <h3 class="svc-pillar-head-title">PDF Remediation &amp; Accessibility</h3>
@@ -715,51 +853,161 @@
     <!-- 04 / DEDICATED PDF REMEDIATION -->
     <section class="border-t border-white/5 bg-[#07070a]/90 py-28 px-6 md:px-12 w-full" id="pdf-remediation" aria-labelledby="pdf-remediation-heading">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-12 space-y-4 max-w-4xl">
-                <h2 id="pdf-remediation-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Make Your PDFs Accessible, Compliant, and User-Friendly</h2>
-            </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                <p class="text-neutral-400 font-light leading-relaxed text-base">PDFs are widely used for corporate reports, manuals, forms, policy documents, training materials, brochures, and public-facing communication. However, not every PDF is accessible to users who rely on screen readers or assistive technologies.</p>
-                <p class="text-neutral-400 font-light leading-relaxed text-base">SuperDTP provides specialized PDF remediation services to make documents accessible, structured, navigable, and compliant with global accessibility standards such as WCAG, PDF/UA, Section 508, ADA, and AODA. Our PDF accessibility experts improve the internal structure of documents so they can be interpreted correctly by assistive technologies while preserving visual design and brand quality.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                    <h3 class="font-mono text-xs text-brandAccent tracking-widest uppercase">What We Remediate</h3>
-                    <ul class="space-y-0" aria-label="What we remediate">
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Reading Order</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Heading Structure</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Tags and Document Structure</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Tables and Lists</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Hyperlinks and Bookmarks</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Fillable Forms</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Alternative Text for Images</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Language Attributes</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Document Metadata</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Color Contrast Review</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Screen Reader Compatibility</li>
-                        <li class="flex items-center gap-3 py-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Accessibility Validation</li>
-                    </ul>
+            <div class="pdfr-grid mb-20">
+                <div class="space-y-6">
+                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">ACCESSIBILITY</span>
+                    <h2 id="pdf-remediation-heading" class="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight">Make Your PDFs Accessible, Compliant, and User-Friendly</h2>
+                    <p class="text-neutral-400 font-light leading-relaxed text-base">PDFs carry your reports, manuals, forms, and public communication — yet most of them are unreadable to anyone relying on a screen reader.</p>
+                    <p class="text-neutral-400 font-light leading-relaxed text-base">We rebuild the internal structure of a document so assistive technology can interpret it correctly, while the visual design and brand quality stay exactly as you designed them.</p>
+                    <div class="pdfr-badges pt-2">
+                        <span class="pdfr-badge">WCAG</span>
+                        <span class="pdfr-badge" style="--d:0.4s">PDF/UA</span>
+                        <span class="pdfr-badge" style="--d:0.8s">Section 508</span>
+                        <span class="pdfr-badge" style="--d:1.2s">ADA</span>
+                        <span class="pdfr-badge" style="--d:1.6s">AODA</span>
+                    </div>
                 </div>
 
-                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                    <h3 class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">Ideal For</h3>
-                    <p class="text-sm text-neutral-400 font-light">Multilingual PDFs require additional expertise. Every language version needs correct tagging, reading order, font handling, language attributes, and script-specific validation — especially for right-to-left, Indic, and Asian scripts.</p>
-                    <ul class="space-y-0" aria-label="Ideal for">
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>ESG Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Annual Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Sustainability Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Government Documents</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Policy Documents</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Healthcare Documents</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Financial Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Training Manuals</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Educational Content</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Product Manuals</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Forms</li>
-                        <li class="flex items-center gap-3 py-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Public-Facing PDFs</li>
-                    </ul>
+                <div class="pdfr-stage">
+                    <canvas id="pdf-three-canvas" aria-hidden="true"></canvas>
+                    <svg class="pdfr-svg" viewBox="0 0 420 400" role="img" aria-labelledby="pf-title pf-desc">
+                        <title id="pf-title">How a PDF is remediated</title>
+                        <desc id="pf-desc">A document page is scanned, its heading, paragraph, image, table, and metadata are tagged, a numbered reading order is drawn through them, and the file is validated against PDF/UA.</desc>
+                        <defs>
+                            <linearGradient id="pf-beam-grad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#d4af37" stop-opacity="0"></stop>
+                                <stop offset="50%" stop-color="#d4af37" stop-opacity="0.16"></stop>
+                                <stop offset="100%" stop-color="#d4af37" stop-opacity="0"></stop>
+                            </linearGradient>
+                            <linearGradient id="pf-page-grad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#17171f"></stop>
+                                <stop offset="100%" stop-color="#0a0a0e"></stop>
+                            </linearGradient>
+                            <clipPath id="pf-page-clip">
+                                <rect x="132" y="30" width="180" height="270" rx="8"></rect>
+                            </clipPath>
+                        </defs>
+
+                        <!-- page -->
+                        <g class="pf-page-shell">
+                            <rect x="132" y="30" width="180" height="270" rx="8" fill="url(#pf-page-grad)" stroke="rgba(212,175,55,0.28)"></rect>
+                        </g>
+
+                        <!-- content blocks -->
+                        <g class="pf-block" style="--b:0">
+                            <rect x="148" y="52" width="98" height="12" rx="2" fill="rgba(212,175,55,0.75)"></rect>
+                        </g>
+                        <g class="pf-block" style="--b:1">
+                            <rect x="148" y="80" width="148" height="5" rx="2" fill="rgba(255,255,255,0.14)"></rect>
+                            <rect x="148" y="92" width="148" height="5" rx="2" fill="rgba(255,255,255,0.14)"></rect>
+                            <rect x="148" y="104" width="106" height="5" rx="2" fill="rgba(255,255,255,0.14)"></rect>
+                        </g>
+                        <g class="pf-block" style="--b:2">
+                            <rect x="148" y="124" width="62" height="46" rx="3" fill="rgba(34,211,238,0.06)" stroke="rgba(34,211,238,0.35)"></rect>
+                            <path d="M156 162 L172 142 L182 154 L190 146 L202 162 Z" fill="rgba(34,211,238,0.3)"></path>
+                            <circle cx="163" cy="136" r="4" fill="rgba(34,211,238,0.45)"></circle>
+                            <rect x="220" y="128" width="76" height="5" rx="2" fill="rgba(255,255,255,0.14)"></rect>
+                            <rect x="220" y="140" width="76" height="5" rx="2" fill="rgba(255,255,255,0.14)"></rect>
+                            <rect x="220" y="152" width="52" height="5" rx="2" fill="rgba(255,255,255,0.14)"></rect>
+                        </g>
+                        <g class="pf-block" style="--b:3">
+                            <rect x="148" y="190" width="148" height="54" rx="3" fill="none" stroke="rgba(255,255,255,0.14)"></rect>
+                            <rect x="148" y="190" width="148" height="16" rx="3" fill="rgba(255,255,255,0.05)"></rect>
+                            <path d="M148 206 H296 M148 225 H296 M197 190 V244 M247 190 V244" stroke="rgba(255,255,255,0.1)"></path>
+                        </g>
+                        <g class="pf-block" style="--b:4">
+                            <rect x="148" y="260" width="148" height="5" rx="2" fill="rgba(255,255,255,0.14)"></rect>
+                            <rect x="148" y="272" width="92" height="5" rx="2" fill="rgba(255,255,255,0.14)"></rect>
+                        </g>
+
+                        <!-- scan beam, clipped to the page -->
+                        <g clip-path="url(#pf-page-clip)">
+                            <rect class="pf-beam" x="132" y="24" width="180" height="34" fill="url(#pf-beam-grad)"></rect>
+                        </g>
+
+                        <!-- reading order path + numbered stops -->
+                        <path class="pf-order" d="M124 58 C104 74 104 78 124 92 C146 112 100 128 124 147 C146 172 100 196 124 217 C146 240 104 250 124 266"
+                              stroke="rgba(212,175,55,0.5)" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-dasharray="4 4"></path>
+                        <g class="pf-dot" style="--b:0"><circle cx="124" cy="58" r="9" fill="#0d0d12" stroke="rgba(212,175,55,0.6)"></circle><text x="124" y="61.5" text-anchor="middle" font-size="8" fill="#d4af37">1</text></g>
+                        <g class="pf-dot" style="--b:1"><circle cx="124" cy="92" r="9" fill="#0d0d12" stroke="rgba(212,175,55,0.6)"></circle><text x="124" y="95.5" text-anchor="middle" font-size="8" fill="#d4af37">2</text></g>
+                        <g class="pf-dot" style="--b:2"><circle cx="124" cy="147" r="9" fill="#0d0d12" stroke="rgba(212,175,55,0.6)"></circle><text x="124" y="150.5" text-anchor="middle" font-size="8" fill="#d4af37">3</text></g>
+                        <g class="pf-dot" style="--b:3"><circle cx="124" cy="217" r="9" fill="#0d0d12" stroke="rgba(212,175,55,0.6)"></circle><text x="124" y="220.5" text-anchor="middle" font-size="8" fill="#d4af37">4</text></g>
+                        <g class="pf-dot" style="--b:4"><circle cx="124" cy="266" r="9" fill="#0d0d12" stroke="rgba(212,175,55,0.6)"></circle><text x="124" y="269.5" text-anchor="middle" font-size="8" fill="#d4af37">5</text></g>
+
+                        <!-- structure tags -->
+                        <path class="pf-leader" style="--b:0" d="M312 58 H326" stroke="rgba(212,175,55,0.4)"></path>
+                        <g class="pf-tag" style="--b:0">
+                            <rect x="326" y="47" width="74" height="22" rx="11" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.32)"></rect>
+                            <text x="363" y="61.5" text-anchor="middle" font-size="8.5" letter-spacing="1" fill="rgba(212,175,55,0.95)">H1</text>
+                        </g>
+                        <path class="pf-leader" style="--b:1" d="M312 92 H326" stroke="rgba(212,175,55,0.4)"></path>
+                        <g class="pf-tag" style="--b:1">
+                            <rect x="326" y="81" width="74" height="22" rx="11" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.32)"></rect>
+                            <text x="363" y="95.5" text-anchor="middle" font-size="8.5" letter-spacing="1" fill="rgba(212,175,55,0.95)">P</text>
+                        </g>
+                        <path class="pf-leader" style="--b:2" d="M312 147 H326" stroke="rgba(34,211,238,0.4)"></path>
+                        <g class="pf-tag" style="--b:2">
+                            <rect x="326" y="136" width="74" height="22" rx="11" fill="rgba(34,211,238,0.07)" stroke="rgba(34,211,238,0.32)"></rect>
+                            <text x="363" y="150.5" text-anchor="middle" font-size="8.5" letter-spacing="1" fill="rgba(34,211,238,0.95)">ALT TEXT</text>
+                        </g>
+                        <path class="pf-leader" style="--b:3" d="M312 217 H326" stroke="rgba(212,175,55,0.4)"></path>
+                        <g class="pf-tag" style="--b:3">
+                            <rect x="326" y="206" width="74" height="22" rx="11" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.32)"></rect>
+                            <text x="363" y="220.5" text-anchor="middle" font-size="8.5" letter-spacing="1" fill="rgba(212,175,55,0.95)">TABLE</text>
+                        </g>
+                        <path class="pf-leader" style="--b:4" d="M312 266 H326" stroke="rgba(212,175,55,0.4)"></path>
+                        <g class="pf-tag" style="--b:4">
+                            <rect x="326" y="255" width="74" height="22" rx="11" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.32)"></rect>
+                            <text x="363" y="269.5" text-anchor="middle" font-size="8.5" letter-spacing="1" fill="rgba(212,175,55,0.95)">METADATA</text>
+                        </g>
+
+                        <!-- PDF/UA validation seal -->
+                        <circle class="pf-seal-glow" cx="76" cy="330" r="30" fill="#d4af37"></circle>
+                        <circle class="pf-seal-ring" cx="76" cy="330" r="20" fill="#0b0b10" stroke="#d4af37" stroke-width="1.5" transform="rotate(-90 76 330)"></circle>
+                        <path class="pf-seal-tick" d="M67 330 L74 337 L86 323" stroke="#d4af37" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+                        <text class="pf-seal-txt" x="112" y="327" font-size="9" letter-spacing="2" fill="rgba(255,255,255,0.75)">PDF/UA</text>
+                        <text class="pf-seal-txt" x="112" y="340" font-size="7.5" letter-spacing="1.6" fill="rgba(255,255,255,0.35)">VALIDATED</text>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+                <div class="pdfr-panel">
+                    <h3 class="pdfr-panel-hdr text-brandAccent">What We Remediate</h3>
+                    <div class="pdfr-tags" aria-label="What we remediate">
+                        <span class="pdfr-tag">Reading Order</span>
+                        <span class="pdfr-tag">Heading Structure</span>
+                        <span class="pdfr-tag">Tags &amp; Structure</span>
+                        <span class="pdfr-tag">Tables &amp; Lists</span>
+                        <span class="pdfr-tag">Links &amp; Bookmarks</span>
+                        <span class="pdfr-tag">Fillable Forms</span>
+                        <span class="pdfr-tag">Alt Text</span>
+                        <span class="pdfr-tag">Language Attributes</span>
+                        <span class="pdfr-tag">Metadata</span>
+                        <span class="pdfr-tag">Color Contrast</span>
+                        <span class="pdfr-tag">Screen Reader Compatibility</span>
+                        <span class="pdfr-tag">Accessibility Validation</span>
+                    </div>
+                </div>
+
+                <div class="pdfr-panel">
+                    <h3 class="pdfr-panel-hdr text-cyan-400/80">Ideal For</h3>
+                    <p class="text-sm text-neutral-400 font-light mb-5 leading-relaxed">Multilingual PDFs need more: correct tagging, reading order, font handling, and script-specific validation for RTL, Indic, and Asian scripts.</p>
+                    <div class="pdfr-tags" aria-label="Ideal for">
+                        <span class="pdfr-tag" style="--tag:#22d3ee">ESG Reports</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Annual Reports</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Sustainability Reports</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Government Documents</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Policy Documents</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Healthcare Documents</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Financial Reports</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Training Manuals</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Educational Content</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Product Manuals</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Forms</span>
+                        <span class="pdfr-tag" style="--tag:#22d3ee">Public-Facing PDFs</span>
+                    </div>
                 </div>
             </div>
 
@@ -973,9 +1221,9 @@
     </script>
 
     <script>
-        /* Staggered reveal for the capability chips inside each service card. */
+        /* Staggered reveal for the capability chips, the PDF diagram, and its tag pills. */
         (function () {
-            var grids = document.querySelectorAll(".cap-grid");
+            var grids = document.querySelectorAll(".cap-grid, .pdfr-svg, .pdfr-tags");
             if (!grids.length) return;
             if (!("IntersectionObserver" in window)) {
                 grids.forEach(function (g) { g.classList.add("cap-in"); });
@@ -1046,6 +1294,127 @@
             }, { passive: true });
 
             updateButtonState();
+        })();
+    </script>
+
+    <script>
+        /* Ambient Three.js sheets behind the PDF remediation diagram.
+           three.min.js is fetched only once the section nears the viewport, and
+           the render loop is parked whenever the stage is scrolled off screen. */
+        (function () {
+            var stage = document.querySelector(".pdfr-stage");
+            var canvas = document.getElementById("pdf-three-canvas");
+            if (!stage || !canvas || !("IntersectionObserver" in window)) return;
+
+            var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            var requested = false;
+
+            new IntersectionObserver(function (entries, obs) {
+                if (!entries[0].isIntersecting || requested) return;
+                requested = true;
+                obs.disconnect();
+                var s = document.createElement("script");
+                s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r161/three.min.js";
+                s.onload = init;
+                s.onerror = function () { canvas.style.display = "none"; };
+                document.head.appendChild(s);
+            }, { rootMargin: "400px 0px" }).observe(stage);
+
+            function init() {
+                if (typeof THREE === "undefined") { canvas.style.display = "none"; return; }
+
+                var scene = new THREE.Scene();
+                var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+                camera.position.set(0, 0, 5);
+
+                var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.setClearColor(0x09090b, 0);
+
+                var group = new THREE.Group();
+                scene.add(group);
+
+                // Three offset sheets — the stack of documents being processed.
+                var sheets = [];
+                var sheetGeo = new THREE.PlaneGeometry(1.55, 2.1);
+                for (var i = 0; i < 3; i++) {
+                    var sheet = new THREE.Group();
+                    sheet.add(new THREE.Mesh(sheetGeo, new THREE.MeshBasicMaterial({
+                        color: 0x0f0f16, transparent: true, opacity: 0.5, side: THREE.DoubleSide
+                    })));
+                    sheet.add(new THREE.LineSegments(
+                        new THREE.EdgesGeometry(sheetGeo),
+                        new THREE.LineBasicMaterial({ color: 0xd4af37, transparent: true, opacity: 0.1 + i * 0.07 })
+                    ));
+                    sheet.position.set(-0.55 + i * 0.55, 0.18 - i * 0.16, -1.1 + i * 0.55);
+                    sheet.rotation.set(0.12, -0.5 + i * 0.16, 0.06 - i * 0.05);
+                    group.add(sheet);
+                    sheets.push(sheet);
+                }
+
+                // Gold motes drifting through the stack.
+                var COUNT = 240;
+                var pos = new Float32Array(COUNT * 3);
+                for (var p = 0; p < COUNT; p++) {
+                    pos[p * 3] = (Math.random() - 0.5) * 6;
+                    pos[p * 3 + 1] = (Math.random() - 0.5) * 5;
+                    pos[p * 3 + 2] = (Math.random() - 0.5) * 4 - 0.5;
+                }
+                var dustGeo = new THREE.BufferGeometry();
+                dustGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+                var dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+                    color: 0xd4af37, size: 0.022, transparent: true, opacity: 0.5, sizeAttenuation: true
+                }));
+                group.add(dust);
+
+                function resize() {
+                    var w = stage.clientWidth, h = stage.clientHeight;
+                    if (!w || !h) return;
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(w, h, false);
+                }
+                resize();
+                if ("ResizeObserver" in window) new ResizeObserver(resize).observe(stage);
+                else window.addEventListener("resize", resize);
+
+                // Pointer parallax, eased toward the target each frame.
+                var targetX = 0, targetY = 0;
+                if (!reduced && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                    stage.addEventListener("pointermove", function (e) {
+                        var r = stage.getBoundingClientRect();
+                        targetX = ((e.clientX - r.left) / r.width - 0.5) * 0.4;
+                        targetY = ((e.clientY - r.top) / r.height - 0.5) * 0.3;
+                    });
+                    stage.addEventListener("pointerleave", function () { targetX = 0; targetY = 0; });
+                }
+
+                renderer.render(scene, camera);
+                canvas.classList.add("pdfr-lit");
+                if (reduced) return;
+
+                var visible = false, raf = null, start = performance.now();
+
+                function frame(now) {
+                    if (!visible) { raf = null; return; }
+                    var t = (now - start) * 0.001;
+                    group.rotation.y += (targetX - group.rotation.y) * 0.05;
+                    group.rotation.x += (-targetY - group.rotation.x) * 0.05;
+                    for (var i = 0; i < sheets.length; i++) {
+                        sheets[i].position.y = (0.18 - i * 0.16) + Math.sin(t * 0.6 + i * 1.3) * 0.055;
+                        sheets[i].rotation.z = (0.06 - i * 0.05) + Math.sin(t * 0.4 + i) * 0.02;
+                    }
+                    dust.rotation.y = t * 0.03;
+                    dust.rotation.x = Math.sin(t * 0.12) * 0.06;
+                    renderer.render(scene, camera);
+                    raf = requestAnimationFrame(frame);
+                }
+
+                new IntersectionObserver(function (entries) {
+                    visible = entries[0].isIntersecting;
+                    if (visible && raf === null) raf = requestAnimationFrame(frame);
+                }, { threshold: 0 }).observe(stage);
+            }
         })();
     </script>
 </body>
