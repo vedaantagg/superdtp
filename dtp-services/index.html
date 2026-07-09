@@ -231,6 +231,86 @@
         .svc-pillar-body { padding: 18px 24px 22px; overflow-y: auto; flex: 1; min-height: 0; }
         .svc-stack-spacer { height: 120px; }
 
+        /* ── Capability chips (replaces the old "Includes" bullet lists) ──
+           Each pillar picks its accent via data-accent; --cap drives glyph,
+           hover border and wash so one rule set covers all eight cards. */
+        .svc-pillar { --cap: #d4af37; --cap-soft: rgba(212,175,55,0.38); --cap-wash: rgba(212,175,55,0.10); }
+        .svc-pillar[data-accent="cyan"]    { --cap: #22d3ee; --cap-soft: rgba(34,211,238,0.38);  --cap-wash: rgba(34,211,238,0.10); }
+        .svc-pillar[data-accent="emerald"] { --cap: #34d399; --cap-soft: rgba(52,211,153,0.38);  --cap-wash: rgba(52,211,153,0.10); }
+        .svc-pillar[data-accent="purple"]  { --cap: #c084fc; --cap-soft: rgba(192,132,252,0.38); --cap-wash: rgba(192,132,252,0.10); }
+        .svc-pillar[data-accent="orange"]  { --cap: #fb923c; --cap-soft: rgba(251,146,60,0.38);  --cap-wash: rgba(251,146,60,0.10); }
+        .svc-pillar[data-accent="rose"]    { --cap: #fb7185; --cap-soft: rgba(251,113,133,0.38); --cap-wash: rgba(251,113,133,0.10); }
+
+        .cap-label {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.5rem; letter-spacing: 0.28em; text-transform: uppercase;
+            color: rgba(255,255,255,0.34);
+            margin-bottom: 12px;
+        }
+        .cap-label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--cap-soft), transparent); }
+        .cap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+        .cap-chip {
+            position: relative;
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 11px;
+            border-radius: 11px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.022);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+        .cap-chip::before {
+            content: "";
+            position: absolute; inset: 0;
+            background: linear-gradient(100deg, var(--cap-wash) 0%, transparent 62%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .cap-chip:hover { border-color: var(--cap-soft); transform: translateY(-3px); }
+        .cap-chip:hover::before { opacity: 1; }
+        .cap-glyph {
+            position: relative; z-index: 1;
+            width: 24px; height: 24px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 7px;
+            border: 1px solid var(--cap-soft);
+            background: var(--cap-wash);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.5rem; letter-spacing: 0.02em;
+            color: var(--cap);
+            transition: background 0.25s ease, box-shadow 0.25s ease;
+        }
+        .cap-chip:hover .cap-glyph { background: var(--cap-soft); box-shadow: 0 0 14px -2px var(--cap-soft); }
+        .cap-name {
+            position: relative; z-index: 1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.74rem; font-weight: 600; line-height: 1.25;
+            color: rgba(255,255,255,0.82);
+            transition: color 0.25s ease;
+            min-width: 0;
+        }
+        .cap-chip:hover .cap-name { color: #fff; }
+        /* Staggered reveal once the card scrolls into view */
+        .cap-grid.cap-in .cap-chip { opacity: 1; transform: translateY(0); }
+        .cap-grid.cap-in .cap-chip:hover { transform: translateY(-3px); }
+        .cap-grid.cap-in .cap-chip:nth-child(1) { transition-delay: 0ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(2) { transition-delay: 55ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(3) { transition-delay: 110ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(4) { transition-delay: 165ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(5) { transition-delay: 220ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(6) { transition-delay: 275ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(7) { transition-delay: 330ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(8) { transition-delay: 385ms; }
+        @media (max-width: 460px) { .cap-grid { grid-template-columns: 1fr; } }
+        @media (prefers-reduced-motion: reduce) {
+            .cap-chip { opacity: 1; transform: none; transition: border-color 0.25s ease, background 0.25s ease; }
+            .cap-chip:hover, .cap-grid.cap-in .cap-chip:hover { transform: none; }
+        }
+
         /* Compressed ladder for short-but-wide screens (11–14" laptops, ~768px tall). */
         @media (min-width: 1025px) and (max-height: 900px) {
             #svc-stack { --peek: 44px; --base: 128px; --buf: 16px; --head-top: 60px;
@@ -422,153 +502,153 @@
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Translation is only one part of multilingual communication. The final document must also look professional, readable, and brand consistent across every language. Our multilingual DTP specialists format translated content while preserving the original layout, typography, visual hierarchy, and user experience.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We work with left-to-right, right-to-left, Asian, and Indic languages, handling text expansion, font compatibility, spacing, line breaks, tables, graphics, and complex page layouts. Whether you're publishing brochures, manuals, catalogs, reports, or marketing collateral, we ensure production-ready files that are ready for print or digital distribution.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Translation is only half the job — the finished document still has to look professional and stay on brand in every language. We format translated content while preserving the original layout, typography, and visual hierarchy.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Across LTR, RTL, Asian, and Indic scripts, we handle text expansion, font compatibility, tables, and complex page layouts — delivering production-ready files for print or digital.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Multilingual DTP and Typesetting includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Multilingual Document Formatting</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Complex Script Support</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>RTL Language Formatting</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Asian &amp; Indic Typography</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Font Management</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Layout Adjustment After Translation</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Brand Consistency</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Multilingual DTP and Typesetting includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Multilingual Formatting</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Complex Scripts</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">RTL Layouts</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Asian &amp; Indic Type</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Font Management</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Post-translation Layout</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Brand Consistency</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:1" id="document-formatting">
+                <div class="svc-pillar" style="--i:1" data-accent="cyan" id="document-formatting">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <h3 class="svc-pillar-head-title">Document Formatting &amp; Corporate Publishing</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Well-formatted documents improve readability, strengthen brand credibility, and reduce production issues. We professionally format business documents of every size and complexity while ensuring consistency across layouts, styles, tables, graphics, numbering, and corporate branding.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Whether you're preparing annual reports, whitepapers, product catalogs, training manuals, proposals, or corporate communications, our team delivers polished, publication-ready documents for both print and digital use.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Well-formatted documents read better, strengthen brand credibility, and cut production issues. We format business documents of any size, keeping layouts, styles, tables, graphics, numbering, and branding consistent throughout.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">From annual reports and whitepapers to catalogs, proposals, and training manuals — polished, publication-ready files for print and digital.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Document Formatting and Corporate Publishing includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Reports</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Manuals</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Catalogs</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Brochures</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Whitepapers</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Corporate Documents</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Templates</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Business Forms</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Document Formatting and Corporate Publishing includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Reports</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Manuals</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Catalogs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Brochures</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Whitepapers</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Corporate Docs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Templates</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Business Forms</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:2">
+                <div class="svc-pillar" style="--i:2" data-accent="emerald" id="pdf-remediation">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <h3 class="svc-pillar-head-title">PDF Remediation &amp; Accessibility</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Accessibility is no longer optional. Organizations must ensure digital documents are usable by everyone, including people using screen readers and assistive technologies.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Our accessibility specialists remediate PDFs to comply with PDF/UA, WCAG, and Section 508 standards. We add proper document structure, tags, reading order, headings, alt text, bookmarks, tables, metadata, and navigation while preserving the document's visual design.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Accessibility is no longer optional — digital documents have to work for everyone, including people using screen readers and assistive technology.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We remediate PDFs to PDF/UA, WCAG, and Section 508 standards, adding structure, tags, reading order, headings, alt text, bookmarks, and metadata while preserving the original visual design.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="PDF Remediation and Accessibility includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>PDF Remediation</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>WCAG Compliance</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>PDF/UA Compliance</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Section 508 Support</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Tagged PDFs</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Accessible Forms</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Screen Reader Optimization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Accessibility Testing</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="PDF Remediation and Accessibility includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">PDF Remediation</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">WCAG Compliance</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">PDF/UA Compliance</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Section 508</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Tagged PDFs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Accessible Forms</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Screen Reader Ready</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Accessibility Testing</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:3" id="layout-recreation">
+                <div class="svc-pillar" style="--i:3" data-accent="purple" id="layout-recreation">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <h3 class="svc-pillar-head-title">Layout Recreation &amp; File Conversion</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Lost source files shouldn't stop your localization projects. We recreate editable layouts from PDFs, scanned documents, screenshots, and printed materials while preserving typography, tables, graphics, illustrations, and formatting.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">The resulting files are fully editable, translation-ready, and suitable for future updates.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Lost source files shouldn't stall a localization project. We rebuild editable layouts from PDFs, scans, screenshots, and printed material — typography, tables, graphics, and formatting intact.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">What you get back is fully editable, translation-ready, and easy to update later.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Layout Recreation and File Conversion includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>PDF to InDesign</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Scan to Editable</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Legacy File Recreation</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Editable Layouts</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>OCR Cleanup</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Template Rebuilding</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Document Reconstruction</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Layout Recreation and File Conversion includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">PDF to InDesign</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Scan to Editable</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Legacy Recreation</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Editable Layouts</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">OCR Cleanup</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Template Rebuilding</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Doc Reconstruction</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:4" id="technical-documentation">
+                <div class="svc-pillar" style="--i:4" data-accent="orange" id="technical-documentation">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <h3 class="svc-pillar-head-title">Technical Documentation &amp; eLearning DTP</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Technical content demands precision. We format engineering documents, software documentation, user manuals, SOPs, training guides, and multilingual eLearning assets while maintaining technical accuracy and instructional clarity.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Our specialists work with complex tables, diagrams, callouts, cross-references, screenshots, and multilingual learning content for platforms like Storyline, Rise, Captivate, and LMS environments.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Technical content demands precision. We format engineering documents, software docs, user manuals, SOPs, and training guides without losing technical accuracy or instructional clarity.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">That includes complex tables, diagrams, callouts, cross-references, and multilingual learning content for Storyline, Rise, Captivate, and LMS platforms.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Technical Documentation and eLearning DTP includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Technical Manuals</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>User Guides</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>SOPs</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Product Documentation</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Training Manuals</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Storyline Localization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Rise Localization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>LMS Assets</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Technical Documentation and eLearning DTP includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Technical Manuals</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">User Guides</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">SOPs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Product Docs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Training Manuals</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Storyline</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Rise</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">LMS Assets</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:5" id="image-graphics">
+                <div class="svc-pillar" style="--i:5" data-accent="rose" id="image-graphics">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <h3 class="svc-pillar-head-title">Image, Graphics &amp; Presentation Localization</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Global communication extends beyond text. Images, diagrams, presentations, and visual assets must also be localized for different markets.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We edit embedded text in graphics, screenshots, charts, infographics, labels, and presentations while ensuring visual consistency, language accuracy, and brand alignment.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Global communication extends past text — images, diagrams, and presentations need localizing too.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We edit embedded text in graphics, screenshots, charts, infographics, labels, and slide decks, holding visual consistency and brand alignment across every market.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Image, Graphics and Presentation Localization includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>PowerPoint Localization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Image Editing</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Screenshot Localization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Charts</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Infographics</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Diagrams</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Marketing Visuals</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Corporate Presentations</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Image, Graphics and Presentation Localization includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">PowerPoint</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Image Editing</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Screenshots</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Charts</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Infographics</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Diagrams</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Marketing Visuals</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Corporate Decks</span></li>
                         </ul>
                     </div>
                     </div>
@@ -582,45 +662,45 @@
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Successful localization begins before translation. We prepare and optimize source files to improve translation efficiency, reduce formatting errors, and streamline multilingual production.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Our production specialists clean files, organize styles, extract translatable content, resolve formatting inconsistencies, and prepare documents for CAT tools and localization platforms. After translation, we also perform multilingual formatting to resolve text expansion, font issues, table breaks, and layout inconsistencies before final delivery.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Successful localization begins before translation. We clean and optimize source files — organizing styles, extracting translatable content, and prepping documents for CAT tools and localization platforms.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">After translation, we resolve text expansion, font issues, table breaks, and layout drift before final delivery.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Translation File Engineering and Production Support includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Translation Preparation</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>CAT Tool Optimization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>File Engineering</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>QA Formatting</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Post-translation Formatting</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Production Support</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Workflow Optimization</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Translation File Engineering and Production Support includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Translation Prep</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">CAT Tool Optimization</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">File Engineering</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">QA Formatting</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Post-translation DTP</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Production Support</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Workflow Optimization</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:7" id="print-publishing">
+                <div class="svc-pillar" style="--i:7" data-accent="cyan" id="print-publishing">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <h3 class="svc-pillar-head-title">Print &amp; Digital Publishing Services</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Whether your content is destined for print or digital channels, we ensure it meets production standards from the outset. We prepare high-quality print-ready files with proper bleeds, crop marks, fonts, colors, and image resolution.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We also optimize digital documents for websites, portals, email campaigns, knowledge bases, and online learning platforms.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Print or digital, your content meets production standards from the outset. We build print-ready files with correct bleeds, crop marks, fonts, colors, and image resolution.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We also optimize digital documents for websites, portals, email campaigns, knowledge bases, and learning platforms.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Print and Digital Publishing Services includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Print-ready Artwork</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Digital Publishing</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Interactive PDFs</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Online Documents</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Print Production</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Packaging Files</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Publishing QA</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Print and Digital Publishing Services includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Print-ready Artwork</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Digital Publishing</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Interactive PDFs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Online Documents</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Print Production</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Packaging Files</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Publishing QA</span></li>
                         </ul>
                     </div>
                     </div>
@@ -631,30 +711,11 @@
         </div>
     </section>
 
-    <!-- 03 / TOOLS & FORMATS -->
-    <section class="border-t border-white/5 py-24 px-6 md:px-12 max-w-7xl mx-auto w-full">
-        <div class="space-y-4 mb-10">
-            <span class="font-mono text-[0.6rem] text-neutral-400 uppercase tracking-widest block">TOOLING</span>
-            <h2 class="font-serif text-4xl md:text-5xl tracking-tight">Tools &amp; Formats We Support</h2>
-            <p class="text-neutral-400 font-light max-w-2xl text-base">We work with a wide range of design, publishing, documentation, and office tools.</p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div class="live-data-card rounded-2xl p-6">
-                <div class="text-brandAccent font-mono text-[0.6rem] uppercase tracking-widest mb-2">Design &amp; Publishing</div>
-                <p class="text-neutral-300 text-sm leading-relaxed">Adobe InDesign, Illustrator, Photoshop, FrameMaker, and Acrobat &middot; QuarkXPress, CorelDRAW, Canva, and Figma</p>
-            </div>
-            <div class="live-data-card rounded-2xl p-6">
-                <div class="text-cyan-400/80 font-mono text-[0.6rem] uppercase tracking-widest mb-2">Office &amp; Formats</div>
-                <p class="text-neutral-300 text-sm leading-relaxed">Microsoft Word, PowerPoint, and Excel &middot; AutoCAD, XML, HTML, PDF, IDML, INDD, AI, PSD, PPTX, DOCX, XLSX, EPS, SVG, and more</p>
-            </div>
-        </div>
-    </section>
 
     <!-- 04 / DEDICATED PDF REMEDIATION -->
     <section class="border-t border-white/5 bg-[#07070a]/90 py-28 px-6 md:px-12 w-full" id="pdf-remediation" aria-labelledby="pdf-remediation-heading">
         <div class="max-w-7xl mx-auto">
             <div class="mb-12 space-y-4 max-w-4xl">
-                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">DEDICATED SECTION</span>
                 <h2 id="pdf-remediation-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Make Your PDFs Accessible, Compliant, and User-Friendly</h2>
             </div>
 
@@ -726,42 +787,6 @@
         </div>
     </section>
 
-    <!-- 06 / WORKFLOW -->
-    <section class="border-t border-white/5 bg-[#07070a]/90 py-28 px-6 md:px-12 w-full" id="workflow" aria-labelledby="workflow-heading">
-        <div class="max-w-7xl mx-auto">
-            <div class="mb-16 space-y-4">
-                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">PROCESS</span>
-                <h2 id="workflow-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Our DTP Workflow</h2>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-                <div class="live-data-card rounded-2xl p-6 space-y-2">
-                    <div class="text-brandAccent font-mono text-xs">01</div>
-                    <h3 class="text-white font-serif text-lg">File Assessment</h3>
-                    <p class="text-neutral-400 text-sm leading-relaxed">We review source files, formats, languages, design complexity, output requirements, and delivery expectations.</p>
-                </div>
-                <div class="live-data-card rounded-2xl p-6 space-y-2">
-                    <div class="text-brandAccent font-mono text-xs">02</div>
-                    <h3 class="text-white font-serif text-lg">File Preparation</h3>
-                    <p class="text-neutral-400 text-sm leading-relaxed">We clean, structure, extract, or prepare files for translation, editing, formatting, or publishing.</p>
-                </div>
-                <div class="live-data-card rounded-2xl p-6 space-y-2">
-                    <div class="text-brandAccent font-mono text-xs">03</div>
-                    <h3 class="text-white font-serif text-lg">Layout &amp; Formatting</h3>
-                    <p class="text-neutral-400 text-sm leading-relaxed">Our DTP specialists format content, adjust layouts, fix typography, align visuals, and manage language-specific expansion or script requirements.</p>
-                </div>
-                <div class="live-data-card rounded-2xl p-6 space-y-2">
-                    <div class="text-brandAccent font-mono text-xs">04</div>
-                    <h3 class="text-white font-serif text-lg">Quality Check</h3>
-                    <p class="text-neutral-400 text-sm leading-relaxed">We review spacing, fonts, alignment, tables, graphics, page breaks, hyperlinks, accessibility needs, and overall visual consistency.</p>
-                </div>
-                <div class="live-data-card rounded-2xl p-6 space-y-2">
-                    <div class="text-brandAccent font-mono text-xs">05</div>
-                    <h3 class="text-white font-serif text-lg">Final Delivery</h3>
-                    <p class="text-neutral-400 text-sm leading-relaxed">We deliver final files in print-ready, digital-ready, editable, or accessible formats based on your project requirements.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- 07 / CTA -->
     <section id="cta" class="border-t border-white/5 py-28 px-6 md:px-12 w-full" aria-labelledby="cta-heading">
@@ -944,6 +969,26 @@
                     activateCat(this);
                 });
             });
+        })();
+    </script>
+
+    <script>
+        /* Staggered reveal for the capability chips inside each service card. */
+        (function () {
+            var grids = document.querySelectorAll(".cap-grid");
+            if (!grids.length) return;
+            if (!("IntersectionObserver" in window)) {
+                grids.forEach(function (g) { g.classList.add("cap-in"); });
+                return;
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("cap-in");
+                    io.unobserve(entry.target);
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+            grids.forEach(function (g) { io.observe(g); });
         })();
     </script>
 
