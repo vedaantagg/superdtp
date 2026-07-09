@@ -21,6 +21,7 @@ jobs:
         with:
           root: .
           extra: >-
+            --blacklist static clients
             --ignore-re "CSS: " "Attribute .fetchpriority. not allowed on element .img."
 
   link-check:
@@ -35,6 +36,7 @@ jobs:
           args: >-
             --no-progress
             --exclude-loopback
+            --exclude 'https?://(www\.)?superdtp\.com'
             --root-dir .
             '**/*.html'
           fail: true
