@@ -134,10 +134,20 @@
 
         /* Stacking cards — DTP Services Catalogue collapse into one another on scroll,
            mirroring the localization page's peek-stack pattern. */
-        #svc-stack { position: relative; }
+        #svc-stack {
+            position: relative;
+            /* Ladder geometry as variables so short (11") laptops keep the sticky
+               peek-stack — just compressed — instead of collapsing to flat flow.
+               --peek must equal .svc-pillar-head height for the rungs to stack flush. */
+            --peek: 56px;
+            --base: 168px;
+            --buf: 24px;
+            --head-top: 74px;
+            --title-size: clamp(1.1rem, 1.15vw + 0.85rem, 1.6rem);
+        }
         .svc-head {
             position: sticky;
-            top: 74px;
+            top: var(--head-top);
             z-index: 45;
             text-align: center;
             max-width: 640px;
@@ -149,7 +159,7 @@
         }
         .svc-pillar {
             position: sticky;
-            top: calc(168px + var(--i) * 40px);
+            top: calc(var(--base) + var(--i) * var(--peek));
             z-index: calc(10 + var(--i));
             scroll-margin-top: 84px;
         }
@@ -162,25 +172,56 @@
             background: linear-gradient(162deg, #16161e 0%, #0c0c12 58%, #0a0a0e 100%);
             box-shadow: 0 -1px 0 rgba(255,255,255,0.05) inset, 0 26px 64px rgba(0,0,0,0.55);
             transition: border-color 0.35s ease, box-shadow 0.4s ease;
-            min-height: 320px;
-            max-height: calc(100vh - 192px - var(--i) * 40px);
+            max-height: calc(100vh - var(--base) - var(--buf) - var(--i) * var(--peek));
             overflow: hidden;
         }
-        .svc-pillar-card:hover { border-color: rgba(212,175,55,0.35); }
+        .svc-pillar-card:hover {
+            border-color: rgba(212,175,55,0.35);
+            box-shadow: 0 -1px 0 rgba(255,255,255,0.06) inset, 0 30px 72px rgba(0,0,0,0.6);
+        }
         .svc-pillar-head {
             display: flex;
             align-items: center;
-            gap: 14px;
-            height: 40px;
-            padding: 0 20px;
+            gap: 16px;
+            height: var(--peek);
+            padding: 0 26px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
             flex-shrink: 0;
+            position: relative;
+            transition: background 0.4s ease;
         }
-        .svc-pillar-no { font-family: 'Space Grotesk', monospace; font-size: 0.6rem; letter-spacing: 0.2em; color: rgba(212,175,55,0.9); flex-shrink: 0; }
+        /* Gold peek-strip sheen so each stacked header reads as its own step in the ladder */
+        .svc-pillar-head::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(212,175,55,0.07) 0%, rgba(212,175,55,0) 42%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .svc-pillar-card:hover .svc-pillar-head::before { opacity: 1; }
+        /* Chevron cue on the right of every rung */
+        .svc-pillar-head::after {
+            content: "";
+            margin-left: auto;
+            width: 8px;
+            height: 8px;
+            border-right: 1.5px solid rgba(212,175,55,0.55);
+            border-bottom: 1.5px solid rgba(212,175,55,0.55);
+            transform: rotate(45deg);
+            flex-shrink: 0;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+        .svc-pillar-card:hover .svc-pillar-head::after {
+            transform: rotate(-135deg);
+            border-color: rgba(212,175,55,0.9);
+        }
         .svc-pillar-head-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(0.95rem, 1vw + 0.7rem, 1.2rem);
-            line-height: 1.15;
+            font-size: var(--title-size);
+            line-height: 1.1;
+            letter-spacing: 0.01em;
             color: #fff;
             white-space: nowrap;
             overflow: hidden;
@@ -190,18 +231,35 @@
         .svc-pillar-body { padding: 18px 24px 22px; overflow-y: auto; flex: 1; min-height: 0; }
         .svc-stack-spacer { height: 120px; }
 
-        @media (max-width: 1024px), (max-height: 820px) {
+        /* Compressed ladder for short-but-wide screens (11–14" laptops, ~768px tall). */
+        @media (min-width: 1025px) and (max-height: 900px) {
+            #svc-stack { --peek: 44px; --base: 128px; --buf: 16px; --head-top: 60px;
+                         --title-size: clamp(1rem, 0.7vw + 0.78rem, 1.25rem); }
+            .svc-head { margin: 0 auto 12px; padding: 8px 18px 9px; }
+            .svc-head h2 { font-size: 1.5rem; }
+            .svc-pillar-body { padding: 16px 24px 20px; }
+        }
+        @media (min-width: 1025px) and (max-height: 720px) {
+            #svc-stack { --peek: 40px; --base: 116px; --buf: 12px; --head-top: 54px;
+                         --title-size: clamp(0.95rem, 0.6vw + 0.75rem, 1.15rem); }
+        }
+
+        /* Too narrow (tablet/phone) or too short to fit the pin window — flat flow. */
+        @media (max-width: 1024px), (max-height: 560px) {
             .svc-head { position: static; top: auto; margin: 0 0 32px; padding: 0; background: none; backdrop-filter: none; text-align: left; max-width: none; }
+            .svc-head h2 { font-size: inherit; }
             .svc-pillar { position: static; top: auto; z-index: auto; margin-bottom: 20px; }
             .svc-pillar-card { max-height: none; min-height: 0; }
-            .svc-pillar-head { height: auto; min-height: 50px; padding: 12px 20px; flex-wrap: wrap; }
+            .svc-pillar-head { height: auto; min-height: 60px; padding: 16px 22px; flex-wrap: wrap; }
+            .svc-pillar-head::after { align-self: center; }
             .svc-pillar-head-title { white-space: normal; overflow: visible; text-overflow: clip; }
             .svc-pillar-body { padding: 26px 26px 34px; overflow-y: visible; }
             .svc-stack-spacer { display: none; }
         }
         @media (max-width: 640px) {
-            .svc-pillar-head-title { font-size: 1.05rem; }
-            .svc-pillar-no { font-size: 0.56rem; }
+            .svc-pillar-head { gap: 12px; padding: 14px 16px; }
+            .svc-pillar-head-title { font-size: clamp(1.05rem, 4.4vw, 1.35rem); }
+            .svc-pillar-head::after { width: 7px; height: 7px; }
         }
 
         /* Footer — mirrors homepage / localization footer */
@@ -364,12 +422,10 @@
                 <div class="svc-pillar" style="--i:0" id="multilingual-dtp">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
-                        <span class="svc-pillar-no">01</span>
                         <h3 class="svc-pillar-head-title">Multilingual DTP &amp; Typesetting</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">01 // Typesetting</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Translation is only one part of multilingual communication. The final document must also look professional, readable, and brand consistent across every language. Our multilingual DTP specialists format translated content while preserving the original layout, typography, visual hierarchy, and user experience.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">We work with left-to-right, right-to-left, Asian, and Indic languages, handling text expansion, font compatibility, spacing, line breaks, tables, graphics, and complex page layouts. Whether you're publishing brochures, manuals, catalogs, reports, or marketing collateral, we ensure production-ready files that are ready for print or digital distribution.</p>
                     </div>
@@ -392,12 +448,10 @@
                 <div class="svc-pillar" style="--i:1" id="document-formatting">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
-                        <span class="svc-pillar-no">02</span>
                         <h3 class="svc-pillar-head-title">Document Formatting &amp; Corporate Publishing</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">02 // Corporate</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Well-formatted documents improve readability, strengthen brand credibility, and reduce production issues. We professionally format business documents of every size and complexity while ensuring consistency across layouts, styles, tables, graphics, numbering, and corporate branding.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Whether you're preparing annual reports, whitepapers, product catalogs, training manuals, proposals, or corporate communications, our team delivers polished, publication-ready documents for both print and digital use.</p>
                     </div>
@@ -421,12 +475,10 @@
                 <div class="svc-pillar" style="--i:2">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
-                        <span class="svc-pillar-no">03</span>
                         <h3 class="svc-pillar-head-title">PDF Remediation &amp; Accessibility</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-emerald-400/80 tracking-widest uppercase">03 // Accessibility</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Accessibility is no longer optional. Organizations must ensure digital documents are usable by everyone, including people using screen readers and assistive technologies.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Our accessibility specialists remediate PDFs to comply with PDF/UA, WCAG, and Section 508 standards. We add proper document structure, tags, reading order, headings, alt text, bookmarks, tables, metadata, and navigation while preserving the document's visual design.</p>
                     </div>
@@ -450,12 +502,10 @@
                 <div class="svc-pillar" style="--i:3" id="layout-recreation">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
-                        <span class="svc-pillar-no">04</span>
                         <h3 class="svc-pillar-head-title">Layout Recreation &amp; File Conversion</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-purple-400/80 tracking-widest uppercase">04 // Recreation</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Lost source files shouldn't stop your localization projects. We recreate editable layouts from PDFs, scanned documents, screenshots, and printed materials while preserving typography, tables, graphics, illustrations, and formatting.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">The resulting files are fully editable, translation-ready, and suitable for future updates.</p>
                     </div>
@@ -478,12 +528,10 @@
                 <div class="svc-pillar" style="--i:4" id="technical-documentation">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
-                        <span class="svc-pillar-no">05</span>
                         <h3 class="svc-pillar-head-title">Technical Documentation &amp; eLearning DTP</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-orange-400/80 tracking-widest uppercase">05 // Technical</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Technical content demands precision. We format engineering documents, software documentation, user manuals, SOPs, training guides, and multilingual eLearning assets while maintaining technical accuracy and instructional clarity.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Our specialists work with complex tables, diagrams, callouts, cross-references, screenshots, and multilingual learning content for platforms like Storyline, Rise, Captivate, and LMS environments.</p>
                     </div>
@@ -507,12 +555,10 @@
                 <div class="svc-pillar" style="--i:5" id="image-graphics">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
-                        <span class="svc-pillar-no">06</span>
                         <h3 class="svc-pillar-head-title">Image, Graphics &amp; Presentation Localization</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-rose-400/80 tracking-widest uppercase">06 // Visual</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Global communication extends beyond text. Images, diagrams, presentations, and visual assets must also be localized for different markets.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">We edit embedded text in graphics, screenshots, charts, infographics, labels, and presentations while ensuring visual consistency, language accuracy, and brand alignment.</p>
                     </div>
@@ -536,12 +582,10 @@
                 <div class="svc-pillar" style="--i:6" id="file-engineering">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
-                        <span class="svc-pillar-no">07</span>
                         <h3 class="svc-pillar-head-title">Translation File Engineering &amp; Production Support</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">07 // Engineering</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Successful localization begins before translation. We prepare and optimize source files to improve translation efficiency, reduce formatting errors, and streamline multilingual production.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Our production specialists clean files, organize styles, extract translatable content, resolve formatting inconsistencies, and prepare documents for CAT tools and localization platforms. After translation, we also perform multilingual formatting to resolve text expansion, font issues, table breaks, and layout inconsistencies before final delivery.</p>
                     </div>
@@ -564,12 +608,10 @@
                 <div class="svc-pillar" style="--i:7" id="print-publishing">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
-                        <span class="svc-pillar-no">08</span>
                         <h3 class="svc-pillar-head-title">Print &amp; Digital Publishing Services</h3>
                     </div>
                     <div class="svc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">08 // Publishing</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Whether your content is destined for print or digital channels, we ensure it meets production standards from the outset. We prepare high-quality print-ready files with proper bleeds, crop marks, fonts, colors, and image resolution.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">We also optimize digital documents for websites, portals, email campaigns, knowledge bases, and online learning platforms.</p>
                     </div>

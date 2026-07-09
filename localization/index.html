@@ -495,10 +495,20 @@
            below their own peek offset (100vh - offset - buffer) with internal scroll
            as a safety net, so the active card — including the very last one — is
            always fully on-screen, never cropped by the viewport edge. */
-        #loc-svc-stack { position: relative; }
+        #loc-svc-stack {
+            position: relative;
+            /* Ladder geometry as variables so short (11") laptops keep the sticky
+               peek-stack — just compressed — instead of collapsing to flat flow.
+               --peek must equal .loc-pillar-head height for the rungs to stack flush. */
+            --peek: 56px;   /* height of each stacked header rung */
+            --base: 168px;  /* where the first card pins, below the section head */
+            --buf: 24px;    /* breathing room below the open card */
+            --head-top: 74px;
+            --title-size: clamp(1.1rem, 1.15vw + 0.85rem, 1.6rem);
+        }
         .loc-svc-head {
             position: sticky;
-            top: 74px;
+            top: var(--head-top);
             z-index: 45;
             text-align: center;
             max-width: 640px;
@@ -510,7 +520,7 @@
         }
         .loc-pillar {
             position: sticky;
-            top: calc(168px + var(--i) * 40px);
+            top: calc(var(--base) + var(--i) * var(--peek));
             z-index: calc(10 + var(--i));
             scroll-margin-top: 84px;
         }
@@ -523,32 +533,56 @@
             background: linear-gradient(162deg, #16161e 0%, #0c0c12 58%, #0a0a0e 100%);
             box-shadow: 0 -1px 0 rgba(255,255,255,0.05) inset, 0 26px 64px rgba(0,0,0,0.55);
             transition: border-color 0.35s ease, box-shadow 0.4s ease;
-            max-height: calc(100vh - 192px - var(--i) * 40px);
+            max-height: calc(100vh - var(--base) - var(--buf) - var(--i) * var(--peek));
             overflow: hidden;
         }
         .loc-pillar-card:hover {
             border-color: rgba(212,175,55,0.35);
+            box-shadow: 0 -1px 0 rgba(255,255,255,0.06) inset, 0 30px 72px rgba(0,0,0,0.6);
         }
         .loc-pillar-head {
             display: flex;
             align-items: center;
-            gap: 14px;
-            height: 40px;
-            padding: 0 20px;
+            gap: 16px;
+            height: var(--peek);
+            padding: 0 26px;
             border-bottom: 1px solid rgba(255,255,255,0.06);
             flex-shrink: 0;
+            position: relative;
+            transition: background 0.4s ease;
         }
-        .loc-pillar-no {
-            font-family: 'Space Grotesk', monospace;
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            color: rgba(212,175,55,0.9);
+        /* Gold peek-strip sheen so each stacked header reads as its own step in the ladder */
+        .loc-pillar-head::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(212,175,55,0.07) 0%, rgba(212,175,55,0) 42%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        .loc-pillar-card:hover .loc-pillar-head::before { opacity: 1; }
+        /* Chevron cue on the right of every rung */
+        .loc-pillar-head::after {
+            content: "";
+            margin-left: auto;
+            width: 8px;
+            height: 8px;
+            border-right: 1.5px solid rgba(212,175,55,0.55);
+            border-bottom: 1.5px solid rgba(212,175,55,0.55);
+            transform: rotate(45deg);
             flex-shrink: 0;
+            transition: transform 0.4s ease, border-color 0.4s ease;
+        }
+        .loc-pillar-card:hover .loc-pillar-head::after {
+            transform: rotate(-135deg);
+            border-color: rgba(212,175,55,0.9);
         }
         .loc-pillar-head-title {
             font-family: 'Instrument Serif', serif;
-            font-size: clamp(0.95rem, 1vw + 0.7rem, 1.2rem);
-            line-height: 1.15;
+            font-size: var(--title-size);
+            line-height: 1.1;
+            letter-spacing: 0.01em;
             color: #fff;
             white-space: nowrap;
             overflow: hidden;
@@ -566,21 +600,40 @@
            sticky card keeps overlapping whatever follows. */
         .loc-svc-stack-spacer { height: 120px; }
 
-        /* Below this breakpoint the sticky peek-stack illusion is dropped —
-           card bodies are taller than the available pin window, so keep
+        /* Compressed ladder for short-but-wide screens (11–14" laptops, ~768px tall).
+           Keeps the exact sticky peek-stack effect of a 27" monitor — just with
+           slimmer rungs and a tighter section head so all 8 cards still fit and
+           stay readable. Only applies on real laptops (width > 1024). */
+        @media (min-width: 1025px) and (max-height: 900px) {
+            #loc-svc-stack { --peek: 44px; --base: 128px; --buf: 16px; --head-top: 60px;
+                             --title-size: clamp(1rem, 0.7vw + 0.78rem, 1.25rem); }
+            .loc-svc-head { margin: 0 auto 12px; padding: 8px 18px 9px; }
+            .loc-svc-head h2 { font-size: 1.5rem; }
+            .loc-pillar-body { padding: 16px 24px 20px; }
+        }
+        @media (min-width: 1025px) and (max-height: 720px) {
+            #loc-svc-stack { --peek: 40px; --base: 116px; --buf: 12px; --head-top: 54px;
+                             --title-size: clamp(0.95rem, 0.6vw + 0.75rem, 1.15rem); }
+        }
+
+        /* Below these limits the sticky peek-stack is dropped — the viewport is
+           too narrow (tablet/phone) or too short to fit the pin window, so keep
            everything in normal flow and let head titles wrap naturally. */
-        @media (max-width: 1024px), (max-height: 820px) {
+        @media (max-width: 1024px), (max-height: 560px) {
             .loc-svc-head { position: static; top: auto; margin: 0 0 32px; padding: 0; background: none; backdrop-filter: none; text-align: left; max-width: none; }
+            .loc-svc-head h2 { font-size: inherit; }
             .loc-pillar { position: static; top: auto; z-index: auto; margin-bottom: 20px; }
             .loc-pillar-card { max-height: none; }
-            .loc-pillar-head { height: auto; min-height: 50px; padding: 12px 20px; flex-wrap: wrap; }
+            .loc-pillar-head { height: auto; min-height: 60px; padding: 16px 22px; flex-wrap: wrap; }
+            .loc-pillar-head::after { align-self: center; }
             .loc-pillar-head-title { white-space: normal; overflow: visible; text-overflow: clip; }
             .loc-pillar-body { padding: 26px 26px 34px; overflow-y: visible; }
             .loc-svc-stack-spacer { display: none; }
         }
         @media (max-width: 640px) {
-            .loc-pillar-head-title { font-size: 1.05rem; }
-            .loc-pillar-no { font-size: 0.56rem; }
+            .loc-pillar-head { gap: 12px; padding: 14px 16px; }
+            .loc-pillar-head-title { font-size: clamp(1.05rem, 4.4vw, 1.35rem); }
+            .loc-pillar-head::after { width: 7px; height: 7px; }
         }
 
         /* Indic stat tiles (22+ Scheduled Languages, etc.) — clamp so long
@@ -853,12 +906,10 @@
                 <div class="loc-pillar" style="--i:0" id="website-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
-                        <span class="loc-pillar-no">01</span>
                         <h3 class="loc-pillar-head-title">Website Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">01 // Digital</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Your website is often the first interaction customers have with your business. Our website localization services go beyond translation by adapting content, navigation, visuals, SEO elements, and user experience for each target market. We ensure every page feels natural to local users while preserving your brand voice and design consistency.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Whether you manage a corporate website, eCommerce platform, customer portal, or multilingual CMS, we help you create seamless digital experiences that support global growth and improve customer engagement.</p>
                     </div>
@@ -882,12 +933,10 @@
                 <div class="loc-pillar" style="--i:1" id="software-app-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
-                        <span class="loc-pillar-no">02</span>
                         <h3 class="loc-pillar-head-title">Software &amp; App Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">02 // Product</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Expand your software products into new markets with professionally localized applications that feel native to every user. We localize desktop software, web applications, SaaS platforms, mobile apps, user interfaces, notifications, and help systems while preserving usability, functionality, and technical accuracy.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Our team also performs localization testing to ensure multilingual functionality across devices, operating systems, and platforms.</p>
                     </div>
@@ -911,12 +960,10 @@
                 <div class="loc-pillar" style="--i:2" id="marketing-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
-                        <span class="loc-pillar-no">03</span>
                         <h3 class="loc-pillar-head-title">Marketing Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-emerald-400/80 tracking-widest uppercase">03 // Brand</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Successful marketing speaks the language of its audience—both linguistically and culturally. We localize marketing campaigns, promotional materials, digital content, and sales assets to ensure your message resonates naturally with customers across different regions.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">From product launches to ongoing brand communication, we help organizations maintain consistent global branding while connecting with local audiences.</p>
                     </div>
@@ -940,12 +987,10 @@
                 <div class="loc-pillar" style="--i:3" id="technical-documentation-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
-                        <span class="loc-pillar-no">04</span>
                         <h3 class="loc-pillar-head-title">Technical Documentation Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-purple-400/80 tracking-widest uppercase">04 // Technical</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Technical content demands precision, consistency, and subject-matter expertise. We localize user manuals, engineering documents, maintenance guides, installation instructions, SOPs, and technical publications while maintaining terminology consistency, formatting, and regulatory compliance.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Combined with multilingual DTP, we deliver production-ready documentation suitable for both print and digital distribution.</p>
                     </div>
@@ -969,12 +1014,10 @@
                 <div class="loc-pillar" style="--i:4" id="multimedia-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
-                        <span class="loc-pillar-no">05</span>
                         <h3 class="loc-pillar-head-title">Multimedia Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-orange-400/80 tracking-widest uppercase">05 // Media</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Video and multimedia content require more than translated scripts—they demand synchronized visuals, culturally appropriate messaging, and engaging user experiences.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">We localize videos, animations, subtitles, captions, voice-overs, dubbing, and multimedia assets while ensuring consistency across every language and platform.</p>
                     </div>
@@ -998,12 +1041,10 @@
                 <div class="loc-pillar" style="--i:5" id="elearning-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
-                        <span class="loc-pillar-no">06</span>
                         <h3 class="loc-pillar-head-title">eLearning Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-rose-400/80 tracking-widest uppercase">06 // Learning</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Global learning requires localized content that remains instructionally effective across every language. We localize Storyline, Rise, SCORM packages, LMS courses, simulations, assessments, learner guides, and training materials while preserving learning objectives, interactions, and visual consistency.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Our localization process ensures learners receive the same high-quality experience regardless of language or geography.</p>
                     </div>
@@ -1027,12 +1068,10 @@
                 <div class="loc-pillar" style="--i:6" id="multilingual-dtp-publishing">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
-                        <span class="loc-pillar-no">07</span>
                         <h3 class="loc-pillar-head-title">Multilingual DTP &amp; Desktop Publishing</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-brandAccent tracking-widest uppercase">07 // Publishing</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Translation is only complete when the final document looks as professional as the original. Our multilingual DTP specialists format translated content while maintaining typography, page layouts, graphics, tables, spacing, and brand consistency across all languages.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">We support complex scripts, right-to-left languages, Asian typography, and multilingual publishing for digital and print-ready outputs.</p>
                     </div>
@@ -1056,12 +1095,10 @@
                 <div class="loc-pillar" style="--i:7" id="localization-qa-testing">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
-                        <span class="loc-pillar-no">08</span>
                         <h3 class="loc-pillar-head-title">Localization QA &amp; Testing</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <div class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">08 // Quality</div>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">Quality assurance is essential for delivering successful multilingual content. Our QA specialists perform comprehensive linguistic reviews, layout verification, visual inspection, terminology validation, functional testing, and localization testing before publication.</p>
                         <p class="text-neutral-400 font-light leading-relaxed text-sm">We ensure every localized asset meets enterprise quality standards while maintaining consistency across languages and platforms.</p>
                     </div>
