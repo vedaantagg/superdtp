@@ -52,14 +52,17 @@
     </script>
     <style>
         html { scroll-behavior: smooth; }
-        .site-logo { height: 44px; width: auto; display: block; max-width: 160px; flex-shrink: 0; } @media (min-width: 640px) { .site-logo { height: 52px; max-width: 200px; } } @media (min-width: 1024px) { .site-logo { height: 58px; max-width: 240px; } }
+        .site-logo { height: clamp(20px, 6vw, 28px); width: auto; max-width: 44vw; display: block; flex-shrink: 1; }
+        @media (min-width: 480px) { .site-logo { height: 28px; max-width: none; } }
+        @media (min-width: 640px) { .site-logo { height: 34px; } }
+        @media (min-width: 1024px) { .site-logo { height: 42px; } }
         body { background-color: #09090b; color: #fafafa; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
         .grain-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); opacity: 0.025; pointer-events: none; z-index: 9999; }
         #page-bg-overlay { position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(circle at 15% 25%, rgba(212,175,55,0.12), transparent 35%), radial-gradient(circle at 85% 75%, rgba(56,189,248,0.08), transparent 35%), #050507; }
         #cursor-light { position: fixed; width: 500px; height: 500px; left: 0; top: 0; z-index: 6; pointer-events: none; border-radius: 50%; background: radial-gradient(circle, rgba(212,175,55,0.08), transparent 65%); transform: translate(-50%, -50%); mix-blend-mode: screen; }
         #ambient-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
         header, section, footer { position: relative; z-index: 5; }
-        .nav-link { opacity: 0.45; transition: opacity 0.3s ease, color 0.3s ease; background: none; border: none; color: inherit; }
+        .nav-link { opacity: 0.75; transition: opacity 0.35s ease, color 0.35s ease; background: none; border: none; color: inherit; font-size: 1rem; }
         .nav-link:hover, .nav-link.active { opacity: 1; color: #fff; }
         .live-data-card { border: 1px solid rgba(255,255,255,0.06); background: rgba(13,13,18,0.6); backdrop-filter: blur(20px); transition: border-color 0.4s ease, background 0.4s ease, transform 0.4s ease; }
         .live-data-card:hover { border-color: rgba(212,175,55,0.25); background: rgba(18,18,26,0.8); transform: translateY(-2px); }
@@ -91,6 +94,31 @@
         .dropdown-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.18); flex-shrink: 0; }
         .dropdown-link:hover .dropdown-dot { background: rgba(212,175,55,0.5); }
 
+        /* ── Skip link ───────────────────────────────────────── */
+        .skip-link { position: absolute; top: -100%; left: 1rem; background: #d4af37; color: #000; padding: 8px 16px; border-radius: 4px; font-family: 'Space Grotesk', monospace; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; z-index: 9999; text-decoration: none; transition: top 0.15s ease; }
+        .skip-link:focus { top: 1rem; }
+
+        /* ── Mobile Menu ─────────────────────────────────────── */
+        #mobile-menu-btn { position: relative; z-index: 51; flex-shrink: 0; }
+        #mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+        #mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+        #mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+        @media (min-width: 1024px) and (max-width: 1279.98px) { #main-nav > * + * { margin-left: 0.6rem !important; } }
+        #main-nav.mobile-open { display: flex !important; position: fixed; top: 64px; left: 0; right: 0; width: 100%; flex-direction: column; gap: 0; background: rgba(9,9,11,0.98); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 12px 0; z-index: 49; max-height: calc(100vh - 64px); overflow-y: auto; overflow-x: hidden; }
+        #main-nav.mobile-open a, #main-nav.mobile-open .services-trigger > a { padding: 12px 20px; display: block; }
+        #main-nav.mobile-open .services-dropdown { position: static; transform: none; width: 100%; max-width: 100%; background: transparent; backdrop-filter: none; border: none; display: none; grid-template-columns: 1fr; min-height: auto; opacity: 1; visibility: visible; }
+        #main-nav.mobile-open .services-trigger.active .services-dropdown { display: grid; }
+        #main-nav.mobile-open .mega-cat-nav { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); flex-direction: row; flex-wrap: wrap; padding: 8px; }
+        #main-nav.mobile-open .mega-cat-eyebrow { display: none; }
+        #main-nav.mobile-open .mega-cat-btn { border-left: none; border-bottom: 2px solid transparent; padding: 8px 14px; width: auto; flex: 1; }
+        #main-nav.mobile-open .mega-cat-btn.active { border-bottom-color: #d4af37; }
+        #main-nav.mobile-open .mega-pane { display: none; }
+        #main-nav.mobile-open .mega-pane.active { display: block; }
+        #main-nav.mobile-open .mega-pane-hdr { padding-left: 20px; padding-right: 20px; }
+        #main-nav.mobile-open .dropdown-link { padding-left: 20px; padding-right: 20px; }
+        #main-nav.mobile-open .services-trigger { display: flex !important; flex-direction: column !important; position: static !important; align-items: stretch !important; }
+        #main-nav.mobile-open .services-trigger > a { display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 12px 20px !important; border-bottom: 1px solid rgba(255,255,255,0.05); }
+
         /* Stacking cards — DTP Services Catalogue collapse into one another on scroll,
            mirroring the localization page's peek-stack pattern. */
         #svc-stack { position: relative; }
@@ -110,6 +138,7 @@
             position: sticky;
             top: calc(168px + var(--i) * 40px);
             z-index: calc(10 + var(--i));
+            scroll-margin-top: 84px;
         }
         .svc-pillar-card {
             position: relative;
@@ -206,17 +235,18 @@
     </style>
 </head>
 <body class="font-sans antialiased text-neutral-200">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <canvas id="ambient-canvas" aria-hidden="true"></canvas>
     <div id="page-bg-overlay"></div>
     <div id="cursor-light" aria-hidden="true"></div>
     <div class="grain-overlay"></div>
 
-    <header class="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md">
-        <a href="/" aria-label="SuperDTP Home" class="flex items-center gap-3">
-            <img src="../static/logo copy 5.svg" alt="SuperDTP" class="site-logo" />
+    <header class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md" style="height: 64px">
+        <a href="/" aria-label="SuperDTP Home" class="flex-shrink min-w-0">
+            <img src="../static/logo copy 5.svg" alt="SuperDTP logo" class="site-logo" fetchpriority="high" />
         </a>
-        <nav class="hidden md:flex items-center space-x-8 font-mono text-xs tracking-wider" aria-label="Primary">
+        <nav id="main-nav" class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200" aria-label="Main navigation">
             <a href="#hero" class="nav-link active">01. INCEPTION</a>
             <div class="services-trigger relative flex items-center cursor-pointer" role="none">
                 <a href="#services" class="nav-link flex items-center gap-1.5" aria-haspopup="true" aria-expanded="false">
@@ -238,25 +268,25 @@
                     <div class="mega-pane-col">
                         <div class="mega-pane" id="mega-pane-loc" role="group" aria-label="Localization Services">
                             <div class="mega-pane-hdr">Localization Services</div>
-                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Website &amp; Digital Experience Localization</a>
-                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Software, SaaS &amp; App Localization</a>
-                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Marketing &amp; Brand Localization</a>
-                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical &amp; Business Document Localization</a>
-                            <a href="/e-learning/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia &amp; eLearning Localization</a>
-                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
-                            <a href="/qa/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia DTP &amp; Desktop Publishing</a>
-                            <a href="/localization/" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Localization QA &amp; Testing</a>
+                            <a href="/localization/#website-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Website &amp; Digital Experience Localization</a>
+                            <a href="/localization/#software-app-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Software, SaaS &amp; App Localization</a>
+                            <a href="/localization/#marketing-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Marketing &amp; Brand Localization</a>
+                            <a href="/localization/#technical-documentation-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical &amp; Business Document Localization</a>
+                            <a href="/localization/#multimedia-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia &amp; eLearning Localization</a>
+                            <a href="/localization/#elearning-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
+                            <a href="/localization/#multilingual-dtp-publishing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia DTP &amp; Desktop Publishing</a>
+                            <a href="/localization/#localization-qa-testing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Localization QA &amp; Testing</a>
                         </div>
                         <div class="mega-pane active" id="mega-pane-dtp" role="group" aria-label="DTP &amp; Publishing Services">
                             <div class="mega-pane-hdr">DTP &amp; Publishing Services</div>
-                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP &amp; Typesetting</a>
-                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Document Formatting &amp; Corporate Publishing</a>
-                            <a href="/dtp-services/#pdf-remediation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Remediation &amp; Accessible Documents</a>
-                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Layout Recreation &amp; File Conversion</a>
-                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical Documentation &amp; eLearning DTP</a>
-                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Image, Graphics &amp; Presentation Localization</a>
-                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Translation File Engineering &amp; Production Support</a>
-                            <a href="/dtp-services/#services" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Print &amp; Digital Publishing Services</a>
+                            <a href="#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP &amp; Typesetting</a>
+                            <a href="#document-formatting" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Document Formatting &amp; Corporate Publishing</a>
+                            <a href="#pdf-remediation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Remediation &amp; Accessible Documents</a>
+                            <a href="#layout-recreation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Layout Recreation &amp; File Conversion</a>
+                            <a href="#technical-documentation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical Documentation &amp; eLearning DTP</a>
+                            <a href="#image-graphics" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Image, Graphics &amp; Presentation Localization</a>
+                            <a href="#file-engineering" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Translation File Engineering &amp; Production Support</a>
+                            <a href="#print-publishing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Print &amp; Digital Publishing Services</a>
                         </div>
                     </div>
                 </div>
@@ -264,7 +294,16 @@
             <a href="#pdf-remediation" class="nav-link">03. ACCESSIBILITY</a>
             <a href="#footer" class="nav-link">04. TERMINUS</a>
         </nav>
-        <div class="status-badge hidden sm:block">DTP ENGINE: ACTIVE</div>
+        <div class="flex items-center gap-3 flex-shrink-0">
+            <div class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block">
+                <a href="/#contact" class="nav-link">CONTACT US</a>
+            </div>
+            <button id="mobile-menu-btn" class="lg:hidden flex flex-col justify-center gap-[5px] w-10 h-10 cursor-pointer" aria-label="Toggle menu" aria-expanded="false">
+                <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
+                <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
+                <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
+            </button>
+        </div>
     </header>
 
     <main id="main-content">
@@ -309,7 +348,7 @@
             </div>
 
             <div id="svc-stack">
-                <div class="svc-pillar" style="--i:0">
+                <div class="svc-pillar" style="--i:0" id="multilingual-dtp">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <span class="svc-pillar-no">01</span>
@@ -337,7 +376,7 @@
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:1">
+                <div class="svc-pillar" style="--i:1" id="document-formatting">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <span class="svc-pillar-no">02</span>
@@ -395,7 +434,7 @@
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:3">
+                <div class="svc-pillar" style="--i:3" id="layout-recreation">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <span class="svc-pillar-no">04</span>
@@ -423,7 +462,7 @@
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:4">
+                <div class="svc-pillar" style="--i:4" id="technical-documentation">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <span class="svc-pillar-no">05</span>
@@ -452,7 +491,7 @@
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:5">
+                <div class="svc-pillar" style="--i:5" id="image-graphics">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <span class="svc-pillar-no">06</span>
@@ -481,7 +520,7 @@
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:6">
+                <div class="svc-pillar" style="--i:6" id="file-engineering">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <span class="svc-pillar-no">07</span>
@@ -509,7 +548,7 @@
                 </article>
                 </div>
 
-                <div class="svc-pillar" style="--i:7">
+                <div class="svc-pillar" style="--i:7" id="print-publishing">
                 <article class="svc-pillar-card">
                     <div class="svc-pillar-head">
                         <span class="svc-pillar-no">08</span>
@@ -706,23 +745,23 @@
 
           <div>
             <div class="footer-col-hdr">Localization</div>
-            <a href="/localization/" class="footer-nav-lnk">Website &amp; Digital Experience Localization</a>
-            <a href="/localization/" class="footer-nav-lnk">Software, SaaS &amp; App Localization</a>
-            <a href="/localization/" class="footer-nav-lnk">Marketing &amp; Brand Localization</a>
-            <a href="/e-learning/" class="footer-nav-lnk">Technical &amp; Business Document Localization</a>
-            <a href="/localization/" class="footer-nav-lnk">Multimedia &amp; eLearning Localization</a>
-            <a href="/qa/" class="footer-nav-lnk">Localization QA &amp; Testing</a>
+            <a href="/localization/#website-localization" class="footer-nav-lnk">Website &amp; Digital Experience Localization</a>
+            <a href="/localization/#software-app-localization" class="footer-nav-lnk">Software, SaaS &amp; App Localization</a>
+            <a href="/localization/#marketing-localization" class="footer-nav-lnk">Marketing &amp; Brand Localization</a>
+            <a href="/localization/#technical-documentation-localization" class="footer-nav-lnk">Technical &amp; Business Document Localization</a>
+            <a href="/localization/#multimedia-localization" class="footer-nav-lnk">Multimedia &amp; eLearning Localization</a>
+            <a href="/localization/#localization-qa-testing" class="footer-nav-lnk">Localization QA &amp; Testing</a>
           </div>
 
           <div>
             <div class="footer-col-hdr">DTP &amp; Publishing</div>
-            <a href="#services" class="footer-nav-lnk">Multilingual DTP &amp; Typesetting</a>
-            <a href="#services" class="footer-nav-lnk">Document Formatting &amp; Corporate Publishing</a>
+            <a href="#multilingual-dtp" class="footer-nav-lnk">Multilingual DTP &amp; Typesetting</a>
+            <a href="#document-formatting" class="footer-nav-lnk">Document Formatting &amp; Corporate Publishing</a>
             <a href="#pdf-remediation" class="footer-nav-lnk">PDF Remediation &amp; Accessible Documents</a>
-            <a href="#services" class="footer-nav-lnk">Layout Recreation &amp; File Conversion</a>
-            <a href="#services" class="footer-nav-lnk">Technical Documentation &amp; eLearning DTP</a>
-            <a href="/file-preparation/" class="footer-nav-lnk">Translation File Engineering &amp; Production Support</a>
-            <a href="/prepress/" class="footer-nav-lnk">Print &amp; Digital Publishing Services</a>
+            <a href="#layout-recreation" class="footer-nav-lnk">Layout Recreation &amp; File Conversion</a>
+            <a href="#technical-documentation" class="footer-nav-lnk">Technical Documentation &amp; eLearning DTP</a>
+            <a href="#file-engineering" class="footer-nav-lnk">Translation File Engineering &amp; Production Support</a>
+            <a href="#print-publishing" class="footer-nav-lnk">Print &amp; Digital Publishing Services</a>
           </div>
         </div>
 
@@ -793,6 +832,32 @@
 
     <script>
         (function () {
+            var mobileMenuBtn = document.getElementById("mobile-menu-btn");
+            var mainNav = document.getElementById("main-nav");
+            if (mobileMenuBtn && mainNav) {
+                var navLinks = mainNav.querySelectorAll("a:not(.dropdown-link)");
+                var servicesTriggerEl = mainNav.querySelector(".services-trigger");
+                mobileMenuBtn.addEventListener("click", function () {
+                    mobileMenuBtn.classList.toggle("active");
+                    mainNav.classList.toggle("mobile-open");
+                });
+                navLinks.forEach(function (link) {
+                    link.addEventListener("click", function () {
+                        mobileMenuBtn.classList.remove("active");
+                        mainNav.classList.remove("mobile-open");
+                    });
+                });
+                if (servicesTriggerEl) {
+                    var servicesTriggerLinkEl = servicesTriggerEl.querySelector(":scope > a");
+                    if (servicesTriggerLinkEl) {
+                        servicesTriggerLinkEl.addEventListener("click", function (e) {
+                            e.preventDefault();
+                            servicesTriggerEl.classList.toggle("active");
+                        });
+                    }
+                }
+            }
+
             var servicesTrigger = document.querySelector(".services-trigger");
             if (!servicesTrigger) return;
             var servicesDropdown = servicesTrigger.querySelector(".services-dropdown");
