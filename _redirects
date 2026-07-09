@@ -5,3 +5,14 @@
 /localization         /localization/         301
 /dtp-services     /dtp-services/     301
 
+# British-spelling alias → canonical route
+/localisation          /localization/         301
+/localisation/          /localization/         301
+
+# SEO/crawler file aliases → canonical files
+/Robots.txt             /robots.txt            301
+/Sitemap.xml             /sitemap.xml            301
+/sitemap                /sitemap.xml            301
+/sitemap.txt             /sitemap.xml            301
+/llm.txt                /llms.txt               301
+

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- Home -->
   <url>
     <loc>https://www.superdtp.com/</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -13,57 +14,17 @@
   <!-- Indic Localisation (flagship service) -->
   <url>
     <loc>https://www.superdtp.com/localization/</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-07-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.95</priority>
   </url>
 
-  <!-- Multilingual DTP -->
+  <!-- Multilingual DTP Services (covers typesetting, prepress, file preparation, QA sub-services) -->
   <url>
-    <loc>https://www.superdtp.com/multilingual-dtp/</loc>
-    <lastmod>2026-06-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <!-- E-learning Localisation -->
-  <url>
-    <loc>https://www.superdtp.com/e-learning/</loc>
-    <lastmod>2026-06-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <!-- File Preparation -->
-  <url>
-    <loc>https://www.superdtp.com/file-preparation/</loc>
-    <lastmod>2026-06-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- Quality Assurance -->
-  <url>
-    <loc>https://www.superdtp.com/qa/</loc>
-    <lastmod>2026-06-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- PDF Accessibility & Remediation -->
-  <url>
-    <loc>https://www.superdtp.com/pdf-remediation/</loc>
-    <lastmod>2026-06-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
-  </url>
-
-  <!-- Prepress & Typesetting -->
-  <url>
-    <loc>https://www.superdtp.com/prepress/</loc>
-    <lastmod>2026-06-03</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.88</priority>
+    <loc>https://www.superdtp.com/dtp-services/</loc>
+    <lastmod>2026-07-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.95</priority>
   </url>
 
 </urlset>

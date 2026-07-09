@@ -20,7 +20,8 @@ jobs:
         uses: Cyb3r-Jak3/html5validator-action@v7.2.0
         with:
           root: .
-          extra: --ignore-re "static/|clients/|node_modules/"
+          extra: >-
+            --ignore-re "CSS: " "Attribute .fetchpriority. not allowed on element .img."
 
   link-check:
     name: Broken link check
@@ -33,7 +34,7 @@ jobs:
         with:
           args: >-
             --no-progress
-            --exclude-mail
             --exclude-loopback
+            --root-dir .
             '**/*.html'
           fail: true

@@ -4,11 +4,6 @@
 User-agent: *
 Allow: /
 
-# Block archived/test files
-Disallow: /superdtp exisitng/
-Disallow: /index copy.html
-Disallow: /127.0.0.1.html
-
 # AI Crawlers — allow full indexing for GEO
 User-agent: GPTBot
 Allow: /
