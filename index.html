@@ -5637,12 +5637,9 @@
                     placeholder="Describe your project — file formats, volume, deadline, and any special requirements…"
                   ></textarea>
                 </div>
-                <!-- Attachments temporarily disabled — Web3Forms free-tier
-                     submissions with files were failing; form now sends
-                     text fields only until this is re-enabled.
                 <div>
                   <label class="contact-label" for="cf-files"
-                    >Attachments · Optional · Up to 1 MB</label
+                    >Attachments · Optional · Up to 10 MB</label
                   >
                   <input
                     type="file"
@@ -5677,7 +5674,6 @@
                     role="alert"
                   ></div>
                 </div>
-                -->
                 <div class="flex items-center gap-6 pt-2">
                   <button
                     type="submit"
@@ -9362,23 +9358,19 @@
           });
       })();
 
-      // ── Contact form: submission + attachments (up to 1 MB, free Web3Forms tier) ─────
+      // ── Contact form: submission + attachments (Google Apps Script) ─────
       (function initContactForm() {
         var form = document.getElementById("contact-form");
         var success = document.getElementById("contact-success");
         if (!form) return;
 
-        // Set this to your mail API endpoint to enable attachment delivery.
-        // When set, the form posts multipart/form-data (all fields + files
-        // under "attachments") to it. When empty, it falls back to Web3Forms,
-        // also as multipart/form-data so attachments still go through
-        // (Web3Forms reads files from "attachment", "attachment2", …).
-        // Attachments are disabled for now (see commented-out #cf-files
-        // markup above) — cf-files/cf-file-list/etc. no longer exist in the
-        // DOM, so these lookups return null and every file-handling block
-        // below is a no-op; `attached` stays empty and only text fields submit.
-        var CONTACT_API_URL = "";
-        var MAX_TOTAL_BYTES = 1 * 1024 * 1024; // 1 MB across all files — Web3Forms free-tier attachment limit
+        // Apps Script web app URL (Deploy → New deployment → Web app,
+        // "Execute as: Me", "Who has access: Anyone"). Ends in /exec.
+        var CONTACT_API_URL =
+          "https://script.google.com/macros/s/AKfycbwaRxbBqTuIeRcXnYmB1hdut03Tyod_M9MiQ5l_xnSm23mdfoFLm004M1T5VL4pU639/exec";
+        // 10 MB of raw file bytes ≈ 13.3 MB base64, well inside both the
+        // Apps Script POST payload limit and Gmail's 25 MB attachment cap.
+        var MAX_TOTAL_BYTES = 10 * 1024 * 1024;
 
         var fileInput = document.getElementById("cf-files");
         var fileList = document.getElementById("cf-file-list");
@@ -9437,7 +9429,7 @@
           });
           showFileError(
             rejected.length
-              ? "Attachments must stay under 1 MB total — couldn't add: " +
+              ? "Attachments must stay under 10 MB total — couldn't add: " +
                   rejected.join(", ")
               : "",
           );
@@ -9484,7 +9476,7 @@
             return;
           }
           if (totalBytes() > MAX_TOTAL_BYTES) {
-            showFileError("Attachments must stay under 1 MB total.");
+            showFileError("Attachments must stay under 10 MB total.");
             return;
           }
 
@@ -9530,55 +9522,55 @@
             restoreBtn();
           }
 
-          if (CONTACT_API_URL) {
-            var fd = new FormData();
-            fd.append("subject", subject);
-            fd.append("name", name);
-            fd.append("email", email);
-            fd.append("company", company);
-            fd.append("service", service);
-            fd.append("phone", phone);
-            fd.append("languages", langs);
-            fd.append("message", message);
-            attached.forEach(function (f) {
-              fd.append("attachments", f, f.name);
+          // Read each file as a base64 string. Apps Script can't parse
+          // multipart/form-data, so files travel inside the JSON body.
+          function readAsBase64(file) {
+            return new Promise(function (resolve, reject) {
+              var r = new FileReader();
+              r.onload = function () {
+                // result is "data:<mime>;base64,<payload>" — keep the payload.
+                resolve({
+                  name: file.name,
+                  mimeType: file.type || "application/octet-stream",
+                  data: String(r.result).split(",")[1] || "",
+                });
+              };
+              r.onerror = function () {
+                reject(r.error);
+              };
+              r.readAsDataURL(file);
             });
-            fetch(CONTACT_API_URL, { method: "POST", body: fd })
-              .then(function (res) {
-                if (res.ok) onSuccess();
-                else onFailure();
-              })
-              .catch(onNetworkError);
-          } else {
-            var wfd = new FormData();
-            wfd.append("access_key", "75703a66-e5a7-497d-9bf5-f747be94c7a2");
-            wfd.append("subject", subject);
-            wfd.append("from_name", "SuperDTP Website");
-            wfd.append("name", name);
-            wfd.append("email", email);
-            wfd.append("company", company || "");
-            wfd.append("service", service || "");
-            wfd.append("phone", phone || "");
-            wfd.append("languages", langs || "");
-            wfd.append("message", message || "");
-            attached.forEach(function (f, idx) {
-              wfd.append(idx === 0 ? "attachment" : "attachment" + (idx + 1), f, f.name);
-            });
-            // No headers here on purpose — the browser sets the correct
-            // multipart Content-Type (with boundary) for a FormData body.
-            fetch("https://api.web3forms.com/submit", {
-              method: "POST",
-              body: wfd,
-            })
-              .then(function (res) {
-                return res.json();
-              })
-              .then(function (data) {
-                if (data.success) onSuccess();
-                else onFailure();
-              })
-              .catch(onNetworkError);
           }
+
+          Promise.all(attached.map(readAsBase64))
+            .then(function (files) {
+              return fetch(CONTACT_API_URL, {
+                method: "POST",
+                // text/plain is a CORS-safelisted content type, so the browser
+                // sends no preflight. Apps Script web apps reject OPTIONS, so
+                // an application/json header here would break the request.
+                headers: { "Content-Type": "text/plain;charset=utf-8" },
+                body: JSON.stringify({
+                  subject: subject,
+                  name: name,
+                  email: email,
+                  company: company,
+                  service: service,
+                  phone: phone,
+                  languages: langs,
+                  message: message,
+                  files: files,
+                }),
+              });
+            })
+            .then(function (res) {
+              return res.json();
+            })
+            .then(function (data) {
+              if (data && data.ok) onSuccess();
+              else onFailure();
+            })
+            .catch(onNetworkError);
         });
       })();
 
