@@ -720,6 +720,275 @@
                 height: 38px;
             }
         }
+
+        /* ── Capability chips (mirrors dtp-services/index.html) ──
+           Each pillar picks its accent via data-accent; --cap drives glyph,
+           hover border and wash so one rule set covers all eight cards. */
+        .loc-pillar { --cap: #d4af37; --cap-soft: rgba(212,175,55,0.38); --cap-wash: rgba(212,175,55,0.10); }
+        .loc-pillar[data-accent="cyan"]    { --cap: #22d3ee; --cap-soft: rgba(34,211,238,0.38);  --cap-wash: rgba(34,211,238,0.10); }
+        .loc-pillar[data-accent="emerald"] { --cap: #34d399; --cap-soft: rgba(52,211,153,0.38);  --cap-wash: rgba(52,211,153,0.10); }
+        .loc-pillar[data-accent="purple"]  { --cap: #c084fc; --cap-soft: rgba(192,132,252,0.38); --cap-wash: rgba(192,132,252,0.10); }
+        .loc-pillar[data-accent="orange"]  { --cap: #fb923c; --cap-soft: rgba(251,146,60,0.38);  --cap-wash: rgba(251,146,60,0.10); }
+        .loc-pillar[data-accent="rose"]    { --cap: #fb7185; --cap-soft: rgba(251,113,133,0.38); --cap-wash: rgba(251,113,133,0.10); }
+
+        .cap-label {
+            display: flex; align-items: center; gap: 10px;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.5rem; letter-spacing: 0.28em; text-transform: uppercase;
+            color: rgba(255,255,255,0.34);
+            margin-bottom: 12px;
+        }
+        .cap-label::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--cap-soft), transparent); }
+        .cap-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+        .cap-chip {
+            position: relative;
+            display: flex; align-items: center; gap: 10px;
+            padding: 9px 11px;
+            border-radius: 11px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.022);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+        .cap-chip::before {
+            content: "";
+            position: absolute; inset: 0;
+            background: linear-gradient(100deg, var(--cap-wash) 0%, transparent 62%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .cap-chip:hover { border-color: var(--cap-soft); transform: translateY(-3px); }
+        .cap-chip:hover::before { opacity: 1; }
+        .cap-glyph {
+            position: relative; z-index: 1;
+            width: 24px; height: 24px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 7px;
+            border: 1px solid var(--cap-soft);
+            background: var(--cap-wash);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.5rem;
+            color: var(--cap);
+            transition: background 0.25s ease, box-shadow 0.25s ease;
+        }
+        .cap-chip:hover .cap-glyph { background: var(--cap-soft); box-shadow: 0 0 14px -2px var(--cap-soft); }
+        .cap-name {
+            position: relative; z-index: 1;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.74rem; font-weight: 600; line-height: 1.25;
+            color: rgba(255,255,255,0.82);
+            transition: color 0.25s ease;
+            min-width: 0;
+        }
+        .cap-chip:hover .cap-name { color: #fff; }
+        .cap-grid.cap-in .cap-chip { opacity: 1; transform: translateY(0); }
+        .cap-grid.cap-in .cap-chip:hover { transform: translateY(-3px); }
+        .cap-grid.cap-in .cap-chip:nth-child(1) { transition-delay: 0ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(2) { transition-delay: 55ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(3) { transition-delay: 110ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(4) { transition-delay: 165ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(5) { transition-delay: 220ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(6) { transition-delay: 275ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(7) { transition-delay: 330ms; }
+        .cap-grid.cap-in .cap-chip:nth-child(8) { transition-delay: 385ms; }
+        @media (max-width: 460px) { .cap-grid { grid-template-columns: 1fr; } }
+
+        /* ── Showcase kit: badges, tag pills, check grid, 3D stage ── */
+        .sc-grid { display: grid; grid-template-columns: 1fr; gap: 44px; align-items: center; }
+        @media (min-width: 1024px) { .sc-grid { grid-template-columns: 1.05fr 1fr; gap: 56px; } }
+        .sc-stage { position: relative; width: 100%; max-width: 540px; margin: 0 auto; aspect-ratio: 21 / 20; }
+        .sc-canvas {
+            position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1;
+            opacity: 0; transition: opacity 1.1s ease;
+            -webkit-mask-image: radial-gradient(circle at 50% 48%, #000 45%, transparent 78%);
+            mask-image: radial-gradient(circle at 50% 48%, #000 45%, transparent 78%);
+        }
+        .sc-canvas.sc-lit { opacity: 0.85; }
+        .sc-svg { position: relative; z-index: 2; width: 100%; height: 100%; overflow: visible; }
+
+        .sc-badges { display: flex; flex-wrap: wrap; gap: 8px; }
+        .sc-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 7px 14px; border-radius: 999px;
+            border: 1px solid rgba(212,175,55,0.2);
+            background: rgba(212,175,55,0.04);
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.58rem; letter-spacing: 0.16em; text-transform: uppercase;
+            color: rgba(255,255,255,0.7);
+            transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+        }
+        .sc-badge::before {
+            content: ""; width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+            background: #d4af37;
+            animation: scPulse 2.8s ease-out infinite;
+            animation-delay: var(--d, 0s);
+        }
+        .sc-badge:hover { border-color: rgba(212,175,55,0.5); background: rgba(212,175,55,0.08); color: #fff; transform: translateY(-2px); }
+        @keyframes scPulse {
+            0%   { box-shadow: 0 0 0 0 rgba(212,175,55,0.45); }
+            70%  { box-shadow: 0 0 0 7px rgba(212,175,55,0); }
+            100% { box-shadow: 0 0 0 0 rgba(212,175,55,0); }
+        }
+
+        .sc-panel {
+            padding: 26px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+            border-radius: 18px;
+            transition: border-color 0.4s ease;
+        }
+        .sc-panel:hover { border-color: rgba(255,255,255,0.12); }
+        .sc-panel-hdr {
+            font-family: 'Space Grotesk', monospace;
+            font-size: 0.6rem; letter-spacing: 0.22em; text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        .sc-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+        .sc-tag {
+            --tag: #d4af37;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 7px 13px; border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.022);
+            font-size: 0.72rem; color: rgba(255,255,255,0.76);
+            opacity: 0; transform: translateY(10px);
+            transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+        }
+        .sc-tag::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--tag); opacity: 0.75; flex-shrink: 0; }
+        .sc-tag:hover { border-color: var(--tag); background: rgba(255,255,255,0.05); color: #fff; }
+        .sc-tags.cap-in .sc-tag { opacity: 1; transform: none; }
+        .sc-tags.cap-in .sc-tag:nth-child(1)  { transition-delay: 0ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(2)  { transition-delay: 40ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(3)  { transition-delay: 80ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(4)  { transition-delay: 120ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(5)  { transition-delay: 160ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(6)  { transition-delay: 200ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(7)  { transition-delay: 240ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(8)  { transition-delay: 280ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(9)  { transition-delay: 320ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(10) { transition-delay: 360ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(11) { transition-delay: 400ms; }
+        .sc-tags.cap-in .sc-tag:nth-child(12) { transition-delay: 440ms; }
+
+        /* Check grid — replaces the "✓ reason" bullet lists */
+        .sc-checks { display: grid; grid-template-columns: 1fr; gap: 8px; }
+        @media (min-width: 640px) { .sc-checks { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+        .sc-check {
+            display: flex; align-items: flex-start; gap: 11px;
+            padding: 12px 14px; border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.018);
+            font-size: 0.78rem; line-height: 1.4; color: rgba(255,255,255,0.76);
+            opacity: 0; transform: translateY(10px);
+            transition: opacity 0.45s ease, transform 0.45s ease, border-color 0.25s ease, background 0.25s ease, color 0.25s ease;
+        }
+        .sc-check:hover { border-color: rgba(212,175,55,0.32); background: rgba(212,175,55,0.05); color: #fff; }
+        .sc-check-mark {
+            flex-shrink: 0; width: 18px; height: 18px; margin-top: 1px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            border: 1px solid rgba(212,175,55,0.35);
+            background: rgba(212,175,55,0.08);
+            color: #d4af37; font-size: 0.62rem; line-height: 1;
+            transition: background 0.25s ease, box-shadow 0.25s ease;
+        }
+        .sc-check:hover .sc-check-mark { background: rgba(212,175,55,0.28); box-shadow: 0 0 12px -2px rgba(212,175,55,0.5); }
+        .sc-checks.cap-in .sc-check { opacity: 1; transform: none; }
+        .sc-checks.cap-in .sc-check:nth-child(1) { transition-delay: 0ms; }
+        .sc-checks.cap-in .sc-check:nth-child(2) { transition-delay: 55ms; }
+        .sc-checks.cap-in .sc-check:nth-child(3) { transition-delay: 110ms; }
+        .sc-checks.cap-in .sc-check:nth-child(4) { transition-delay: 165ms; }
+        .sc-checks.cap-in .sc-check:nth-child(5) { transition-delay: 220ms; }
+        .sc-checks.cap-in .sc-check:nth-child(6) { transition-delay: 275ms; }
+        .sc-checks.cap-in .sc-check:nth-child(7) { transition-delay: 330ms; }
+        .sc-checks.cap-in .sc-check:nth-child(8) { transition-delay: 385ms; }
+        .sc-checks.cap-in .sc-check:nth-child(9) { transition-delay: 440ms; }
+
+        /* Language cloud cards — stagger in, lift and glow on hover */
+        .lang-card {
+            padding: 16px 12px; border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.06);
+            background: rgba(255,255,255,0.02);
+            text-align: center;
+            opacity: 0; transform: translateY(12px) scale(0.97);
+            transition: opacity 0.5s ease, transform 0.5s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+        .lang-card:hover { border-color: rgba(212,175,55,0.4); background: rgba(212,175,55,0.05); transform: translateY(-3px); }
+        .lang-glyph { font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: #fff; line-height: 1.3; transition: color 0.25s ease, text-shadow 0.25s ease; }
+        .lang-card:hover .lang-glyph { color: #d4af37; text-shadow: 0 0 22px rgba(212,175,55,0.35); }
+        .lang-name { font-family: 'Space Grotesk', monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-top: 5px; }
+        .lang-cloud.cap-in .lang-card { opacity: 1; transform: none; }
+        .lang-cloud.cap-in .lang-card:hover { transform: translateY(-3px); }
+        .lang-cloud.cap-in .lang-card:nth-child(1)  { transition-delay: 0ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(2)  { transition-delay: 50ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(3)  { transition-delay: 100ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(4)  { transition-delay: 150ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(5)  { transition-delay: 200ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(6)  { transition-delay: 250ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(7)  { transition-delay: 300ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(8)  { transition-delay: 350ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(9)  { transition-delay: 400ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(10) { transition-delay: 450ms; }
+        .lang-cloud.cap-in .lang-card:nth-child(11) { transition-delay: 500ms; }
+
+        /* ── ESG report SVG animation ── */
+        .sc-svg text { font-family: 'Space Grotesk', monospace; }
+        .eg-page { opacity: 0; transform: scale(0.97); transform-box: fill-box; transform-origin: center; }
+        .sc-svg.cap-in .eg-page { animation: egIn 0.9s cubic-bezier(0.22,1,0.36,1) forwards; }
+        @keyframes egIn { to { opacity: 1; transform: scale(1); } }
+
+        .eg-el { opacity: 0; transform: translateY(7px); transform-box: fill-box; }
+        .sc-svg.cap-in .eg-el { animation: egRise 0.55s ease forwards; animation-delay: calc(0.35s + var(--b, 0) * 0.1s); }
+        @keyframes egRise { to { opacity: 1; transform: none; } }
+
+        /* Bars grow from their baseline */
+        .eg-bar { transform: scaleY(0); transform-box: fill-box; transform-origin: bottom; }
+        .sc-svg.cap-in .eg-bar { animation: egBar 0.8s cubic-bezier(0.22,1,0.36,1) forwards; animation-delay: calc(1s + var(--b, 0) * 0.12s); }
+        @keyframes egBar { to { transform: scaleY(1); } }
+
+        .eg-donut { stroke-dasharray: 132; stroke-dashoffset: 132; }
+        .sc-svg.cap-in .eg-donut { animation: egDraw 1.4s ease-out forwards 1.3s; }
+        @keyframes egDraw { to { stroke-dashoffset: var(--off, 30); } }
+
+        .eg-line { stroke-dasharray: 180; stroke-dashoffset: 180; }
+        .sc-svg.cap-in .eg-line { animation: egDrawFull 1.6s ease-in-out forwards 1.5s; }
+        @keyframes egDrawFull { to { stroke-dashoffset: 0; } }
+
+        .eg-leader { stroke-dasharray: 16; stroke-dashoffset: 16; }
+        .sc-svg.cap-in .eg-leader { animation: egDash 0.4s ease forwards; animation-delay: calc(1.9s + var(--b, 0) * 0.16s); }
+        @keyframes egDash { to { stroke-dashoffset: 0; } }
+
+        /* Language chips fan out from the report */
+        .eg-lang { opacity: 0; transform: translateX(-10px) scale(0.9); transform-box: fill-box; transform-origin: left center; }
+        .sc-svg.cap-in .eg-lang { animation: egLangIn 0.55s cubic-bezier(0.34,1.56,0.64,1) forwards; animation-delay: calc(2s + var(--b, 0) * 0.16s); }
+        @keyframes egLangIn { to { opacity: 1; transform: none; } }
+        .sc-svg.cap-in .eg-lang-pulse { animation: egLangPulse 3.2s ease-in-out infinite; animation-delay: calc(3s + var(--b, 0) * 0.4s); }
+        @keyframes egLangPulse { 0%, 100% { opacity: 0.25; } 50% { opacity: 0.75; } }
+
+        .eg-sheen { opacity: 0; }
+        .sc-svg.cap-in .eg-sheen { animation: egSheen 5s ease-in-out infinite 1.2s; }
+        @keyframes egSheen {
+            0%        { opacity: 0; transform: translateY(0); }
+            10%, 70%  { opacity: 1; }
+            80%, 100% { opacity: 0; transform: translateY(250px); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .cap-chip { opacity: 1; transform: none; transition: border-color 0.25s ease, background 0.25s ease; }
+            .cap-chip:hover, .cap-grid.cap-in .cap-chip:hover { transform: none; }
+            .sc-badge::before { animation: none; }
+            .sc-tag, .sc-check, .lang-card { opacity: 1; transform: none; }
+            .lang-card:hover, .lang-cloud.cap-in .lang-card:hover, .sc-check:hover { transform: none; }
+            .eg-page, .eg-el, .eg-lang { opacity: 1; transform: none; }
+            .eg-bar { transform: none; }
+            .eg-leader, .eg-line { stroke-dashoffset: 0; }
+            .eg-donut { stroke-dashoffset: 30; }
+            .eg-sheen { opacity: 0; }
+            .sc-svg.cap-in * { animation: none !important; }
+        }
     </style>
 </head>
 <body class="font-sans antialiased text-neutral-200">
@@ -836,155 +1105,155 @@
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Your website is often the first interaction customers have with your business. Our website localization services go beyond translation by adapting content, navigation, visuals, SEO elements, and user experience for each target market. We ensure every page feels natural to local users while preserving your brand voice and design consistency.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Whether you manage a corporate website, eCommerce platform, customer portal, or multilingual CMS, we help you create seamless digital experiences that support global growth and improve customer engagement.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Your website is usually a customer's first interaction with your business. We adapt content, navigation, visuals, SEO, and user experience for each market — so every page feels native while your brand voice and design stay intact.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Corporate sites, eCommerce platforms, customer portals, multilingual CMS — seamless digital experiences that support global growth.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Website Localization includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Corporate Websites</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Landing Pages</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>CMS Localization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Blogs</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>SEO Metadata</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Customer Portals</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Forms</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>eCommerce Websites</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Website Localization includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Corporate Websites</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Landing Pages</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">CMS Localization</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Blogs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">SEO Metadata</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Customer Portals</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Forms</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">eCommerce</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="loc-pillar" style="--i:1" id="software-app-localization">
+                <div class="loc-pillar" style="--i:1" data-accent="cyan" id="software-app-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
                         <h3 class="loc-pillar-head-title">Software &amp; App Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Expand your software products into new markets with professionally localized applications that feel native to every user. We localize desktop software, web applications, SaaS platforms, mobile apps, user interfaces, notifications, and help systems while preserving usability, functionality, and technical accuracy.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Our team also performs localization testing to ensure multilingual functionality across devices, operating systems, and platforms.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Ship software that feels native in every market. We localize desktop apps, web applications, SaaS platforms, mobile apps, interfaces, notifications, and help systems without compromising usability or technical accuracy.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We also run localization testing to verify multilingual behavior across devices, operating systems, and platforms.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Software and App Localization includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>SaaS Platforms</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Mobile Apps</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Desktop Software</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Enterprise Applications</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>User Interfaces</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Help Systems</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Installation Guides</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Localization Testing</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Software and App Localization includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">SaaS Platforms</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Mobile Apps</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Desktop Software</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Enterprise Apps</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">User Interfaces</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Help Systems</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Install Guides</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Localization Testing</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="loc-pillar" style="--i:2" id="marketing-localization">
+                <div class="loc-pillar" style="--i:2" data-accent="emerald" id="marketing-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
                         <h3 class="loc-pillar-head-title">Marketing Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Successful marketing speaks the language of its audience—both linguistically and culturally. We localize marketing campaigns, promotional materials, digital content, and sales assets to ensure your message resonates naturally with customers across different regions.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">From product launches to ongoing brand communication, we help organizations maintain consistent global branding while connecting with local audiences.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Marketing has to speak its audience's language — linguistically and culturally. We adapt campaigns, promotional material, digital content, and sales assets so the message lands naturally in every region.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">From product launches to ongoing brand communication, global consistency without sounding foreign locally.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Marketing Localization includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Marketing Campaigns</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Brochures</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Whitepapers</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Product Launches</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Email Campaigns</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Social Media</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Sales Presentations</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400/60 flex-shrink-0" aria-hidden="true"></span>Marketing Collateral</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Marketing Localization includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Campaigns</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Brochures</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Whitepapers</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Product Launches</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Email Campaigns</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Social Media</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Sales Decks</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Collateral</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="loc-pillar" style="--i:3" id="technical-documentation-localization">
+                <div class="loc-pillar" style="--i:3" data-accent="purple" id="technical-documentation-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
                         <h3 class="loc-pillar-head-title">Technical Documentation Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Technical content demands precision, consistency, and subject-matter expertise. We localize user manuals, engineering documents, maintenance guides, installation instructions, SOPs, and technical publications while maintaining terminology consistency, formatting, and regulatory compliance.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Combined with multilingual DTP, we deliver production-ready documentation suitable for both print and digital distribution.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Technical content demands precision and subject-matter expertise. We localize user manuals, engineering documents, maintenance guides, SOPs, and technical publications while holding terminology, formatting, and regulatory compliance steady.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Paired with multilingual DTP, you get production-ready documentation for print and digital.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Technical Documentation Localization includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>User Manuals</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Technical Guides</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Engineering Documents</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>SOPs</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Maintenance Manuals</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Product Documentation</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Installation Guides</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-purple-400/60 flex-shrink-0" aria-hidden="true"></span>Safety Documentation</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Technical Documentation Localization includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">User Manuals</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Technical Guides</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Engineering Docs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">SOPs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Maintenance Manuals</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Product Docs</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Install Guides</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Safety Docs</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="loc-pillar" style="--i:4" id="multimedia-localization">
+                <div class="loc-pillar" style="--i:4" data-accent="orange" id="multimedia-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
                         <h3 class="loc-pillar-head-title">Multimedia Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Video and multimedia content require more than translated scripts—they demand synchronized visuals, culturally appropriate messaging, and engaging user experiences.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We localize videos, animations, subtitles, captions, voice-overs, dubbing, and multimedia assets while ensuring consistency across every language and platform.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Video needs more than a translated script — it needs synchronized visuals, culturally appropriate messaging, and timing that still works.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We localize video, animation, subtitles, captions, voice-over, dubbing, and multimedia assets consistently across every language and platform.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Multimedia Localization includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Video Localization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Voice-over</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Dubbing</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Subtitling</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Closed Captioning</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Motion Graphics</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Audio Localization</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-orange-400/60 flex-shrink-0" aria-hidden="true"></span>Interactive Media</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Multimedia Localization includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Video Localization</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Voice-over</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Dubbing</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Subtitling</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Closed Captioning</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Motion Graphics</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Audio Localization</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Interactive Media</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="loc-pillar" style="--i:5" id="elearning-localization">
+                <div class="loc-pillar" style="--i:5" data-accent="rose" id="elearning-localization">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
                         <h3 class="loc-pillar-head-title">eLearning Localization</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Global learning requires localized content that remains instructionally effective across every language. We localize Storyline, Rise, SCORM packages, LMS courses, simulations, assessments, learner guides, and training materials while preserving learning objectives, interactions, and visual consistency.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Our localization process ensures learners receive the same high-quality experience regardless of language or geography.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Global learning only works if the course stays instructionally effective in every language. We localize Storyline, Rise, SCORM packages, LMS courses, simulations, and assessments while preserving learning objectives and interactions.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Learners get the same experience regardless of language or geography.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="eLearning Localization includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Storyline Courses</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Rise Courses</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>SCORM Packages</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>LMS Content</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Assessments</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Simulations</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Learner Guides</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-rose-400/60 flex-shrink-0" aria-hidden="true"></span>Training Materials</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="eLearning Localization includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Storyline Courses</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Rise Courses</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">SCORM Packages</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">LMS Content</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Assessments</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Simulations</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Learner Guides</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Training Materials</span></li>
                         </ul>
                     </div>
                     </div>
@@ -998,47 +1267,47 @@
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Translation is only complete when the final document looks as professional as the original. Our multilingual DTP specialists format translated content while maintaining typography, page layouts, graphics, tables, spacing, and brand consistency across all languages.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We support complex scripts, right-to-left languages, Asian typography, and multilingual publishing for digital and print-ready outputs.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Translation isn't finished until the document looks as professional as the original. We format translated content while maintaining typography, page layout, graphics, tables, spacing, and brand consistency in every language.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Complex scripts, right-to-left languages, Asian typography — digital and print-ready outputs.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Multilingual DTP and Desktop Publishing includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Multilingual Typesetting</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Layout Formatting</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Font Management</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>RTL Languages</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Asian Languages</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Indic Scripts</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Post-translation Formatting</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Print-ready Files</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Multilingual DTP and Desktop Publishing includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Multilingual Typesetting</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Layout Formatting</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Font Management</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">RTL Languages</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Asian Languages</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Indic Scripts</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Post-translation DTP</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">Print-ready Files</span></li>
                         </ul>
                     </div>
                     </div>
                 </article>
                 </div>
 
-                <div class="loc-pillar" style="--i:7" id="localization-qa-testing">
+                <div class="loc-pillar" style="--i:7" data-accent="cyan" id="localization-qa-testing">
                 <article class="loc-pillar-card">
                     <div class="loc-pillar-head">
                         <h3 class="loc-pillar-head-title">Localization QA &amp; Testing</h3>
                     </div>
                     <div class="loc-pillar-body grid grid-cols-1 lg:grid-cols-12 gap-8">
                     <div class="lg:col-span-7 space-y-4">
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Quality assurance is essential for delivering successful multilingual content. Our QA specialists perform comprehensive linguistic reviews, layout verification, visual inspection, terminology validation, functional testing, and localization testing before publication.</p>
-                        <p class="text-neutral-400 font-light leading-relaxed text-sm">We ensure every localized asset meets enterprise quality standards while maintaining consistency across languages and platforms.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Quality assurance is what separates translated content from shippable content. Our QA specialists run linguistic review, layout verification, visual inspection, terminology validation, and functional testing before anything publishes.</p>
+                        <p class="text-neutral-400 font-light leading-relaxed text-sm">Every localized asset meets enterprise standards and stays consistent across languages and platforms.</p>
                     </div>
                     <div class="lg:col-span-5">
-                        <div class="text-[0.6rem] font-mono text-neutral-400 uppercase tracking-wider mb-3">Includes</div>
-                        <ul class="grid grid-cols-2 gap-x-4 gap-y-2" aria-label="Localization QA and Testing includes">
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Linguistic QA</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Localization Testing</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Functional QA</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Layout Verification</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Visual QA</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Terminology Validation</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Accessibility Review</li>
-                            <li class="flex items-center gap-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>PDF Validation</li>
+                        <div class="cap-label">Capabilities</div>
+                        <ul class="cap-grid" aria-label="Localization QA and Testing includes">
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">01</span><span class="cap-name">Linguistic QA</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">02</span><span class="cap-name">Localization Testing</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">03</span><span class="cap-name">Functional QA</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">04</span><span class="cap-name">Layout Verification</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">05</span><span class="cap-name">Visual QA</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">06</span><span class="cap-name">Terminology Validation</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">07</span><span class="cap-name">Accessibility Review</span></li>
+                            <li class="cap-chip"><span class="cap-glyph" aria-hidden="true">08</span><span class="cap-name">PDF Validation</span></li>
                         </ul>
                     </div>
                     </div>
@@ -1059,45 +1328,44 @@
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                <p class="text-neutral-400 font-light leading-relaxed text-base">India is one of the world's fastest-growing digital economies—and one of its most linguistically diverse. Reaching Indian audiences requires far more than translating content into regional languages. It demands cultural understanding, native linguistic expertise, multilingual publishing capabilities, and an in-depth knowledge of India's diverse scripts, typography, and user expectations.</p>
-                <p class="text-neutral-400 font-light leading-relaxed text-base">At SuperDTP, we help global enterprises, localization partners, and technology companies communicate confidently across India's multilingual landscape through comprehensive Indic language localization services. From websites and software applications to technical documentation, eLearning content, marketing campaigns, mobile apps, and ESG reports, we ensure your content is not only translated accurately but also feels natural, culturally relevant, and visually flawless.</p>
-                <p class="text-neutral-400 font-light leading-relaxed text-base lg:col-span-2">Our localization specialists work with native linguists, experienced multilingual DTP professionals, and rigorous quality assurance processes to preserve your brand voice while adapting content for regional audiences. We also handle complex Indic typography, Unicode compliance, font management, layout adjustments, and multilingual publishing to ensure every deliverable is ready for both digital and print distribution.</p>
+                <p class="text-neutral-400 font-light leading-relaxed text-base">India is one of the world's fastest-growing digital economies — and one of its most linguistically diverse. Reaching Indian audiences takes more than regional translation: it takes cultural understanding, native linguists, and deep knowledge of Indic scripts and typography.</p>
+                <p class="text-neutral-400 font-light leading-relaxed text-base">We handle websites, software, technical documentation, eLearning, campaigns, mobile apps, and ESG reports — with complex Indic typography, Unicode compliance, font management, and layout adjustment handled end to end, digital and print.</p>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
                 <div class="lg:col-span-5 space-y-6">
                     <div class="p-6 border border-white/5 bg-white/[0.02] rounded-2xl">
-                        <div class="font-mono text-[0.6rem] text-neutral-400 uppercase tracking-widest mb-4">Language Cloud</div>
-                        <div class="grid grid-cols-2 gap-3" aria-label="Indic language cloud">
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">हिन्दी</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Hindi</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">বাংলা</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Bengali</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">தமிழ்</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Tamil</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">తెలుగు</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Telugu</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">ಕನ್ನಡ</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Kannada</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">മലയാളം</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Malayalam</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">ગુજરાતી</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Gujarati</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">ਪੰਜਾਬੀ</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Punjabi</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">ଓଡ଼ିଆ</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Odia</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center"><div class="text-2xl text-white font-serif">অসমীয়া</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Assamese</div></div>
-                            <div class="p-4 border border-white/5 bg-white/[0.02] rounded-xl text-center col-span-2"><div class="text-2xl text-white font-serif">اردو</div><div class="text-[0.65rem] text-neutral-400 font-mono uppercase tracking-wider mt-1">Urdu</div></div>
+                        <div class="cap-label">Language Cloud</div>
+                        <div class="lang-cloud grid grid-cols-2 gap-3" aria-label="Indic language cloud">
+                            <div class="lang-card"><div class="lang-glyph">हिन्दी</div><div class="lang-name">Hindi</div></div>
+                            <div class="lang-card"><div class="lang-glyph">বাংলা</div><div class="lang-name">Bengali</div></div>
+                            <div class="lang-card"><div class="lang-glyph">தமிழ்</div><div class="lang-name">Tamil</div></div>
+                            <div class="lang-card"><div class="lang-glyph">తెలుగు</div><div class="lang-name">Telugu</div></div>
+                            <div class="lang-card"><div class="lang-glyph">ಕನ್ನಡ</div><div class="lang-name">Kannada</div></div>
+                            <div class="lang-card"><div class="lang-glyph">മലയാളം</div><div class="lang-name">Malayalam</div></div>
+                            <div class="lang-card"><div class="lang-glyph">ગુજરાતી</div><div class="lang-name">Gujarati</div></div>
+                            <div class="lang-card"><div class="lang-glyph">ਪੰਜਾਬੀ</div><div class="lang-name">Punjabi</div></div>
+                            <div class="lang-card"><div class="lang-glyph">ଓଡ଼ିଆ</div><div class="lang-name">Odia</div></div>
+                            <div class="lang-card"><div class="lang-glyph">অসমীয়া</div><div class="lang-name">Assamese</div></div>
+                            <div class="lang-card col-span-2"><div class="lang-glyph">اردو</div><div class="lang-name">Urdu</div></div>
                         </div>
                     </div>
                 </div>
 
                 <div class="lg:col-span-7 space-y-10">
                     <div class="space-y-4">
-                        <h3 class="font-mono text-xs text-brandAccent uppercase tracking-widest">Why Choose SuperDTP for Indic Language Localization?</h3>
-                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3" aria-label="Reasons to choose SuperDTP for Indic language localization">
-                            <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Native language experts with industry-specific knowledge</li>
-                            <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Localization beyond translation with cultural adaptation</li>
-                            <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Advanced multilingual DTP and publishing expertise</li>
-                            <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Support for complex Indic scripts and typography</li>
-                            <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Unicode and font compatibility management</li>
-                            <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Linguistic Quality Assurance (LQA)</li>
-                            <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Localization testing for websites, software, and mobile applications</li>
-                            <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Enterprise-scale workflows with fast turnaround</li>
-                            <li class="flex items-start gap-2 text-sm text-neutral-300 sm:col-span-2"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Consistent terminology and brand voice across multiple Indian languages</li>
-                        </ul>
+                        <h3 class="sc-panel-hdr text-brandAccent">Why SuperDTP for Indic Localization?</h3>
+                        <div class="sc-checks" aria-label="Reasons to choose SuperDTP for Indic language localization">
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Native language experts with industry knowledge</div>
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Cultural adaptation, not just translation</div>
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Advanced multilingual DTP and publishing</div>
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Complex Indic scripts and typography</div>
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Unicode and font compatibility management</div>
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Linguistic Quality Assurance (LQA)</div>
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Testing for web, software, and mobile</div>
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Enterprise workflows, fast turnaround</div>
+                            <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Consistent terminology and brand voice across languages</div>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3 sm:gap-4">
@@ -1130,67 +1398,168 @@
     <!-- ESG Report Localization -->
     <section class="border-t border-white/5 py-28 px-6 md:px-12 w-full" id="esg" aria-labelledby="esg-heading">
         <div class="max-w-7xl mx-auto">
-            <div class="mb-12 space-y-4 max-w-4xl">
-                <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">ESG REPORT LOCALIZATION</span>
-                <h2 id="esg-heading" class="font-serif text-5xl md:text-6xl tracking-tight">Communicate Your Sustainability Story with Confidence Across Global Markets</h2>
+            <div class="sc-grid mb-20">
+                <div class="space-y-6">
+                    <span class="font-mono text-xs text-neutral-400 uppercase tracking-widest block" aria-hidden="true">ESG REPORT LOCALIZATION</span>
+                    <h2 id="esg-heading" class="font-serif text-4xl md:text-5xl lg:text-6xl tracking-tight">Communicate Your Sustainability Story with Confidence Across Global Markets</h2>
+                    <p class="text-neutral-400 font-light leading-relaxed text-base">Investors, regulators, employees, and customers all expect sustainability disclosures that are accurate, transparent, and readable in their own language.</p>
+                    <p class="text-neutral-400 font-light leading-relaxed text-base">An ESG report is a high-impact publication — financial data, metrics, charts, tables, legal disclosures. We localize all of it, preserving your data integrity, visual identity, and corporate voice in every edition.</p>
+                    <div class="sc-badges pt-2">
+                        <span class="sc-badge">GRI</span>
+                        <span class="sc-badge" style="--d:0.4s">SASB</span>
+                        <span class="sc-badge" style="--d:0.8s">TCFD</span>
+                        <span class="sc-badge" style="--d:1.2s">CSRD</span>
+                        <span class="sc-badge" style="--d:1.6s">ISSB</span>
+                    </div>
+                </div>
+
+                <div class="sc-stage">
+                    <canvas class="sc-canvas" id="esg-canvas" aria-hidden="true"></canvas>
+                    <svg class="sc-svg" viewBox="0 0 420 400" role="img" aria-labelledby="eg-title eg-desc">
+                        <title id="eg-title">One ESG report, many localized editions</title>
+                        <desc id="eg-desc">A sustainability report containing a donut chart, bar chart, and trend line fans out into localized editions in English, German, Japanese, Arabic, and Hindi.</desc>
+                        <defs>
+                            <linearGradient id="eg-sheen-grad" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stop-color="#d4af37" stop-opacity="0"></stop>
+                                <stop offset="50%" stop-color="#d4af37" stop-opacity="0.14"></stop>
+                                <stop offset="100%" stop-color="#d4af37" stop-opacity="0"></stop>
+                            </linearGradient>
+                            <linearGradient id="eg-page-grad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#17171f"></stop>
+                                <stop offset="100%" stop-color="#0a0a0e"></stop>
+                            </linearGradient>
+                            <clipPath id="eg-page-clip">
+                                <rect x="96" y="30" width="180" height="270" rx="8"></rect>
+                            </clipPath>
+                        </defs>
+
+                        <g class="eg-page">
+                            <rect x="96" y="30" width="180" height="270" rx="8" fill="url(#eg-page-grad)" stroke="rgba(212,175,55,0.28)"></rect>
+                        </g>
+
+                        <!-- title block -->
+                        <g class="eg-el" style="--b:0">
+                            <rect x="112" y="50" width="96" height="11" rx="2" fill="rgba(212,175,55,0.75)"></rect>
+                            <rect x="112" y="68" width="130" height="4" rx="2" fill="rgba(255,255,255,0.13)"></rect>
+                        </g>
+
+                        <!-- donut + legend -->
+                        <g class="eg-el" style="--b:1">
+                            <circle cx="140" cy="115" r="21" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="7"></circle>
+                            <circle class="eg-donut" cx="140" cy="115" r="21" fill="none" stroke="#d4af37" stroke-width="7"
+                                    stroke-linecap="round" transform="rotate(-90 140 115)" style="--off:30"></circle>
+                            <rect x="176" y="100" width="60" height="4" rx="2" fill="rgba(255,255,255,0.13)"></rect>
+                            <rect x="176" y="112" width="44" height="4" rx="2" fill="rgba(212,175,55,0.4)"></rect>
+                            <rect x="176" y="124" width="52" height="4" rx="2" fill="rgba(255,255,255,0.13)"></rect>
+                        </g>
+
+                        <!-- bar chart + trend line -->
+                        <path class="eg-el" style="--b:2" d="M110 250 H262" stroke="rgba(255,255,255,0.14)"></path>
+                        <rect class="eg-bar" style="--b:0" x="114" y="220" width="16" height="30" rx="2" fill="rgba(212,175,55,0.35)"></rect>
+                        <rect class="eg-bar" style="--b:1" x="142" y="202" width="16" height="48" rx="2" fill="rgba(212,175,55,0.5)"></rect>
+                        <rect class="eg-bar" style="--b:2" x="170" y="224" width="16" height="26" rx="2" fill="rgba(212,175,55,0.35)"></rect>
+                        <rect class="eg-bar" style="--b:3" x="198" y="190" width="16" height="60" rx="2" fill="rgba(212,175,55,0.65)"></rect>
+                        <rect class="eg-bar" style="--b:4" x="226" y="210" width="16" height="40" rx="2" fill="rgba(212,175,55,0.45)"></rect>
+                        <path class="eg-line" d="M122 214 L150 196 L178 218 L206 184 L234 204" stroke="#22d3ee" stroke-width="1.5"
+                              fill="none" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"></path>
+
+                        <g class="eg-el" style="--b:3">
+                            <rect x="112" y="268" width="148" height="4" rx="2" fill="rgba(255,255,255,0.1)"></rect>
+                            <rect x="112" y="279" width="92" height="4" rx="2" fill="rgba(255,255,255,0.1)"></rect>
+                        </g>
+
+                        <g clip-path="url(#eg-page-clip)">
+                            <rect class="eg-sheen" x="96" y="24" width="180" height="34" fill="url(#eg-sheen-grad)"></rect>
+                        </g>
+
+                        <!-- localized editions fanning out -->
+                        <path class="eg-leader" style="--b:0" d="M276 62 H292" stroke="rgba(212,175,55,0.35)"></path>
+                        <g class="eg-lang" style="--b:0">
+                            <rect x="292" y="52" width="80" height="20" rx="10" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.3)"></rect>
+                            <circle class="eg-lang-pulse" cx="304" cy="62" r="2.5" fill="#d4af37"></circle>
+                            <text x="316" y="65.5" font-size="8" letter-spacing="1" fill="rgba(255,255,255,0.8)">English</text>
+                        </g>
+                        <path class="eg-leader" style="--b:1" d="M276 102 H292" stroke="rgba(212,175,55,0.35)"></path>
+                        <g class="eg-lang" style="--b:1">
+                            <rect x="292" y="92" width="80" height="20" rx="10" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.3)"></rect>
+                            <circle class="eg-lang-pulse" cx="304" cy="102" r="2.5" fill="#d4af37"></circle>
+                            <text x="316" y="105.5" font-size="8" letter-spacing="1" fill="rgba(255,255,255,0.8)">Deutsch</text>
+                        </g>
+                        <path class="eg-leader" style="--b:2" d="M276 142 H292" stroke="rgba(212,175,55,0.35)"></path>
+                        <g class="eg-lang" style="--b:2">
+                            <rect x="292" y="132" width="80" height="20" rx="10" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.3)"></rect>
+                            <circle class="eg-lang-pulse" cx="304" cy="142" r="2.5" fill="#d4af37"></circle>
+                            <text x="316" y="145.5" font-size="8" fill="rgba(255,255,255,0.8)">日本語</text>
+                        </g>
+                        <path class="eg-leader" style="--b:3" d="M276 182 H292" stroke="rgba(212,175,55,0.35)"></path>
+                        <g class="eg-lang" style="--b:3">
+                            <rect x="292" y="172" width="80" height="20" rx="10" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.3)"></rect>
+                            <circle class="eg-lang-pulse" cx="304" cy="182" r="2.5" fill="#d4af37"></circle>
+                            <text x="316" y="185.5" font-size="8" fill="rgba(255,255,255,0.8)">العربية</text>
+                        </g>
+                        <path class="eg-leader" style="--b:4" d="M276 222 H292" stroke="rgba(212,175,55,0.35)"></path>
+                        <g class="eg-lang" style="--b:4">
+                            <rect x="292" y="212" width="80" height="20" rx="10" fill="rgba(212,175,55,0.07)" stroke="rgba(212,175,55,0.3)"></rect>
+                            <circle class="eg-lang-pulse" cx="304" cy="222" r="2.5" fill="#d4af37"></circle>
+                            <text x="316" y="225.5" font-size="8" fill="rgba(255,255,255,0.8)">हिन्दी</text>
+                        </g>
+
+                        <g class="eg-el" style="--b:4">
+                            <text x="96" y="322" font-size="7.5" letter-spacing="2" fill="rgba(255,255,255,0.35)">SOURCE REPORT</text>
+                            <text x="292" y="252" font-size="7.5" letter-spacing="2" fill="rgba(255,255,255,0.35)">LOCALIZED EDITIONS</text>
+                        </g>
+                    </svg>
+                </div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                <p class="text-neutral-400 font-light leading-relaxed text-base">Environmental, Social, and Governance (ESG) reporting has become a strategic business imperative. As organizations expand globally, stakeholders, investors, regulators, employees, and customers expect sustainability disclosures that are accurate, transparent, and accessible in their preferred languages.</p>
-                <p class="text-neutral-400 font-light leading-relaxed text-base">At SuperDTP, we provide specialized ESG report localization services that combine expert linguistic translation, multilingual desktop publishing (DTP), accessibility compliance, and premium publishing standards. We help organizations transform complex sustainability reports into professionally localized, market-ready documents that preserve the integrity of your data, visual identity, and corporate messaging across every language.</p>
-                <p class="text-neutral-400 font-light leading-relaxed text-base lg:col-span-2">Our team understands that ESG reports are more than translated documents—they are high-impact corporate publications containing financial data, sustainability metrics, charts, infographics, tables, legal disclosures, and brand-sensitive content. Every localized report undergoes rigorous linguistic review, formatting, quality assurance, and layout validation to ensure consistency with the source document while meeting international publishing and accessibility standards.</p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
-                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                    <h3 class="font-mono text-xs text-brandAccent tracking-widest uppercase">Our ESG Localization Expertise</h3>
-                    <p class="text-sm text-neutral-400 font-light">We localize a wide range of corporate reporting and sustainability documents, including:</p>
-                    <ul class="space-y-0" aria-label="ESG localization expertise">
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>ESG Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Sustainability Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Annual Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Integrated Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Corporate Social Responsibility (CSR) Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Climate &amp; Environmental Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Corporate Governance Reports</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Investor Presentations</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Sustainability Framework Documentation</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Supplier Codes of Conduct</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>ESG Policies &amp; Disclosures</li>
-                        <li class="flex items-center gap-3 py-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-brandAccent flex-shrink-0" aria-hidden="true"></span>Regulatory &amp; Compliance Documents</li>
-                    </ul>
+                <div class="sc-panel">
+                    <h3 class="sc-panel-hdr text-brandAccent">What We Localize</h3>
+                    <div class="sc-tags" aria-label="ESG localization expertise">
+                        <span class="sc-tag">ESG Reports</span>
+                        <span class="sc-tag">Sustainability Reports</span>
+                        <span class="sc-tag">Annual Reports</span>
+                        <span class="sc-tag">Integrated Reports</span>
+                        <span class="sc-tag">CSR Reports</span>
+                        <span class="sc-tag">Climate Reports</span>
+                        <span class="sc-tag">Governance Reports</span>
+                        <span class="sc-tag">Investor Presentations</span>
+                        <span class="sc-tag">Framework Documentation</span>
+                        <span class="sc-tag">Supplier Codes</span>
+                        <span class="sc-tag">Policies &amp; Disclosures</span>
+                        <span class="sc-tag">Regulatory Documents</span>
+                    </div>
                 </div>
 
-                <div class="p-8 border border-white/5 bg-gradient-to-b from-white/[0.02] to-transparent rounded-2xl space-y-4">
-                    <h3 class="font-mono text-xs text-cyan-400/80 tracking-widest uppercase">End-to-End ESG Publishing Services</h3>
-                    <p class="text-sm text-neutral-400 font-light">Our specialized capabilities include:</p>
-                    <ul class="space-y-0" aria-label="ESG publishing services">
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Professional multilingual translation and localization</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Multilingual Desktop Publishing (DTP)</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Charts, graphs, tables, and infographic localization</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Financial data formatting and layout preservation</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Brand-consistent multilingual publishing</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>PDF Accessibility Remediation</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>WCAG and PDF/UA compliance support</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Cross-reference and hyperlink validation</li>
-                        <li class="flex items-center gap-3 py-2 border-b border-white/5 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Linguistic Quality Assurance (LQA)</li>
-                        <li class="flex items-center gap-3 py-2 text-sm text-neutral-300"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400/60 flex-shrink-0" aria-hidden="true"></span>Print-ready and digital-ready file delivery</li>
-                    </ul>
+                <div class="sc-panel">
+                    <h3 class="sc-panel-hdr text-cyan-400/80">End-to-End ESG Publishing</h3>
+                    <div class="sc-tags" aria-label="ESG publishing services">
+                        <span class="sc-tag" style="--tag:#22d3ee">Multilingual Translation</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">Multilingual DTP</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">Chart &amp; Infographic Localization</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">Financial Data Formatting</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">Brand-consistent Publishing</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">PDF Remediation</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">WCAG &amp; PDF/UA</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">Hyperlink Validation</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">Linguistic QA</span>
+                        <span class="sc-tag" style="--tag:#22d3ee">Print &amp; Digital Delivery</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="p-8 border border-white/5 bg-white/[0.02] rounded-2xl mb-12">
-                <h3 class="font-mono text-xs text-brandAccent uppercase tracking-widest mb-4">Why Choose SuperDTP for ESG Report Localization?</h3>
-                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3" aria-label="Reasons to choose SuperDTP for ESG report localization">
-                    <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Specialized expertise in multilingual corporate reporting</li>
-                    <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>High-quality multilingual DTP for complex layouts</li>
-                    <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>PDF Accessibility and Remediation services</li>
-                    <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Consistent terminology across multiple languages</li>
-                    <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Native linguists with subject-matter expertise</li>
-                    <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Secure handling of confidential corporate documents</li>
-                    <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>Enterprise-scale workflows with rapid turnaround</li>
-                    <li class="flex items-start gap-2 text-sm text-neutral-300"><span class="text-brandAccent flex-shrink-0" aria-hidden="true">&check;</span>A single partner for translation, localization, publishing, and accessibility</li>
-                </ul>
+            <div class="sc-panel mb-12">
+                <h3 class="sc-panel-hdr text-brandAccent">Why SuperDTP for ESG Report Localization?</h3>
+                <div class="sc-checks" aria-label="Reasons to choose SuperDTP for ESG report localization">
+                    <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Specialized expertise in multilingual corporate reporting</div>
+                    <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>High-quality multilingual DTP for complex layouts</div>
+                    <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>PDF accessibility and remediation services</div>
+                    <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Consistent terminology across multiple languages</div>
+                    <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Native linguists with subject-matter expertise</div>
+                    <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Secure handling of confidential corporate documents</div>
+                    <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>Enterprise-scale workflows with rapid turnaround</div>
+                    <div class="sc-check"><span class="sc-check-mark" aria-hidden="true">&check;</span>One partner for translation, publishing, and accessibility</div>
+                </div>
             </div>
 
             <blockquote class="p-6 border border-brandAccent/20 bg-brandAccent/[0.03] rounded-2xl text-center">
@@ -1573,6 +1942,144 @@
             );
 
             updateButtonState();
+        })();
+    </script>
+
+    <script>
+        /* Staggered reveal for capability chips, tag pills, check grids,
+           the language cloud, and the ESG diagram. */
+        (function () {
+            var groups = document.querySelectorAll(".cap-grid, .sc-tags, .sc-checks, .lang-cloud, .sc-svg");
+            if (!groups.length) return;
+            if (!("IntersectionObserver" in window)) {
+                groups.forEach(function (g) { g.classList.add("cap-in"); });
+                return;
+            }
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    entry.target.classList.add("cap-in");
+                    io.unobserve(entry.target);
+                });
+            }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" });
+            groups.forEach(function (g) { io.observe(g); });
+        })();
+    </script>
+
+    <script>
+        /* Ambient Three.js globe behind the ESG diagram — a wireframe world with
+           gold motes, standing in for the report's global audience.
+           three.min.js loads only as the section nears the viewport, and the
+           render loop parks whenever the stage is scrolled off screen. */
+        (function () {
+            var stage = document.querySelector(".sc-stage");
+            var canvas = document.getElementById("esg-canvas");
+            if (!stage || !canvas || !("IntersectionObserver" in window)) return;
+
+            var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+            var requested = false;
+
+            new IntersectionObserver(function (entries, obs) {
+                if (!entries[0].isIntersecting || requested) return;
+                requested = true;
+                obs.disconnect();
+                var s = document.createElement("script");
+                s.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r161/three.min.js";
+                s.onload = init;
+                s.onerror = function () { canvas.style.display = "none"; };
+                document.head.appendChild(s);
+            }, { rootMargin: "400px 0px" }).observe(stage);
+
+            function init() {
+                if (typeof THREE === "undefined") { canvas.style.display = "none"; return; }
+
+                var scene = new THREE.Scene();
+                var camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+                camera.position.set(0, 0, 5);
+
+                var renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+                renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+                renderer.setClearColor(0x09090b, 0);
+
+                var group = new THREE.Group();
+                scene.add(group);
+
+                var globeGeo = new THREE.IcosahedronGeometry(1.55, 3);
+                var globe = new THREE.LineSegments(
+                    new THREE.WireframeGeometry(globeGeo),
+                    new THREE.LineBasicMaterial({ color: 0xd4af37, transparent: true, opacity: 0.07 })
+                );
+                group.add(globe);
+
+                var shell = new THREE.LineSegments(
+                    new THREE.WireframeGeometry(new THREE.IcosahedronGeometry(1.95, 1)),
+                    new THREE.LineBasicMaterial({ color: 0x22d3ee, transparent: true, opacity: 0.09 })
+                );
+                group.add(shell);
+
+                // Gold motes orbiting the globe.
+                var COUNT = 260;
+                var pos = new Float32Array(COUNT * 3);
+                for (var p = 0; p < COUNT; p++) {
+                    var r = 1.7 + Math.random() * 1.3;
+                    var theta = Math.random() * Math.PI * 2;
+                    var phi = Math.acos(2 * Math.random() - 1);
+                    pos[p * 3] = r * Math.sin(phi) * Math.cos(theta);
+                    pos[p * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+                    pos[p * 3 + 2] = r * Math.cos(phi);
+                }
+                var dustGeo = new THREE.BufferGeometry();
+                dustGeo.setAttribute("position", new THREE.BufferAttribute(pos, 3));
+                var dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
+                    color: 0xd4af37, size: 0.022, transparent: true, opacity: 0.55, sizeAttenuation: true
+                }));
+                group.add(dust);
+
+                function resize() {
+                    var w = stage.clientWidth, h = stage.clientHeight;
+                    if (!w || !h) return;
+                    camera.aspect = w / h;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(w, h, false);
+                }
+                resize();
+                if ("ResizeObserver" in window) new ResizeObserver(resize).observe(stage);
+                else window.addEventListener("resize", resize);
+
+                var targetX = 0, targetY = 0;
+                if (!reduced && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+                    stage.addEventListener("pointermove", function (e) {
+                        var r = stage.getBoundingClientRect();
+                        targetX = ((e.clientX - r.left) / r.width - 0.5) * 0.5;
+                        targetY = ((e.clientY - r.top) / r.height - 0.5) * 0.35;
+                    });
+                    stage.addEventListener("pointerleave", function () { targetX = 0; targetY = 0; });
+                }
+
+                renderer.render(scene, camera);
+                canvas.classList.add("sc-lit");
+                if (reduced) return;
+
+                var visible = false, raf = null, start = performance.now();
+
+                function frame(now) {
+                    if (!visible) { raf = null; return; }
+                    var t = (now - start) * 0.001;
+                    globe.rotation.y = t * 0.06;
+                    shell.rotation.y = -t * 0.035;
+                    shell.rotation.x = t * 0.02;
+                    dust.rotation.y = t * 0.045;
+                    group.rotation.y += (targetX - group.rotation.y) * 0.05;
+                    group.rotation.x += (-targetY - group.rotation.x) * 0.05;
+                    renderer.render(scene, camera);
+                    raf = requestAnimationFrame(frame);
+                }
+
+                new IntersectionObserver(function (entries) {
+                    visible = entries[0].isIntersecting;
+                    if (visible && raf === null) raf = requestAnimationFrame(frame);
+                }, { threshold: 0 }).observe(stage);
+            }
         })();
     </script>
 </body>
