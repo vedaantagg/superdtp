@@ -208,7 +208,7 @@
     <text x="800" y="422" font-size="12.5" fill="#9aa1b0" text-anchor="middle" font-weight="700" letter-spacing="1.5">LOCALIZING</text>
 
     <!-- current language cycling label -->
-    <g font-size="15" font-weight="800" text-anchor="middle" fill="#d4af37">
+    <g font-size="20" font-weight="800" text-anchor="middle" fill="#d4af37">
       <text x="800" y="445" opacity="0">French
         <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;0.15417;0.16667;1" dur="12s" repeatCount="indefinite"/>
       </text>
@@ -454,7 +454,7 @@
 
   <!-- ============ ICON ROW: applications & content types ============ -->
   <g id="icon-row">
-    <rect x="80" y="618" width="1440" height="140" rx="18"  stroke="#e2e8f0" stroke-width="1.5" filter="url(#softShadowSmall)"/>
+    <rect x="80" y="618" width="1440" height="150" rx="18"  stroke="#e2e8f0" stroke-width="1.5" filter="url(#softShadowSmall)"/>
     <text x="800" y="648" font-size="16" fill="#64748b" text-anchor="middle" font-weight="700" letter-spacing="1.5">SUPPORTED FORMATS &amp; CONTENT TYPES</text>
 
     <!-- Layout software -->
@@ -464,7 +464,7 @@
       <line x1="20" y1="26" x2="46" y2="26" stroke="#ffffff" stroke-width="2.5"/>
       <line x1="20" y1="34" x2="40" y2="34" stroke="#ffffff" stroke-width="2.5" opacity="0.7"/>
       <line x1="20" y1="42" x2="46" y2="42" stroke="#ffffff" stroke-width="2.5" opacity="0.5"/>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Layout App</text>
+      <text x="33" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">Layout App</text>
     </g>
 
     <!-- PDF -->
@@ -473,7 +473,7 @@
       <path d="M18 13 h20 l10 10 v29 a3 3 0 0 1 -3 3 h-27 a3 3 0 0 1 -3 -3 v-36 a3 3 0 0 1 3 -3 z" fill="#ef4444"/>
       <path d="M38 13 v10 h10 z" fill="#b91c1c"/>
       <text x="33" y="43" font-size="8.5" fill="#ffffff" text-anchor="middle" font-weight="700">PDF</text>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">PDF File</text>
+      <text x="33" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">PDF File</text>
     </g>
 
     <!-- Word -->
@@ -481,7 +481,7 @@
       <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
       <rect x="14" y="13" width="38" height="42" rx="4" fill="url(#badgeBlue)"/>
       <text x="33" y="40" font-size="15" fill="#ffffff" text-anchor="middle" font-weight="700">W</text>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Word Doc</text>
+      <text x="35" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">Word Doc</text>
     </g>
 
     <!-- Presentation -->
@@ -489,7 +489,7 @@
       <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
       <rect x="14" y="13" width="38" height="42" rx="4" fill="#f59e0b"/>
       <text x="33" y="40" font-size="15" fill="#ffffff" text-anchor="middle" font-weight="700">P</text>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Slides</text>
+      <text x="33" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">Slides</text>
     </g>
 
     <!-- Technical manual -->
@@ -498,7 +498,7 @@
       <path d="M17 14 h18 v38 h-18 a4 4 0 0 1 -4 -4 v-30 a4 4 0 0 1 4 -4 z" fill="#6ee7b7"/>
       <path d="M35 14 h14 a4 4 0 0 1 4 4 v30 a4 4 0 0 1 -4 4 h-14 z" fill="#34d399"/>
       <line x1="35" y1="18" x2="35" y2="52" stroke="#ffffff" stroke-width="1.5" opacity="0.5"/>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Manuals</text>
+      <text x="33" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">Manuals</text>
     </g>
 
     <!-- Report -->
@@ -508,7 +508,7 @@
       <rect x="22" y="35" width="6" height="13" fill="#d4af37"/>
       <rect x="30" y="27" width="6" height="21" fill="#34d399"/>
       <rect x="38" y="21" width="6" height="27" fill="#d4af37"/>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Reports</text>
+      <text x="33" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">Reports</text>
     </g>
 
     <!-- Brochure -->
@@ -516,7 +516,7 @@
       <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
       <path d="M15 17 l13 -5 l13 5 v32 l-13 5 l-13 -5 z" fill="#d4af37"/>
       <path d="M41 17 l11 -4 v32 l-11 4 z" fill="#34d399"/>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Brochures</text>
+      <text x="33" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">Brochures</text>
     </g>
 
     <!-- Accessibility -->
@@ -525,7 +525,7 @@
       <circle cx="33" cy="33" r="19" fill="none" stroke="#d4af37" stroke-width="3"/>
       <circle cx="33" cy="24" r="4" fill="#d4af37"/>
       <path d="M22 31 h22 M33 31 v13 M33 37 l-7 9 M33 37 l7 9" stroke="#d4af37" stroke-width="3" stroke-linecap="round" fill="none"/>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">Accessible</text>
+      <text x="33" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">Accessible</text>
     </g>
 
     <!-- QA -->
@@ -533,7 +533,7 @@
       <rect width="66" height="66" rx="14" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
       <path d="M33 12 l18 7 v15 c0 14 -9 23 -18 27 c-9 -4 -18 -13 -18 -27 v-15 z" fill="url(#tealAccent)"/>
       <path d="M25 33 l6 6 l12 -12" fill="none" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="33" y="84" font-size="13" fill="#f1f1f1" text-anchor="middle">QA Check</text>
+      <text x="33" y="88" font-size="18" fill="#f1f1f1" text-anchor="middle">QA Check</text>
     </g>
   </g>
 
@@ -555,14 +555,14 @@
       <path d="M -8 -10 h10 l6 6 v14 h-16 z" fill="none" stroke="#d4af37" stroke-width="2" stroke-linejoin="round"/>
       <line x1="-4" y1="-2" x2="6" y2="-2" stroke="#d4af37" stroke-width="1.6"/>
       <line x1="-4" y1="3" x2="6" y2="3" stroke="#d4af37" stroke-width="1.6"/>
-      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">Source File</text>
+      <text x="5" y="55" font-size="20" fill="#e5e7eb" text-anchor="middle" font-weight="700">Source File</text>
     </g>
 
     <!-- Step 2: Translation -->
     <g transform="translate(480,850)">
       <circle r="26" fill="#14141c" stroke="#34d399" stroke-width="3" filter="url(#glowGreen)"/>
-      <text x="0" y="6" font-size="13" fill="#34d399" text-anchor="middle" font-weight="700">文A</text>
-      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">Translation</text>
+      <text x="0" y="7" font-size="15" fill="#34d399" text-anchor="middle" font-weight="700">文A</text>
+      <text x="5" y="55" font-size="20" fill="#e5e7eb" text-anchor="middle" font-weight="700">Translation</text>
     </g>
 
     <!-- Step 3: DTP -->
@@ -572,14 +572,14 @@
       <line x1="-6" y1="-4" x2="6" y2="-4" stroke="#d4af37" stroke-width="1.6"/>
       <line x1="-6" y1="1" x2="6" y2="1" stroke="#d4af37" stroke-width="1.6"/>
       <line x1="-6" y1="6" x2="2" y2="6" stroke="#d4af37" stroke-width="1.6"/>
-      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">DTP</text>
+      <text x="0" y="55" font-size="20" fill="#e5e7eb" text-anchor="middle" font-weight="700">DTP</text>
     </g>
 
     <!-- Step 4: QA -->
     <g transform="translate(1120,850)">
       <circle r="26" fill="#14141c" stroke="#34d399" stroke-width="3" filter="url(#glowGreen)"/>
       <path d="M -9 0 l 6 6 l 12 -12" fill="none" stroke="#34d399" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">QA</text>
+      <text x="0" y="55" font-size="20" fill="#e5e7eb" text-anchor="middle" font-weight="700">QA</text>
     </g>
 
     <!-- Step 5: Final Delivery -->
@@ -590,7 +590,7 @@
       </circle>
       <circle r="26" fill="url(#badgeBlue)" filter="url(#glowGold)"/>
       <path d="M -10 4 l 7 7 l 15 -17" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-      <text x="0" y="52" font-size="15" fill="#e5e7eb" text-anchor="middle" font-weight="700">Final Delivery</text>
+      <text x="0" y="55" font-size="20" fill="#e5e7eb" text-anchor="middle" font-weight="700">Final Delivery</text>
     </g>
 
     <!-- connecting chevrons -->
