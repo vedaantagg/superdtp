@@ -5637,6 +5637,9 @@
                     placeholder="Describe your project — file formats, volume, deadline, and any special requirements…"
                   ></textarea>
                 </div>
+                <!-- Attachments temporarily disabled — Web3Forms free-tier
+                     submissions with files were failing; form now sends
+                     text fields only until this is re-enabled.
                 <div>
                   <label class="contact-label" for="cf-files"
                     >Attachments · Optional · Up to 1 MB</label
@@ -5674,6 +5677,7 @@
                     role="alert"
                   ></div>
                 </div>
+                -->
                 <div class="flex items-center gap-6 pt-2">
                   <button
                     type="submit"
@@ -9369,6 +9373,10 @@
         // under "attachments") to it. When empty, it falls back to Web3Forms,
         // also as multipart/form-data so attachments still go through
         // (Web3Forms reads files from "attachment", "attachment2", …).
+        // Attachments are disabled for now (see commented-out #cf-files
+        // markup above) — cf-files/cf-file-list/etc. no longer exist in the
+        // DOM, so these lookups return null and every file-handling block
+        // below is a no-op; `attached` stays empty and only text fields submit.
         var CONTACT_API_URL = "";
         var MAX_TOTAL_BYTES = 1 * 1024 * 1024; // 1 MB across all files — Web3Forms free-tier attachment limit
 
