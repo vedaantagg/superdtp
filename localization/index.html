@@ -146,9 +146,11 @@
     
     <style>
         html { scroll-behavior: smooth; }
-        .site-logo { height: clamp(20px, 6vw, 28px); width: auto; max-width: 44vw; display: block; flex-shrink: 1; }
-        @media (min-width: 480px) { .site-logo { height: 28px; max-width: none; } }
-        @media (min-width: 640px) { .site-logo { height: 34px; } }
+        /* Only `height` is ever set; `width: auto` lets the SVG's intrinsic 133:44
+           keep the aspect ratio. Nothing may constrain width, or the fixed height
+           would stretch the mark. */
+        .site-logo { height: clamp(28px, 8vw, 34px); width: auto; max-width: 60vw; display: block; flex-shrink: 0; }
+        @media (min-width: 480px) { .site-logo { max-width: none; } }
         @media (min-width: 1024px) { .site-logo { height: 42px; } }
         body {
             background-color: #09090b;
@@ -269,6 +271,10 @@
         @media (min-width: 1024px) and (max-width: 1279.98px) { #main-nav > * + * { margin-left: 0.6rem !important; } }
         #main-nav.mobile-open { display: flex !important; position: fixed; top: 64px; left: 0; right: 0; width: 100%; flex-direction: column; gap: 0; background: rgba(9,9,11,0.98); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 12px 0; z-index: 49; max-height: calc(100vh - 64px); overflow-y: auto; overflow-x: hidden; }
         #main-nav.mobile-open a, #main-nav.mobile-open .services-trigger > a { padding: 12px 20px; display: block; }
+        /* The header-bar CONTACT US pill is `hidden sm:block`, so it disappears on
+           phones. This in-nav twin shows only inside the open hamburger menu. */
+        .nav-contact-mobile { display: none; }
+        #main-nav.mobile-open .nav-contact-mobile { display: block; margin: 10px 20px 2px; padding: 11px 18px; border: 1px solid rgba(212,175,55,0.3); border-radius: 9999px; background: rgba(212,175,55,0.05); color: #d4af37; text-align: center; letter-spacing: 0.1em; }
         #main-nav.mobile-open .services-dropdown { position: static; transform: none; width: 100%; max-width: 100%; background: transparent; backdrop-filter: none; border: none; display: none; grid-template-columns: 1fr; min-height: auto; opacity: 1; visibility: visible; }
         #main-nav.mobile-open .services-trigger.active .services-dropdown { display: grid; }
         #main-nav.mobile-open .mega-cat-nav { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.05); flex-direction: row; flex-wrap: wrap; padding: 8px; }
@@ -1079,7 +1085,7 @@
       class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md"
       style="height: 64px"
     >
-      <a href="/" aria-label="SuperDTP Home" class="flex-shrink min-w-0">
+      <a href="/" aria-label="SuperDTP Home" class="flex-shrink-0">
         <img
           src="../static/logo%20copy%205.svg"
           alt="SuperDTP logo"
@@ -1287,6 +1293,7 @@
         </div>
         <a href="/#industry-solutions" class="nav-link">INDUSTRIES</a>
         <a href="/#visual-lab" class="nav-link">HOW WE WORK</a>
+        <a href="/#contact" class="nav-link nav-contact-mobile">CONTACT US</a>
       </nav>
       <!-- Right-side group: CONTACT US + hamburger stay together at all breakpoints -->
       <div class="flex items-center gap-3 flex-shrink-0">

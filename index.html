@@ -131,15 +131,18 @@
       iframe {
         max-width: 100%;
       }
+      /* Only `height` is ever set; `width: auto` lets the SVG's intrinsic 133:44
+         keep the aspect ratio at every size. Nothing here may constrain width, or
+         the fixed height would stretch the mark. 34px is the ceiling that still
+         leaves breathing room inside the 64px header. */
       .site-logo {
-        height: clamp(20px, 6vw, 28px); /* shrinks below 28px on narrow screens */
+        height: clamp(28px, 8vw, 34px); /* big enough that ".com" stays legible on phones */
         width: auto;
-        max-width: 44vw;  /* never wider than 44% of viewport — leaves room for hamburger */
+        max-width: 60vw; /* safety net only — at 320px this is 192px vs the ~85px the mark needs */
         display: block;
-        flex-shrink: 1;   /* allow shrink inside flex header */
+        flex-shrink: 0;  /* must not shrink: width is what would give, distorting the ratio */
       }
-      @media (min-width: 480px) { .site-logo { height: 28px; max-width: none; } }
-      @media (min-width: 640px) { .site-logo { height: 34px; } }
+      @media (min-width: 480px) { .site-logo { max-width: none; } }
       @media (min-width: 1024px) { .site-logo { height: 42px; } }
       html.lenis {
         height: auto;
@@ -488,6 +491,24 @@
       #main-nav.mobile-open .services-trigger > a {
         padding: 12px 20px;
         display: block;
+      }
+
+      /* The header-bar CONTACT US pill is `hidden sm:block`, so it disappears on
+         phones. This in-nav twin is hidden everywhere except inside the open
+         hamburger menu, where it renders as the same gold pill. */
+      .nav-contact-mobile {
+        display: none;
+      }
+      #main-nav.mobile-open .nav-contact-mobile {
+        display: block;
+        margin: 10px 20px 2px;
+        padding: 11px 18px;
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        border-radius: 9999px;
+        background: rgba(212, 175, 55, 0.05);
+        color: #d4af37;
+        text-align: center;
+        letter-spacing: 0.1em;
       }
 
       #main-nav.mobile-open .services-dropdown {
@@ -3103,7 +3124,7 @@
       class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md"
       style="height: 64px"
     >
-      <a href="/" aria-label="SuperDTP Home" class="flex-shrink min-w-0">
+      <a href="/" aria-label="SuperDTP Home" class="flex-shrink-0">
         <img
           src="static/logo%20copy%205.svg"
           alt="SuperDTP logo"
@@ -3311,6 +3332,7 @@
         </div>
         <a href="#industry-solutions" class="nav-link">INDUSTRIES</a>
         <a href="#visual-lab" class="nav-link">HOW WE WORK</a>
+        <a href="#contact" class="nav-link nav-contact-mobile">CONTACT US</a>
       </nav>
       <!-- Right-side group: CONTACT US + hamburger stay together at all breakpoints -->
       <div class="flex items-center gap-3 flex-shrink-0">
