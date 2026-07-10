@@ -144,6 +144,12 @@
             --buf: 24px;
             --head-top: 74px;
             --title-size: clamp(1.1rem, 1.15vw + 0.85rem, 1.6rem);
+            /* Vertical step between consecutive pinned cards. Equals --peek for the
+               ladder look. Set to 0 on short/narrow desktops so every card pins at
+               the same top and covers the one before it completely — the ladder
+               costs --i * --peek of body room, which the 8th card cannot afford
+               below ~820px of viewport height (it overflows and grows a scrollbar). */
+            --rung: var(--peek);
         }
         .svc-head {
             position: sticky;
@@ -159,7 +165,7 @@
         }
         .svc-pillar {
             position: sticky;
-            top: calc(var(--base) + var(--i) * var(--peek));
+            top: calc(var(--base) + var(--i) * var(--rung));
             z-index: calc(10 + var(--i));
             scroll-margin-top: 84px;
         }
@@ -172,7 +178,7 @@
             background: linear-gradient(162deg, #16161e 0%, #0c0c12 58%, #0a0a0e 100%);
             box-shadow: 0 -1px 0 rgba(255,255,255,0.05) inset, 0 26px 64px rgba(0,0,0,0.55);
             transition: border-color 0.35s ease, box-shadow 0.4s ease;
-            max-height: calc(100vh - var(--base) - var(--buf) - var(--i) * var(--peek));
+            max-height: calc(100vh - var(--base) - var(--buf) - var(--i) * var(--rung));
             overflow: hidden;
         }
         .svc-pillar-card:hover {
@@ -449,17 +455,38 @@
             .pdfr-svg.cap-in * { animation: none !important; }
         }
 
-        /* Compressed ladder for short-but-wide screens (11–14" laptops, ~768px tall). */
-        @media (min-width: 1025px) and (max-height: 900px) {
+        /* Compressed ladder for large-but-not-tall displays. Keeps the sticky
+           peek-stack of a 27" monitor, just with slimmer rungs and a tighter
+           section head. The 8-rung ladder needs roughly
+             --base + 7*--peek + --peek + body + --buf
+           of viewport height. The full-size tokens need ~1000px of that before the
+           8th card's body gets tight, so hand over to slimmer rungs below 1000px. */
+        @media (min-width: 1280px) and (max-height: 1000px) {
             #svc-stack { --peek: 44px; --base: 128px; --buf: 16px; --head-top: 60px;
                          --title-size: clamp(1rem, 0.7vw + 0.78rem, 1.25rem); }
             .svc-head { margin: 0 auto 12px; padding: 8px 18px 9px; }
             .svc-head h2 { font-size: 1.5rem; }
             .svc-pillar-body { padding: 16px 24px 20px; }
         }
-        @media (min-width: 1025px) and (max-height: 720px) {
-            #svc-stack { --peek: 40px; --base: 116px; --buf: 12px; --head-top: 54px;
-                         --title-size: clamp(0.95rem, 0.6vw + 0.75rem, 1.15rem); }
+
+        /* Full-overlap mode — smaller desktops: either too short to fit an 8-rung
+           ladder (11–14" laptops: ~768px of screen, ~660–700px of viewport) or too
+           narrow, where body copy rewraps taller and costs the same headroom.
+           --rung: 0 pins every card at the identical top, so each one covers its
+           predecessor completely instead of stepping down the page. Cards keep the
+           full 100vh - --base - --buf of body room, which is what stops the last
+           card from overflowing into an internal scrollbar. Still sticky, still
+           one-card-at-a-time — just no accumulating ladder. */
+        @media (min-width: 1025px) and (max-height: 840px),
+               (min-width: 1025px) and (max-width: 1279px) {
+            #svc-stack { --rung: 0px; --base: 118px; --buf: 16px; --head-top: 56px;
+                         --title-size: clamp(1rem, 0.7vw + 0.78rem, 1.3rem); }
+            .svc-head { margin: 0 auto 12px; padding: 8px 18px 9px; }
+            .svc-head h2 { font-size: 1.5rem; }
+            .svc-pillar-body { padding: 16px 24px 20px; }
+            /* Opaque top edge: with zero offset the card below slides up over the
+               one above, so the header must not let it show through. */
+            .svc-pillar-head { background: linear-gradient(162deg, #16161e 0%, #12121a 100%); }
         }
 
         /* Too narrow (tablet/phone) or too short to fit the pin window — flat flow. */
@@ -531,68 +558,243 @@
     <div id="cursor-light" aria-hidden="true"></div>
     <div class="grain-overlay"></div>
 
-    <header class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md" style="height: 64px">
-        <a href="/" aria-label="SuperDTP Home" class="flex-shrink min-w-0">
-            <img src="../static/logo%20copy%205.svg" alt="SuperDTP logo" class="site-logo" fetchpriority="high" />
-        </a>
-        <nav id="main-nav" class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200" aria-label="Main navigation">
-            <a href="#hero" class="nav-link active">INCEPTION</a>
-            <div class="services-trigger relative flex items-center cursor-pointer" role="none">
-                <a href="#services" class="nav-link flex items-center gap-1.5" aria-haspopup="true" aria-expanded="false">
-                    SERVICES
-                    <svg class="w-2.5 h-2.5" viewBox="0 0 10 6" fill="none" aria-hidden="true"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-                <div class="services-dropdown" role="menu" aria-label="Services menu">
-                    <div class="mega-cat-nav">
-                        <div class="mega-cat-eyebrow">Our Services</div>
-                        <button class="mega-cat-btn" type="button" data-cat="loc" data-url="/localization/" aria-controls="mega-pane-loc">
-                            <span>Localization</span>
-                            <svg class="mega-cat-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                        <button class="mega-cat-btn active" type="button" data-cat="dtp" data-url="/dtp-services/" aria-controls="mega-pane-dtp">
-                            <span>DTP &amp; Publishing</span>
-                            <svg class="mega-cat-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true"><path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                        </button>
-                    </div>
-                    <div class="mega-pane-col">
-                        <div class="mega-pane" id="mega-pane-loc" role="group" aria-label="Localization Services">
-                            <div class="mega-pane-hdr">Localization Services</div>
-                            <a href="/localization/#website-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Website &amp; Digital Experience Localization</a>
-                            <a href="/localization/#software-app-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Software, SaaS &amp; App Localization</a>
-                            <a href="/localization/#marketing-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Marketing &amp; Brand Localization</a>
-                            <a href="/localization/#technical-documentation-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical &amp; Business Document Localization</a>
-                            <a href="/localization/#multimedia-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia &amp; eLearning Localization</a>
-                            <a href="/localization/#elearning-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
-                            <a href="/localization/#multilingual-dtp-publishing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP &amp; Desktop Publishing</a>
-                            <a href="/localization/#localization-qa-testing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Localization QA &amp; Testing</a>
-                        </div>
-                        <div class="mega-pane active" id="mega-pane-dtp" role="group" aria-label="DTP &amp; Publishing Services">
-                            <div class="mega-pane-hdr">DTP &amp; Publishing Services</div>
-                            <a href="#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP &amp; Typesetting</a>
-                            <a href="#document-formatting" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Document Formatting &amp; Corporate Publishing</a>
-                            <a href="#pdf-remediation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Remediation &amp; Accessible Documents</a>
-                            <a href="#layout-recreation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Layout Recreation &amp; File Conversion</a>
-                            <a href="#technical-documentation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical Documentation &amp; eLearning DTP</a>
-                            <a href="#image-graphics" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Image, Graphics &amp; Presentation Localization</a>
-                            <a href="#file-engineering" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Translation File Engineering &amp; Production Support</a>
-                            <a href="#print-publishing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Print &amp; Digital Publishing Services</a>
-                        </div>
-                    </div>
-                </div>
+   <header
+      class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md"
+      style="height: 64px"
+    >
+      <a href="/" aria-label="SuperDTP Home" class="flex-shrink min-w-0">
+        <img
+          src="../static/logo%20copy%205.svg"
+          alt="SuperDTP logo"
+          class="site-logo"
+          fetchpriority="high"
+        />
+      </a>
+      <nav
+        aria-label="Main navigation"
+        id="main-nav"
+        class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200"
+      >
+        <a href="/" class="nav-link">HOME</a>
+
+        <!-- 03. SERVICES — dropdown preserved exactly -->
+        <div
+          class="services-trigger relative flex items-center cursor-pointer"
+          role="none"
+        >
+          <a
+            href="#services"
+            class="nav-link active flex items-center gap-1.5"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            SERVICES
+            <svg
+              class="w-2.5 h-2.5"
+              viewBox="0 0 10 6"
+              fill="none"
+              aria-hidden="true"
+            >
+              <path
+                d="M1 1l4 4 4-4"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </a>
+          <div class="services-dropdown" role="menu" aria-label="Services menu">
+            <!-- Left: Category nav -->
+            <div class="mega-cat-nav">
+              <div class="mega-cat-eyebrow">Our Services</div>
+              <button
+                class="mega-cat-btn active"
+                type="button"
+                data-cat="loc"
+                data-url="/localization/"
+                aria-controls="mega-pane-loc"
+              >
+                <span>Localization</span>
+                <svg
+                  class="mega-cat-arrow"
+                  width="6"
+                  height="10"
+                  viewBox="0 0 6 10"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M1 1l4 4-4 4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+              <button
+                class="mega-cat-btn"
+                type="button"
+                data-cat="dtp"
+                data-url="/dtp-services/"
+                aria-controls="mega-pane-dtp"
+              >
+                <span>DTP &amp; Publishing</span>
+                <svg
+                  class="mega-cat-arrow"
+                  width="6"
+                  height="10"
+                  viewBox="0 0 6 10"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M1 1l4 4-4 4"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
             </div>
-            <a href="#pdf-remediation" class="nav-link">ACCESSIBILITY</a>
-            <a href="#footer" class="nav-link">TERMINUS</a>
-        </nav>
-        <div class="flex items-center gap-3 flex-shrink-0">
-            <div class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block">
-                <a href="/#contact" class="nav-link">CONTACT US</a>
+
+            <!-- Right: Service panes -->
+            <div class="mega-pane-col">
+              <div
+                class="mega-pane active"
+                id="mega-pane-loc"
+                role="group"
+                aria-label="Localization Services"
+              >
+                <div class="mega-pane-hdr">Localization Services</div>
+                <a href="/localization/#website-localization" class="dropdown-link" role="menuitem"
+                  ><span class="dropdown-dot"></span>Website &amp;
+                  Digital Experience Localization</a
+                >
+                <a href="/localization/#software-app-localization" class="dropdown-link" role="menuitem"
+                  ><span class="dropdown-dot"></span>Software, SaaS &amp;
+                  App Localization</a
+                >
+                <a href="/localization/#marketing-localization" class="dropdown-link" role="menuitem"
+                  ><span class="dropdown-dot"></span>Marketing &amp;
+                  Brand Localization</a
+                >
+                <a href="/localization/#technical-documentation-localization" class="dropdown-link" role="menuitem"
+                  ><span class="dropdown-dot"></span>Technical &amp; Business Document
+                  Localization</a
+                >
+                <a href="/localization/#multimedia-localization" class="dropdown-link" role="menuitem"
+                  ><span class="dropdown-dot"></span>Multimedia &amp;
+                  eLearning Localization</a
+                >
+                <a href="/localization/#elearning-localization" class="dropdown-link" role="menuitem"
+                  ><span class="dropdown-dot"></span>eLearning Localization</a
+                >
+                <a href="/localization/#multilingual-dtp-publishing" class="dropdown-link" role="menuitem"
+                  ><span class="dropdown-dot"></span>Multimedia DTP &amp;
+                  Desktop Publishing</a
+                >
+                <a href="/localization/#localization-qa-testing" class="dropdown-link" role="menuitem"
+                  ><span class="dropdown-dot"></span>Localization QA &amp;
+                  Testing</a
+                >
+              </div>
+              <div
+                class="mega-pane"
+                id="mega-pane-dtp"
+                role="group"
+                aria-label="DTP &amp; Publishing Services"
+              >
+                <div class="mega-pane-hdr">DTP &amp; Publishing Services</div>
+                <a
+                  href="/dtp-services/#multilingual-dtp"
+                  class="dropdown-link"
+                  role="menuitem"
+                  ><span class="dropdown-dot"></span>Multilingual DTP &amp;
+                  Typesetting</a
+                >
+                <a
+                  href="/dtp-services/#document-formatting"
+                  class="dropdown-link"
+                  role="menuitem"
+                  ><span class="dropdown-dot"></span>Document Formatting &amp;
+                  Corporate Publishing</a
+                >
+                <a
+                  href="/dtp-services/#pdf-remediation"
+                  class="dropdown-link"
+                  role="menuitem"
+                  ><span class="dropdown-dot"></span>PDF Remediation &amp;
+                  Accessible Documents</a
+                >
+                <a
+                  href="/dtp-services/#layout-recreation"
+                  class="dropdown-link"
+                  role="menuitem"
+                  ><span class="dropdown-dot"></span>Layout Recreation &amp;
+                  File Conversion</a
+                >
+                <a
+                  href="/dtp-services/#technical-documentation"
+                  class="dropdown-link"
+                  role="menuitem"
+                  ><span class="dropdown-dot"></span>Technical Documentation &amp;
+                  eLearning DTP</a
+                >
+                <a
+                  href="/dtp-services/#image-graphics"
+                  class="dropdown-link"
+                  role="menuitem"
+                  ><span class="dropdown-dot"></span>Image, Graphics &amp;
+                  Presentation Localization</a
+                >
+                <a
+                  href="/dtp-services/#file-engineering"
+                  class="dropdown-link"
+                  role="menuitem"
+                  ><span class="dropdown-dot"></span>Translation File Engineering &amp;
+                  Production Support</a
+                >
+                <a
+                  href="/dtp-services/#print-publishing"
+                  class="dropdown-link"
+                  role="menuitem"
+                  ><span class="dropdown-dot"></span>Print &amp;
+                  Digital Publishing Services</a
+                >
+              </div>
             </div>
-            <button id="mobile-menu-btn" class="lg:hidden flex flex-col justify-center gap-[5px] w-10 h-10 cursor-pointer" aria-label="Toggle menu" aria-expanded="false">
-                <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
-                <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
-                <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
-            </button>
+          </div>
         </div>
+        <a href="/#industry-solutions" class="nav-link">INDUSTRIES</a>
+        <a href="/#visual-lab" class="nav-link">HOW WE WORK</a>
+      </nav>
+      <!-- Right-side group: CONTACT US + hamburger stay together at all breakpoints -->
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <div
+          class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block"
+        >
+          <a href="/#contact" class="nav-link">CONTACT US</a>
+        </div>
+        <button
+          id="mobile-menu-btn"
+          class="lg:hidden flex flex-col justify-center gap-[5px] w-10 h-10 cursor-pointer"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+        >
+          <span
+            class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"
+          ></span>
+          <span
+            class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"
+          ></span>
+          <span
+            class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"
+          ></span>
+        </button>
+      </div>
     </header>
 
     <main id="main-content">
