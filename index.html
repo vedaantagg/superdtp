@@ -472,11 +472,17 @@
       }
 
       /* Desktop nav on smaller laptops (1024–1365px, e.g. 11" laptops and
-         scaled-DPI displays): still tighter than the 1rem default above
-         1366px, but with enough breathing room between links */
+         scaled-DPI displays): give links clear breathing room so they
+         don't look cluttered next to the logo and CONTACT US pill */
       @media (min-width: 1024px) and (max-width: 1365.98px) {
         #main-nav > * + * {
-          margin-left: 0.9rem !important;
+          margin-left: 1.1rem !important;
+        }
+      }
+      /* Normal/larger screens above 11" laptop widths: back to 1rem */
+      @media (min-width: 1366px) {
+        #main-nav > * + * {
+          margin-left: 2rem !important;
         }
       }
 
