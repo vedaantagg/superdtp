@@ -279,7 +279,7 @@
         #mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
         #mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
         #mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
-        @media (min-width: 1024px) and (max-width: 1279.98px) { #main-nav > * + * { margin-left: 0.6rem !important; } }
+        @media (min-width: 1024px) and (max-width: 1365.98px) { #main-nav > * + * { margin-left: 0.9rem !important; } }
         #main-nav.mobile-open { display: flex !important; position: fixed; top: 64px; left: 0; right: 0; width: 100%; flex-direction: column; gap: 0; background: rgba(9,9,11,0.98); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.1); padding: 12px 0; z-index: 49; max-height: calc(100vh - 64px); overflow-y: auto; overflow-x: hidden; }
         #main-nav.mobile-open a, #main-nav.mobile-open .services-trigger > a { padding: 12px 20px; display: block; }
         /* The header-bar CONTACT US pill is `hidden sm:block`, so it disappears on
@@ -2078,6 +2078,9 @@
                 </svg>
               </a>
             </div>
+            <p class="text-neutral-500 text-xs leading-relaxed mt-4">
+              30A Ivan Kalpazanov Street, Gabrovo, Bulgaria
+            </p>
           </div>
 
           <!-- Localization -->
@@ -2134,12 +2137,20 @@
           class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[0.65rem] text-neutral-600 tracking-wider"
         >
           <div>&copy; 2026 SUPERDTP LABS. WORLDWIDE DISTRIBUTION.</div>
-          <a
-            href="mailto:dtp.bulgaria@gmail.com"
-            class="hover:text-brandAccent transition-colors duration-200"
-          >
-            DTP.BULGARIA@GMAIL.COM
-          </a>
+          <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <a
+              href="mailto:dtp.bulgaria@gmail.com"
+              class="hover:text-brandAccent transition-colors duration-200"
+            >
+              DTP.BULGARIA@GMAIL.COM
+            </a>
+            <a
+              href="tel:+442032873217"
+              class="hover:text-brandAccent transition-colors duration-200"
+            >
+              +44 20 3287 3217
+            </a>
+          </div>
         </div>
       </div>
     </footer>

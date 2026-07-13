@@ -471,11 +471,12 @@
         transform: rotate(-45deg) translate(6px, -6px);
       }
 
-      /* Desktop nav on smaller laptops (1024–1279px): tighter link spacing
-         so all items fit beside the logo and CONTACT US pill */
-      @media (min-width: 1024px) and (max-width: 1279.98px) {
+      /* Desktop nav on smaller laptops (1024–1365px, e.g. 11" laptops and
+         scaled-DPI displays): still tighter than the 1rem default above
+         1366px, but with enough breathing room between links */
+      @media (min-width: 1024px) and (max-width: 1365.98px) {
         #main-nav > * + * {
-          margin-left: 0.6rem !important;
+          margin-left: 0.9rem !important;
         }
       }
 
@@ -5520,6 +5521,36 @@
                       stroke="#d4af37"
                       stroke-width="1.5"
                     >
+                      <path
+                        d="M2.5 1.5l2 .5.7 2.2-1.2 1.2c.5 1.2 1.4 2.1 2.6 2.6l1.2-1.2 2.2.7.5 2c0 .6-.5 1-1 1-4 0-7.5-3.5-7.5-7.5 0-.5.4-1 .95-1z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <div
+                      class="font-mono text-[0.58rem] uppercase tracking-widest text-neutral-200 mb-1"
+                    >
+                      Phone
+                    </div>
+                    <a
+                      href="tel:+442032873217"
+                      class="text-sm text-white hover:text-brandAccent transition-colors"
+                      >+44 20 3287 3217</a
+                    >
+                  </div>
+                </div>
+                <div class="flex items-start gap-4">
+                  <div
+                    class="w-8 h-8 rounded-lg bg-brandAccent/10 border border-brandAccent/20 flex items-center justify-center flex-shrink-0 mt-0.5"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 14 14"
+                      fill="none"
+                      stroke="#d4af37"
+                      stroke-width="1.5"
+                    >
                       <circle cx="7" cy="7" r="5" />
                       <path d="M7 4v3l2 2" />
                     </svg>
@@ -5808,6 +5839,9 @@
                 </svg>
               </a>
             </div>
+            <p class="text-neutral-500 text-xs leading-relaxed mt-4">
+              30A Ivan Kalpazanov Street, Gabrovo, Bulgaria
+            </p>
           </div>
 
           <!-- Localization -->
@@ -5864,12 +5898,20 @@
           class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[0.65rem] text-neutral-600 tracking-wider"
         >
           <div>&copy; 2026 SUPERDTP LABS. WORLDWIDE DISTRIBUTION.</div>
-          <a
-            href="mailto:dtp.bulgaria@gmail.com"
-            class="hover:text-brandAccent transition-colors duration-200"
-          >
-            DTP.BULGARIA@GMAIL.COM
-          </a>
+          <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <a
+              href="mailto:dtp.bulgaria@gmail.com"
+              class="hover:text-brandAccent transition-colors duration-200"
+            >
+              DTP.BULGARIA@GMAIL.COM
+            </a>
+            <a
+              href="tel:+442032873217"
+              class="hover:text-brandAccent transition-colors duration-200"
+            >
+              +44 20 3287 3217
+            </a>
+          </div>
         </div>
       </div>
     </footer>
