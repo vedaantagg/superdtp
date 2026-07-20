@@ -1,0 +1,39 @@
+# Files in the assets directory that must NOT be published.
+#
+# wrangler.jsonc sets `assets.directory: "."`, so by default every file in the
+# repo root is uploaded as a servable asset — including the .git directory.
+# On the build runner the repo is cloned (not exported), so .git is present and
+# its packfile is read as an asset. Once that packfile passed 25 MiB it tripped
+# the Workers per-asset size limit and every deploy failed with "Asset too
+# large." Excluding .git here is what keeps the build green; do not remove it.
+#
+# Syntax is gitignore-style. Note this is separate from .gitignore: that
+# controls what git tracks, this controls what Cloudflare serves.
+
+# ── Required: version control internals ──
+.git
+.gitignore
+.gitattributes
+
+# ── Repo tooling that should never be public ──
+.github
+.assetsignore
+wrangler.jsonc
+tools
+apps-script
+CLAUDE.md
+
+# ── Local-only dirs. Already gitignored, so absent on the build runner, but
+#    listed so a local `wrangler deploy --dry-run` matches CI instead of
+#    failing on a large file that CI would never see. ──
+.venv
+node_modules
+blogs-src
+Extras
+Resources
+logs
+
+# ── OS/editor noise ──
+Thumbs.db
+.DS_Store
+*.swp
