@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog — Insights on Multilingual DTP &amp; Localization | SuperDTP</title>
+  <meta name="description" content="Field notes on multilingual desktop publishing, PDF accessibility, eLearning localization and translation production from the SuperDTP team." />
+  <link rel="canonical" href="https://www.superdtp.com/blogs/" />
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content="Blog — Insights on Multilingual DTP &amp; Localization | SuperDTP" />
+  <meta property="og:description" content="Field notes on multilingual desktop publishing, PDF accessibility, eLearning localization and translation production from the SuperDTP team." />
+  <meta property="og:url" content="https://www.superdtp.com/blogs/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;600&family=Space+Grotesk:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Instrument Serif"', "serif"],
+            sans: ['"Plus Jakarta Sans"', "sans-serif"],
+            mono: ['"Space Grotesk"', "monospace"],
+          },
+          colors: { brandBg: "#09090b", brandAccent: "#d4af37" },
+        },
+      },
+    };
+  </script>
+  <style>
+    html { scroll-behavior: smooth; overflow-x: hidden; }
+    body { background: #09090b; color: #e7e7ea; font-family: "Plus Jakarta Sans", sans-serif; }
+    img, video { max-width: 100%; }
+
+    .site-logo { height: clamp(28px, 8vw, 34px); width: auto; max-width: 60vw; display: block; flex-shrink: 0; }
+    @media (min-width: 480px) { .site-logo { max-width: none; } }
+    @media (min-width: 1024px) { .site-logo { height: 42px; } }
+
+    /* ── Header nav (mirrors index.html) ─────────────────── */
+    .nav-link { opacity: .75; transition: opacity .35s ease, color .35s ease; background: none; border: none; color: inherit; font-size: 1rem; }
+    .nav-link:hover, .nav-link.active { opacity: 1; color: #fff; }
+
+    .services-dropdown {
+      position: fixed; top: 76px; left: 50%; transform: translateX(-50%);
+      width: 620px; max-width: 96vw; background: rgba(9,9,11,.98);
+      backdrop-filter: blur(18px); border: 1px solid rgba(255,255,255,.1);
+      border-radius: 14px; overflow: hidden; opacity: 0; visibility: hidden;
+      transition: opacity .22s ease, visibility .22s ease; z-index: 100;
+      display: grid; grid-template-columns: 195px 1fr; min-height: 280px;
+    }
+    .services-trigger:hover .services-dropdown,
+    .services-trigger:focus-within .services-dropdown { opacity: 1; visibility: visible; }
+    .services-trigger:hover .nav-link,
+    .services-trigger:focus-within .nav-link { opacity: 1; color: #fff; }
+    .mega-cat-nav { border-right: 1px solid rgba(255,255,255,.05); padding: 14px 0; display: flex; flex-direction: column; gap: 2px; }
+    .mega-cat-eyebrow { padding: 4px 18px 10px; font-family: "Space Grotesk", monospace; font-size: .48rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(255,255,255,.22); border-bottom: 1px solid rgba(255,255,255,.04); margin-bottom: 6px; }
+    .mega-cat-btn { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 16px 10px 18px; width: 100%; border: none; border-left: 2px solid transparent; background: none; cursor: pointer; font-family: "Space Grotesk", monospace; font-size: .56rem; letter-spacing: .14em; text-transform: uppercase; color: rgba(255,255,255,.55); text-align: left; transition: color .2s ease, background .2s ease, border-color .2s ease; }
+    .mega-cat-btn:hover { color: rgba(255,255,255,.9); background: rgba(255,255,255,.04); }
+    .mega-cat-btn.active { color: #d4af37; border-left-color: #d4af37; background: rgba(212,175,55,.06); }
+    .mega-cat-arrow { opacity: .35; flex-shrink: 0; transition: opacity .2s ease; }
+    .mega-cat-btn.active .mega-cat-arrow { opacity: .85; }
+    .mega-pane-col { position: relative; }
+    .mega-pane { display: none; padding: 14px 0; }
+    .mega-pane.active { display: block; }
+    .mega-pane-hdr { padding: 4px 18px 10px; font-family: "Space Grotesk", monospace; font-size: .48rem; letter-spacing: .28em; text-transform: uppercase; color: #d4af37; border-bottom: 1px solid rgba(255,255,255,.04); margin-bottom: 6px; }
+    .dropdown-link { display: flex; align-items: center; gap: 8px; padding: 7px 18px; font-size: .58rem; font-family: "Space Grotesk", monospace; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.68); text-decoration: none; transition: color .2s ease, background .2s ease; }
+    .dropdown-link:hover { color: #d4af37; background: rgba(255,255,255,.04); }
+    .dropdown-dot { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,.18); flex-shrink: 0; }
+    .dropdown-link:hover .dropdown-dot { background: rgba(212,175,55,.5); }
+
+    #mobile-menu-btn { position: relative; z-index: 51; flex-shrink: 0; }
+    #mobile-menu-btn.active span:nth-child(1) { transform: rotate(45deg) translate(6px, 6px); }
+    #mobile-menu-btn.active span:nth-child(2) { opacity: 0; }
+    #mobile-menu-btn.active span:nth-child(3) { transform: rotate(-45deg) translate(6px, -6px); }
+    @media (min-width: 1024px) and (max-width: 1365.98px) { #main-nav > * + * { margin-left: 1.1rem !important; } }
+    @media (min-width: 1366px) { #main-nav > * + * { margin-left: 2rem !important; } }
+
+    #main-nav.mobile-open { display: flex !important; position: fixed; top: 64px; left: 0; right: 0; width: 100%; flex-direction: column; gap: 0; background: rgba(9,9,11,.98); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,.1); padding: 12px 0; z-index: 49; max-height: calc(100vh - 64px); overflow-y: auto; overflow-x: hidden; }
+    #main-nav.mobile-open a, #main-nav.mobile-open .services-trigger > a { padding: 12px 20px; display: block; }
+    .nav-contact-mobile { display: none; }
+    #main-nav.mobile-open .nav-contact-mobile { display: block; margin: 10px 20px 2px; padding: 11px 18px; border: 1px solid rgba(212,175,55,.3); border-radius: 9999px; background: rgba(212,175,55,.05); color: #d4af37; text-align: center; letter-spacing: .1em; }
+    #main-nav.mobile-open .services-dropdown { position: static; transform: none; width: 100%; max-width: 100%; background: transparent; backdrop-filter: none; border: none; display: none; grid-template-columns: 1fr; min-height: auto; opacity: 1; visibility: visible; }
+    #main-nav.mobile-open .services-trigger.active .services-dropdown { display: grid; }
+    #main-nav.mobile-open .mega-cat-nav { border-right: none; border-bottom: 1px solid rgba(255,255,255,.05); flex-direction: row; flex-wrap: wrap; padding: 8px; }
+    #main-nav.mobile-open .mega-cat-eyebrow { display: none; }
+    #main-nav.mobile-open .mega-cat-btn { border-left: none; border-bottom: 2px solid transparent; padding: 8px 14px; width: auto; flex: 1; }
+    #main-nav.mobile-open .mega-cat-btn.active { border-bottom-color: #d4af37; }
+    #main-nav.mobile-open .mega-pane { display: none; }
+    #main-nav.mobile-open .mega-pane.active { display: block; }
+    #main-nav.mobile-open .mega-pane-hdr, #main-nav.mobile-open .dropdown-link { padding-left: 20px; padding-right: 20px; }
+    #main-nav.mobile-open .services-trigger { display: flex !important; flex-direction: column !important; position: static !important; align-items: stretch !important; }
+    #main-nav.mobile-open .services-trigger > a { display: flex !important; align-items: center !important; justify-content: space-between !important; padding: 12px 20px !important; border-bottom: 1px solid rgba(255,255,255,.05); }
+
+    /* ── Footer ──────────────────────────────────────────── */
+    .footer-col-hdr { font-family: "Space Grotesk", monospace; font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: #d4af37; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid rgba(212,175,55,.15); }
+    .footer-nav-lnk { display: block; font-family: "Space Grotesk", monospace; font-size: .65rem; letter-spacing: .08em; color: rgba(255,255,255,.45); text-decoration: none; padding: 4px 0; transition: color .2s ease; }
+    .footer-nav-lnk:hover { color: #d4af37; }
+
+    /* ── Shared blog furniture ───────────────────────────── */
+    .eyebrow { font-family: "Space Grotesk", monospace; font-size: .6rem; letter-spacing: .28em; text-transform: uppercase; color: rgba(212,175,55,.75); }
+    .grain::before {
+      content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+      background:
+        radial-gradient(60rem 30rem at 15% -10%, rgba(212,175,55,.10), transparent 60%),
+        radial-gradient(45rem 25rem at 95% 0%, rgba(212,175,55,.05), transparent 55%);
+    }
+    .post-card { transition: border-color .35s ease, background .35s ease, transform .35s ease; }
+    .post-card:hover { border-color: rgba(212,175,55,.35); background: rgba(255,255,255,.02); transform: translateY(-3px); }
+    .chip {
+      font-family: "Space Grotesk", monospace; font-size: .6rem; letter-spacing: .16em;
+      text-transform: uppercase; padding: 8px 16px; border-radius: 9999px; cursor: pointer;
+      border: 1px solid rgba(255,255,255,.12); color: rgba(255,255,255,.55);
+      background: none; transition: all .25s ease;
+    }
+    .chip:hover { color: #fff; border-color: rgba(255,255,255,.3); }
+    .chip.active { color: #d4af37; border-color: rgba(212,175,55,.5); background: rgba(212,175,55,.07); }
+    .post-card[hidden] { display: none; }
+  </style>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Blog","name":"SuperDTP Blog","url":"https://www.superdtp.com/blogs/","description":"Field notes on multilingual desktop publishing, PDF accessibility, eLearning localization and translation production from the SuperDTP team.","blogPost":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://www.superdtp.com/blogs/ensuring-equal-access-unveiling-the-top-pdf-accessibility-errors-and-how-to-fix-them/","name":"The Top PDF Accessibility Errors — and How to Fix Them"},{"@type":"ListItem","position":2,"url":"https://www.superdtp.com/blogs/step-by-step-multilingual-dtp-workflow-from-translation-to-final-output/","name":"A Step-by-Step Multilingual DTP Workflow, Translation to Final Output"},{"@type":"ListItem","position":3,"url":"https://www.superdtp.com/blogs/the-ultimate-guide-to-e-learning-localization/","name":"The Ultimate Guide to eLearning Localization"},{"@type":"ListItem","position":4,"url":"https://www.superdtp.com/blogs/best-practices-for-managing-text-expansion-and-contraction-in-dtp/","name":"Managing Text Expansion and Contraction in Multilingual DTP"},{"@type":"ListItem","position":5,"url":"https://www.superdtp.com/blogs/essential-steps-for-quality-assurance-in-dtp-services/","name":"Essential Steps for Quality Assurance in DTP"},{"@type":"ListItem","position":6,"url":"https://www.superdtp.com/blogs/pdf-remediation-a-beginners-guide-to-accessibility/","name":"PDF Remediation: A Beginner's Guide to Accessibility"},{"@type":"ListItem","position":7,"url":"https://www.superdtp.com/blogs/a-step-by-step-guide-to-preparing-documents-for-translation/","name":"A Step-by-Step Guide to Preparing Documents for Translation"},{"@type":"ListItem","position":8,"url":"https://www.superdtp.com/blogs/why-multilingual-dtp-is-the-hidden-hero-of-global-marketing/","name":"Why Multilingual DTP Is the Hidden Hero of Global Marketing"},{"@type":"ListItem","position":9,"url":"https://www.superdtp.com/blogs/human-translation-vs-mtpe-which-is-right-for-your-content/","name":"Human Translation vs MTPE: Which Is Right for Your Content?"},{"@type":"ListItem","position":10,"url":"https://www.superdtp.com/blogs/can-ai-replace-human-expertise-in-desktop-publishing/","name":"Can AI Replace Human Expertise in Desktop Publishing?"}]}}</script>
+</head>
+<body class="bg-brandBg text-neutral-200 antialiased">
+  <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[60] focus:bg-brandAccent focus:text-black focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
+    <header
+      class="fixed top-0 left-0 w-full z-50 px-4 sm:px-6 flex justify-between items-center border-b border-white/5 bg-brandBg/40 backdrop-blur-md"
+      style="height: 64px"
+    >
+      <a href="/" aria-label="SuperDTP Home" class="flex-shrink-0">
+        <img src="/static/logo%20copy%205.svg" alt="SuperDTP logo" class="site-logo" fetchpriority="high" />
+      </a>
+      <nav
+        aria-label="Main navigation"
+        id="main-nav"
+        class="hidden lg:flex items-center space-x-4 font-mono text-[0.62rem] tracking-wider text-neutral-200"
+      >
+        <a href="/" class="nav-link">HOME</a>
+
+        <div class="services-trigger relative flex items-center cursor-pointer" role="none">
+          <a href="/#services" class="nav-link flex items-center gap-1.5" aria-haspopup="true" aria-expanded="false">
+            SERVICES
+            <svg class="w-2.5 h-2.5" viewBox="0 0 10 6" fill="none" aria-hidden="true">
+              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </a>
+          <div class="services-dropdown" role="menu" aria-label="Services menu">
+            <div class="mega-cat-nav">
+              <div class="mega-cat-eyebrow">Our Services</div>
+              <button class="mega-cat-btn active" type="button" data-cat="loc" data-url="/localization/" aria-controls="mega-pane-loc">
+                <span>Localization</span>
+                <svg class="mega-cat-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true">
+                  <path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+              <button class="mega-cat-btn" type="button" data-cat="dtp" data-url="/dtp-services/" aria-controls="mega-pane-dtp">
+                <span>DTP &amp; Publishing</span>
+                <svg class="mega-cat-arrow" width="6" height="10" viewBox="0 0 6 10" fill="none" aria-hidden="true">
+                  <path d="M1 1l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+            <div class="mega-pane-col">
+              <div class="mega-pane active" id="mega-pane-loc" role="group" aria-label="Localization Services">
+                <div class="mega-pane-hdr">Localization Services</div>
+                <a href="/localization/#website-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Website &amp; Digital Experience Localization</a>
+                <a href="/localization/#software-app-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Software, SaaS &amp; App Localization</a>
+                <a href="/localization/#marketing-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Marketing &amp; Brand Localization</a>
+                <a href="/localization/#technical-documentation-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical &amp; Business Document Localization</a>
+                <a href="/localization/#multimedia-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia &amp; eLearning Localization</a>
+                <a href="/localization/#elearning-localization" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>eLearning Localization</a>
+                <a href="/localization/#multilingual-dtp-publishing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multimedia DTP &amp; Desktop Publishing</a>
+                <a href="/localization/#localization-qa-testing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Localization QA &amp; Testing</a>
+              </div>
+              <div class="mega-pane" id="mega-pane-dtp" role="group" aria-label="DTP &amp; Publishing Services">
+                <div class="mega-pane-hdr">DTP &amp; Publishing Services</div>
+                <a href="/dtp-services/#multilingual-dtp" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Multilingual DTP &amp; Typesetting</a>
+                <a href="/dtp-services/#document-formatting" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Document Formatting &amp; Corporate Publishing</a>
+                <a href="/dtp-services/#pdf-remediation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>PDF Remediation &amp; Accessible Documents</a>
+                <a href="/dtp-services/#layout-recreation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Layout Recreation &amp; File Conversion</a>
+                <a href="/dtp-services/#technical-documentation" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Technical Documentation &amp; eLearning DTP</a>
+                <a href="/dtp-services/#image-graphics" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Image, Graphics &amp; Presentation Localization</a>
+                <a href="/dtp-services/#file-engineering" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Translation File Engineering &amp; Production Support</a>
+                <a href="/dtp-services/#print-publishing" class="dropdown-link" role="menuitem"><span class="dropdown-dot"></span>Print &amp; Digital Publishing Services</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="/#industry-solutions" class="nav-link">INDUSTRIES</a>
+        <a href="/#visual-lab" class="nav-link">HOW WE WORK</a>
+        <a href="/blogs/" class="nav-link active">BLOGS</a>
+        <a href="/#contact" class="nav-link nav-contact-mobile">CONTACT US</a>
+      </nav>
+      <div class="flex items-center gap-3 flex-shrink-0">
+        <div class="font-mono text-[0.65rem] border border-brandAccent/30 px-3 py-1 rounded-full text-brandAccent bg-brandAccent/5 tracking-widest hidden sm:block">
+          <a href="/#contact" class="nav-link">CONTACT US</a>
+        </div>
+        <button id="mobile-menu-btn" class="lg:hidden flex flex-col justify-center gap-[5px] w-10 h-10 cursor-pointer" aria-label="Toggle menu" aria-expanded="false">
+          <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
+          <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
+          <span class="w-5 h-[1.5px] bg-neutral-200 transition-all block mx-auto"></span>
+        </button>
+      </div>
+    </header>
+
+  <main id="main-content" tabindex="-1">
+    <!-- ── Hero ── -->
+    <section class="relative grain overflow-x-clip pt-36 pb-16 px-5 sm:px-8">
+      <div class="relative max-w-5xl mx-auto">
+        <div class="eyebrow mb-6">Insights &amp; Field Notes</div>
+        <!-- One line on anything wider than a phone; wraps naturally below that
+             rather than being force-broken. line-height is inline because the
+             Tailwind CDN build has no JIT, so leading-[1.05] would be a no-op. -->
+        <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl text-white tracking-tight mb-7" style="line-height: 1.05">
+          The SuperDTP <span class="text-brandAccent italic">Journal</span>
+        </h1>
+        <p class="text-neutral-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+          Ten essential reads on multilingual desktop publishing, PDF accessibility,
+          eLearning localization and translation production &mdash; written by the team
+          that ships these files every day.
+        </p>
+        <div class="flex flex-wrap gap-2.5 mt-10">
+            <button class="chip active" data-cat="all" type="button">All</button>
+            <button class="chip" data-cat="PDF Accessibility" type="button">PDF Accessibility</button>
+            <button class="chip" data-cat="Multilingual DTP" type="button">Multilingual DTP</button>
+            <button class="chip" data-cat="eLearning" type="button">eLearning</button>
+            <button class="chip" data-cat="Quality Assurance" type="button">Quality Assurance</button>
+            <button class="chip" data-cat="File Engineering" type="button">File Engineering</button>
+            <button class="chip" data-cat="Localization" type="button">Localization</button>
+            <button class="chip" data-cat="Translation &amp; AI" type="button">Translation &amp; AI</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Posts ── -->
+    <section class="px-5 sm:px-8 pb-28">
+      <div class="max-w-5xl mx-auto">
+        <div id="lead-slot">
+          <a href="/blogs/ensuring-equal-access-unveiling-the-top-pdf-accessibility-errors-and-how-to-fix-them/" class="post-card group block border border-white/10 rounded-2xl overflow-hidden p-8 sm:p-12 mb-5 bg-white/[0.015]">
+            <div class="flex flex-wrap items-center gap-3 mb-6">
+              <span class="font-mono text-[0.55rem] tracking-[0.2em] uppercase border border-brandAccent/40 text-brandAccent px-3 py-1 rounded-full">Featured</span>
+              <span class="eyebrow">PDF Accessibility</span>
+            </div>
+            <h2 class="font-serif text-3xl sm:text-4xl md:text-5xl leading-[1.1] text-white mb-5 group-hover:text-brandAccent transition-colors duration-300 max-w-3xl">The Top PDF Accessibility Errors — and How to Fix Them</h2>
+            <p class="text-neutral-400 text-sm sm:text-base leading-relaxed max-w-2xl mb-7">PDF accessibility plays a significant role in ensuring that information is accessible to all individuals, regardless of their abilities.</p>
+            <div class="flex items-center gap-4 font-mono text-[0.6rem] tracking-[0.18em] uppercase text-neutral-500">
+              <span>6 min read</span>
+              <span class="text-neutral-700">&bull;</span>
+              <span class="text-brandAccent group-hover:text-white transition-colors">Read article &rarr;</span>
+            </div>
+          </a>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="post-grid">
+            <a href="/blogs/step-by-step-multilingual-dtp-workflow-from-translation-to-final-output/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="Multilingual DTP">
+              <div class="eyebrow mb-4">Multilingual DTP</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">A Step-by-Step Multilingual DTP Workflow, Translation to Final Output</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">In today’s global market, companies often need to publish documents in multiple languages to reach diverse audiences. Whether it&#x27;s brochures, manuals, e-learning…</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>5 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+            <a href="/blogs/the-ultimate-guide-to-e-learning-localization/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="eLearning">
+              <div class="eyebrow mb-4">eLearning</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">The Ultimate Guide to eLearning Localization</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">E-Learning has emerged as one of the broadest and fastest growing markets, globally. The development of new technologies — mobile phones, tablets, increased access…</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>6 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+            <a href="/blogs/best-practices-for-managing-text-expansion-and-contraction-in-dtp/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="Multilingual DTP">
+              <div class="eyebrow mb-4">Multilingual DTP</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">Managing Text Expansion and Contraction in Multilingual DTP</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">When working on multilingual projects, especially in the field of desktop publishing (DTP), managing text expansion and contraction is a crucial challenge. This…</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>5 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+            <a href="/blogs/essential-steps-for-quality-assurance-in-dtp-services/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="Quality Assurance">
+              <div class="eyebrow mb-4">Quality Assurance</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">Essential Steps for Quality Assurance in DTP</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">Introduction When it comes to Desktop Publishing (DTP) services, ensuring high-quality output is a crucial part of the process. Whether it&#x27;s for multilingual…</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>5 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+            <a href="/blogs/pdf-remediation-a-beginners-guide-to-accessibility/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="PDF Accessibility">
+              <div class="eyebrow mb-4">PDF Accessibility</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">PDF Remediation: A Beginner&#x27;s Guide to Accessibility</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">Introduction: Why Accessibility Matters Accessibility in PDF remediation is crucial for several reasons, including legal compliance, improved user experience, and…</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>5 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+            <a href="/blogs/a-step-by-step-guide-to-preparing-documents-for-translation/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="File Engineering">
+              <div class="eyebrow mb-4">File Engineering</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">A Step-by-Step Guide to Preparing Documents for Translation</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">Introduction Translation is one of the fastest-growing businesses in the world, and it is predicted to reach USD 70 billion by 2023. The necessity of document…</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>5 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+            <a href="/blogs/why-multilingual-dtp-is-the-hidden-hero-of-global-marketing/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="Localization">
+              <div class="eyebrow mb-4">Localization</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">Why Multilingual DTP Is the Hidden Hero of Global Marketing</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">Multilingual DTP (Desktop Publishing) is a critical, often overlooked, aspect of global marketing because it ensures that translated marketing materials not only…</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>5 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+            <a href="/blogs/human-translation-vs-mtpe-which-is-right-for-your-content/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="Translation &amp; AI">
+              <div class="eyebrow mb-4">Translation &amp; AI</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">Human Translation vs MTPE: Which Is Right for Your Content?</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">The more widely used terms are machine translation, post-editing, and MTPE; however, some refer to it as post-editing machine translation (PEMT).</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>5 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+            <a href="/blogs/can-ai-replace-human-expertise-in-desktop-publishing/" class="post-card group flex flex-col border border-white/10 rounded-2xl p-7" data-cat="Translation &amp; AI">
+              <div class="eyebrow mb-4">Translation &amp; AI</div>
+              <h2 class="font-serif text-2xl leading-snug text-white mb-3.5 group-hover:text-brandAccent transition-colors duration-300">Can AI Replace Human Expertise in Desktop Publishing?</h2>
+              <p class="text-neutral-500 text-sm leading-relaxed mb-6 flex-grow">While AI can automate and assist with some tasks in desktop publishing, it cannot fully replace human expertise. AI excels at tasks like automation, data analysis…</p>
+              <div class="flex items-center justify-between font-mono text-[0.58rem] tracking-[0.18em] uppercase text-neutral-600 pt-4 border-t border-white/6">
+                <span>5 min read</span>
+                <span class="text-brandAccent/70 group-hover:text-brandAccent transition-colors">Read &rarr;</span>
+              </div>
+            </a>
+        </div>
+        <p id="empty-state" class="hidden text-center text-neutral-500 font-mono text-xs tracking-widest uppercase py-16">
+          No articles in this category.
+        </p>
+      </div>
+    </section>
+
+    <!-- ── CTA ── -->
+    <section class="px-5 sm:px-8 pb-28">
+      <div class="max-w-5xl mx-auto border border-white/10 rounded-2xl p-9 sm:p-14 text-center bg-white/[0.015]">
+        <div class="eyebrow mb-5">Work With Us</div>
+        <h2 class="font-serif text-3xl sm:text-4xl text-white leading-snug mb-5">Have a multilingual file that needs to land perfectly?</h2>
+        <p class="text-neutral-400 text-sm sm:text-base leading-relaxed max-w-xl mx-auto mb-9">
+          We handle DTP, localization engineering and accessibility remediation across 120+ languages.
+        </p>
+        <a href="/#contact" class="inline-block font-mono text-[0.65rem] tracking-widest uppercase border border-brandAccent/40 text-brandAccent px-8 py-3.5 rounded-full hover:bg-brandAccent hover:text-black transition-all duration-300">Start a project</a>
+      </div>
+    </section>
+  </main>
+
+    <footer class="bg-[#060609] border-t border-white/8 pt-16 pb-8 px-6 md:px-12" id="footer" role="contentinfo">
+      <div class="max-w-7xl mx-auto">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5 pb-12 border-b border-white/8">
+          <div class="col-span-2 md:col-span-3 lg:col-span-1">
+            <a href="/" aria-label="SuperDTP Home" class="inline-block mb-5">
+              <img src="/static/logo%20copy%205.svg" alt="SuperDTP logo" class="site-logo" style="opacity: 0.9" />
+            </a>
+            <p class="text-neutral-500 text-xs leading-relaxed max-w-xs mb-5">
+              Specialist multilingual DTP &amp; localization studio. Precision layouts in 120+ languages, delivered on time.
+            </p>
+            <div class="flex items-center gap-2.5 sm:gap-3">
+              <a href="https://www.linkedin.com/company/superdtp/" target="_blank" rel="noopener noreferrer" aria-label="SuperDTP on LinkedIn" class="group p-2.5 sm:p-3 rounded-full border border-neutral-700 hover:border-[#0A66C2] hover:bg-[#0A66C2]/10 transition-all duration-200">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-[#0A66C2] transition-colors duration-200"><path d="M20.5 2H3.5C2.67 2 2 2.67 2 3.5v17C2 21.33 2.67 22 3.5 22h17c.83 0 1.5-.67 1.5-1.5v-17C22 2.67 21.33 2 20.5 2zM8 19H5v-9h3v9zm-1.5-10.26c-.966 0-1.75-.79-1.75-1.75s.784-1.75 1.75-1.75 1.75.79 1.75 1.75-.784 1.75-1.75 1.75zM19 19h-3v-4.74c0-1.42-.5-2.26-1.68-2.26-1.08 0-1.72.73-2.02 1.44-.1.25-.13.59-.13.94V19h-3s.04-8 0-8.64h3V9.19c.5-.77 1.39-1.87 3.38-1.87 2.46 0 4.3 1.61 4.3 5.07V19z"/></svg>
+              </a>
+              <a href="https://www.facebook.com/superdtpbulgaria" target="_blank" rel="noopener noreferrer" aria-label="SuperDTP on Facebook" class="group p-2.5 sm:p-3 rounded-full border border-neutral-700 hover:border-[#1877F2] hover:bg-[#1877F2]/10 transition-all duration-200">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-[#1877F2] transition-colors duration-200"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+              <a href="https://www.instagram.com/super.dtp/" target="_blank" rel="noopener noreferrer" aria-label="SuperDTP on Instagram" class="group p-2.5 sm:p-3 rounded-full border border-neutral-700 hover:border-[#E4405F] hover:bg-[#E4405F]/10 transition-all duration-200">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="text-[#E4405F] transition-colors duration-200"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><circle cx="17.5" cy="6.5" r="1.5"></circle></svg>
+              </a>
+              <a href="https://x.com/dtp_super/" target="_blank" rel="noopener noreferrer" aria-label="SuperDTP on X (Twitter)" class="group p-2.5 sm:p-3 rounded-full border border-neutral-700 hover:border-neutral-200 hover:bg-neutral-200/10 transition-all duration-200">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-neutral-200 transition-colors duration-200"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.514l-5.106-6.694-5.934 6.694H2.88l7.644-8.74L2.171 2.25h6.636l4.633 6.116 5.404-6.116zM17.15 18.477h1.828L6.122 3.958H4.231l13.919 14.519z"/></svg>
+              </a>
+            </div>
+            <p class="text-neutral-500 text-xs leading-relaxed mt-4">30A Ivan Kalpazanov Street, Gabrovo, Bulgaria</p>
+          </div>
+
+          <div>
+            <div class="footer-col-hdr">Localization</div>
+            <a href="/localization/#website-localization" class="footer-nav-lnk">Website &amp; Digital Experience Localization</a>
+            <a href="/localization/#software-app-localization" class="footer-nav-lnk">Software, SaaS &amp; App Localization</a>
+            <a href="/localization/#marketing-localization" class="footer-nav-lnk">Marketing &amp; Brand Localization</a>
+            <a href="/localization/#technical-documentation-localization" class="footer-nav-lnk">Technical &amp; Business Document Localization</a>
+            <a href="/localization/#multimedia-localization" class="footer-nav-lnk">Multimedia &amp; eLearning Localization</a>
+            <a href="/localization/#elearning-localization" class="footer-nav-lnk">eLearning Localization</a>
+            <a href="/localization/#multilingual-dtp-publishing" class="footer-nav-lnk">Multilingual DTP &amp; Desktop Publishing</a>
+            <a href="/localization/#localization-qa-testing" class="footer-nav-lnk">Localization QA &amp; Testing</a>
+          </div>
+
+          <div>
+            <div class="footer-col-hdr">DTP &amp; Publishing</div>
+            <a href="/dtp-services/#multilingual-dtp" class="footer-nav-lnk">Multilingual DTP &amp; Typesetting</a>
+            <a href="/dtp-services/#document-formatting" class="footer-nav-lnk">Document Formatting &amp; Corporate Publishing</a>
+            <a href="/dtp-services/#pdf-remediation" class="footer-nav-lnk">PDF Remediation &amp; Accessible Documents</a>
+            <a href="/dtp-services/#layout-recreation" class="footer-nav-lnk">Layout Recreation &amp; File Conversion</a>
+            <a href="/dtp-services/#technical-documentation" class="footer-nav-lnk">Technical Documentation &amp; eLearning DTP</a>
+            <a href="/dtp-services/#image-graphics" class="footer-nav-lnk">Image, Graphics &amp; Presentation Localization</a>
+            <a href="/dtp-services/#file-engineering" class="footer-nav-lnk">Translation File Engineering &amp; Production Support</a>
+            <a href="/dtp-services/#print-publishing" class="footer-nav-lnk">Print &amp; Digital Publishing Services</a>
+          </div>
+        </div>
+
+        <div class="pt-8 flex flex-col sm:flex-row justify-between items-center gap-4 font-mono text-[0.65rem] text-neutral-600 tracking-wider">
+          <div>&copy; 2026 SUPERDTP LABS. WORLDWIDE DISTRIBUTION.</div>
+          <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
+            <a href="mailto:dtp.bulgaria@gmail.com" class="hover:text-brandAccent transition-colors duration-200">DTP.BULGARIA@GMAIL.COM</a>
+            <a href="tel:+442032873217" class="hover:text-brandAccent transition-colors duration-200">+44 20 3287 3217</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <script>
+      const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+      const mainNav = document.getElementById("main-nav");
+      const navLinks = mainNav.querySelectorAll("a:not(.dropdown-link)");
+      const servicesTrigger = mainNav.querySelector(".services-trigger");
+
+      mobileMenuBtn.addEventListener("click", () => {
+        mobileMenuBtn.classList.toggle("active");
+        mainNav.classList.toggle("mobile-open");
+      });
+
+      navLinks.forEach((link) => {
+        link.addEventListener("click", () => {
+          mobileMenuBtn.classList.remove("active");
+          mainNav.classList.remove("mobile-open");
+        });
+      });
+
+      if (servicesTrigger) {
+        var servicesTriggerLink = servicesTrigger.querySelector(":scope > a");
+        if (servicesTriggerLink) {
+          servicesTriggerLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            servicesTrigger.classList.toggle("active");
+          });
+        }
+        var servicesDropdown = servicesTrigger.querySelector(".services-dropdown");
+        function positionServicesDropdown() {
+          if (!servicesDropdown || window.innerWidth < 1024) return;
+          var r = servicesTrigger.getBoundingClientRect();
+          var ddw = servicesDropdown.offsetWidth || 620;
+          var margin = 16;
+          var left = r.left + r.width / 2 - ddw / 2;
+          if (left + ddw > window.innerWidth - margin) left = window.innerWidth - ddw - margin;
+          if (left < margin) left = margin;
+          servicesDropdown.style.left = left + "px";
+          servicesDropdown.style.transform = "none";
+        }
+        servicesTrigger.addEventListener("mouseenter", positionServicesDropdown);
+        servicesTrigger.addEventListener("focusin", positionServicesDropdown);
+        window.addEventListener("resize", positionServicesDropdown);
+      }
+
+      (function () {
+        var catBtns = document.querySelectorAll(".mega-cat-btn");
+        var supportsHover =
+          window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+        function activateCat(btn) {
+          catBtns.forEach(function (b) { b.classList.remove("active"); });
+          document.querySelectorAll(".mega-pane").forEach(function (p) { p.classList.remove("active"); });
+          btn.classList.add("active");
+          var pane = document.getElementById("mega-pane-" + btn.getAttribute("data-cat"));
+          if (pane) pane.classList.add("active");
+        }
+        catBtns.forEach(function (btn) {
+          btn.addEventListener("mouseenter", function () { activateCat(this); });
+          btn.addEventListener("click", function () {
+            var url = this.getAttribute("data-url");
+            if (supportsHover && url) { window.location.href = url; return; }
+            activateCat(this);
+          });
+        });
+      })();
+    </script>
+  <script>
+    // Category filter. The featured card is part of the "All" view only —
+    // once a category is chosen every matching post is shown in the grid,
+    // so the lead card is hidden to avoid rendering it twice.
+    (function () {
+      var chips = document.querySelectorAll(".chip");
+      var cards = document.querySelectorAll("#post-grid .post-card");
+      var leadSlot = document.getElementById("lead-slot");
+      var empty = document.getElementById("empty-state");
+      var leadCat = "PDF Accessibility";
+
+      chips.forEach(function (chip) {
+        chip.addEventListener("click", function () {
+          var cat = this.getAttribute("data-cat");
+          chips.forEach(function (c) { c.classList.remove("active"); });
+          this.classList.add("active");
+
+          var shown = 0;
+          cards.forEach(function (card) {
+            var match = cat === "all" || card.getAttribute("data-cat") === cat;
+            card.hidden = !match;
+            if (match) shown++;
+          });
+
+          var leadVisible = cat === "all" || cat === leadCat;
+          leadSlot.hidden = !leadVisible;
+          if (leadVisible) shown++;
+
+          empty.classList.toggle("hidden", shown > 0);
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

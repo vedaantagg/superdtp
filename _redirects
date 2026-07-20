@@ -16,3 +16,45 @@
 /sitemap.txt             /sitemap.xml            301
 /llm.txt                /llms.txt               301
 
+# ── Blog ──────────────────────────────────────────────────────────
+# Canonical no-slash redirect, matching /localization and /dtp-services above.
+/blogs                /blogs/                301
+
+# Legacy WordPress URLs for the 10 published posts. Each used to live at the
+# site root (superdtp.com/<slug>/) and now lives under /blogs/<slug>/. Both the
+# slashed and unslashed forms are listed because inbound links use both and a
+# rule for one form does not match the other.
+#
+# Only these 10 are redirected. The other archived posts in blogs-src/ are not
+# published, so their old URLs are left to 404 rather than being pointed at the
+# blog index. If one of them is ever built, add its rules here.
+
+/ensuring-equal-access-unveiling-the-top-pdf-accessibility-errors-and-how-to-fix-them     /blogs/ensuring-equal-access-unveiling-the-top-pdf-accessibility-errors-and-how-to-fix-them/     301
+/ensuring-equal-access-unveiling-the-top-pdf-accessibility-errors-and-how-to-fix-them/    /blogs/ensuring-equal-access-unveiling-the-top-pdf-accessibility-errors-and-how-to-fix-them/     301
+
+/step-by-step-multilingual-dtp-workflow-from-translation-to-final-output      /blogs/step-by-step-multilingual-dtp-workflow-from-translation-to-final-output/      301
+/step-by-step-multilingual-dtp-workflow-from-translation-to-final-output/     /blogs/step-by-step-multilingual-dtp-workflow-from-translation-to-final-output/      301
+
+/the-ultimate-guide-to-e-learning-localization       /blogs/the-ultimate-guide-to-e-learning-localization/       301
+/the-ultimate-guide-to-e-learning-localization/      /blogs/the-ultimate-guide-to-e-learning-localization/       301
+
+/best-practices-for-managing-text-expansion-and-contraction-in-dtp        /blogs/best-practices-for-managing-text-expansion-and-contraction-in-dtp/        301
+/best-practices-for-managing-text-expansion-and-contraction-in-dtp/       /blogs/best-practices-for-managing-text-expansion-and-contraction-in-dtp/        301
+
+/essential-steps-for-quality-assurance-in-dtp-services        /blogs/essential-steps-for-quality-assurance-in-dtp-services/        301
+/essential-steps-for-quality-assurance-in-dtp-services/       /blogs/essential-steps-for-quality-assurance-in-dtp-services/        301
+
+/pdf-remediation-a-beginners-guide-to-accessibility       /blogs/pdf-remediation-a-beginners-guide-to-accessibility/       301
+/pdf-remediation-a-beginners-guide-to-accessibility/      /blogs/pdf-remediation-a-beginners-guide-to-accessibility/       301
+
+/a-step-by-step-guide-to-preparing-documents-for-translation      /blogs/a-step-by-step-guide-to-preparing-documents-for-translation/      301
+/a-step-by-step-guide-to-preparing-documents-for-translation/     /blogs/a-step-by-step-guide-to-preparing-documents-for-translation/      301
+
+/why-multilingual-dtp-is-the-hidden-hero-of-global-marketing      /blogs/why-multilingual-dtp-is-the-hidden-hero-of-global-marketing/      301
+/why-multilingual-dtp-is-the-hidden-hero-of-global-marketing/     /blogs/why-multilingual-dtp-is-the-hidden-hero-of-global-marketing/      301
+
+/human-translation-vs-mtpe-which-is-right-for-your-content        /blogs/human-translation-vs-mtpe-which-is-right-for-your-content/        301
+/human-translation-vs-mtpe-which-is-right-for-your-content/       /blogs/human-translation-vs-mtpe-which-is-right-for-your-content/        301
+
+/can-ai-replace-human-expertise-in-desktop-publishing     /blogs/can-ai-replace-human-expertise-in-desktop-publishing/     301
+/can-ai-replace-human-expertise-in-desktop-publishing/    /blogs/can-ai-replace-human-expertise-in-desktop-publishing/     301

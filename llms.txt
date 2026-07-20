@@ -16,6 +16,21 @@ SuperDTP delivers production-grade multilingual services spanning desktop publis
 
 - [PDF Accessibility & Remediation](https://www.superdtp.com/dtp-services/#pdf-remediation): Manual PDF remediation for full Section 508, WCAG 2.1/2.2, and ADA compliance. Accessibility specialists personally review every page — adding tags, reading order, alt-text, and document structure that automated tools cannot reliably produce.
 
+## Blog
+
+- [SuperDTP Blog](https://www.superdtp.com/blogs/): Practitioner articles on multilingual desktop publishing, PDF accessibility, eLearning localization, and translation production.
+
+- [The Top PDF Accessibility Errors — and How to Fix Them](https://www.superdtp.com/blogs/ensuring-equal-access-unveiling-the-top-pdf-accessibility-errors-and-how-to-fix-them/): Common tagging, reading-order, and alt-text failures found in untagged PDFs, and the remediation steps that resolve each one.
+- [A Step-by-Step Multilingual DTP Workflow, Translation to Final Output](https://www.superdtp.com/blogs/step-by-step-multilingual-dtp-workflow-from-translation-to-final-output/): The production sequence from source file analysis through translation import, layout adjustment, linguistic QA, and print-ready export.
+- [The Ultimate Guide to eLearning Localization](https://www.superdtp.com/blogs/the-ultimate-guide-to-e-learning-localization/): Adapting courses, voiceover, on-screen text, and interactive elements for other languages and markets.
+- [Managing Text Expansion and Contraction in Multilingual DTP](https://www.superdtp.com/blogs/best-practices-for-managing-text-expansion-and-contraction-in-dtp/): Why translated text changes length, and layout techniques that absorb it without redesign.
+- [Essential Steps for Quality Assurance in DTP](https://www.superdtp.com/blogs/essential-steps-for-quality-assurance-in-dtp-services/): The checks that catch layout, typography, and linguistic defects before delivery.
+- [PDF Remediation: A Beginner's Guide to Accessibility](https://www.superdtp.com/blogs/pdf-remediation-a-beginners-guide-to-accessibility/): What tagging is, why it matters for screen readers, and how remediation works.
+- [A Step-by-Step Guide to Preparing Documents for Translation](https://www.superdtp.com/blogs/a-step-by-step-guide-to-preparing-documents-for-translation/): File preparation that reduces translation cost and downstream DTP rework.
+- [Why Multilingual DTP Is the Hidden Hero of Global Marketing](https://www.superdtp.com/blogs/why-multilingual-dtp-is-the-hidden-hero-of-global-marketing/): How layout fidelity affects brand consistency across markets.
+- [Human Translation vs MTPE: Which Is Right for Your Content?](https://www.superdtp.com/blogs/human-translation-vs-mtpe-which-is-right-for-your-content/): Comparing full human translation against machine translation post-editing by content type, risk, and budget.
+- [Can AI Replace Human Expertise in Desktop Publishing?](https://www.superdtp.com/blogs/can-ai-replace-human-expertise-in-desktop-publishing/): Where automation helps in DTP production and where human judgment remains necessary.
+
 ## Key Facts
 
 - Founded: 2014

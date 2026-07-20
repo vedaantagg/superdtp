@@ -3350,6 +3350,7 @@
         </div>
         <a href="#industry-solutions" class="nav-link">INDUSTRIES</a>
         <a href="#visual-lab" class="nav-link">HOW WE WORK</a>
+        <a href="/blogs/" class="nav-link">BLOGS</a>
         <a href="#contact" class="nav-link nav-contact-mobile">CONTACT US</a>
       </nav>
       <!-- Right-side group: CONTACT US + hamburger stay together at all breakpoints -->
@@ -6257,12 +6258,15 @@
       function initReferenceNavigation() {
         const navLinks = gsap.utils.toArray(".nav-link");
         navLinks.forEach((link) => {
+          const href = link.getAttribute("href");
+          // Only in-page anchors get scroll-jacked. Links to real routes
+          // (/blogs/, /localization/) must navigate normally: preventDefault()
+          // would kill the navigation, and querySelector() throws outright on a
+          // path like "/blogs/" since it isn't a valid selector.
+          if (!href || !href.startsWith("#")) return;
           link.addEventListener("click", (event) => {
             event.preventDefault();
-            scrollToTarget(
-              document.querySelector(link.getAttribute("href")),
-              1.8,
-            );
+            scrollToTarget(document.querySelector(href), 1.8);
           });
         });
 

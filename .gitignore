@@ -229,5 +229,8 @@ Tony Mak _ Creative at the Speed of Next.html
 
 Extras/
 Resources/Problems in landing page.pdf
-blogs/
+# Raw Wayback/WordPress captures. Source material for tools/build_blogs.py —
+# never served. The built output in blogs/ IS committed and deployed.
+blogs-src/
 blogs.zip
+tools/build_blogs.py
